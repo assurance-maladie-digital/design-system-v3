@@ -36,6 +36,19 @@ import * as NotificationBarStories from './NotificationBar.stories';
 # API
 <Controls of={NotificationBarStories.Default} />
 
+## Personnaliser le texte du bouton de fermeture
+
+Le bouton de fermeture a pour nom accessible « Fermer la notification ». Si vous modifiez `closeBtnText`, redéfinissez ce nom accessible via `vuetifyOptions` pour qu'il contienne le texte visible (critère RGAA 11.9) :
+
+<Source dark code={`
+<NotificationBar
+	close-btn-text="Masquer"
+	:vuetify-options="{ btn: { 'aria-label': 'Masquer la notification' } }"
+/>
+`} />
+
+<Canvas of={NotificationBarStories.CustomCloseBtnText} />
+
 # Exemple d'utilisation
 
 <Source dark code={`
