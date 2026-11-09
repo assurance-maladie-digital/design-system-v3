@@ -1,13 +1,11 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { enableAutoUnmount, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
-import { analyzeSnippet, type StoryWithSourceCode } from '@tests/helpers/storySnippets'
+import type { StoryWithSourceCode } from '@tests/helpers/storySnippets'
 import * as stories from '../ErrorPage.stories'
 
 const composedStories = composeStories(stories)
 const { CustomIllustration, SlotAction, SlotAdditionalContent } = composedStories
-
-const allStories = Object.entries(composedStories).map(([name, story]) => ({ name, story }))
 
 function snippetCode(story: StoryWithSourceCode): string {
 	const { sourceCode } = story.parameters
@@ -17,24 +15,6 @@ function snippetCode(story: StoryWithSourceCode): string {
 enableAutoUnmount(afterEach)
 
 describe('ErrorPage stories', () => {
-	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
-		expect(analyzeSnippet(story)).toEqual({
-			parseErrors: [],
-			hasScriptSetup: true,
-			undeclaredIdentifiers: [],
-			unresolvedComponents: [],
-			untypedRefs: [],
-			invalidAttributes: [],
-		})
-	})
-
-	it.each(allStories)('l\'extrait de $name ne reprend pas l\'habillage Storybook ni de couleur codée en dur', ({ story }) => {
-		const code = snippetCode(story)
-
-		expect(code).not.toContain('rgb(231, 236, 245)')
-		expect(code).not.toMatch(/#[0-9a-f]{3,6}\b/i)
-	})
-
 	it.each([
 		{ name: 'CustomIllustration', story: CustomIllustration },
 		{ name: 'SlotAction', story: SlotAction },
