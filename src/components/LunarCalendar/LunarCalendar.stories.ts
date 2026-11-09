@@ -137,6 +137,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('')
 </script>`,
@@ -182,6 +183,7 @@ export const Required: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('')
 </script>`,
@@ -229,6 +231,7 @@ export const DisplayAsterisk: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('')
 </script>`,
@@ -277,6 +280,7 @@ export const WithClearable: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('12/13/1564')
 </script>`,
@@ -371,6 +375,7 @@ export const HelpText: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('')
 </script>`,
@@ -417,6 +422,7 @@ export const WithLoading: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('12/12/1445')
 </script>`,
@@ -463,6 +469,7 @@ export const Disabled: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('12/12/1445')
 </script>`,
@@ -509,6 +516,7 @@ export const Readonly: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('12/12/1445')
 </script>`,
@@ -545,6 +553,7 @@ export const WithCustomRules: Story = {
 				name: 'Template',
 				code: `<template>
 	<LunarCalendar
+		ref="fieldRef"
 		label="Date de naissance"
 		v-model="dateValue"
 		:custom-rules="customRules"
@@ -554,9 +563,11 @@ export const WithCustomRules: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('12/12/1390')
+const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
 const customRules = [
 	{
@@ -567,6 +578,10 @@ const customRules = [
 		},
 	},
 ]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
