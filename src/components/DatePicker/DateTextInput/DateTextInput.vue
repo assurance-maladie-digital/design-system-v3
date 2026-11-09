@@ -78,6 +78,7 @@
 		autoClamp: false,
 		bgColor: 'white',
 		calendarActivator: false,
+		clearable: true,
 		customSuccessRules: () => [],
 		customRules: () => [],
 		customWarningRules: () => [],

@@ -5,6 +5,7 @@ import { nextTick, defineComponent, ref } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 import { locales } from '../../locales'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- VueWrapper<any> est le pattern standard pour les composants Vue avec defineExpose complexe
 let wrapper: VueWrapper<any> | null = null
@@ -39,6 +40,18 @@ afterEach(() => {
 })
 
 describe('ComplexDatePicker.clean', () => {
+	it('propage clearable=false au champ texte', () => {
+		const wrapper = mountComponent({ label: 'Test', clearable: false })
+
+		expect(wrapper.findComponent(SyTextField).props('isClearable')).toBe(false)
+	})
+
+	it('affiche le bouton d\'effacement par défaut', () => {
+		const wrapper = mountComponent({ label: 'Test' })
+
+		expect(wrapper.findComponent(SyTextField).props('isClearable')).toBe(true)
+	})
+
 	it('renders in calendar mode by default', () => {
 		const wrapper = mountComponent()
 

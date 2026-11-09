@@ -232,6 +232,11 @@ const meta = {
 			description: 'Désactive le champ, empêchant toute interaction utilisateur et appliquant un style grisé. ⚠️ Incompatible avec readonly.',
 			defaultValue: false,
 		},
+		'clearable': {
+			control: 'boolean',
+			description: 'Affiche le bouton d\'effacement du champ (jamais affiché en readonly). Mettre à false sur petit écran (RGAA 10.4).',
+			defaultValue: true,
+		},
 		'noIcon': {
 			control: 'boolean',
 			description: 'Masque toutes les icônes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. ⚠️ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
@@ -446,8 +451,8 @@ export const Default: Story = {
 
 /**
  * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
- * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire. Le bouton d'effacement est toujours
- * affiché hors lecture seule (non désactivable pour l'instant).
+ * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire, et ne pas utiliser `clearable`
+ * pour libérer de la place dans le champ.
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,
@@ -475,6 +480,7 @@ export const MobileAccessibilityGuideline: Story = {
 						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						format="DD/MM/YYYY"
+						:clearable="false"
 					/>
 				</template>
 				`,
@@ -497,6 +503,7 @@ export const MobileAccessibilityGuideline: Story = {
 		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
 		hint: 'Cette date figure sur votre prescription médicale',
 		persistentHint: true,
+		clearable: false,
 	},
 }
 
@@ -921,6 +928,60 @@ export const AppendIcon: Story = {
                   <p>Valeur actuelle: {{ value }}</p>
                   <p>L'icône du calendrier est positionnée à la fin du champ.</p>
                 </div>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithoutClearButton: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
+						format="DD/MM/YYYY"
+						useCombinedMode
+						:clearable="false"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const date = ref('01/01/2025')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
+		format: 'DD/MM/YYYY',
+		useCombinedMode: true,
+		clearable: false,
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref('01/01/2025')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}

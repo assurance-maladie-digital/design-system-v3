@@ -26,6 +26,7 @@ interface DatePickerProps {
 	'successMessages'?: string[] | null
 	'disabled'?: boolean
 	'noIcon'?: boolean
+	'clearable'?: boolean
 	'noCalendar'?: boolean
 	'isOutlined'?: boolean
 	'readonly'?: boolean
@@ -184,6 +185,11 @@ const meta = {
 			control: 'boolean',
 			description: 'Affiche l\'icône calendrier Ã  la fin du champ (Ã  droite). âš ï¸ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
 			defaultValue: false,
+		},
+		'clearable': {
+			control: 'boolean',
+			description: 'Affiche le bouton d\'effacement du champ (jamais affiché en readonly). Mettre à false sur petit écran (RGAA 10.4).',
+			defaultValue: true,
 		},
 		'noIcon': {
 			control: 'boolean',
@@ -359,8 +365,8 @@ export const Default: Story = {
 
 /**
  * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
- * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire. Le bouton d'effacement est toujours
- * affiché hors lecture seule (non désactivable pour l'instant).
+ * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire, et ne pas utiliser `clearable`
+ * pour libérer de la place dans le champ.
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,
@@ -399,6 +405,7 @@ export const MobileAccessibilityGuideline: Story = {
 						hint="Cette date figure sur votre prescription médicale"
 						persistent-hint
 						:no-calendar="true"
+						:clearable="false"
 					/>
 				</template>
 				`,
@@ -411,6 +418,7 @@ export const MobileAccessibilityGuideline: Story = {
 		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
 		hint: 'Cette date figure sur votre prescription médicale',
 		persistentHint: true,
+		clearable: false,
 		// `hint` n'est pas une prop typée du DatePicker : il est transmis en attribut au champ.
 	} as typeof Default.args,
 }
@@ -501,6 +509,55 @@ export const Required: Story = {
 					/>
 				</div>
 			`,
+		}
+	},
+}
+
+export const WithoutClearButton: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+        <template>
+          <DatePicker
+            v-model="date"
+            format="DD/MM/YYYY"
+            placeholder="JJ/MM/AAAA"
+            label="Date sans bouton d'effacement (JJ/MM/AAAA)"
+            no-calendar
+            :clearable="false"
+          />
+        </template>
+        `,
+			},
+		],
+	},
+	args: {
+		'noCalendar': true,
+		'format': 'DD/MM/YYYY',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date sans bouton d\'effacement (JJ/MM/AAAA)',
+		'clearable': false,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+	},
+	render(args) {
+		const date = ref<string | null>('01/01/2025')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+        <div style="padding: 20px;">
+          <DatePicker
+            v-model="date"
+            v-bind="args"
+          />
+        </div>
+      `,
 		}
 	},
 }

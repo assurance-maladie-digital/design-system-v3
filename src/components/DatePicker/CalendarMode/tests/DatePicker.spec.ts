@@ -6,6 +6,7 @@ import DatePicker from '../DatePicker.vue'
 import ComplexDatePicker from '../../ComplexDatePicker/ComplexDatePicker.vue'
 import { locales } from '../../locales'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
 type DatePickerInstance = InstanceType<typeof DatePicker>
 
@@ -32,6 +33,29 @@ describe('DatePicker', () => {
 			await flushPromises()
 		}
 	}
+
+	describe.each([
+		['mode calendrier', {}],
+		['mode saisie (noCalendar)', { noCalendar: true }],
+	])('clearable (%s)', (_name, modeProps) => {
+		it('affiche le bouton d\'effacement par défaut', () => {
+			const wrapper = mountComponent(modeProps)
+
+			expect(wrapper.findComponent(SyTextField).props('isClearable')).toBe(true)
+		})
+
+		it('masque le bouton d\'effacement avec clearable=false', () => {
+			const wrapper = mountComponent({ ...modeProps, clearable: false })
+
+			expect(wrapper.findComponent(SyTextField).props('isClearable')).toBe(false)
+		})
+
+		it('masque le bouton d\'effacement en readonly', () => {
+			const wrapper = mountComponent({ ...modeProps, readonly: true })
+
+			expect(wrapper.findComponent(SyTextField).props('isClearable')).toBe(false)
+		})
+	})
 
 	it('renders the calendar mode activator input by default', () => {
 		const wrapper = mountComponent({
