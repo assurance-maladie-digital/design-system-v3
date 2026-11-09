@@ -13,8 +13,8 @@ export const buildComplexDatePickerMenuTextInputProps = (
 	'display-range': props.displayRange,
 	'density': props.density,
 	// Le champ sert d'activateur du calendrier : on avertit via aria-describedby
-	// (sauf quand le champ est désactivé, car rien ne s'ouvre alors).
-	'calendar-activator': !props.disabled,
+	// (sauf quand le champ est désactivé ou en lecture seule, car rien ne s'ouvre alors).
+	'calendar-activator': !(props.disabled || props.readonly),
 	// Icône calendrier = bouton focusable au clavier (comme en CalendarMode), pas une
 	// icône décorative. Elle ouvre le calendrier au clic/Enter/Espace et reçoit le ring DS.
 	'disable-click-button': false,

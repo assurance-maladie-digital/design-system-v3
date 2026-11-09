@@ -958,7 +958,7 @@
 							v-model="displayFormattedDate"
 							:class="[messageClasses, 'label-hidden-on-focus']"
 							v-bind="menuActivatorTextFieldProps"
-							:aria-describedby="props.disabled ? undefined : activatorHintId"
+							:aria-describedby="isInteractionDisabled ? undefined : activatorHintId"
 							@click="openDatePickerOnClick"
 							@focus="openDatePickerOnFocus"
 							@blur="handleInputBlur"

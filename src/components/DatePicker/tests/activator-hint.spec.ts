@@ -40,6 +40,16 @@ describe('annonce « Activation ouvre un calendrier »', () => {
 
 			wrapper.unmount()
 		})
+
+		it('n\'annonce pas l\'ouverture du calendrier quand le champ est en lecture seule', () => {
+			const wrapper = mount(DatePicker, {
+				props: { label: 'Date de naissance', readonly: true },
+			})
+
+			expect(describedbyText(wrapper)).not.toContain(locales.activationOpensCalendar)
+
+			wrapper.unmount()
+		})
 	})
 
 	describe('mode combiné (useCombinedMode)', () => {
@@ -51,6 +61,16 @@ describe('annonce « Activation ouvre un calendrier »', () => {
 			const description = describedbyText(wrapper)
 			expect(description).toContain(locales.formatHint)
 			expect(description).toContain(locales.activationOpensCalendar)
+
+			wrapper.unmount()
+		})
+
+		it('n\'ajoute pas l\'indice quand le champ est en lecture seule', () => {
+			const wrapper = mount(DatePicker, {
+				props: { label: 'Date de naissance', useCombinedMode: true, readonly: true },
+			})
+
+			expect(describedbyText(wrapper)).not.toContain(locales.activationOpensCalendar)
 
 			wrapper.unmount()
 		})
