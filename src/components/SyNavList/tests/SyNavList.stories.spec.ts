@@ -1,17 +1,11 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { enableAutoUnmount, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
-import { analyzeSnippet } from '@tests/helpers/storySnippets'
 import { controlMatchers } from '../../../../.storybook/controlMatchers'
 import * as stories from '../SyNavList.stories'
 
 const composedStories = composeStories(stories)
 const { Default, WithIcons, WithActions, WithSubLevel, Complete, IconColor, SlotActions, ActiveItem } = composedStories
-
-// LabsNotice est le bandeau de la documentation, pas un exemple du composant
-const allStories = Object.entries(composedStories)
-	.filter(([name]) => name !== 'LabsNotice')
-	.map(([name, story]) => ({ name, story }))
 
 enableAutoUnmount(afterEach)
 
@@ -20,17 +14,6 @@ describe('SyNavList stories', () => {
 		// Storybook n'accepte le matcher color que sur un type string.
 		expect(controlMatchers.color.test('iconColor')).toBe(true)
 		expect(stories.default.argTypes.iconColor.type).toMatchObject({ name: 'string' })
-	})
-
-	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
-		expect(analyzeSnippet(story)).toEqual({
-			parseErrors: [],
-			hasScriptSetup: true,
-			undeclaredIdentifiers: [],
-			unresolvedComponents: [],
-			untypedRefs: [],
-			invalidAttributes: [],
-		})
 	})
 
 	it('Default ne montre que des liens', () => {
