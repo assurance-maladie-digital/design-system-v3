@@ -78,6 +78,7 @@ import {
 - En plage de dates, préciser l’ordre attendu dans le hint et laisser la séparatrice visible.
 - Vérifier la cohérence des bornes <code>period</code> pour ne pas masquer les jours attendus.
 - Ne pas ajouter <code>role="combobox"</code> au mode calendrier seul : ce mode ne permet pas la saisie d’une valeur.
+- Éviter les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférer un champ actif accompagné d'un message expliquant la contrainte, ou n'afficher le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquer par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.
 </BestPracticesSection>
 
 <ResourcesSection>
