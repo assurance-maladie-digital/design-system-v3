@@ -37,7 +37,7 @@ function getSnippetCopyBtnAttributes(story: { parameters: Record<string, unknown
 	return collect(descriptor.template?.ast)
 }
 
-describe('CopyBtn stories : extraits de code', () => {
+describe('CopyBtn snippets', () => {
 	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
 		expect(analyzeSnippet(story)).toEqual({
 			parseErrors: [],

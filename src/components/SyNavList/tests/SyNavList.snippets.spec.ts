@@ -8,7 +8,7 @@ const allStories = Object.entries(composeStories(stories))
 	.filter(([name]) => name !== 'LabsNotice')
 	.map(([name, story]) => ({ name, story }))
 
-describe('SyNavList stories : extraits de code', () => {
+describe('SyNavList snippets', () => {
 	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
 		expect(analyzeSnippet(story)).toEqual({
 			parseErrors: [],

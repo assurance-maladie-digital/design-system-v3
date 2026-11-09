@@ -10,7 +10,7 @@ function snippetCode(story: StoryWithSourceCode): string {
 	return JSON.stringify(sourceCode)
 }
 
-describe('ErrorPage stories : extraits de code', () => {
+describe('ErrorPage snippets', () => {
 	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
 		expect(analyzeSnippet(story)).toEqual({
 			parseErrors: [],

@@ -7,7 +7,7 @@ const sourceCodeStories = Object.entries(composeStories(stories))
 	.map(([name, story]) => ({ name, story }))
 	.filter(({ story }) => Array.isArray(story.parameters.sourceCode))
 
-describe('SyInputSelect stories', () => {
+describe('SyInputSelect snippets', () => {
 	it.each(sourceCodeStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
 		expect(analyzeSnippet(story)).toEqual({
 			parseErrors: [],

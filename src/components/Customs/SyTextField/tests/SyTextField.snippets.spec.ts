@@ -9,7 +9,7 @@ const allStories = [
 	...Object.entries(composeStories(validationStories)),
 ].map(([name, story]) => ({ name, story }))
 
-describe('SyTextField stories : extraits de code', () => {
+describe('SyTextField snippets', () => {
 	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
 		expect(analyzeSnippet(story)).toEqual({
 			parseErrors: [],
