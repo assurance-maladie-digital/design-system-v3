@@ -271,7 +271,7 @@ export const Default: Story = {
         <Captcha
 			url-create="..."
 			url-get-image="..."
-			url-get-audio="/..."
+			url-get-audio="..."
 			:custom-rules="customRules"
 			show-success-messages
 		/>
@@ -322,8 +322,8 @@ const customRules = [
 }
 
 /**
- * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : ne pas utiliser `is-clearable` pour libérer de la place
- * dans le champ. Le composant n'expose pas `help-text` : si l'intitulé est personnalisé via `locales`
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : affichage du Captcha dans un conteneur de 320px.
+ * Le composant n'expose pas `help-text` : si l'intitulé est personnalisé via `locales`
  * (`image.textfieldLabel`), il doit rester court et explicite.
  */
 export const MobileAccessibilityGuideline: Story = {
@@ -335,7 +335,6 @@ export const MobileAccessibilityGuideline: Story = {
 	],
 	args: {
 		...Default.args,
-		isClearable: false,
 	},
 	parameters: {
 		sourceCode: [
@@ -346,8 +345,7 @@ export const MobileAccessibilityGuideline: Story = {
         <Captcha
 			url-create="..."
 			url-get-image="..."
-			url-get-audio="/..."
-			:is-clearable="false"
+			url-get-audio="..."
 		/>
     </VCard>
 </template>
@@ -404,10 +402,10 @@ export const Choice: Story = {
 				name: 'Template',
 				code: `<template>
     <VCard class="pa-8" max-width="600">
-        <Captcha 
+        <Captcha
 			url-create="..."
 			url-get-image="..."
-			url-get-audio="/..."
+			url-get-audio="..."
 			type="choice"
 		/>
     </VCard>

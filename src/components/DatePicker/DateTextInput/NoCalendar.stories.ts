@@ -360,8 +360,9 @@ export const Default: Story = {
 }
 
 /**
- * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, reprendre l'intitulé dans
- * `hint` (avec `persistent-hint`) pour qu'il reste lisible en entier. Le composant n'expose pas `clearable`.
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
+ * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire. Le bouton d'effacement est toujours
+ * affiché hors lecture seule (non désactivable pour l'instant).
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,
@@ -370,9 +371,9 @@ export const MobileAccessibilityGuideline: Story = {
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
 		createInfoNoticeDecorator(`
-			<code>hint</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
-			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
-			préférez un intitulé court avec un <code>hint</code> qui complète l'information.
+			<code>hint</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(précision), pas pour le copier.
 		`),
 	],
 	parameters: {
@@ -397,7 +398,7 @@ export const MobileAccessibilityGuideline: Story = {
 						format="DD/MM/YYYY"
 						placeholder="JJ/MM/AAAA"
 						label="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
-						hint="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						hint="Cette date figure sur votre prescription médicale"
 						persistent-hint
 						:no-calendar="true"
 					/>
@@ -410,8 +411,9 @@ export const MobileAccessibilityGuideline: Story = {
 		...Default.args,
 		required: false,
 		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
-		hint: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		hint: 'Cette date figure sur votre prescription médicale',
 		persistentHint: true,
+		// `hint` n'est pas une prop typée du DatePicker : il est transmis en attribut au champ.
 	} as typeof Default.args,
 }
 

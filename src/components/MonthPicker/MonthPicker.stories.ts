@@ -205,8 +205,9 @@ export const Default: Story = {
 }
 
 /**
- * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
- * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, ne pas utiliser `clearable`,
+ * conserver l'indication du format dans l'intitulé (« (MM/AAAA) ») puisque `help-text` est personnalisé, et
+ * utiliser `help-text` pour apporter une information complémentaire.
  */
 export const MobileAccessibilityGuideline: Story = {
 	decorators: [
@@ -214,14 +215,14 @@ export const MobileAccessibilityGuideline: Story = {
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
 		createInfoNoticeDecorator(`
-			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
-			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
-			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
 		`),
 	],
 	args: {
 		'modelValue': '',
-		'label': 'Mois de début de votre arrêt de travail figurant sur votre prescription',
+		'label': 'Mois de début de votre arrêt de travail (MM/AAAA)',
 		'helpText': 'Mois de début de votre arrêt de travail figurant sur votre prescription',
 		'clearable': false,
 		'onUpdate:modelValue': fn(),
@@ -235,7 +236,7 @@ export const MobileAccessibilityGuideline: Story = {
 				<template>
 					<MonthPicker
 						v-model="selectedMonth"
-						label="Mois de début de votre arrêt de travail figurant sur votre prescription"
+						label="Mois de début de votre arrêt de travail (MM/AAAA)"
 						help-text="Mois de début de votre arrêt de travail figurant sur votre prescription"
 					/>
 				</template>

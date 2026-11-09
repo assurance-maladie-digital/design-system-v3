@@ -1,10 +1,9 @@
 # Champs de formulaire — espacements réduits sous 600 px de large (changement visuel, non cassant)
 
-Sous 600 px de large (mobile, ou zoom texte à 200 % qui réduit la largeur effective), les champs de formulaire basés sur `v-field` affichent désormais des espacements compacts pour laisser toute la place au libellé (RGAA 10.4) :
+Sous 600 px de large (petits écrans ; la règle porte sur la largeur et ne détecte pas le zoom texte seul), les champs de formulaire basés sur `v-field` affichent désormais des espacements compacts pour laisser toute la place au libellé (RGAA 10.4) :
 
-- le libellé peut occuper toute la largeur du champ (`max-width: 100%`) ;
-- les icônes des zones prepend, append et du bouton d'effacement passent à `1.25rem` sans marge interne ;
-- le padding horizontal de la zone de saisie passe à `8 px`.
+- `--v-field-padding-start` et `--v-field-padding-end` passent à `8 px` : la zone de saisie, la marge de l'intitulé et sa largeur maximale suivent ces variables, donc le libellé et la valeur restent alignés ;
+- les icônes des zones prepend, append et du bouton d'effacement passent à `1.25rem` sans marge interne.
 
 Avant, les espacements desktop (icônes `1.5rem`, marges internes plus larges) s'appliquaient aussi sur mobile, ce qui rognait le libellé.
 

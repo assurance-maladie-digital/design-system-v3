@@ -617,7 +617,7 @@ export const WithoutKey: Story = {
 
 /**
  * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec des intitulés longs, ne pas utiliser `clearable`
- * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ * et utiliser `help-text` pour apporter une information complémentaire à l'intitulé.
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,
@@ -626,9 +626,9 @@ export const MobileAccessibilityGuideline: Story = {
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
 		createInfoNoticeDecorator(`
-			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
-			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
-			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
 		`),
 	],
 	parameters: {
@@ -641,7 +641,7 @@ export const MobileAccessibilityGuideline: Story = {
       v-model="value"
       number-label="Numéro de sécurité sociale figurant sur votre carte Vitale"
       key-label="Clé de validation"
-      help-text="Numéro de sécurité sociale figurant sur votre carte Vitale"
+      help-text="13 chiffres, puis la clé de 2 chiffres"
      />
     </template>
     `,
@@ -662,7 +662,7 @@ export const MobileAccessibilityGuideline: Story = {
 	args: {
 		...Default.args,
 		numberLabel: 'Numéro de sécurité sociale figurant sur votre carte Vitale',
-		helpText: 'Numéro de sécurité sociale figurant sur votre carte Vitale',
+		helpText: '13 chiffres, puis la clé de 2 chiffres',
 		clearable: false,
 	},
 }

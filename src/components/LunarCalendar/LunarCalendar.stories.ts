@@ -308,8 +308,8 @@ const dateValue = ref('12/13/1564')
 }
 
 /**
- * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `is-clearable`
- * et répéter l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, ne pas utiliser `is-clearable`
+ * et fournir un `help-text` qui complète l'intitulé.
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,
@@ -318,9 +318,9 @@ export const MobileAccessibilityGuideline: Story = {
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
 		createInfoNoticeDecorator(`
-			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
-			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
-			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
 		`),
 	],
 	parameters: {
@@ -331,7 +331,7 @@ export const MobileAccessibilityGuideline: Story = {
 	<LunarCalendar
 		v-model="dateValue"
 		label="Date de naissance figurant sur votre acte de naissance"
-		help-text="Date de naissance figurant sur votre acte de naissance"
+		help-text="Format attendu : JJ/MM/AAAA"
 	/>
 </template>`,
 			},
@@ -339,6 +339,7 @@ export const MobileAccessibilityGuideline: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('')
 </script>`,
@@ -348,7 +349,7 @@ const dateValue = ref('')
 	args: {
 		modelValue: '',
 		label: 'Date de naissance figurant sur votre acte de naissance',
-		helpText: 'Date de naissance figurant sur votre acte de naissance',
+		helpText: 'Format attendu : JJ/MM/AAAA',
 		isClearable: false,
 	},
 }

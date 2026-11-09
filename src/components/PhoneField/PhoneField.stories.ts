@@ -390,8 +390,8 @@ const phoneNumber = ref('')
 }
 
 /**
- * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `is-clearable`
- * et fournir un `help-text` reprenant l'intitulé pour qu'il reste lisible en entier.
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : ne pas utiliser `is-clearable` pour libérer de la place
+ * dans le champ, et fournir un `help-text` qui complète l'intitulé « Numéro de téléphone » (valeur par défaut).
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,
@@ -400,9 +400,9 @@ export const MobileAccessibilityGuideline: Story = {
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
 		createInfoNoticeDecorator(`
-			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
-			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
-			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
 		`),
 	],
 	parameters: {
@@ -438,7 +438,7 @@ export const MobileAccessibilityGuideline: Story = {
 		...Default.args,
 		helpText: 'Numéro de téléphone sur lequel vous souhaitez être contacté',
 		isClearable: false,
-	} as Record<string, unknown>,
+	},
 }
 
 export const HelpText: Story = {

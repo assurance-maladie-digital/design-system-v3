@@ -256,14 +256,14 @@ export const Default: Story = {
 
 /**
  * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
- * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ * et utiliser `help-text` pour apporter une information complémentaire à l'intitulé.
  */
 export const MobileAccessibilityGuideline: Story = {
 	decorators: [
 		createInfoNoticeDecorator(`
-			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
-			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
-			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
 		`),
 	],
 	parameters: {
@@ -276,7 +276,7 @@ export const MobileAccessibilityGuideline: Story = {
 						v-model="selectedValue"
 						:items="items"
 						label="Prénom du professionnel de santé figurant sur votre ordonnance"
-						help-text="Prénom du professionnel de santé figurant sur votre ordonnance"
+						help-text="Saisissez les premières lettres pour filtrer la liste"
 					/>
 				</template>
 				`,
@@ -302,7 +302,7 @@ export const MobileAccessibilityGuideline: Story = {
 	args: {
 		items: sampleItems,
 		label: 'Prénom du professionnel de santé figurant sur votre ordonnance',
-		helpText: 'Prénom du professionnel de santé figurant sur votre ordonnance',
+		helpText: 'Saisissez les premières lettres pour filtrer la liste',
 		clearable: false,
 	},
 	render: (args) => {
