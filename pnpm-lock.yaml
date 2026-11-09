@@ -134,6 +134,9 @@ importers:
       axios:
         specifier: ^1.14.0
         version: 1.21.0
+      chromatic:
+        specifier: ^18.14.2
+        version: 18.14.2
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
@@ -2297,6 +2300,22 @@ packages:
   chokidar@5.0.0:
     resolution: {integrity: sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw==}
     engines: {node: '>= 20.19.0'}
+
+  chromatic@18.14.2:
+    resolution: {integrity: sha512-snDe/CcyGnPWwIv69/SnUtzx602u74YNCwQq8sSZR4993YowUSjcQKRG0Fj0+GtxVwNVPfNaqdJq+3cMApZqxg==}
+    engines: {node: '>=22.0.0'}
+    hasBin: true
+    peerDependencies:
+      '@chromatic-com/cypress': ^0.*.* || ^1.0.0
+      '@chromatic-com/playwright': ^0.*.* || ^1.0.0
+      '@chromatic-com/vitest': ^0.*.* || ^1.0.0
+    peerDependenciesMeta:
+      '@chromatic-com/cypress':
+        optional: true
+      '@chromatic-com/playwright':
+        optional: true
+      '@chromatic-com/vitest':
+        optional: true
 
   chrome-remote-interface@0.33.3:
     resolution: {integrity: sha512-zNnn0prUL86Teru6UCAZ1yU1XeXljHl3gj7OrfPcarEfU62OUU4IujDPdTDW3dAWwRqN3ZMG/Chhkh2gPL/wiw==}
@@ -6781,6 +6800,10 @@ snapshots:
   chokidar@5.0.0:
     dependencies:
       readdirp: 5.1.1
+
+  chromatic@18.14.2:
+    dependencies:
+      semver: 7.8.6
 
   chrome-remote-interface@0.33.3:
     dependencies:

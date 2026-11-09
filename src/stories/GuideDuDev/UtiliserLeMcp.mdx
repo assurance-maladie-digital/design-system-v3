@@ -1,0 +1,137 @@
+import {Meta, Source} from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
+
+<Meta title="Guide Du Dev/Assistants IA/Utiliser Synapse avec le MCP" />
+
+<div className="header">
+    <h1>Utiliser Synapse avec un assistant IA</h1>
+</div>
+
+La documentation et les exemples des composants Synapse sont accessibles à
+votre assistant de code via un serveur **MCP** (*Model Context Protocol*).
+Connectez-le pour obtenir de l’aide afin de choisir et d’intégrer les
+composants adaptés à votre projet.
+
+Endpoint MCP Synapse : https://66ab962f47d1fd65c7852d10-phmncxkker.chromatic.com/mcp
+
+## 1. Connecter l’assistant au serveur MCP
+
+### VS Code avec GitHub Copilot
+
+Dans le projet, créez ou complétez `.vscode/mcp.json` avec cette configuration.
+
+Consultez la [documentation VS Code sur les serveurs MCP](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
+pour les autres méthodes de configuration.
+
+<Source dark language="json" code={`
+{
+  "servers": {
+    "synapse-storybook": {
+      "type": "http",
+      "url": "https://66ab962f47d1fd65c7852d10-phmncxkker.chromatic.com/mcp"
+    }
+  }
+}
+`}/>
+
+Enregistrez le fichier, démarrez le serveur MCP depuis VS Code si demandé, puis
+autorisez ses outils dans la conversation Copilot.
+
+### Claude Code
+
+Depuis la racine du projet, ajoutez le serveur à la configuration du projet :
+
+<Source dark language="bash" code={`
+claude mcp add --transport http --scope project synapse-storybook https://main--66ab962f47d1fd65c7852d10.chromatic.com/mcp
+`}/>
+
+Consultez la [documentation MCP de Claude Code](https://code.claude.com/docs/en/mcp)
+pour plus de détails sur les portées de configuration et la gestion du serveur.
+
+Pour un autre assistant compatible MCP, ajoutez ce même endpoint comme serveur
+HTTP distant en suivant la configuration propre à l’outil.
+
+### Utiliser le MCP en local
+
+Pour consulter la version du Storybook présente sur votre poste, lancez-le
+depuis le dépôt du Design System :
+
+<Source dark language="bash" code={`
+pnpm storybook
+`}/>
+
+Le Storybook démarre par défaut sur `http://localhost:6006` et son endpoint MCP
+est `http://localhost:6006/mcp`. Tant qu’il tourne, configurez l’assistant avec
+cette URL au lieu de l’endpoint Chromatic.
+
+Pour VS Code avec GitHub Copilot, ajoutez cette entrée à `servers` dans
+`.vscode/mcp.json` :
+
+<Source dark language="json" code={`
+"synapse-storybook-local": {
+  "type": "http",
+  "url": "http://localhost:6006/mcp"
+}
+`}/>
+
+Pour Claude Code, enregistrez le serveur local dans la configuration du projet :
+
+<Source dark language="bash" code={`
+claude mcp add --transport http --scope project synapse-storybook-local http://localhost:6006/mcp
+`}/>
+
+Cette connexion est utile pour explorer et tester les changements locaux du
+Design System. Si Storybook utilise un autre port, adaptez l’URL en conséquence.
+
+## 2. Intégrer Synapse aux consignes de l’assistant
+
+Pour que l’assistant consulte le MCP de façon régulière, ajoutez ces consignes
+à un agent ou à une skill de votre projet.
+
+### Dans les instructions d’un agent
+
+Ajoutez cette section à `AGENTS.md`, `CLAUDE.md` ou au fichier d’instructions
+utilisé par votre assistant :
+
+<Source dark language="md" code={`
+## Utilisation de Synapse
+
+- Pour toute interface utilisant @cnamts/synapse, consulte d'abord le serveur MCP synapse-storybook.
+- Réutilise les composants documentés quand ils répondent au besoin.
+- Base-toi sur les props, slots, événements et exemples documentés ; n'invente pas d'API.
+- Vérifie que l'API proposée existe dans la version de @cnamts/synapse installée dans ce projet.
+- Respecte les conventions du projet et ses exigences d'accessibilité.
+`}/>
+
+### Dans une skill dédiée
+
+Si vous préférez déclencher ces consignes uniquement pour les tâches d’interface,
+créez une skill (par exemple `skills/synapse-ui/SKILL.md`) et adaptez son
+descriptif aux conventions de votre assistant :
+
+<Source dark language="md" code={`
+---
+name: synapse-ui
+description: À utiliser pour créer ou modifier une interface qui s'appuie sur Synapse.
+---
+
+# Développer une interface avec Synapse
+
+- Consulte le serveur MCP synapse-storybook avant de choisir ou d'utiliser un composant Synapse.
+- Recherche les composants adaptés, puis vérifie leurs props, slots, événements et exemples.
+- Réutilise les composants documentés ; n'invente pas d'API.
+- Vérifie que l'API existe dans la version de Synapse installée dans le projet.
+- Respecte les conventions du projet et ses exigences d'accessibilité.
+`}/>
+
+## 3. Vérifier la proposition
+
+Le MCP fournit le contexte du Storybook déployé ; il n’installe pas Synapse dans
+votre projet et ne remplace pas ses dépendances. Vérifiez toujours que :
+
+1. `@cnamts/synapse` est installé et configuré dans le projet ;
+2. les composants et API suggérés existent dans la version réellement installée
+   (elle peut différer de celle présentée par le Storybook déployé) ;
+3. le code respecte le thème, les règles d’accessibilité et les conventions de
+   votre application ;
+4. les tests et le build du projet passent après les modifications.
