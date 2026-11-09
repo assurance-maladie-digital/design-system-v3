@@ -19,6 +19,43 @@
 	}
 }
 
+// RGAA 10.4 (reflow) : sur petits écrans (largeur <= 599px), on libère de la place
+// pour l'intitulé. La media query ne détecte pas le zoom texte seul.
+// Portée limitée aux champs du design system : `:is()` énumère les conteneurs
+// racine de chaque composant de champ — à compléter si un nouveau champ ajoute
+// son propre conteneur (les composants bâtis sur SyTextField en héritent déjà).
+@media (width <= 599px) {
+	:is(
+		.sy-textfield-container,
+		.sy-select-container,
+		.sy-textarea,
+		.sy-input-select,
+		.amelipro-text-field__wrapper,
+		.amelipro-select__wrapper,
+		.amelipro-textarea,
+		.amelipro-autocomplete,
+		.amelipro-postal-address,
+		.amelipro-upload,
+		.sy-table-toolbar
+	) .v-field {
+		// Vuetify en dérive le padding de la saisie, la marge et la largeur max de l'intitulé.
+		--v-field-padding-start: 8px;
+		--v-field-padding-end: 8px;
+
+		.v-field__prepend-inner,
+		.v-field__append-inner,
+		.v-field__clearable {
+			padding-inline: 0;
+
+			> .v-icon {
+				font-size: 1.25rem;
+				width: 1.25rem;
+				height: 1.25rem;
+			}
+		}
+	}
+}
+
 // AP theme: inset the loader bar to match the larger field border-radius (12px)
 .theme-ap,
 .theme-ap2026 {

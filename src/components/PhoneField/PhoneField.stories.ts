@@ -3,6 +3,7 @@ import PhoneField from './PhoneField.vue'
 import { ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import { fn } from 'storybook/test'
 
 const meta = {
@@ -385,6 +386,58 @@ const phoneNumber = ref('')
 				</div>
 			`,
 		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : ne pas utiliser `is-clearable` pour libérer de la place
+ * dans le champ, et fournir un `help-text` qui complète l'intitulé « Numéro de téléphone » (valeur par défaut).
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
+		`),
+	],
+	parameters: {
+		a11y: {
+			disable: false,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						help-text="Numéro de téléphone sur lequel vous souhaitez être contacté"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField } from '@cnamts/synapse'
+					
+					const modelValue = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		helpText: 'Numéro de téléphone sur lequel vous souhaitez être contacté',
+		isClearable: false,
 	},
 }
 

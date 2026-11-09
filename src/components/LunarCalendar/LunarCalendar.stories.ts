@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { onMounted, ref, watch } from 'vue'
 import LunarCalendar from './LunarCalendar.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 const meta = {
 	title: 'Composants/Formulaires/LunarCalendar',
@@ -303,6 +304,53 @@ const dateValue = ref('12/13/1564')
 				</div>
 			`,
 		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, ne pas utiliser `is-clearable`
+ * et fournir un `help-text` qui complète l'intitulé.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LunarCalendar
+		v-model="dateValue"
+		label="Date de naissance figurant sur votre acte de naissance"
+		help-text="Format attendu : JJ/MM/AAAA"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
+
+const dateValue = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		label: 'Date de naissance figurant sur votre acte de naissance',
+		helpText: 'Format attendu : JJ/MM/AAAA',
+		isClearable: false,
 	},
 }
 

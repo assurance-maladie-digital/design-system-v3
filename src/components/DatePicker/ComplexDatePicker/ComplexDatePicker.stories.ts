@@ -4,6 +4,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
 import { fn } from 'storybook/test'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import type { CalendarModeProps } from '../types'
 
 const meta = {
@@ -440,6 +441,62 @@ export const Default: Story = {
               </div>
             `,
 		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
+ * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire. Le bouton d'effacement est toujours
+ * affiché hors lecture seule (non désactivable pour l'instant).
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>hint</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(précision), pas pour le copier.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						label="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						hint="Cette date figure sur votre prescription médicale"
+						persistent-hint
+						placeholder="JJ/MM/AAAA"
+						useCombinedMode
+						format="DD/MM/YYYY"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+					
+					const date = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		hint: 'Cette date figure sur votre prescription médicale',
+		persistentHint: true,
 	},
 }
 

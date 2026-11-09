@@ -240,6 +240,51 @@ export const Default: Story = {
 	}),
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : les intitulés (`placeholder-from` / `placeholder-to`)
+ * restent courts et explicites, car le composant n'expose ni `clearable` ni `help-text`.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PeriodField
+						v-model="selectedPeriod"
+						placeholder-from="Début de période"
+						placeholder-to="Fin de période"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PeriodField } from '@cnamts/synapse'
+					
+					const selectedPeriod = ref({ from: null, to: null })
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		placeholderFrom: 'Début de période',
+		placeholderTo: 'Fin de période',
+	},
+}
+
 export const CustomPlaceholders: Story = {
 	parameters: {
 		sourceCode: [

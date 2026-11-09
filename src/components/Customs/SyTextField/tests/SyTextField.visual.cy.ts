@@ -136,6 +136,50 @@ describe('SyTextField - Focus visual regression tests', () => {
 	})
 })
 
+// RGAA 10.4 : à moins de 600 px de large, _forms.scss réduit les icônes et les
+// marges internes du champ et laisse tout l'espace au label. Le viewport global
+// (1280 px) n'atteint jamais cette media query, d'où un cas mobile dédié.
+describe('SyTextField - Mobile visual regression tests', () => {
+	it('displays the field with compact icon and input spacing on a narrow screen', () => {
+		cy.viewport(375, 667)
+		cy.mountWithVuetify(SyTextField, {
+			props: {
+				label: 'Recherche',
+				modelValue: 'Jean',
+				prependInnerIcon: 'info',
+				isClearable: true,
+			},
+		})
+
+		cy.get('.v-text-field').should('be.visible')
+		cy.matchImageSnapshot('sy-text-field-mobile', cy.get('.v-text-field'))
+	})
+
+	it('keeps a long label inside the field, before the end icons, at 320px', () => {
+		cy.viewport(320, 568)
+		cy.mountWithVuetify(SyTextField, {
+			props: {
+				label: 'Date de début de votre arrêt de travail figurant sur votre prescription médicale',
+				prependInnerIcon: 'info',
+				isClearable: true,
+			},
+		})
+
+		cy.get('.v-field').should('be.visible')
+		cy.get('.v-field').then(($field) => {
+			const fieldRect = $field[0]!.getBoundingClientRect()
+			const labelRect = $field.find('.v-field__field .v-label.v-field-label')[0]!.getBoundingClientRect()
+			const appendInner = $field.find('.v-field__append-inner')[0]
+
+			expect(labelRect.right, 'label right edge <= field right edge').to.be.at.most(fieldRect.right)
+			if (appendInner) {
+				expect(labelRect.right, 'label right edge <= end icons left edge').to.be.at.most(appendInner.getBoundingClientRect().left + 1)
+			}
+		})
+		cy.matchImageSnapshot('sy-text-field-mobile-long-label', cy.get('.v-text-field'))
+	})
+})
+
 // RGAA 3.2 : texte de moins de 24 px et non gras, contraste minimal de 4,5:1.
 // Mesuré sur le fond blanc et sur le fond par défaut des stories (#e7ecf5).
 describe('SyTextField - Text contrast', () => {
