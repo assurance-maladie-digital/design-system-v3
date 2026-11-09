@@ -179,4 +179,39 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 
 		wrapper.unmount()
 	})
+
+	it('has no obvious axe violations when the calendar opens on the year view (birth date mode)', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date de naissance',
+				format: 'DD/MM/YYYY',
+				modelValue: null,
+				isBirthDate: true,
+			},
+			attachTo: document.body,
+		})
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		// Apply ARIA semantics before running axe so we test the patched markup
+		await wrapper.vm.updateAccessibility()
+		await nextTick()
+
+		const yearsContainer = document.body.querySelector<HTMLElement>('.v-date-picker-years')
+		expect(yearsContainer).not.toBeNull()
+
+		// Le conteneur scrollable de la liste des années doit être nommé ;
+		// role="rowgroup" car il est enfant direct du role="grid" posé sur .v-date-picker-years
+		const yearsContent = yearsContainer?.querySelector<HTMLElement>('.v-date-picker-years__content')
+		expect(yearsContent).not.toBeNull()
+		expect(yearsContent?.getAttribute('role')).toBe('rowgroup')
+		expect(yearsContent?.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'DatePicker – opened year view (birth date)', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	}, 60000)
 })

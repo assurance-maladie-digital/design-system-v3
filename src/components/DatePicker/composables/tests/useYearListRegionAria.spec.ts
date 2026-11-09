@@ -44,13 +44,13 @@ const mountComposable = (options: {
 }
 
 describe('useYearListRegionAria', () => {
-	it('applique role=region et aria-label sur .v-date-picker-years__content', () => {
+	it('applique role=rowgroup et aria-label sur .v-date-picker-years__content', () => {
 		const { rootEl, yearsContent } = buildYearsDom()
 
 		const { api } = mountComposable({ getRootEl: () => rootEl })
 		api.applyYearListRegionAria()
 
-		expect(yearsContent.getAttribute('role')).toBe('region')
+		expect(yearsContent.getAttribute('role')).toBe('rowgroup')
 		expect(yearsContent.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
 		rootEl.remove()
 	})
@@ -71,7 +71,7 @@ describe('useYearListRegionAria', () => {
 		api.applyYearListRegionAria()
 		api.applyYearListRegionAria()
 
-		expect(yearsContent.getAttribute('role')).toBe('region')
+		expect(yearsContent.getAttribute('role')).toBe('rowgroup')
 		expect(yearsContent.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
 		rootEl.remove()
 	})
@@ -89,7 +89,7 @@ describe('useYearListRegionAria', () => {
 
 		api.applyYearListRegionAria()
 
-		expect(recreated.getAttribute('role')).toBe('region')
+		expect(recreated.getAttribute('role')).toBe('rowgroup')
 		expect(recreated.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
 		rootEl.remove()
 	})
@@ -107,7 +107,7 @@ describe('useYearListRegionAria', () => {
 		await nextTick()
 		await nextTick()
 
-		expect(yearsContent.getAttribute('role')).toBe('region')
+		expect(yearsContent.getAttribute('role')).toBe('rowgroup')
 		expect(yearsContent.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
 		rootEl.remove()
 	})

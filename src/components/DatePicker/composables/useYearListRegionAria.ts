@@ -24,8 +24,13 @@ export interface UseYearListRegionAriaOptions {
  * Vuetify rend `.v-date-picker-years__content` focusable (`tabindex="0"`) pour
  * permettre le scroll au clavier, mais sans nom ni rôle : un élément qui reçoit
  * le focus sans intitulé est annoncé « blanc » par les lecteurs d'écran.
- * Ce composable pose `role="region"` + `aria-label` sur cet élément quand la
+ * Ce composable pose `role="rowgroup"` + `aria-label` sur cet élément quand la
  * vue années est affichée.
+ *
+ * `rowgroup` (et non `region`) car `__content` est l'enfant direct de
+ * `.v-date-picker-years[role="grid"]` (cf. `applyOptionGridStructure` dans
+ * `useDatePickerAccessibility`) : un grid n'admet que `row`/`rowgroup` comme
+ * enfants possédés — tout autre rôle casse `aria-required-children`/`aria-required-parent`.
  *
  * ## Réapplication
  *
@@ -42,8 +47,8 @@ export const useYearListRegionAria = (options: UseYearListRegionAriaOptions) => 
 		const content = rootEl?.querySelector<HTMLElement>('.v-date-picker-years__content')
 		if (!content) return
 
-		if (content.getAttribute('role') !== 'region') {
-			content.setAttribute('role', 'region')
+		if (content.getAttribute('role') !== 'rowgroup') {
+			content.setAttribute('role', 'rowgroup')
 		}
 		content.setAttribute('aria-label', locales.yearListRegionLabel)
 	}
