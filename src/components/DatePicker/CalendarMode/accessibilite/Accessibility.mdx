@@ -70,6 +70,8 @@ import {
 
 <BestPracticesSection>
 - Fournir un <code>label</code> explicite; utiliser <code>placeholder</code> uniquement comme aide complémentaire, jamais comme seul libellé.
+- Ne pas dupliquer le format attendu entre <code>label</code> et <code>placeholder</code> : indiquer le format une seule fois, idéalement dans le <code>label</code> (ex. « Date (JJ/MM/AAAA) »), sinon les technologies d’assistance l’annoncent en double.
+- Le champ activateur avertit nativement l’utilisateur de l’affichage du calendrier (« Activation ouvre un calendrier » via <code>aria-describedby</code>, annonce désactivée quand le champ est <code>disabled</code>) : inutile de répéter cette information dans le <code>label</code> ou le <code>hint</code>.
 - Conserver <code>format</code> et le texte d’aide cohérents avec la valeur attendue; utiliser <code>hint</code> pour expliquer le format métier.
 - Laisser <code>isValidateOnBlur</code> à <code>true</code> si les erreurs ne doivent apparaître qu’après la sortie du champ; réserver <code>validateOnSubmit()</code> à la soumission.
 - En lecture seule, le champ n’est pas éditable et le calendrier ne doit pas être proposé; pour un champ sélectionnable mais non saisissable, utiliser le mode calendrier normal, pas <code>readonly</code>.

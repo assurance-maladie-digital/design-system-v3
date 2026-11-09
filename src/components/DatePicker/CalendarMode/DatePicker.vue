@@ -53,6 +53,7 @@
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTarget, useDatePickerFocusTrap, useDatePickerIds, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
+	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
 	import { locales } from '../locales'
 	import type { CalendarModeDatePickerPublicApi, CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
@@ -168,7 +169,7 @@
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
-	const { contentId: datePickerContentId, dialogId: datePickerDialogId, titleId: datePickerTitleId, headingId: datePickerHeadingId, inputId: datePickerInputId } = useDatePickerIds()
+	const { contentId: datePickerContentId, dialogId: datePickerDialogId, titleId: datePickerTitleId, headingId: datePickerHeadingId, inputId: datePickerInputId, activatorHintId } = useDatePickerIds()
 
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 
@@ -957,6 +958,7 @@
 							v-model="displayFormattedDate"
 							:class="[messageClasses, 'label-hidden-on-focus']"
 							v-bind="menuActivatorTextFieldProps"
+							:aria-describedby="isInteractionDisabled ? undefined : activatorHintId"
 							@click="openDatePickerOnClick"
 							@focus="openDatePickerOnFocus"
 							@blur="handleInputBlur"
@@ -964,6 +966,12 @@
 							@update:model-value="updateSelectedDates"
 							@prepend-icon-click="openDatePickerOnIconClick"
 							@append-icon-click="openDatePickerOnIconClick"
+						/>
+						<!-- Avertit l'utilisateur (via aria-describedby) que l'activation du champ affiche un calendrier -->
+						<DatePickerLiveRegion
+							:id="activatorHintId"
+							:text="locales.activationOpensCalendar"
+							live="off"
 						/>
 					</div>
 				</template>

@@ -189,7 +189,6 @@ export const Default: Story = {
 					<DatePicker
 						v-model="dateRange"
 						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
 						display-range
 						no-calendar
@@ -201,7 +200,6 @@ export const Default: Story = {
 	},
 	args: {
 		'format': 'DD/MM/YYYY',
-		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
 		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
 		'displayRange': true,
 		'displayIcon': true,
@@ -246,7 +244,6 @@ export const WithInitialValue: Story = {
 					<DatePicker
 						v-model="dateRange"
 						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
 						display-range
 						no-calendar
@@ -259,7 +256,6 @@ export const WithInitialValue: Story = {
 	args: {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
-		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
 		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
 		'displayRange': true,
 		'displayIcon': true,
@@ -356,7 +352,6 @@ export const WithValidation: Story = {
 					<DatePicker
 						v-model="dateRange"
 						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
 						display-range
 						no-calendar
@@ -380,7 +375,6 @@ export const WithValidation: Story = {
 	args: {
 		noCalendar: true,
 		format: 'DD/MM/YYYY',
-		placeholder: 'JJ/MM/AAAA - JJ/MM/AAAA',
 		label: 'Période (JJ/MM/AAAA - JJ/MM/AAAA, max 30 jours)',
 		displayRange: true,
 		displayIcon: true,

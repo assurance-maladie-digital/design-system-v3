@@ -117,6 +117,8 @@ export interface DatePickerCommonProps {
  * Props spécifiques à DateTextInput
  */
 export interface DateTextInputProps extends Omit<DatePickerCommonProps, 'displayAsterisk' | 'displayHolidayDays' | 'displayTodayButton' | 'displayWeekendDays' | 'headingLevel' | 'hideDetails' | 'noCalendar' | 'period' | 'showWeekNumber' | 'textFieldActivator' | 'width'> {
+	/** Annonce aux technologies d'assistance que l'activation du champ ouvre un calendrier. */
+	calendarActivator?: boolean
 	disableClickButton?: boolean
 	externalErrorMessages?: string[]
 	/** Contrôle la validation déclenchée par une synchronisation externe du modèle. */

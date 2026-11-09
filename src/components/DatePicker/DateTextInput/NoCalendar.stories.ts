@@ -1,4 +1,4 @@
-﻿import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
@@ -298,7 +298,6 @@ export const Default: Story = {
 							v-model="date"
 							format="DD/MM/YYYY"
 							date-format-return=""
-							placeholder="JJ/MM/AAAA"
 							label="Date (JJ/MM/AAAA)"
 							required
 							is-outlined
@@ -319,7 +318,6 @@ export const Default: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date (JJ/MM/AAAA)',
 		'required': true,
 		'disabled': false,
@@ -381,7 +379,6 @@ export const Required: Story = {
 						<DatePicker
 							v-model="date"
 							format="DD/MM/YYYY"
-							placeholder="JJ/MM/AAAA"
 							label="Date (JJ/MM/AAAA)"
 							required
 							is-outlined
@@ -391,7 +388,6 @@ export const Required: Story = {
 						<DatePicker
 							v-model="date"
 							format="DD/MM/YYYY"
-							placeholder="JJ/MM/AAAA"
 							label="Date (JJ/MM/AAAA)"
 							required
 							is-outlined
@@ -408,7 +404,6 @@ export const Required: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date (JJ/MM/AAAA)',
 		'required': true,
 		'disabled': false,
@@ -461,7 +456,6 @@ export const WithAppendIcon: Story = {
           <DatePicker
             v-model="date"
             format="DD/MM/YYYY"
-            placeholder="JJ/MM/AAAA"
             label="Date avec icône en suffixe (JJ/MM/AAAA)"
             no-calendar
             display-append-icon
@@ -474,7 +468,6 @@ export const WithAppendIcon: Story = {
 	args: {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date avec icône en suffixe (JJ/MM/AAAA)',
 		'displayAppendIcon': true,
 		'onUpdate:modelValue': fn(),

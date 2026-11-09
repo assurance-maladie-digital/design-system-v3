@@ -383,7 +383,6 @@ export const Default: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						format="DD/MM/YYYY"
 					/>
@@ -405,7 +404,6 @@ export const Default: Story = {
 	},
 	args: {
 		'label': 'Date (JJ/MM/AAAA)',
-		'placeholder': 'JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -460,7 +458,6 @@ export const Required: Story = {
 					<DatePicker
 						v-model="date1"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						format="DD/MM/YYYY"
@@ -468,7 +465,6 @@ export const Required: Story = {
 					<DatePicker
 						v-model="date2"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						displayAsterisk
@@ -551,7 +547,6 @@ export const DateRange: Story = {
 					<DatePicker
 						v-model="dateRange"
 						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						display-range
 						use-combined-mode
@@ -574,7 +569,6 @@ export const DateRange: Story = {
 	},
 	args: {
 		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
-		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -627,7 +621,6 @@ export const BirthDate: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date de naissance (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						isBirthDate
 						useCombinedMode
@@ -650,7 +643,6 @@ export const BirthDate: Story = {
 	},
 	args: {
 		label: 'Date de naissance (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		isBirthDate: true,
 		showWeekNumber: false,
@@ -697,7 +689,6 @@ export const DisablePickerInteraction: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						noCalendar
@@ -720,7 +711,6 @@ export const DisablePickerInteraction: Story = {
 	},
 	args: {
 		label: 'Date (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		displayIcon: true,
 		useCombinedMode: true,
@@ -761,7 +751,6 @@ export const ReadonlyMode: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date en lecture seule (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						readonly
@@ -789,7 +778,6 @@ export const ReadonlyMode: Story = {
 	},
 	args: {
 		label: 'Date en lecture seule (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		readonly: true,
@@ -834,7 +822,6 @@ export const AppendIcon: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date avec icône à la fin (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:displayPrependIcon="false"
@@ -858,7 +845,6 @@ export const AppendIcon: Story = {
 	},
 	args: {
 		label: 'Date avec icône à la fin (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		displayPrependIcon: false,
@@ -899,7 +885,6 @@ export const WithCustomPeriod: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:period="{
@@ -949,7 +934,6 @@ export const WithCustomPeriod: Story = {
 	},
 	args: {
 		label: 'Date (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		period: {
