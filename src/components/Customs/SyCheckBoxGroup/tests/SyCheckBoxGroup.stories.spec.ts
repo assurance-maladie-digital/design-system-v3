@@ -1,11 +1,111 @@
-import { afterEach, describe, expect, it } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
-import * as stories from '../Validation/Validation.stories'
+import { defineComponent, h, onMounted } from 'vue'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { Required, Multiple, MultipleRequired, Readonly, EventShowcase } from '../SyCheckBoxGroup.stories'
+import * as validationStories from '../Validation/Validation.stories'
+import { CustomRules, MultipleSelectionValidation, WithError, WithSuccess } from '../Validation/Validation.stories'
 
-const { WithError, MultipleSelectionValidation } = composeStories(stories)
+const composedValidation = composeStories(validationStories)
 
 enableAutoUnmount(afterEach)
+
+const CheckBoxGroupStub = defineComponent({
+	props: {
+		label: { type: String, default: '' },
+		multiple: { type: Boolean, default: false },
+		showSuccessMessages: { type: Boolean, default: false },
+	},
+	emits: ['update:modelValue'],
+	setup(_, { emit }) {
+		onMounted(() => emit('update:modelValue', 'B'))
+		return () => h('div')
+	},
+})
+
+describe('SyCheckBoxGroup stories', () => {
+	it('keeps required and multiple scenario props bound to story args', () => {
+		expect(Required.args?.required).toBe(true)
+		expect(Required.render?.(Required.args ?? {})).toMatchObject({
+			template: expect.stringContaining('v-bind="args"'),
+		})
+
+		expect(Multiple.args?.multiple).toBe(true)
+		expect(Multiple.render?.(Multiple.args ?? {})).toMatchObject({
+			template: expect.stringContaining('v-bind="args"'),
+		})
+
+		expect(MultipleRequired.args?.multiple).toBe(true)
+		expect(MultipleRequired.args?.required).toBe(true)
+		expect(MultipleRequired.argTypes?.multiple).toMatchObject({ control: false })
+		expect(MultipleRequired.render?.(MultipleRequired.args ?? {})).toMatchObject({
+			template: expect.stringContaining('v-bind="args"'),
+		})
+	})
+
+	it('binds the readonly label and EventShowcase controls to their components', () => {
+		expect(Readonly.args?.label).toBe('CheckBoxGroup en lecture seule')
+		expect(Readonly.render?.(Readonly.args ?? {})).toMatchObject({
+			template: expect.stringContaining('v-bind="args"'),
+		})
+
+		expect(EventShowcase.args?.multiple).toBe(true)
+		expect(EventShowcase.render?.(EventShowcase.args ?? {})).toMatchObject({
+			template: expect.stringContaining('v-bind="args"'),
+		})
+	})
+
+	it.each([true, false])('passes multiple=%s from EventShowcase Controls', (multiple) => {
+		const renderedStory = EventShowcase.render?.({ ...EventShowcase.args, multiple })
+		if (!renderedStory) {
+			throw new Error('EventShowcase story must provide a render result')
+		}
+
+		const wrapper = mount({
+			...renderedStory,
+			components: { SyCheckBoxGroup: CheckBoxGroupStub },
+		})
+
+		expect(wrapper.findComponent(CheckBoxGroupStub).props('multiple')).toBe(multiple)
+	})
+
+	it('keeps validation controls effective and locks required multiple mode', () => {
+		expect(WithSuccess.args?.showSuccessMessages).toBe(true)
+		expect(WithSuccess.render?.(WithSuccess.args ?? {})).toMatchObject({
+			template: expect.stringContaining('v-bind="args"'),
+		})
+
+		expect(WithError.args?.multiple).toBe(true)
+		expect(WithError.argTypes?.multiple).toMatchObject({ control: false })
+		expect(MultipleSelectionValidation.args?.multiple).toBe(true)
+		expect(MultipleSelectionValidation.argTypes?.multiple).toMatchObject({ control: false })
+	})
+
+	it('applies CustomRules args and forwards model updates to Actions', () => {
+		const onUpdate = vi.fn()
+		const renderedStory = CustomRules.render?.({
+			...CustomRules.args,
+			'label': 'Contrôle lié',
+			'multiple': true,
+			'showSuccessMessages': false,
+			'onUpdate:modelValue': onUpdate,
+		})
+		if (!renderedStory) {
+			throw new Error('CustomRules story must provide a render result')
+		}
+
+		const wrapper = mount({
+			...renderedStory,
+			components: { SyCheckBoxGroup: CheckBoxGroupStub },
+		})
+
+		const checkBoxGroup = wrapper.findComponent(CheckBoxGroupStub)
+		expect(checkBoxGroup.props('label')).toBe('Contrôle lié')
+		expect(checkBoxGroup.props('multiple')).toBe(true)
+		expect(checkBoxGroup.props('showSuccessMessages')).toBe(false)
+		expect(onUpdate).toHaveBeenCalledWith('B')
+	})
+})
 
 async function checkedAfterClickingBAndC(wrapper: ReturnType<typeof mount>): Promise<boolean[]> {
 	const inputs = wrapper.findAll('input[type="checkbox"]')
@@ -17,9 +117,9 @@ async function checkedAfterClickingBAndC(wrapper: ReturnType<typeof mount>): Pro
 
 describe('SyCheckBoxGroup validation stories', () => {
 	it.each([
-		['WithError', WithError],
-		['MultipleSelectionValidation', MultipleSelectionValidation],
-	])('%s laisse le control multiple effectif', async (_name, Story) => {
+		['WithError', composedValidation.WithError],
+		['MultipleSelectionValidation', composedValidation.MultipleSelectionValidation],
+	])('%s applique multiple transmis par args (et non codé en dur dans le template)', async (_name, Story) => {
 		const multiple = mount(Story(), { attachTo: document.body })
 		const multipleChecked = await checkedAfterClickingBAndC(multiple)
 		expect(multipleChecked.slice(1, 3)).toEqual([true, true])

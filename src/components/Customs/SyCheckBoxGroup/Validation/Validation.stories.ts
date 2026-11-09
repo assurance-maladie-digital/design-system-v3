@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { onMounted, ref } from 'vue'
+import { fn } from 'storybook/test'
 import SyCheckBoxGroup from '../SyCheckBoxGroup.vue'
 import SyForm from '../../SyForm/SyForm.vue'
 import { VBtn, VForm } from 'vuetify/components'
@@ -47,12 +48,19 @@ export const WithError: Story = {
 		label: 'Sélectionnez au moins 2 options',
 		multiple: true,
 	},
+	argTypes: {
+		multiple: {
+			control: false,
+			description: 'Verrouillé à true : la règle personnalisée valide un tableau de sélections.',
+		},
+	},
 	parameters: {
 		docs: {
 			description: {
 				story: `
 ### Validation avec customRules
 Utilise les **customRules** pour définir des règles de validation personnalisées.
+Le mode multiple est imposé car la règle valide le nombre d'éléments du tableau sélectionné.
 
 **Caractéristiques :**
 - Règles de type ValidationRule (Synapse)
@@ -285,6 +293,9 @@ onMounted(() => {
  * Affiche un message de succès quand une option valide est sélectionnée
  */
 export const WithSuccess: Story = {
+	args: {
+		showSuccessMessages: true,
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -382,7 +393,6 @@ onMounted(() => {
 					ref="checkboxGroupRef"
 					v-model="selected"
 					v-bind="args"
-					show-success-messages
 					:custom-success-rules="customSuccessRules"
 				/>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
@@ -650,6 +660,9 @@ async function onSubmit() {
  * Les règles sont de simples fonctions `(value) => true | 'message'`, comme la prop `rules` de Vuetify.
  */
 export const SyFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -719,7 +732,6 @@ function onSubmit(e: { isValid: boolean }) {
 				<SyCheckBoxGroup
 					v-bind="args"
 					v-model="selected"
-					:use-vuetify-validation="true"
 					:rules="vuetifyRules"
 				/>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
@@ -732,6 +744,9 @@ function onSubmit(e: { isValid: boolean }) {
  * Mode de validation natif Vuetify (`useVuetifyValidation`) dans un `VForm` Vuetify.
  */
 export const VFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -803,7 +818,6 @@ async function onSubmit(e: Promise<{ valid: boolean }>) {
 				<SyCheckBoxGroup
 					v-bind="args"
 					v-model="selected"
-					:use-vuetify-validation="true"
 					:rules="vuetifyRules"
 				/>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
@@ -819,7 +833,19 @@ async function onSubmit(e: Promise<{ valid: boolean }>) {
 export const MultipleSelectionValidation: Story = {
 	args: {
 		label: 'Sélectionnez au moins 2 options',
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+			{ label: 'Option C', value: 'c' },
+			{ label: 'Option D', value: 'd' },
+		],
 		multiple: true,
+	},
+	argTypes: {
+		multiple: {
+			control: false,
+			description: 'Verrouillé à true : le scénario et la règle personnalisée nécessitent une sélection multiple.',
+		},
 	},
 	parameters: {
 		docs: {
@@ -832,6 +858,7 @@ Valide que l'utilisateur a sélectionné au moins 2 options.
 **Caractéristiques :**
 - Mode multiple activé
 - Règle personnalisée sur la taille du tableau
+- Le mode multiple est verrouillé car la règle attend un tableau de valeurs
 			`,
 			},
 		},
@@ -930,6 +957,17 @@ const onSubmit = (event: { isValid: boolean }) => {
  * Démonstration de l'utilisation simultanée des règles warning et success
  */
 export const CustomRules: Story = {
+	args: {
+		'label': 'Options',
+		'options': [
+			{ label: 'Option A', value: 'A' },
+			{ label: 'Option B', value: 'B' },
+		],
+		'multiple': false,
+		'showSuccessMessages': true,
+		'isValidateOnBlur': false,
+		'onUpdate:modelValue': fn(),
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -957,6 +995,7 @@ Ce story démontre l'utilisation simultanée des **customWarningRules** et **cus
 		:custom-success-rules="successRules"
 		show-success-messages
 		:is-validate-on-blur="false"
+		@update:model-value="onUpdate"
 	/>
 </template>`,
 			},
@@ -968,6 +1007,9 @@ import { SyCheckBoxGroup } from '@cnamts/synapse'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('A')
+const onUpdate = (value: string | null) => {
+	selected.value = value
+}
 
 const options = [
 	{ label: 'Option A', value: 'A' },
@@ -1022,6 +1064,7 @@ const successRules: ValidationRule[] = [
 							}
 							return true
 						},
+						fieldIdentifier: 'option',
 					},
 				},
 			]
@@ -1031,6 +1074,7 @@ const successRules: ValidationRule[] = [
 					options: {
 						validate: (value: string | null) => value === 'A',
 						successMessage: 'Option A sélectionnée',
+						fieldIdentifier: 'option',
 					},
 				},
 			]
@@ -1039,12 +1083,9 @@ const successRules: ValidationRule[] = [
 		template: `
 			<SyCheckBoxGroup
 				v-model="selected"
-				label="Options"
-				:options="options"
+				v-bind="args"
 				:custom-warning-rules="warningRules"
 				:custom-success-rules="successRules"
-				show-success-messages
-				:is-validate-on-blur="false"
 			/>
 		`,
 	}),
