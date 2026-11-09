@@ -69,7 +69,7 @@ const items = [
   { text: 'Option 3', value: '3' },
 ]
 
-const autocompleteRef = ref(null)
+const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 onMounted(() => {
   autocompleteRef.value?.validateOnSubmit()
@@ -160,7 +160,7 @@ const items = [
   { text: 'Option 3', value: '3' },
 ]
 
-const autocompleteRef = ref(null)
+const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 onMounted(() => {
   autocompleteRef.value?.validateOnSubmit()
@@ -252,7 +252,7 @@ const items = [
   { text: 'Option 3', value: '3' },
 ]
 
-const autocompleteRef = ref(null)
+const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 onMounted(() => {
   autocompleteRef.value?.validateOnSubmit()
@@ -538,8 +538,8 @@ const items = [
 	{ text: 'Option 3', value: '3' },
 ]
 
-const value1 = ref(null)
-const value2 = ref(null)
+const value1 = ref<string | null>(null)
+const value2 = ref<string | null>(null)
 </script>`,
 			},
 		],
@@ -551,8 +551,8 @@ const value2 = ref(null)
 		return {
 			components: { SyAutocomplete },
 			setup() {
-				const value1 = ref(null)
-				const value2 = ref(null)
+				const value1 = ref<string | null>(null)
+				const value2 = ref<string | null>(null)
 				return { args, value1, value2 }
 			},
 			template: `
@@ -701,7 +701,7 @@ import { SyAutocomplete } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('')
-const autocompleteRef = ref(null)
+const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
@@ -797,7 +797,7 @@ import { ref } from 'vue'
 import { SyAutocomplete, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref(null)
+const value = ref<string | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
@@ -825,7 +825,7 @@ function onSubmit(event: { isValid: boolean }) {
 	render: args => ({
 		components: { SyAutocomplete, SyForm, VBtn },
 		setup() {
-			const value = ref(null)
+			const value = ref<string | null>(null)
 
 			function onSubmit(event: { isValid: boolean }) {
 				if (event.isValid) {
