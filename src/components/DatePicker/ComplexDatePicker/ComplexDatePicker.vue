@@ -112,7 +112,7 @@
 		resolveDatePickerStateFromModelValue,
 	} from '../utils/dateFormattingUtils'
 	import { resolveTitle } from '../utils/titleUtils'
-	import { isModelValueEqual } from '../utils/validationUtils'
+	import { adaptCustomRulesWithStringFallback, isModelValueEqual } from '../utils/validationUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
@@ -722,11 +722,16 @@
 			return true
 		}
 
+		// Les sélections calendrier passent un objet Date aux règles, alors que la
+		// saisie texte passe une chaîne : envelopper avec le repli chaîne pour
+		// qu'une règle écrite pour une chaîne ne refuse pas une date valide
+		// (repli transitoire non cassant, même format que la saisie texte).
+		const rulesFormat = (props.validateWithReturnFormat ? props.dateFormatReturn : undefined) || props.format || ''
 		const validationResult = await Promise.resolve(validateField(
 			date,
-			props.customRules,
-			props.customWarningRules,
-			props.customSuccessRules,
+			adaptCustomRulesWithStringFallback(props.customRules, rulesFormat),
+			adaptCustomRulesWithStringFallback(props.customWarningRules, rulesFormat),
+			adaptCustomRulesWithStringFallback(props.customSuccessRules ?? [], rulesFormat),
 		))
 
 		if (!validationResult.hasError) {

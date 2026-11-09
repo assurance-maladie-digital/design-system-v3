@@ -297,6 +297,7 @@ export const Default: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DialogBox } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
@@ -371,6 +372,7 @@ export const ButtonTexts: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DialogBox } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
@@ -438,6 +440,7 @@ export const HideActions: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DialogBox } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
@@ -510,6 +513,7 @@ export const Persistent: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DialogBox } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
@@ -588,6 +592,7 @@ export const ActionsSlot: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DialogBox } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
@@ -660,6 +665,7 @@ export const TitleSlot: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DialogBox } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
@@ -732,6 +738,7 @@ export const Width: Story = {
 				code: `
 					<script setup lang="ts">
 						import { DialogBox } from '@cnamts/synapse'
+						import { VBtn } from 'vuetify/components'
 						import { ref } from 'vue'
 	
 						const dialogOpen = ref(false)
@@ -827,6 +834,7 @@ export const VuetifyOptions: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DialogBox } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
@@ -903,6 +911,7 @@ export const Scrollable: Story = {
 				code: `
 			<script setup lang="ts">
 				import { DialogBox } from '@cnamts/synapse'
+				import { VBtn } from 'vuetify/components'
 				import { ref } from 'vue'
 
 				const dialogOpen = ref(false)
@@ -1019,6 +1028,7 @@ export const Draggable: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DialogBox } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
 
 					const dialogOpen = ref(false)
