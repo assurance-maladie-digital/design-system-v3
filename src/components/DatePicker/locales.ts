@@ -50,6 +50,7 @@ export const locales = {
 	// Messages d'accessibilité
 	dateInputDescription: 'Date en cours de saisie',
 	openCalendar: 'Ouvrir le calendrier',
+	activationOpensCalendar: 'Activation ouvre un calendrier',
 	selectMonth: (month?: string): string => month ? `Sélectionner le mois (${month})` : 'Sélectionner un mois',
 	selectYear: (year?: string): string => year ? `${year}` : 'Sélectionner une année',
 	selectYearForDisplay: (year: string): string => `Sélectionner l'année ${year}`,

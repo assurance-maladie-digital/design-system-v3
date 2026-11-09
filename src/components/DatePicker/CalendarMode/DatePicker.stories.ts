@@ -340,7 +340,6 @@ export const Default: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 					  />
 				</template>
@@ -359,7 +358,6 @@ export const Default: Story = {
 	args: {
 		'headingLevel': 3,
 		'label': 'Date (JJ/MM/AAAA)',
-		'placeholder': 'JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -404,7 +402,6 @@ export const Required: Story = {
 				<template>
 					<DatePicker
 						v-model="date1"
-						placeholder="JJ/MM/AAAA"
 						label="Date (JJ/MM/AAAA)"
 						required
 						format="DD/MM/YYYY"
@@ -412,7 +409,6 @@ export const Required: Story = {
 					  	<DatePicker
 						v-model="date2"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						required
 						displayAsterisk
 						format="DD/MM/YYYY"
@@ -432,7 +428,6 @@ export const Required: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -483,7 +478,6 @@ export const DateRange: Story = {
 					<DatePicker
 						v-model="dateRange"
 						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						displayRange
 					/>
@@ -505,7 +499,6 @@ export const DateRange: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
 		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -550,7 +543,6 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="JJ/MM/AAAA"
 						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						:period="{
@@ -591,7 +583,6 @@ export const WithCustomPeriod: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -665,7 +656,6 @@ export const WithAppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="JJ/MM/AAAA"
 						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						displayAppendIcon
@@ -688,7 +678,6 @@ export const WithAppendIcon: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -733,7 +722,6 @@ export const WithoutIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="JJ/MM/AAAA"
 						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						:displayIcon="false"
@@ -756,7 +744,6 @@ export const WithoutIcon: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -801,7 +788,6 @@ export const BirthDate: Story = {
 				<template>
 					<DatePicker
 						v-model="birthDate"
-						placeholder="JJ/MM/AAAA"
 						label="Date de naissance (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						isBirthDate
@@ -824,7 +810,6 @@ export const BirthDate: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date de naissance (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -870,7 +855,6 @@ export const UTC: Story = {
 					<div>
 						<DatePicker
 							v-model="dateString"
-							placeholder="JJ/MM/AAAA"
 							label="Date (JJ/MM/AAAA)"
 							format="DD/MM/YYYY"
 						/>
@@ -936,7 +920,6 @@ export const UTC: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
 		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',

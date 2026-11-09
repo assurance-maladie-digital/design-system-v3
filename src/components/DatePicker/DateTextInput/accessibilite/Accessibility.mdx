@@ -53,6 +53,8 @@ import {
 
 	<BestPracticesSection>
 		- Fournir un <code>label</code> explicite; utiliser <code>aria-label</code> ou <code>aria-labelledby</code> uniquement lorsque le label visible n’est pas disponible.
+		- Ne pas dupliquer le format attendu entre <code>label</code> et <code>placeholder</code> : indiquer le format une seule fois, idéalement dans le <code>label</code> (ex. « Date (JJ/MM/AAAA) »), sinon les technologies d’assistance l’annoncent en double.
+		- Si le champ sert d’activateur d’un calendrier, activer la prop <code>calendarActivator</code> pour que l’utilisateur soit averti de l’affichage du calendrier (« Activation ouvre un calendrier » ajouté à la description <code>aria-describedby</code>).
 		- Afficher un placeholder cohérent avec le <code>format</code> attendu et conserver un hint persistent pour les formats non standards.
 		- Laisser <code>isValidateOnBlur</code> à <code>true</code> si la validation doit attendre la sortie du champ; déclencher <code>validateOnSubmit()</code> au submit.
 		- En lecture seule, désactiver les actions d’édition et d’effacement; ne pas utiliser le champ comme solution de remplacement d’un bouton calendrier.

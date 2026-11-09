@@ -61,6 +61,8 @@ import {
 
 <BestPracticesSection>
 - Fournir un <code>label</code> explicite; utiliser <code>placeholder</code> uniquement comme aide complémentaire.
+- Ne pas dupliquer le format attendu entre <code>label</code> et <code>placeholder</code> : indiquer le format une seule fois, idéalement dans le <code>label</code> (ex. « Date (JJ/MM/AAAA) »), sinon les technologies d’assistance l’annoncent en double.
+- Le champ avertit nativement l’utilisateur de l’affichage du calendrier (« Activation ouvre un calendrier » ajouté à la description <code>aria-describedby</code>, annonce désactivée quand le champ est <code>disabled</code>) : inutile de répéter cette information dans le <code>label</code> ou le <code>hint</code>. La saisie manuelle reste possible : elle ne doit jamais être bloquée au profit du seul calendrier.
 - Conserver <code>format</code>, <code>dateFormatReturn</code> et le <code>hint</code> cohérents pour éviter une valeur affichée différente de la valeur émise.
 - Laisser <code>isValidateOnBlur</code> à <code>true</code> si les erreurs et le succès doivent être annoncés au blur; utiliser <code>validateOnSubmit()</code> pour le contrôle de soumission.
 - Avec <code>textFieldActivator</code>, s’assurer que toute la zone d’activation reste compréhensible au clavier et que l’icône n’est pas le seul point d’entrée.
