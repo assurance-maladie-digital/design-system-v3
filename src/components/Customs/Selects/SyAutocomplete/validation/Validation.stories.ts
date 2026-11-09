@@ -275,6 +275,7 @@ onMounted(() => {
 	argTypes: {
 		customSuccessRules: {
 			control: false,
+			description: 'La règle fixe est nécessaire pour déclencher le succès illustré au chargement.',
 		},
 	},
 	args: {
@@ -706,7 +707,6 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
-const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 async function onSubmit() {
   const isValid = await autocompleteRef.value?.validateOnSubmit()
