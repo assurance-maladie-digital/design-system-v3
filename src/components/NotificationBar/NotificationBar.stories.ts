@@ -3,8 +3,9 @@ import NotificationBar from './NotificationBar.vue'
 import { VBtn } from 'vuetify/components'
 import { useNotificationService } from '@/services/NotificationService'
 import type { Notification } from '@/components/NotificationBar/types'
+import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 
-interface StoryArgs {
+interface StoryArgs extends CustomizableOptions {
 	closeBtnText: string
 	type: Notification['type']
 	bottom: boolean
