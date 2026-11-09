@@ -55,6 +55,7 @@ pnpm build                    # Build du projet
 pnpm preview                  # Lancement du serveur de prévisualisation
 pnpm test:unit                # Lancement des tests unitaires
 pnpm test:a11y                # Tests d'accessibilité
+pnpm test:snippets            # Extraits de code des stories (hors CI)
 pnpm test:visual              # Tests visuels avec Cypress (Electron headless)
 pnpm test:visual:open         # Tests visuels en mode interactif (Cypress Studio)
 pnpm test:visual:update       # Mise à jour des snapshots visuels
