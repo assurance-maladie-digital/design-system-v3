@@ -271,7 +271,7 @@ export const Default: Story = {
         <Captcha
 			url-create="..."
 			url-get-image="..."
-			url-get-audio="/..."
+			url-get-audio="..."
 			:custom-rules="customRules"
 			show-success-messages
 		/>
@@ -321,6 +321,48 @@ const customRules = [
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : affichage du Captcha dans un conteneur de 320px.
+ * Le composant n'expose pas `help-text` : si l'intitulé est personnalisé via `locales`
+ * (`image.textfieldLabel`), il doit rester court et explicite.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	args: {
+		...Default.args,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <VCard class="pa-8" max-width="600">
+        <Captcha
+			url-create="..."
+			url-get-image="..."
+			url-get-audio="..."
+		/>
+    </VCard>
+</template>
+                `,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { Captcha } from '@cnamts/synapse'
+import { VCard } from 'vuetify/components'
+</script>
+                `,
+			},
+		],
+	},
+}
+
 export const Choice: Story = {
 	args: {
 		'onUpdate:modelValue': fn(),
@@ -360,10 +402,10 @@ export const Choice: Story = {
 				name: 'Template',
 				code: `<template>
     <VCard class="pa-8" max-width="600">
-        <Captcha 
+        <Captcha
 			url-create="..."
 			url-get-image="..."
-			url-get-audio="/..."
+			url-get-audio="..."
 			type="choice"
 		/>
     </VCard>

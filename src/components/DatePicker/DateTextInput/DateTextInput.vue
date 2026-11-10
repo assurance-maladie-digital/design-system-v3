@@ -77,6 +77,7 @@
 	const props = withDefaults(defineProps<DateTextInputProps>(), {
 		autoClamp: false,
 		bgColor: 'white',
+		calendarActivator: false,
 		customSuccessRules: () => [],
 		customRules: () => [],
 		customWarningRules: () => [],
@@ -246,7 +247,11 @@
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
-	const formatDescription = computed(() => `${locales.formatHint} ${locales.dateFormatDescription(displayFormat.value)}`)
+	const formatDescription = computed(() => {
+		const description = `${locales.formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
+		// Quand le champ sert d'activateur de calendrier, on avertit qu'un élément va s'afficher
+		return props.calendarActivator ? `${description}. ${locales.activationOpensCalendar}` : description
+	})
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => {

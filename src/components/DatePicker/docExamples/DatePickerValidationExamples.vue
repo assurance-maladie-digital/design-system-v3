@@ -70,7 +70,6 @@
 				<DatePicker
 					v-model="date1"
 					label="Date requise (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					required
 				/>
 			</div>
@@ -108,7 +107,6 @@
 				<DatePicker
 					v-model="date2"
 					label="Jour de semaine (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notWeekend',
 						options: {
@@ -153,7 +151,6 @@
 				<DatePicker
 					v-model="date3"
 					label="Date passée (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notAfterToday',
 						options: {
@@ -205,7 +202,6 @@
 				<DatePicker
 					v-model="date4"
 					label="Date future (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notBeforeToday',
 						options: {
@@ -257,7 +253,6 @@
 				<DatePicker
 					v-model="date5"
 					label="Date après le 01/01/2025 (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notBeforeDate',
 						options: {
@@ -303,7 +298,6 @@
 				<DatePicker
 					v-model="date6"
 					label="Date avant le 31/12/2025 (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notAfterDate',
 						options: {
@@ -349,7 +343,6 @@
 				<DatePicker
 					v-model="date7"
 					label="Date exacte (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'dateExact',
 						options: {
@@ -395,7 +388,6 @@
 				<DatePicker
 					v-model="date8"
 					label="Date hors 2024 (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'custom',
 						options: {
@@ -453,7 +445,6 @@
 				<DatePicker
 					v-model="date9"
 					label="Date avec avertissement (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					:custom-warning-rules="[{
 						type: 'custom',
 						options: {
@@ -515,7 +506,6 @@
 				<DatePicker
 					v-model="date10"
 					label="Date de travail (JJ/MM/AAAA)"
-					placeholder="JJ/MM/AAAA"
 					required
 					:custom-rules="[
 						{

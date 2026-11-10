@@ -6,6 +6,7 @@ import { computed, ref } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VCheckbox, VDivider, VListItem, VListItemTitle } from 'vuetify/components'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 const meta: Meta<typeof SyAutocomplete> = {
 	title: 'Composants/Formulaires/Selects/SyAutocomplete',
@@ -243,6 +244,76 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="pa-4">
+					<SyAutocomplete
+						v-model="selectedValue"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
+ * et utiliser `help-text` pour apporter une information complémentaire à l'intitulé.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	decorators: [
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="selectedValue"
+						:items="items"
+						label="Prénom du professionnel de santé figurant sur votre ordonnance"
+						help-text="Saisissez les premières lettres pour filtrer la liste"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+
+					const selectedValue = ref('')
+					const items = [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Prénom du professionnel de santé figurant sur votre ordonnance',
+		helpText: 'Saisissez les premières lettres pour filtrer la liste',
+		clearable: false,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedValue = ref('')
+				return { args, selectedValue }
+			},
+			template: `
+				<div style="max-width: 320px;">
 					<SyAutocomplete
 						v-model="selectedValue"
 						v-bind="args"
@@ -770,7 +841,7 @@ export const LoadingState: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Simule un chargement asynchrone : au clic le dropdown s\'ouvre, le loader s\'active puis les résultats apparaissent.',
+				story: 'Simule un chargement asynchrone : au clic le dropdown s\'ouvre, le loader s\'active puis les résultats apparaissent. Les controls `items` et `loading` sont désactivés : ces valeurs sont pilotées par la simulation.',
 			},
 		},
 		sourceCode: [
@@ -822,6 +893,14 @@ const loadOnClick = () => {
 			},
 		],
 	},
+	argTypes: {
+		items: {
+			control: false,
+		},
+		loading: {
+			control: false,
+		},
+	},
 	args: {
 		label: 'Recherche avec chargement',
 	},
@@ -871,6 +950,11 @@ const loadOnClick = () => {
 
 export const HideDetails: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Les libellés, états de succès et réglages de détails sont fixes pour comparer les deux variantes. Les autres props transmises via `args` restent configurables.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -918,6 +1002,23 @@ const value2 = ref('1')
 			},
 		],
 	},
+	argTypes: {
+		modelValue: {
+			control: false,
+		},
+		label: {
+			control: false,
+		},
+		hasSuccess: {
+			control: false,
+		},
+		successMessages: {
+			control: false,
+		},
+		hideDetails: {
+			control: false,
+		},
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -936,15 +1037,15 @@ const value2 = ref('1')
 			template: `
 				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
 					<SyAutocomplete
-						v-model="value1"
 						v-bind="args"
+						v-model="value1"
 						label="Avec zone de messages (défaut)"
 						:has-success="true"
 						:success-messages="['Sélection valide']"
 					/>
 					<SyAutocomplete
-						v-model="value2"
 						v-bind="args"
+						v-model="value2"
 						label="Sans zone de messages (hide-details)"
 						:has-success="true"
 						:success-messages="['Sélection valide']"

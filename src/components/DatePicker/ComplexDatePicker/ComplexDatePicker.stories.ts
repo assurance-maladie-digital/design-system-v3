@@ -4,6 +4,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
 import { fn } from 'storybook/test'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import type { CalendarModeProps } from '../types'
 
 const meta = {
@@ -383,7 +384,6 @@ export const Default: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						format="DD/MM/YYYY"
 					/>
@@ -405,7 +405,6 @@ export const Default: Story = {
 	},
 	args: {
 		'label': 'Date (JJ/MM/AAAA)',
-		'placeholder': 'JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -445,6 +444,62 @@ export const Default: Story = {
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
+ * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire. Le bouton d'effacement est toujours
+ * affiché hors lecture seule (non désactivable pour l'instant).
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>hint</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(précision), pas pour le copier.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						label="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						hint="Cette date figure sur votre prescription médicale"
+						persistent-hint
+						placeholder="JJ/MM/AAAA"
+						useCombinedMode
+						format="DD/MM/YYYY"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+					
+					const date = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		hint: 'Cette date figure sur votre prescription médicale',
+		persistentHint: true,
+	},
+}
+
 export const Required: Story = {
 	parameters: {
 		docs: {
@@ -460,7 +515,6 @@ export const Required: Story = {
 					<DatePicker
 						v-model="date1"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						format="DD/MM/YYYY"
@@ -468,7 +522,6 @@ export const Required: Story = {
 					<DatePicker
 						v-model="date2"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						displayAsterisk
@@ -551,7 +604,6 @@ export const DateRange: Story = {
 					<DatePicker
 						v-model="dateRange"
 						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						display-range
 						use-combined-mode
@@ -574,7 +626,6 @@ export const DateRange: Story = {
 	},
 	args: {
 		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
-		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -627,7 +678,6 @@ export const BirthDate: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date de naissance (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						isBirthDate
 						useCombinedMode
@@ -650,7 +700,6 @@ export const BirthDate: Story = {
 	},
 	args: {
 		label: 'Date de naissance (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		isBirthDate: true,
 		showWeekNumber: false,
@@ -697,7 +746,6 @@ export const DisablePickerInteraction: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						noCalendar
@@ -720,7 +768,6 @@ export const DisablePickerInteraction: Story = {
 	},
 	args: {
 		label: 'Date (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		displayIcon: true,
 		useCombinedMode: true,
@@ -761,7 +808,6 @@ export const ReadonlyMode: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date en lecture seule (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						readonly
@@ -789,7 +835,6 @@ export const ReadonlyMode: Story = {
 	},
 	args: {
 		label: 'Date en lecture seule (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		readonly: true,
@@ -834,7 +879,6 @@ export const AppendIcon: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date avec icône à la fin (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:displayPrependIcon="false"
@@ -858,7 +902,6 @@ export const AppendIcon: Story = {
 	},
 	args: {
 		label: 'Date avec icône à la fin (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		displayPrependIcon: false,
@@ -899,7 +942,6 @@ export const WithCustomPeriod: Story = {
 					<DatePicker
 						v-model="date"
 						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:period="{
@@ -949,7 +991,6 @@ export const WithCustomPeriod: Story = {
 	},
 	args: {
 		label: 'Date (JJ/MM/AAAA)',
-		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		period: {

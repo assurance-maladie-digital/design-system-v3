@@ -2,6 +2,7 @@ import type { StoryObj, Meta } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import NirField from './NirField.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 const meta: Meta<typeof NirField> = {
 	title: 'Composants/Formulaires/NirField',
@@ -611,6 +612,58 @@ export const WithoutKey: Story = {
     `,
 			},
 		],
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec des intitulés longs, ne pas utiliser `clearable`
+ * et utiliser `help-text` pour apporter une information complémentaire à l'intitulé.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      number-label="Numéro de sécurité sociale figurant sur votre carte Vitale"
+      key-label="Clé de validation"
+      help-text="13 chiffres, puis la clé de 2 chiffres"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import { NirField } from '@cnamts/synapse'
+     import { ref } from 'vue'
+     
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		numberLabel: 'Numéro de sécurité sociale figurant sur votre carte Vitale',
+		helpText: '13 chiffres, puis la clé de 2 chiffres',
+		clearable: false,
 	},
 }
 

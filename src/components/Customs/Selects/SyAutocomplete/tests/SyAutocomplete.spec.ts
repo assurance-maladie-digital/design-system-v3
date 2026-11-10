@@ -859,6 +859,31 @@ describe('SyAutocomplete', () => {
 			expect(wrapper.find('.v-messages').text()).not.toContain('requis')
 		})
 
+		it('validates value changes immediately by default when isValidateOnBlur is false', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test default validation timing',
+					textKey: 'text',
+					valueKey: 'value',
+					customRules: [{
+						type: 'custom',
+						options: { validate: () => false, message: 'Erreur au changement' },
+					}],
+				},
+			})
+
+			await flushPromises()
+			expect(wrapper.find('.v-messages').text()).not.toContain('Erreur au changement')
+
+			await wrapper.setProps({ modelValue: '2' })
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).toContain('Erreur au changement')
+		})
+
 		it('validates only on blur when isValidateOnBlur is true', async () => {
 			wrapper.unmount()
 			const failingRule = {
