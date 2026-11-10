@@ -94,6 +94,7 @@ import '@/stories/styles/shared.css';
       <li>Évitez de modifier l'état d'un bouton automatiquement sans action utilisateur explicite</li>
       <li>Assurez-vous que la taille de la zone cliquable est suffisante (au moins 44×44 pixels pour les interfaces tactiles)</li>
       <li>Fournissez un retour visuel et textuel clair pour les erreurs de validation</li>
+      <li>Évitez les groupes désactivés : même lorsque leur contraste est conforme (critère RGAA 3.2), un groupe désactivé via la prop <code>disabled</code> crée une charge mentale, l'utilisateur devant chercher comment l'activer. Préférez un groupe actif accompagné d'un message expliquant la contrainte, ou ne l'affichez que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi il est indisponible et comment l'activer</li>
     </ul>
   </div>
 
