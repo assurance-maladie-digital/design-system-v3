@@ -3,9 +3,8 @@ import NotificationBar from './NotificationBar.vue'
 import { VBtn } from 'vuetify/components'
 import { useNotificationService } from '@/services/NotificationService'
 import type { Notification } from '@/components/NotificationBar/types'
-import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 
-interface StoryArgs extends CustomizableOptions {
+interface StoryArgs {
 	closeBtnText: string
 	type: Notification['type']
 	bottom: boolean
@@ -363,9 +362,6 @@ export const CustomCloseBtnText: Story = Default.bind({})
 CustomCloseBtnText.args = {
 	...Default.args,
 	closeBtnText: 'Masquer',
-	vuetifyOptions: {
-		btn: { 'aria-label': 'Masquer la notification' },
-	},
 }
 CustomCloseBtnText.parameters = {
 	sourceCode: [
@@ -376,7 +372,6 @@ CustomCloseBtnText.parameters = {
 				<div class="d-flex flex-wrap align-center justify-center">
 					<NotificationBar
 						close-btn-text="Masquer"
-						:vuetify-options="{ btn: { 'aria-label': 'Masquer la notification' } }"
 					/>
 					<VBtn
 						color="primary"
