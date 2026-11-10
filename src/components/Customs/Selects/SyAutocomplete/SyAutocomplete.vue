@@ -145,14 +145,33 @@
 
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
+
 		isPristine.value = true
-		suppressMenuOpen.value = true
+
 		if (isEmptySelectValue(selected.value)) {
-			search.value = ''
+			if (search.value !== '') {
+				suppressMenuOpen.value = true
+				search.value = ''
+			}
 			return
 		}
-		const found = formattedItems.value.find(i => props.returnObject ? i[props.valueKey] === (selected.value as ItemType)[props.valueKey] : i[props.valueKey] === selected.value)
-		search.value = found ? getPlainText(found) : ''
+
+		const found = formattedItems.value.find(i =>
+			props.returnObject
+				? i[props.valueKey] === (selected.value as ItemType)[props.valueKey]
+				: i[props.valueKey] === selected.value,
+		)
+
+		const nextSearch = found ? getPlainText(found) : ''
+
+		if (search.value !== nextSearch) {
+			suppressMenuOpen.value = true
+			search.value = nextSearch
+		}
+	}
+
+	const handleFocus = () => {
+		if (!props.multiple && !focused.value) isPristine.value = true
 	}
 
 	const normalizedSearch = computed(() => (search.value || '').toLowerCase())
@@ -171,7 +190,15 @@
 		if (item === null || item === undefined) {
 			clearValidation()
 		}
-		if (!props.multiple) suppressMenuOpen.value = true
+		if (!props.multiple && item != null) {
+			const selectedText
+				= typeof item === 'object'
+					? getPlainText(item)
+					: String(item)
+			if (search.value !== selectedText) {
+				suppressMenuOpen.value = true
+			}
+		}
 		updateValue(item ?? null)
 		if (!props.multiple) isPristine.value = true
 		if (props.multiple) {
@@ -437,6 +464,7 @@
 					:hide-details="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
+					@focus="handleFocus"
 					@update:model-value="handleInput"
 					@blur="checkErrorOnBlur"
 					@keydown.tab="handleTabKey"

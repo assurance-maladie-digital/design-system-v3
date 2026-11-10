@@ -1434,6 +1434,67 @@ describe('SyAutocomplete', () => {
 	})
 
 	describe('filter and search', () => {
+		it('shows all items again when the selected value changes after typing', async () => {
+			await wrapper.setProps({ modelValue: '1' })
+			await wrapper.find('input').trigger('click')
+			await flushPromises()
+
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+			await flushPromises()
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
+
+			await wrapper.setProps({ modelValue: '2' })
+			await flushPromises()
+
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(3)
+
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 1')
+			await flushPromises()
+
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
+		})
+
+		it('emits search for the first character typed after selecting an option', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test search after selection',
+					textKey: 'text',
+					valueKey: 'value',
+					debounce: 0,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.find('input').trigger('click')
+			await flushPromises()
+			getOption(0)?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 }))
+			await flushPromises()
+
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'O')
+			await flushPromises()
+			await new Promise(resolve => setTimeout(resolve, 0))
+
+			expect(wrapper.emitted('search')?.at(-1)).toEqual(['O'])
+		})
+
+		it('shows all items again when the field receives focus after a search', async () => {
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+			await flushPromises()
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
+
+			await input.trigger('blur')
+			await input.trigger('focus')
+			await flushPromises()
+
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(3)
+		})
+
 		it('shows all items after selecting an option and reopening the menu', async () => {
 			const input = wrapper.find('input')
 			await input.trigger('click')
@@ -1516,6 +1577,7 @@ describe('SyAutocomplete', () => {
 				},
 				attachTo: document.body,
 			})
+			await wrapper.find('input').trigger('focus')
 
 			// '★' est dans textKey mais pas dans plainTextKey → aucun résultat
 			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', '★')
