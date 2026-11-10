@@ -16,7 +16,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import PeriodField from '@/components/PeriodField/PeriodField.vue'
 
 // Defaults Vuetify produits par la configuration de thème d'un projet
-const projectDefaults = createVuetifyOptions({ fields: { variant: 'filled', density: 'compact' } }).defaults ?? {}
+const projectDefaults = createVuetifyOptions({ fields: { density: 'compact' } }).defaults ?? {}
 
 const mountField = (component: Component, props: Record<string, unknown>, withProjectConfig: boolean) => mount({
 	render: () => withProjectConfig
@@ -24,20 +24,21 @@ const mountField = (component: Component, props: Record<string, unknown>, withPr
 		: h(component, props),
 })
 
-const fieldCases: { name: string, component: Component, props: Record<string, unknown>, explicit: Record<string, unknown> }[] = [
-	{ name: 'SyTextField', component: SyTextField, props: { label: 'Nom' }, explicit: { variantStyle: 'underlined', density: 'comfortable' } },
-	{ name: 'SySelect', component: SySelect, props: { label: 'Choix', items: ['a', 'b'] }, explicit: { outlined: false, density: 'comfortable' } },
-	{ name: 'SyAutocomplete', component: SyAutocomplete, props: { label: 'Recherche', items: ['a', 'b'] }, explicit: { density: 'comfortable' } },
-	{ name: 'SyTextArea', component: SyTextArea, props: { label: 'Message' }, explicit: { variant: 'underlined' } },
-	{ name: 'PasswordField', component: PasswordField, props: { label: 'Mot de passe' }, explicit: { variantStyle: 'underlined' } },
-	{ name: 'NirField', component: NirField, props: { label: 'NIR' }, explicit: { variant: 'underlined', density: 'comfortable' } },
-	{ name: 'PhoneField', component: PhoneField, props: {}, explicit: { outlined: false } },
-	{ name: 'LunarCalendar', component: LunarCalendar, props: { label: 'Date' }, explicit: { variantStyle: 'underlined', density: 'comfortable' } },
-	{ name: 'SearchListField', component: SearchListField, props: { label: 'Filtrer', items: [] }, explicit: { outlined: false } },
-	{ name: 'DatePicker (calendrier)', component: DatePicker, props: { label: 'Date' }, explicit: { isOutlined: false, density: 'comfortable' } },
-	{ name: 'DatePicker (noCalendar)', component: DatePicker, props: { label: 'Date', noCalendar: true }, explicit: { isOutlined: false, density: 'comfortable' } },
-	{ name: 'DatePicker (useCombinedMode)', component: DatePicker, props: { label: 'Date', useCombinedMode: true }, explicit: { isOutlined: false, density: 'comfortable' } },
-	{ name: 'PeriodField', component: PeriodField, props: {}, explicit: { isOutlined: false, density: 'comfortable' } },
+// `explicitDensity` : le composant expose une prop `density` que le consommateur peut passer
+const fieldCases: { name: string, component: Component, props: Record<string, unknown>, explicitDensity: boolean }[] = [
+	{ name: 'SyTextField', component: SyTextField, props: { label: 'Nom' }, explicitDensity: true },
+	{ name: 'SySelect', component: SySelect, props: { label: 'Choix', items: ['a', 'b'] }, explicitDensity: true },
+	{ name: 'SyAutocomplete', component: SyAutocomplete, props: { label: 'Recherche', items: ['a', 'b'] }, explicitDensity: true },
+	{ name: 'SyTextArea', component: SyTextArea, props: { label: 'Message' }, explicitDensity: false },
+	{ name: 'PasswordField', component: PasswordField, props: { label: 'Mot de passe' }, explicitDensity: false },
+	{ name: 'NirField', component: NirField, props: { label: 'NIR' }, explicitDensity: true },
+	{ name: 'PhoneField', component: PhoneField, props: {}, explicitDensity: false },
+	{ name: 'LunarCalendar', component: LunarCalendar, props: { label: 'Date' }, explicitDensity: true },
+	{ name: 'SearchListField', component: SearchListField, props: { label: 'Filtrer', items: [] }, explicitDensity: false },
+	{ name: 'DatePicker (calendrier)', component: DatePicker, props: { label: 'Date' }, explicitDensity: true },
+	{ name: 'DatePicker (noCalendar)', component: DatePicker, props: { label: 'Date', noCalendar: true }, explicitDensity: true },
+	{ name: 'DatePicker (useCombinedMode)', component: DatePicker, props: { label: 'Date', useCombinedMode: true }, explicitDensity: true },
+	{ name: 'PeriodField', component: PeriodField, props: {}, explicitDensity: true },
 ]
 
 const fieldClasses = async (component: Component, props: Record<string, unknown>, withProjectConfig: boolean) => {
@@ -60,19 +61,16 @@ describe('Synapse fields and the project fields configuration', () => {
 		expect(new Set(densities)).toEqual(new Set(['v-input--density-default']))
 	})
 
-	it.each(fieldCases)('$name applies fields.variant and fields.density from the configuration', async ({ component, props }) => {
+	it.each(fieldCases)('$name applies fields.density from the configuration and keeps its outlined style', async ({ component, props }) => {
 		const { variants, densities } = await fieldClasses(component, props, true)
 
-		expect(new Set(variants)).toEqual(new Set(['v-field--variant-filled']))
+		expect(new Set(variants)).toEqual(new Set(['v-field--variant-outlined']))
 		expect(new Set(densities)).toEqual(new Set(['v-input--density-compact']))
 	})
 
-	it.each(fieldCases)('$name keeps explicit props over the configuration', async ({ component, props, explicit }) => {
-		const { variants, densities } = await fieldClasses(component, { ...props, ...explicit }, true)
+	it.each(fieldCases.filter(({ explicitDensity }) => explicitDensity))('$name keeps an explicit density over the configuration', async ({ component, props }) => {
+		const { densities } = await fieldClasses(component, { ...props, density: 'comfortable' }, true)
 
-		// Sans prop de variante (SyAutocomplete), la variante reste celle de la configuration
-		const hasVariantProp = ['variant', 'variantStyle', 'outlined', 'isOutlined'].some(name => name in explicit)
-		expect(new Set(variants)).toEqual(new Set([hasVariantProp ? 'v-field--variant-underlined' : 'v-field--variant-filled']))
-		expect(new Set(densities)).toEqual(new Set(['density' in explicit ? 'v-input--density-comfortable' : 'v-input--density-compact']))
+		expect(new Set(densities)).toEqual(new Set(['v-input--density-comfortable']))
 	})
 })

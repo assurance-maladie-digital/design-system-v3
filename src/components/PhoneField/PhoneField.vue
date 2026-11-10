@@ -14,7 +14,6 @@
 	import { usePhoneFieldValidation } from './usePhoneFieldValidation'
 	import FieldState from '@/components/Customs/SyTextField/FieldState.vue'
 	import { useLocales } from '@/composables/useLocales'
-	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 
 	const props = withDefaults(defineProps<PhoneFieldProps>(), {
 		...validationPropsDefaults,
@@ -36,13 +35,6 @@
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
-
-	// Réglage `fields.variant` de la configuration de thème, appliqué si outlined n'est pas passée
-	const { themeFields, isPropExplicit } = useFieldsThemeConfig()
-	const fieldVariant = computed(() => {
-		if (!isPropExplicit('outlined') && themeFields.value.variant) return themeFields.value.variant
-		return props.outlined ? 'outlined' : 'underlined'
-	})
 
 	const emits = defineEmits<{
 		'update:modelValue': [value: string]
@@ -194,7 +186,7 @@
 					v-model="internalDialCode"
 					:items="dialCodeList"
 					:label="locales.indicatifLabel"
-					:variant-style="fieldVariant"
+					:outlined="props.outlined"
 					:aria-required="true"
 					:display-asterisk="props.displayAsterisk"
 					:disable-error-handling="true"
@@ -225,7 +217,7 @@
 					:success-messages="successes"
 					:show-success-messages="props.showSuccessMessages"
 					:disable-error-handling="true"
-					:variant="fieldVariant"
+					:variant="props.outlined ? 'outlined' : 'underlined'"
 					:display-asterisk="props.displayAsterisk"
 					:readonly="props.readonly"
 					:bg-color="props.bgColor"

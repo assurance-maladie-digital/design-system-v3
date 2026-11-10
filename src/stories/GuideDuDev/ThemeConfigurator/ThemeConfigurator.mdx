@@ -8,7 +8,7 @@ import '../../styles/shared.css';
   <h1>Customisation du thème</h1>
 </div>
 
-Un projet peut ajuster un nombre **limité** de réglages de Synapse : la marque par défaut, l'anneau de focus clavier et le style des champs de formulaire.
+Un projet peut ajuster un nombre **limité** de réglages de Synapse : la marque par défaut, l'anneau de focus clavier et la densité des champs de formulaire.
 Tout le reste est verrouillé, pour garder un rendu cohérent entre les projets. Chaque réglage est validé : une valeur hors bornes ou non accessible est refusée et remplacée par sa valeur par défaut.
 
 ## Configurateur
@@ -66,12 +66,6 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))
       <td>Couleur de l'anneau ; un contraste d'au moins 3:1 avec le fond est exigé</td>
     </tr>
     <tr>
-      <td><code>fields.variant</code></td>
-      <td><code>outlined</code>, <code>filled</code>, <code>underlined</code></td>
-      <td><code>outlined</code></td>
-      <td>Style des champs de formulaire</td>
-    </tr>
-    <tr>
       <td><code>fields.density</code></td>
       <td><code>default</code>, <code>comfortable</code>, <code>compact</code></td>
       <td><code>default</code></td>
@@ -84,7 +78,9 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))
 
 `fields` ne s'applique que si le projet le renseigne. Il concerne les champs Vuetify (`VTextField`, `VTextarea`, `VSelect`, `VAutocomplete`, `VCombobox`, `VFileInput`) et les champs Synapse : `SyTextField`, `SyTextArea`, `SySelect`, `SyAutocomplete`, `PasswordField`, `NirField`, `PhoneField`, `LunarCalendar`, `SearchListField`, `DatePicker` et `PeriodField`.
 
-Une prop passée explicitement sur un champ (par exemple `variant-style`, `outlined`, `is-outlined` ou `density`) reste toujours prioritaire sur la configuration.
+Une prop `density` passée explicitement sur un champ reste toujours prioritaire sur la configuration.
+
+Le style des champs n'est pas configurable : la maquette Synapse ne définit qu'un champ à contour (`outlined`), dont la bordure porte les états (focus, erreur, avertissement, succès). Un `fields.variant` éventuel est ignoré avec un avertissement.
 
 ## Valider la configuration en CI
 

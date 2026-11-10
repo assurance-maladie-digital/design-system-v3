@@ -31,10 +31,10 @@ export const getFocusVariables = (focus: SynapseFocusConfig): Record<string, str
  * `defaults` Vuetify des réglages `fields` : champs Vuetify natifs et champs Synapse (clé `FIELDS_DEFAULTS_KEY`).
  */
 export const getFieldsDefaults = (fields: SynapseFieldsConfig): Record<string, Record<string, unknown>> => {
-	const fieldDefaults = { variant: fields.variant, density: fields.density }
+	const fieldDefaults = { density: fields.density }
 	return {
 		...Object.fromEntries(FIELD_COMPONENTS.map(component => [component, fieldDefaults])),
-		// Lu par `useFieldsThemeConfig` dans les champs Synapse, qui passent leur `variant` explicitement à Vuetify.
+		// Lu par `useFieldsThemeConfig` dans les champs Synapse, qui passent leur `density` explicitement à Vuetify.
 		[FIELDS_DEFAULTS_KEY]: fieldDefaults,
 	}
 }

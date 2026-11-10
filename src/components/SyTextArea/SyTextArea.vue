@@ -6,7 +6,6 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 	import { mdiClose } from '@mdi/js'
 	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
 	import { type VTextarea } from 'vuetify/components'
@@ -38,11 +37,6 @@
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
-
-	// Réglage `fields.variant` de la configuration de thème, appliqué si variant n'est pas passée
-	// (`density` n'est pas une prop du composant : elle atteint VTextarea via ses defaults Vuetify)
-	const { resolveVariant } = useFieldsThemeConfig()
-	const fieldVariant = resolveVariant('variant', () => props.variant)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string): void
@@ -236,7 +230,7 @@
 			:id="id"
 			ref="textAreaRef"
 			:model-value="internalValue"
-			:variant="fieldVariant"
+			:variant="variant"
 			:color="color"
 			:bg-color="props.bgColor"
 			:counter="counter"

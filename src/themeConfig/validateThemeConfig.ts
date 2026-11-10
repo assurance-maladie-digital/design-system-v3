@@ -1,7 +1,6 @@
 import { toKebabCase } from '@/designTokens/utils/toKebabCase'
 import {
 	FIELD_DENSITIES,
-	FIELD_VARIANTS,
 	FOCUS_COLORS,
 	FOCUS_MIN_CONTRAST,
 	FOCUS_OFFSET_MAX,
@@ -16,7 +15,7 @@ import type { SynapseFocusColor, SynapseThemeConfigInput, ThemeConfigIssue, Them
 const KNOWN_KEYS: Record<string, readonly string[]> = {
 	'': ['brand', 'focus', 'fields'],
 	'focus': ['width', 'offset', 'color'],
-	'fields': ['variant', 'density'],
+	'fields': ['density'],
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -120,7 +119,6 @@ export function validateThemeConfig(
 	checkFocusColor(focus.color, themeColors, issues)
 
 	checkUnknownKeys(fields, 'fields', issues)
-	checkEnum(fields.variant, FIELD_VARIANTS, 'fields.variant', issues)
 	checkEnum(fields.density, FIELD_DENSITIES, 'fields.density', issues)
 
 	return {

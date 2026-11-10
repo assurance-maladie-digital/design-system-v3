@@ -37,19 +37,21 @@ describe('ThemeConfigurator', () => {
 		expect(wrapper.get('.theme-configurator__preview > *').attributes('style')).toContain('--v-focus-width: 2px')
 	})
 
-	it('applies the fields settings to the preview only when they are customized', async () => {
+	it('applies the fields density to the preview', async () => {
 		const wrapper = mount(ThemeConfigurator)
 		await flushPromises()
-		const previewVariants = () => wrapper.get('.theme-configurator__preview').findAll('.v-field')
-			.map(field => field.classes().find(name => name.startsWith('v-field--variant-')))
+		const preview = () => wrapper.get('.theme-configurator__preview')
+		const previewDensities = () => preview().findAll('.v-input')
+			.filter(input => input.find('.v-field').exists())
+			.map(input => input.classes().find(name => name.startsWith('v-input--density-')))
 
-		expect(new Set(previewVariants())).toEqual(new Set(['v-field--variant-outlined']))
+		expect(new Set(previewDensities())).toEqual(new Set(['v-input--density-default']))
 
-		await wrapper.findAll('input[type="checkbox"]')[0]!.setValue(true)
-		await wrapper.findAll('input[type="radio"][value="filled"]')[0]!.setValue(true)
+		await wrapper.findAll('input[type="radio"][value="compact"]')[0]!.setValue(true)
 		await flushPromises()
 
-		expect(getConfigJson(wrapper)).toEqual({ fields: { variant: 'filled', density: 'default' } })
-		expect(new Set(previewVariants())).toEqual(new Set(['v-field--variant-filled']))
+		expect(getConfigJson(wrapper)).toEqual({ fields: { density: 'compact' } })
+		expect(new Set(previewDensities())).toEqual(new Set(['v-input--density-compact']))
+		expect(preview().findAll('.v-field').every(field => field.classes().includes('v-field--variant-outlined'))).toBe(true)
 	})
 })

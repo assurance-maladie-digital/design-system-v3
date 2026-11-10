@@ -1,7 +1,6 @@
 export { applyThemeConfig } from './applyThemeConfig'
 export {
 	FIELD_DENSITIES,
-	FIELD_VARIANTS,
 	FIELDS_DEFAULTS_KEY,
 	FOCUS_COLORS,
 	FOCUS_MIN_CONTRAST,
@@ -17,7 +16,6 @@ export { resolveThemeConfig } from './resolveThemeConfig'
 export type {
 	SynapseBrand,
 	SynapseFieldDensity,
-	SynapseFieldVariant,
 	SynapseFieldsConfig,
 	SynapseFocusColor,
 	SynapseFocusConfig,

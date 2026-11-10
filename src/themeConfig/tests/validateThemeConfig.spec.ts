@@ -16,7 +16,7 @@ describe('validateThemeConfig', () => {
 		const result = validateThemeConfig({
 			brand: 'pa',
 			focus: { width: 3, offset: 2, color: 'primary' },
-			fields: { variant: 'filled', density: 'compact' },
+			fields: { density: 'compact' },
 		}, colors)
 
 		expect(result.valid).toBe(true)
@@ -40,9 +40,16 @@ describe('validateThemeConfig', () => {
 	})
 
 	it('rejects values outside the allowed lists', () => {
-		const result = validateThemeConfig({ brand: 'acme', fields: { variant: 'solo', density: 'tiny' } })
+		const result = validateThemeConfig({ brand: 'acme', fields: { density: 'tiny' } })
 
-		expect(result.issues.map(issue => issue.path)).toEqual(['brand', 'fields.variant', 'fields.density'])
+		expect(result.issues.map(issue => issue.path)).toEqual(['brand', 'fields.density'])
+	})
+
+	it('ignores fields.variant, which is not configurable', () => {
+		const result = validateThemeConfig({ fields: { variant: 'filled' } })
+
+		expect(result.valid).toBe(true)
+		expect(result.issues).toEqual([expect.objectContaining({ level: 'warning', path: 'fields.variant' })])
 	})
 
 	it.each(['primary', 'pinkDarken20'])('accepts %s as focus color', (color) => {

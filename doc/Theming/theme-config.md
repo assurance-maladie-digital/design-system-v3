@@ -25,10 +25,11 @@ Sans argument, `createVuetifyOptions()` garde exactement le rendu actuel. `creat
 | `focus.width` | 2 à 4 (px) | 2 | Épaisseur du ring de focus (boutons, liens, menus) |
 | `focus.offset` | 0 à 4 (px) | 3 | Écart du ring des boutons (les liens gardent 2px, les menus leur ring intérieur) |
 | `focus.color` | `primary`, `pinkDarken20` | `primary` | Couleur du ring ; contraste ≥ 3:1 avec `surface` exigé |
-| `fields.variant` | `outlined`, `filled`, `underlined` | `outlined` | `variant` des champs Vuetify |
 | `fields.density` | `default`, `comfortable`, `compact` | `default` | `density` des champs Vuetify |
 
 Le focus est exposé en variables CSS sur tous les thèmes : `--v-focus-width`, `--v-focus-offset`, `--v-focus-color`.
+
+Le style des champs n'est pas configurable : la maquette Synapse ne définit qu'un champ à contour (`outlined`), dont la bordure porte les états (focus, erreur, avertissement, succès). Un `fields.variant` éventuel est traité comme un réglage inconnu : ignoré avec un avertissement.
 
 ### Champs concernés par `fields`
 
@@ -37,7 +38,7 @@ Le focus est exposé en variables CSS sur tous les thèmes : `--v-focus-width`, 
 - champs Vuetify natifs (`VTextField`, `VTextarea`, `VSelect`, `VAutocomplete`, `VCombobox`, `VFileInput`), via leurs `defaults` ;
 - champs Synapse (`SyTextField`, `SyTextArea`, `SySelect`, `SyAutocomplete`, `PasswordField`, `NirField`, `PhoneField`, `LunarCalendar`, `SearchListField`, `DatePicker`, `PeriodField`), via le composable `useFieldsThemeConfig`.
 
-Les champs Synapse passent leur `variant` explicitement à Vuetify : les `defaults` ne les atteignent pas. `applyThemeConfig` range donc aussi les réglages sous la clé `FIELDS_DEFAULTS_KEY` (`SyFields`) des `defaults`, que `useFieldsThemeConfig` lit. Ordre de priorité : prop passée explicitement (`variant-style`, `variant`, `outlined`, `is-outlined`, `density`), puis configuration du projet, puis valeur par défaut du composant. Un composant qui encapsule un autre champ transmet la valeur résolue (ou `undefined` pour `is-outlined`, afin que le champ imbriqué résolve lui-même la configuration : voir `useDatePickerFieldAppearance`).
+Les champs Synapse passent leur `density` explicitement à Vuetify : les `defaults` ne les atteignent pas. `applyThemeConfig` range donc aussi le réglage sous la clé `FIELDS_DEFAULTS_KEY` (`SyFields`) des `defaults`, que `useFieldsThemeConfig` lit. Ordre de priorité : prop `density` passée explicitement, puis configuration du projet, puis valeur par défaut du composant. Un composant qui encapsule un autre champ transmet la valeur résolue (voir `useDatePickerFieldAppearance` pour la famille DatePicker).
 
 `SyInputSelect` (rendu en bouton) et les composants Amelipro ne lisent pas `fields`.
 

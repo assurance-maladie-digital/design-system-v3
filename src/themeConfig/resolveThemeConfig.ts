@@ -21,7 +21,6 @@ export function resolveThemeConfig(
 			color: pick('focus.color', config.focus?.color, defaultThemeConfig.focus.color),
 		},
 		fields: {
-			variant: pick('fields.variant', config.fields?.variant, defaultThemeConfig.fields.variant),
 			density: pick('fields.density', config.fields?.density, defaultThemeConfig.fields.density),
 		},
 	}

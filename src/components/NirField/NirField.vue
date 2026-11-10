@@ -89,9 +89,8 @@
 		validateOn: undefined,
 	})
 
-	// Réglages `fields` de la configuration de thème, appliqués si variant / density ne sont pas passés
-	const { resolveVariant, resolveDensity } = useFieldsThemeConfig()
-	const fieldVariant = resolveVariant('variant', () => props.variant)
+	// Réglage `fields.density` de la configuration de thème, appliqué si density n'est pas passée
+	const { resolveDensity } = useFieldsThemeConfig()
 	const fieldDensity = resolveDensity('density', () => props.density)
 
 	const emit = defineEmits(['update:modelValue'])
@@ -457,7 +456,7 @@
 				v-model="numberValue"
 				v-maska="numberMask"
 				:label="numberLabelWithAsterisk"
-				:variant-style="fieldVariant"
+				:variant-style="props.variant"
 				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
@@ -502,7 +501,7 @@
 				v-model="keyValue"
 				v-maska="keyMask"
 				:label="keyLabelWithAsterisk"
-				:variant-style="fieldVariant"
+				:variant-style="props.variant"
 				:prepend-icon="keyTooltip && keyTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"

@@ -4,7 +4,6 @@
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import { useLocales } from '@/composables/useLocales'
-	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 	import {
 		mdiCloseCircle,
 		mdiEyeOffOutline,
@@ -30,10 +29,6 @@
 		locales: () => ({}),
 		...validationPropsDefaults,
 	})
-
-	// Réglage `fields.variant` de la configuration de thème, appliqué si variantStyle n'est pas passée
-	const { resolveVariant } = useFieldsThemeConfig()
-	const fieldVariant = resolveVariant('variantStyle', () => props.variantStyle)
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
@@ -161,7 +156,7 @@
 		:id="passwordFieldId"
 		:key="fieldKey"
 		v-model="password"
-		:variant-style="fieldVariant"
+		:variant-style="props.variantStyle"
 		:color="props.color"
 		:label="props.label"
 		:disable-error-handling="true"

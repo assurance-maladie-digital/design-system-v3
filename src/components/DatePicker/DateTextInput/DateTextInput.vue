@@ -1356,7 +1356,7 @@
 		&& !bridgeHasWarning.value,
 	)
 
-	// Variante et densité des champs internes, avec les réglages `fields` de la configuration de thème
+	// Densité des champs internes, avec le réglage `fields.density` de la configuration de thème
 	const fieldAppearance = useDatePickerFieldAppearance(props)
 
 	// Props du SyTextField rendu par DateTextInput

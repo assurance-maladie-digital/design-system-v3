@@ -2,7 +2,6 @@
 	import { computed, reactive, ref, watch } from 'vue'
 	import { VBtn, VDefaultsProvider, VThemeProvider } from 'vuetify/components'
 	import SyAlert from '@/components/SyAlert/SyAlert.vue'
-	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -11,7 +10,6 @@
 	import { getFieldsDefaults, getFocusVariables, getThemeColors } from '@/themeConfig/applyThemeConfig'
 	import {
 		FIELD_DENSITIES,
-		FIELD_VARIANTS,
 		FOCUS_COLORS,
 		FOCUS_OFFSET_MAX,
 		FOCUS_OFFSET_MIN,
@@ -25,7 +23,6 @@
 
 	const brandLabels: Record<string, string> = { cnam: 'CNAM', pa: 'Portail Agent', ap: 'Amelipro' }
 	const focusColorLabels: Record<string, string> = { primary: 'Couleur principale (primary)', pinkDarken20: 'Rose foncé (pinkDarken20)' }
-	const variantLabels: Record<string, string> = { outlined: 'Contour (outlined)', filled: 'Rempli (filled)', underlined: 'Souligné (underlined)' }
 	const densityLabels: Record<string, string> = { default: 'Standard (default)', comfortable: 'Confortable (comfortable)', compact: 'Compacte (compact)' }
 
 	const toOptions = (values: readonly string[], labels: Record<string, string>) =>
@@ -37,8 +34,6 @@
 		focusWidth: String(defaultThemeConfig.focus.width),
 		focusOffset: String(defaultThemeConfig.focus.offset),
 		focusColor: defaultThemeConfig.focus.color as string,
-		customizeFields: false,
-		fieldsVariant: defaultThemeConfig.fields.variant as string,
 		fieldsDensity: defaultThemeConfig.fields.density as string,
 	})
 
@@ -61,8 +56,8 @@
 		if (form.focusColor !== defaultThemeConfig.focus.color) focus.color = form.focusColor
 		if (Object.keys(focus).length) config.focus = focus
 
-		if (form.customizeFields) {
-			config.fields = { variant: form.fieldsVariant, density: form.fieldsDensity }
+		if (form.fieldsDensity !== defaultThemeConfig.fields.density) {
+			config.fields = { density: form.fieldsDensity }
 		}
 
 		return config
@@ -75,7 +70,7 @@
 	// Rendu appliqué : un réglage refusé reprend sa valeur par défaut, comme dans createVuetifyOptions
 	const resolved = computed(() => resolveThemeConfig(themeConfig.value as SynapseThemeConfigInput, validation.value.issues))
 
-	const previewDefaults = computed(() => form.customizeFields ? getFieldsDefaults(resolved.value.fields) : {})
+	const previewDefaults = computed(() => themeConfig.value.fields ? getFieldsDefaults(resolved.value.fields) : {})
 	const previewStyle = computed(() => Object.fromEntries(
 		Object.entries(getFocusVariables(resolved.value.focus)).map(([name, value]) => [`--v-${name}`, value]),
 	))
@@ -163,27 +158,12 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 				<legend class="text-subtitle-1 font-weight-bold mb-2">
 					Champs de formulaire
 				</legend>
-				<SyCheckbox
-					v-model="form.customizeFields"
-					label="Personnaliser les champs"
+				<SyRadioGroup
+					v-model="form.fieldsDensity"
+					label="Densité"
+					:options="toOptions(FIELD_DENSITIES, densityLabels)"
 					hide-details
 				/>
-				<template v-if="form.customizeFields">
-					<SyRadioGroup
-						v-model="form.fieldsVariant"
-						label="Style"
-						:options="toOptions(FIELD_VARIANTS, variantLabels)"
-						hide-details
-						class="mt-4"
-					/>
-					<SyRadioGroup
-						v-model="form.fieldsDensity"
-						label="Densité"
-						:options="toOptions(FIELD_DENSITIES, densityLabels)"
-						hide-details
-						class="mt-4"
-					/>
-				</template>
 			</fieldset>
 		</section>
 

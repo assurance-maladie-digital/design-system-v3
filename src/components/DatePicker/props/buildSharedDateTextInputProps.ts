@@ -22,7 +22,7 @@ export const buildSharedDateTextInputProps = (
 	'readonly': props.readonly,
 	'clearable': props.clearable,
 	'disable-click-button': false,
-	'is-outlined': appearance.isOutlined,
+	'is-outlined': props.isOutlined,
 	'display-icon': props.displayIcon,
 	'display-append-icon': props.displayAppendIcon,
 	'display-prepend-icon': props.displayPrependIcon,

@@ -194,9 +194,8 @@
 		locales,
 	})
 
-	// Réglages `fields` de la configuration de thème, appliqués si variantStyle / density ne sont pas passés
-	const { resolveVariant, resolveDensity } = useFieldsThemeConfig()
-	const variant = resolveVariant('variantStyle', () => props.variantStyle)
+	// Réglage `fields.density` de la configuration de thème, appliqué si density n'est pas passée
+	const { resolveDensity } = useFieldsThemeConfig()
 	const density = resolveDensity('density', () => props.density)
 
 	const forwardedAttrs = computed(() => {
@@ -632,7 +631,7 @@
 			:tile="props.isTiled"
 			:type="nativeInputType"
 			:inputmode="isNumberField ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
-			:variant="variant"
+			:variant="props.variantStyle"
 			:width="props.width"
 			v-bind="forwardedAttrs"
 			:class="{

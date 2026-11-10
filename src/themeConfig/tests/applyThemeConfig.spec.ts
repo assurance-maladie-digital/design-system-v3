@@ -47,8 +47,8 @@ describe('createVuetifyOptions with a theme configuration', () => {
 	it('applies field settings to Vuetify fields only when provided', () => {
 		const options = createVuetifyOptions({ fields: { density: 'compact' } })
 
-		expect(options.defaults?.VTextField).toEqual({ variant: 'outlined', density: 'compact' })
-		expect(options.defaults?.VSelect).toEqual({ variant: 'outlined', density: 'compact' })
+		expect(options.defaults?.VTextField).toEqual({ density: 'compact' })
+		expect(options.defaults?.VSelect).toEqual({ density: 'compact' })
 		expect(options.defaults?.VBtn).toEqual({ ripple: false })
 	})
 

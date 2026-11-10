@@ -71,7 +71,7 @@
 		locales: () => ({}),
 	})
 
-	// Variante et densité des deux champs date, avec les réglages `fields` de la configuration de thème
+	// Densité des deux champs date, avec le réglage `fields.density` de la configuration de thème
 	const fieldAppearance = useDatePickerFieldAppearance(props)
 
 	const locales = useLocales(defaultLocales, () => props.locales)
@@ -368,7 +368,7 @@
 				:format="props.format"
 				:disabled="props.disabled"
 				:heading-level="props.headingLevel"
-				:is-outlined="fieldAppearance.isOutlined"
+				:is-outlined="props.isOutlined"
 				:no-calendar="props.noCalendar"
 				:no-icon="props.noIcon"
 				:placeholder="props.placeholderFrom"
@@ -395,7 +395,7 @@
 				:heading-level="props.headingLevel"
 				:format="props.format"
 				:disabled="props.disabled"
-				:is-outlined="fieldAppearance.isOutlined"
+				:is-outlined="props.isOutlined"
 				:no-calendar="props.noCalendar"
 				:no-icon="props.noIcon"
 				:placeholder="props.placeholderTo"

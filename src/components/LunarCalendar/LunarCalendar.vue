@@ -43,9 +43,8 @@
 		...validationPropsDefaults,
 	})
 
-	// Réglages `fields` de la configuration de thème, appliqués si variantStyle / density ne sont pas passés
-	const { resolveVariant, resolveDensity } = useFieldsThemeConfig()
-	const fieldVariant = resolveVariant('variantStyle', () => props.variantStyle)
+	// Réglage `fields.density` de la configuration de thème, appliqué si density n'est pas passée
+	const { resolveDensity } = useFieldsThemeConfig()
 	const fieldDensity = resolveDensity('density', () => props.density)
 
 	const locales = useLocales(defaultLocales, () => props.locales)
@@ -88,7 +87,7 @@
 		:prepend-tooltip="props.prependTooltip"
 		:append-tooltip="props.appendTooltip"
 		:tooltip-location="props.tooltipLocation"
-		:variant-style="fieldVariant"
+		:variant-style="props.variantStyle"
 		:color="props.color"
 		:density="fieldDensity"
 		:loading="props.loading"

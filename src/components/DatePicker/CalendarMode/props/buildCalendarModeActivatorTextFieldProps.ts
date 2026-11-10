@@ -34,7 +34,7 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	'placeholder': props.placeholder,
 	'no-icon': props.noIcon,
 	'prepend-icon': props.displayIcon && !props.displayAppendIcon ? 'calendar' : undefined,
-	'variant-style': appearance.variant,
+	'variant-style': props.isOutlined ? 'outlined' : 'underlined',
 	'show-success-messages': props.showSuccessMessages,
 	'bg-color': props.bgColor,
 	'density': appearance.density,

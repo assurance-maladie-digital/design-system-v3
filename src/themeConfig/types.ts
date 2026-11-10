@@ -4,9 +4,6 @@
  */
 export type SynapseBrand = 'cnam' | 'pa' | 'ap'
 
-/** Style visuel des champs de formulaire (prop `variant` des champs Vuetify). */
-export type SynapseFieldVariant = 'outlined' | 'filled' | 'underlined'
-
 /** Densité des champs de formulaire (prop `density` des champs Vuetify). */
 export type SynapseFieldDensity = 'default' | 'comfortable' | 'compact'
 
@@ -25,7 +22,6 @@ export interface SynapseFocusConfig {
 
 /** Réglages des champs de formulaire. */
 export interface SynapseFieldsConfig {
-	variant: SynapseFieldVariant
 	density: SynapseFieldDensity
 }
 

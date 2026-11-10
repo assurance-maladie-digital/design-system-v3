@@ -24,7 +24,7 @@ export const buildDateTextInputTextFieldProps = (
 	'prepend-icon': props.displayIcon && props.displayPrependIcon && !props.displayAppendIcon ? 'calendar' : undefined,
 	'readonly': props.readonly,
 	'required': props.required,
-	'variant-style': appearance.variant,
+	'variant-style': props.isOutlined ? 'outlined' : 'underlined',
 	'warning-messages': warningMessages.value,
 	'success-messages': successMessages.value,
 	'has-error': isOnError.value,

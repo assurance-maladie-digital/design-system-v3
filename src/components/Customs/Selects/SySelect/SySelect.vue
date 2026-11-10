@@ -134,13 +134,13 @@
 		return 'rgb(var(--v-theme-on-surface))'
 	})
 
-	// Réglages `fields` de la configuration de thème, appliqués si ni variantStyle ni outlined ne sont passés
-	const { themeFields, isPropExplicit, resolveDensity } = useFieldsThemeConfig()
 	const variant = computed(() => {
 		if (props.variantStyle) return props.variantStyle
-		if (!isPropExplicit('outlined') && themeFields.value.variant) return themeFields.value.variant
 		return props.outlined ? 'outlined' : 'underlined'
 	})
+
+	// Réglage `fields.density` de la configuration de thème, appliqué si density n'est pas passée
+	const { resolveDensity } = useFieldsThemeConfig()
 	const density = resolveDensity('density', () => props.density)
 
 	const isOpen = ref(false)
