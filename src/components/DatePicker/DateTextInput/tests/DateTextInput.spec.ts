@@ -998,6 +998,25 @@ describe('DateTextInput.clean', () => {
 		expect(descriptionEl?.textContent).toContain('année sur 4 chiffres, mois sur 2 chiffres, jour sur 2 chiffres')
 	})
 
+	it('describes the start and end dates and their format in range mode', () => {
+		const wrapper = mountComponent({
+			label: 'Période',
+			displayRange: true,
+			format: 'YYYY-MM-DD',
+		})
+
+		const input = wrapper.get('input')
+		expect(input.attributes('aria-label')).toBe('Période')
+
+		const descriptionId = input.attributes('aria-describedby')
+			?.split(' ')
+			.find(id => id.startsWith('date-format-desc-'))
+
+		expect(wrapper.get(`[id="${descriptionId}"]`).text()).toBe(
+			'Date de début, puis date de fin. Pour chaque date : année sur 4 chiffres, mois sur 2 chiffres, jour sur 2 chiffres',
+		)
+	})
+
 	it('preserves the business label as accessible name and does not announce the description redundantly', async () => {
 		const wrapper = mountComponent({
 			label: 'Date de naissance',
