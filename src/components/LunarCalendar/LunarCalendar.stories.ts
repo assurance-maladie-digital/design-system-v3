@@ -312,8 +312,8 @@ const dateValue = ref('12/13/1564')
 }
 
 /**
- * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, ne pas utiliser `is-clearable`
- * et fournir un `help-text` qui complète l'intitulé.
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, masquer le bouton d'effacement (`:is-clearable="false"`)
+ * pour libérer de la place et fournir un `help-text` qui complète l'intitulé.
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,

@@ -188,7 +188,7 @@ const meta = {
 		},
 		'clearable': {
 			control: 'boolean',
-			description: 'Affiche le bouton d\'effacement du champ (jamais affiché en readonly). Mettre à false sur petit écran (RGAA 10.4).',
+			description: 'Affiche le bouton d\'effacement du champ (jamais affiché en readonly). Mettre à false sur petit écran (RGAA 10.4) : `const { mobile } = useDisplay()` (Vuetify) puis `:clearable="!mobile"`.',
 			defaultValue: true,
 		},
 		'noIcon': {
@@ -365,7 +365,7 @@ export const Default: Story = {
 
 /**
  * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
- * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire, et ne pas utiliser `clearable`
+ * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire, et masquer le bouton d'effacement (`:clearable="false"`)
  * pour libérer de la place dans le champ.
  */
 export const MobileAccessibilityGuideline: Story = {
@@ -529,6 +529,17 @@ export const WithoutClearButton: Story = {
             :clearable="false"
           />
         </template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+        <script setup lang="ts">
+          import { ref } from 'vue'
+          import { DatePicker } from '@cnamts/synapse'
+
+          const date = ref('01/01/2025')
+        </script>
         `,
 			},
 		],

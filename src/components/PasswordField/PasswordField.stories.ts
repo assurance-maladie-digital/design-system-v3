@@ -322,8 +322,8 @@ export const ReadOnly: Story = {
 }
 
 /**
- * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
- * et utiliser `help-text` pour apporter une information complémentaire à l'intitulé.
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, masquer le bouton d'effacement (`:clearable="false"`)
+ * pour libérer de la place et utiliser `help-text` pour apporter une information complémentaire à l'intitulé.
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,

@@ -390,7 +390,7 @@ const phoneNumber = ref('')
 }
 
 /**
- * Recommandation RGAA 10.4 (reflow, petits écrans) : ne pas utiliser `is-clearable` pour libérer de la place
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : masquer le bouton d'effacement (`:is-clearable="false"`) pour libérer de la place
  * dans le champ, et fournir un `help-text` qui complète l'intitulé « Numéro de téléphone » (valeur par défaut).
  */
 export const MobileAccessibilityGuideline: Story = {
