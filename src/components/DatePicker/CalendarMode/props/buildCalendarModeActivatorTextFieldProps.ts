@@ -36,7 +36,7 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	'variant-style': props.isOutlined ? 'outlined' : 'underlined',
 	'show-success-messages': props.showSuccessMessages,
 	'bg-color': !props.readonly && props.bgColor === 'white'
-		? 'rgb(var(--v-theme-white))'
+		? 'rgb(var(--v-theme-white-base))'
 		: props.bgColor,
 	'density': props.density,
 	'hide-details': props.hideDetails,

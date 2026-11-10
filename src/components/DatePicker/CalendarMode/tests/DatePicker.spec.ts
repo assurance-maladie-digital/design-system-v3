@@ -70,7 +70,7 @@ describe('DatePicker', () => {
 	it('keeps the calendar activator opaque unless the picker is readonly', async () => {
 		const wrapper = mountComponent()
 		expect(wrapper.get('input').attributes('readonly')).toBeDefined()
-		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-white))')
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-white-base))')
 
 		expect(wrapper.find('.calendar-activator-editable').exists()).toBe(true)
 		await wrapper.setProps({ readonly: true })
@@ -78,7 +78,7 @@ describe('DatePicker', () => {
 		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-surface-bright))')
 
 		await wrapper.setProps({ readonly: false })
-		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-white))')
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-white-base))')
 	})
 
 	it('preserves a custom calendar activator background in both readonly states', async () => {
