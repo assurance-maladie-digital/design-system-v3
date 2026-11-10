@@ -252,5 +252,5 @@ export const Info: Story = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

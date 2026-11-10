@@ -460,7 +460,7 @@ export const Info: Story = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const FormValidation: Story = {
@@ -618,5 +618,5 @@ export const DeprecationNotice = {
 	...createDeprecationNotice([
 		{ label: 'SySelect', url: '/?path=/docs/composants-formulaires-selects-syselect--docs' },
 	]),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

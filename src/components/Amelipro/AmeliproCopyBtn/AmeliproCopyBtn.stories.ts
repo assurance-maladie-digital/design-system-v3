@@ -157,5 +157,5 @@ export const DeprecationNotice = {
 	...createDeprecationNotice([
 		{ label: 'CopyBtn', url: '/?path=/docs/composants-boutons-copybtn--docs&globals=theme:ap' },
 	]),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

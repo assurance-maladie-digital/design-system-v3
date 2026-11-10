@@ -770,5 +770,5 @@ export const DeprecationNotice = {
 	...createDeprecationNotice([
 		{ label: 'SyTable', url: '?path=/docs/composants-tableaux-sytable--docs' },
 	]),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

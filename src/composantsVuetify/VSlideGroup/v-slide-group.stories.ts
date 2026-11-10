@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 const meta: Meta<typeof VSlideGroup> = {
 	title: 'Composants/Composants Vuetify/VSlideGroup',
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	component: VSlideGroup,
 	parameters: {
 		docs: {

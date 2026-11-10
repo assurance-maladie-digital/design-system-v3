@@ -328,6 +328,7 @@ const AlertText = defineComponent({
 export default {
 	title: 'Démarrer/Releases',
 	component: SyAlert,
+	tags: ['!manifest'],
 }
 export const List = {
 	render: () => {
@@ -501,5 +502,5 @@ export const List = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

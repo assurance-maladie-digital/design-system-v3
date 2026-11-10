@@ -401,5 +401,5 @@ export const DeprecationNotice = {
 			url: '/?path=/docs/templates-notfoundpage--docs&globals=theme:ap',
 		},
 	]),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

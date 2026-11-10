@@ -11,7 +11,7 @@ import { ref } from 'vue'
 
 const meta: Meta<typeof VStepper> = {
 	title: 'Composants/Composants Vuetify/VStepper',
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	component: VStepper,
 	parameters: {
 		docs: {

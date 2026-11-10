@@ -3,6 +3,7 @@ import type { StoryObj } from '@storybook/vue3-vite'
 
 export default {
 	title: 'Guide Du Dev/Équivalence des composants/Portail Agent',
+	tags: ['!manifest'],
 }
 
 export const PAgComponents: StoryObj = {
@@ -520,5 +521,5 @@ export const PAgComponents: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

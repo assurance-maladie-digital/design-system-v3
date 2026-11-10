@@ -5,6 +5,7 @@ import '../styles/shared.css'
 export default {
 	title: 'Démarrer/Enrichir le Design System',
 	component: SyAlert,
+	tags: ['!manifest'],
 }
 
 export const InfoIntro = {
@@ -23,7 +24,7 @@ export const InfoIntro = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Optimisation = {
@@ -66,7 +67,7 @@ export const Optimisation = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const AjoutFonctionnalite = {
@@ -109,7 +110,7 @@ export const AjoutFonctionnalite = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const DeclinaisonFonctionnalite = {
@@ -151,7 +152,7 @@ export const DeclinaisonFonctionnalite = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const CreationComposant = {
@@ -193,7 +194,7 @@ export const CreationComposant = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const IntegrationComposant = {
@@ -235,5 +236,5 @@ export const IntegrationComposant = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

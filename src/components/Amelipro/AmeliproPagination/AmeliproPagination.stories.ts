@@ -179,5 +179,5 @@ export const DeprecationNotice = {
 	...createDeprecationNotice([
 		{ label: 'SyPagination', url: '/?path=/docs/composants-navigation-sypagination--docs&globals=theme:ap' },
 	]),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

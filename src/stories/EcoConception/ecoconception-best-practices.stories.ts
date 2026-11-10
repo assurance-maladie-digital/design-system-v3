@@ -4,6 +4,7 @@ import EcoBestPracticesDoc from './EcoBestPracticesDoc.vue'
 export default {
 	title: 'Éco-conception',
 	component: EcoBestPracticesDoc,
+	tags: ['!manifest'],
 } as Meta
 
 export const BonnesPratiquesEssentielles: StoryObj = {
@@ -16,5 +17,5 @@ export const BonnesPratiquesEssentielles: StoryObj = {
 	parameters: {
 		layout: 'fullscreen',
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

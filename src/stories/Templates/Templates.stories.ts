@@ -3,6 +3,7 @@ import type { StoryObj } from '@storybook/vue3-vite'
 
 export default {
 	title: 'Templates/Vue d\'ensemble',
+	tags: ['!manifest'],
 }
 
 export const Header: StoryObj = {
@@ -16,7 +17,7 @@ export const Header: StoryObj = {
       `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const TemplatesList: StoryObj = {
@@ -81,5 +82,5 @@ export const TemplatesList: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

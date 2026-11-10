@@ -3,6 +3,7 @@ import ComponentTrackingPage from './SuiviDesComposants/ComponentTrackingPage.vu
 
 export default {
 	title: 'Démarrer/Suivi des composants',
+	tags: ['!manifest'],
 }
 
 export const ComponentTracking: StoryObj = {
@@ -10,5 +11,5 @@ export const ComponentTracking: StoryObj = {
 		components: { ComponentTrackingPage },
 		template: '<ComponentTrackingPage />',
 	}),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

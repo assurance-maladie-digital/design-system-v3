@@ -1007,5 +1007,5 @@ Utilisez à la place le slot item de DataList (ou le slot value de DataListItem)
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

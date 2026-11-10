@@ -397,5 +397,5 @@ export const WarningDocProps: Story = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

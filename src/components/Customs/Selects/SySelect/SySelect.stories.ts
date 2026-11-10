@@ -856,7 +856,7 @@ export const Info: Story = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const StringArray: Story = {

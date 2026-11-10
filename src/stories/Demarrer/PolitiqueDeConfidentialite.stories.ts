@@ -3,6 +3,7 @@ import { VCard } from 'vuetify/components'
 
 export default {
 	title: 'Démarrer/Politique de confidentialité',
+	tags: ['!manifest'],
 }
 
 export const Default: StoryObj = {
@@ -16,5 +17,5 @@ export const Default: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
