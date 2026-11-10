@@ -38,7 +38,7 @@ import * as NotificationBarStories from './NotificationBar.stories';
 
 ## Personnaliser le texte du bouton de fermeture
 
-Le bouton de fermeture a pour nom accessible « Fermer la notification ». Si vous modifiez `closeBtnText`, redéfinissez ce nom accessible via `vuetifyOptions` pour qu'il contienne le texte visible (critère RGAA 11.9) :
+**Contournement temporaire** : le composant ne reprend pas encore `closeBtnText` dans le nom accessible du bouton de fermeture, qui reste « Fermer la notification » (ticket STD-702). En attendant que `Notification.vue` construise ce nom à partir de `closeBtnText`, si vous modifiez ce texte, redéfinissez le nom accessible via `vuetifyOptions` pour qu'il contienne le texte visible (critère RGAA 11.9) :
 
 <Source dark code={`
 <NotificationBar
