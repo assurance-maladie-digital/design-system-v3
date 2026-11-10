@@ -24,13 +24,16 @@ describe('NotificationBar stories - CustomCloseBtnText', () => {
 
 	it('le nom accessible du bouton « Masquer » reprend son intitulé visible', async () => {
 		wrapper = mount(CustomCloseBtnText)
-		await wrapper.findAllComponents(VBtn).at(-1)!.trigger('click')
+		const trigger = wrapper.findAllComponents(VBtn).find(btn => btn.text() === 'Afficher la notification')
+		await trigger!.trigger('click')
 		vi.runAllTimers()
 		await nextTick()
 
 		const closeBtn = wrapper.find('.notification__close')
 		const visibleText = closeBtn.text()
+		const ariaLabel = closeBtn.attributes('aria-label')
 		expect(visibleText).toBe('Masquer')
-		expect(closeBtn.attributes('aria-label') ?? visibleText).toContain(visibleText)
+		expect(ariaLabel).toBeDefined()
+		expect(ariaLabel).toContain(visibleText)
 	})
 })

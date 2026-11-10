@@ -144,7 +144,7 @@ Default.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-                import { NotificationBar, useNotificationService } from '@cnamts/synapse'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 
 				const { addNotification } = useNotificationService()
 
@@ -710,6 +710,78 @@ export const WithClearQueue: Story = (args) => {
 WithClearQueue.args = {
 	...Default.args,
 	bottom: true,
+}
+
+WithClearQueue.parameters = {
+	sourceCode: [
+		{
+			name: 'Template',
+			code: `
+			<template>
+				<div class="d-flex flex-column align-center justify-center ga-4">
+					<NotificationBar
+						close-btn-text="Fermer"
+						bottom
+					/>
+					<div class="d-flex flex-wrap justify-center ga-4">
+						<VBtn
+							color="primary"
+							@click="envoyerNotification('Notification info', 'info')"
+						>
+							Ajouter info
+						</VBtn>
+						<VBtn
+							color="on-success-variant"
+							@click="envoyerNotification('Notification succès', 'success')"
+						>
+							Ajouter succès
+						</VBtn>
+						<VBtn
+							color="on-warning-variant"
+							@click="envoyerNotification('Notification avertissement', 'warning')"
+						>
+							Ajouter avertissement
+						</VBtn>
+						<VBtn
+							color="error"
+							@click="envoyerNotification('Notification erreur', 'error')"
+						>
+							Ajouter erreur
+						</VBtn>
+						<VBtn
+							color="grey-darken-1"
+							@click="clearQueue()"
+						>
+							Fermer toutes les notifications
+						</VBtn>
+					</div>
+					<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+				</div>
+			</template>
+			`,
+		},
+		{
+			name: 'Script',
+			code: `
+			<script setup lang="ts">
+				import { VBtn } from 'vuetify/components'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
+				import type { Notification } from '@cnamts/synapse'
+
+				const { addNotification, clearQueue } = useNotificationService()
+
+				const envoyerNotification = (message: string, type: Notification['type'] = 'info') => {
+					addNotification({
+						id: Date.now().toString(),
+						message,
+						type,
+						timeout: -1,
+					})
+				}
+			</script>
+			`,
+		},
+	],
 }
 
 export const ShowAll: Story = (args) => {
