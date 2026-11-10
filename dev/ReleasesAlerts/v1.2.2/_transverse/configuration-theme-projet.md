@@ -25,4 +25,4 @@ Sans configuration, le rendu est identique à la version précédente.
 ## Conduite à tenir
 
 - Aucune si vous n'utilisez pas la configuration.
-- Pour l'adopter, composez votre fichier avec le configurateur de la page *Guide Du Dev / Démarrage / Configuration de thème projet*, puis passez-le à `createVuetifyOptions(themeConfig)`.
+- Pour l'adopter, composez votre fichier avec le configurateur de la page *Guide Du Dev / Démarrage / Customisation du thème*, puis passez-le à `createVuetifyOptions(themeConfig)`.

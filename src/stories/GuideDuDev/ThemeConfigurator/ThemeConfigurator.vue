@@ -7,8 +7,8 @@
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-	import { checkThemeConfig } from '@/vuetifyOptions'
-	import { getFieldsDefaults, getFocusVariables } from '@/themeConfig/applyThemeConfig'
+	import { checkThemeConfig, createVuetifyOptions } from '@/vuetifyOptions'
+	import { getFieldsDefaults, getFocusVariables, getThemeColors } from '@/themeConfig/applyThemeConfig'
 	import {
 		FIELD_DENSITIES,
 		FIELD_VARIANTS,
@@ -80,6 +80,15 @@
 		Object.entries(getFocusVariables(resolved.value.focus)).map(([name, value]) => [`--v-${name}`, value]),
 	))
 
+	// Couleur principale de chaque marque : CNAM et Portail Agent partagent la même, l'aperçu le signale
+	const baseOptions = createVuetifyOptions()
+	const primaryByBrand = Object.fromEntries(SYNAPSE_BRANDS.map(brand => [brand, getThemeColors(baseOptions, brand)?.primary]))
+	const brandCaption = computed(() => {
+		const brand = resolved.value.brand
+		const sharesPrimary = brand !== defaultThemeConfig.brand && primaryByBrand[brand] === primaryByBrand[defaultThemeConfig.brand]
+		return `Thème appliqué : ${brandLabels[brand] ?? brand}${sharesPrimary ? ` (même couleur principale que ${brandLabels[defaultThemeConfig.brand]})` : ''}`
+	})
+
 	const configJson = computed(() => JSON.stringify(themeConfig.value, null, 2))
 	const usageCode = computed(() => `import { createVuetify } from 'vuetify'
 import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
@@ -133,14 +142,14 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 					label="Épaisseur (px)"
 					type="number"
 					:help-text="`Entre ${FOCUS_WIDTH_MIN} et ${FOCUS_WIDTH_MAX} px`"
-					class="mb-2"
+					class="mb-4"
 				/>
 				<SyTextField
 					v-model="form.focusOffset"
 					label="Écart des boutons (px)"
 					type="number"
 					:help-text="`Entre ${FOCUS_OFFSET_MIN} et ${FOCUS_OFFSET_MAX} px`"
-					class="mb-2"
+					class="mb-4"
 				/>
 				<SyRadioGroup
 					v-model="form.focusColor"
@@ -188,8 +197,11 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 			>
 				Aperçu
 			</h2>
+			<p class="text-body-2 mb-1">
+				{{ brandCaption }}
+			</p>
 			<p class="text-body-2 mb-4">
-				Naviguez avec la touche Tab pour voir l'anneau de focus.
+				L'anneau de focus est reproduit en permanence ci-dessous ; naviguez avec la touche Tab dans l'aperçu pour le voir sur les composants.
 			</p>
 
 			<VThemeProvider
@@ -202,6 +214,15 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 						class="pa-4"
 						:style="previewStyle"
 					>
+						<div class="d-flex flex-wrap align-center ga-4 mb-6">
+							<span class="text-body-2">Anneau de focus :</span>
+							<span
+								class="theme-configurator__focus-sample"
+								aria-hidden="true"
+							>
+								Élément focalisé
+							</span>
+						</div>
 						<SyTextField
 							v-model="previewText"
 							label="Nom de l'assuré"
@@ -312,6 +333,18 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 .theme-configurator__preview {
 	border: 1px solid rgba(var(--v-theme-on-surface), 0.2);
 	border-radius: 4px;
+}
+
+.theme-configurator__focus-sample {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: 36px;
+	padding-inline: 16px;
+	border-radius: 4px;
+	background: rgb(var(--v-theme-primary));
+	color: rgb(var(--v-theme-on-primary));
+	outline: var(--v-focus-width) solid rgb(var(--v-focus-color));
+	outline-offset: var(--v-focus-offset);
 }
 
 .theme-configurator__code {

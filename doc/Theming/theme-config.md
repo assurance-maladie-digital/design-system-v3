@@ -41,7 +41,7 @@ Les champs Synapse passent leur `variant` explicitement à Vuetify : les `defaul
 
 `SyInputSelect` (rendu en bouton) et les composants Amelipro ne lisent pas `fields`.
 
-Un configurateur interactif est disponible dans Storybook : *Guide Du Dev / Démarrage / Configuration de thème projet*.
+Un configurateur interactif est disponible dans Storybook : *Guide Du Dev / Démarrage / Customisation du thème*.
 
 ## Validation
 

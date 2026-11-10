@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import ThemeConfigurator from './ThemeConfigurator.vue'
 
 const meta = {
-	title: 'Guide Du Dev/Démarrage/Configuration de thème projet',
+	title: 'Guide Du Dev/Démarrage/Customisation du thème',
 	component: ThemeConfigurator,
 	parameters: {
 		layout: 'padded',
