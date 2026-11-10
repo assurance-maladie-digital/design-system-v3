@@ -158,6 +158,8 @@ export interface ValidateOptions {
  */
 export interface DatePickerValidationController {
 	validity: ComputedRef<boolean | null>
+	/** true tant qu'aucune validation réelle n'a eu lieu (champ vierge ou validé silencieusement). */
+	isPristine: ComputedRef<boolean>
 	errors: Ref<string[]>
 	warnings: Ref<string[]>
 	successes: Ref<string[]>
@@ -622,6 +624,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	// --- Retour du contrôleur ---
 	return {
 		validity: computed(() => validation?.validity.value ?? null),
+		isPristine: computed(() => validation?.isPristine.value ?? true),
 		errors,
 		warnings,
 		successes,

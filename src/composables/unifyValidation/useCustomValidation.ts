@@ -27,6 +27,13 @@ export interface UseCustomValidationOptions {
 	formRegistration?: {
 		/** Validité d'un champ enfant validé séparément. undefined conserve la validation locale. */
 		getValidity?: () => boolean | null | undefined
+		/**
+		 * État « jamais validé » du champ enfant délégué par getValidity. undefined conserve
+		 * l'état local. À fournir avec getValidity : une validité false silencieuse
+		 * (champ non touché) doit rester pristine pour ne pas faire passer le SyForm de
+		 * null à false sans erreur affichée.
+		 */
+		getIsPristine?: () => boolean | undefined
 		validateOnSubmit?: () => Promise<boolean> | boolean
 		clearValidation?: () => void
 		reset?: () => void
@@ -199,6 +206,7 @@ export function useCustomValidation(
 	}
 
 	const delegatedValidity = computed(() => options.formRegistration?.getValidity?.())
+	const delegatedIsPristine = computed(() => options.formRegistration?.getIsPristine?.())
 	const validity = computed(() => {
 		// Les champs désactivés ou en lecture seule sont ignorés par la validation Synapse.
 		if (readonly?.value || disabled?.value) return true
@@ -216,7 +224,8 @@ export function useCustomValidation(
 			computed(() => (options.enabled?.value ?? true)
 				&& (!disableErrorHandling.value || errors.value.length > 0 || hasExternalErrors.value || hasForcedError.value)),
 			computed(() => !hasExternalErrors.value && !hasForcedError.value
-				&& (delegatedValidity.value !== undefined ? delegatedValidity.value === null : isPristine.value)),
+				&& (delegatedIsPristine.value
+					?? (delegatedValidity.value !== undefined ? delegatedValidity.value === null : isPristine.value))),
 		)
 	}
 

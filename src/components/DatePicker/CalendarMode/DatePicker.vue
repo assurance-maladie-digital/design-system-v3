@@ -349,6 +349,10 @@
 				if (props.noCalendar) return dateTextInputRef.value?.formValidity ?? null
 				if (props.useCombinedMode) return complexDatePickerRef.value?.formValidity ?? null
 			},
+			getIsPristine: () => {
+				if (props.noCalendar) return dateTextInputRef.value?.formIsPristine
+				if (props.useCombinedMode) return complexDatePickerRef.value?.formIsPristine
+			},
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,
 			reset: resetField,

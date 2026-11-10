@@ -150,6 +150,7 @@
 	// pour afficher des erreurs locales (ex: format invalide) sans passer par le flow complet.
 	const {
 		validity: formValidity,
+		isPristine: formIsPristine,
 		hasError: bridgeHasError,
 		hasWarning: bridgeHasWarning,
 		hasSuccess: bridgeHasSuccess,
@@ -1314,8 +1315,9 @@
 		reset()
 	}
 
-	const publicApi: DateTextInputPublicApi & { formValidity: typeof formValidity } = {
+	const publicApi: DateTextInputPublicApi = {
 		formValidity,
+		formIsPristine,
 		validateOnSubmit,
 		validate: bridgeValidate,
 		reset,

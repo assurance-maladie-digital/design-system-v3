@@ -313,6 +313,7 @@
 	// et useDatePickerInputBlurHandler qui ont besoin d'un accès bas niveau.
 	const {
 		validity: formValidity,
+		isPristine: formIsPristine,
 		validate,
 		validateField,
 		clearValidation,
@@ -1515,8 +1516,9 @@
 		fieldKey.value++
 	}
 
-	const publicApi: ComplexDatePickerPublicApi & { formValidity: typeof formValidity } = {
+	const publicApi: ComplexDatePickerPublicApi = {
 		formValidity,
+		formIsPristine,
 		validateOnSubmit,
 		isDatePickerVisible,
 		selectedDates,

@@ -28,7 +28,7 @@ export const SyFormLiveValidity: Story = {
 		controls: { disable: true },
 		docs: {
 			description: {
-				story: 'Sélectionnez une date et quittez le champ. Le formulaire passe de `null` à `true` et le bouton Soumettre devient disponible.',
+				story: 'Une custom rule interdit le 15 du mois : sélectionnez-le pour voir le formulaire passer à `false`, puis un autre jour pour le faire repasser à `true` et activer le bouton Soumettre.',
 			},
 		},
 	},
