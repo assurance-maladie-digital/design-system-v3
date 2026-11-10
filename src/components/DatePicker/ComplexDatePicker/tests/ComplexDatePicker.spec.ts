@@ -1753,6 +1753,39 @@ describe('ComplexDatePicker.clean', () => {
 		wrapper.unmount()
 	})
 
+	it('updates the displayed month and refocuses the target day when keyboard navigation crosses to the previous month', async () => {
+		vi.useFakeTimers()
+
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '01/07/2024',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+		await vi.advanceTimersByTimeAsync(600)
+		await flushPromises()
+
+		const focusedDay = document.activeElement as HTMLElement | null
+		expect(focusedDay?.closest('[data-v-date="2024-07-01"]')).not.toBeNull()
+
+		focusedDay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }))
+		await flushPromises()
+		await nextTick()
+
+		const lastOfJune = document.activeElement
+		expect(lastOfJune?.matches('[role="gridcell"][data-v-date="2024-06-30"]:not(.v-date-picker-month__day--adjacent)')).toBe(true)
+
+		lastOfJune?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }))
+		expect(document.activeElement?.getAttribute('data-v-date')).toBe('2024-06-29')
+
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
 	it('isSameCalendarSelection compares at day level not getTime', () => {
 		const w = mountComponent({ label: 'Date', format: 'DD/MM/YYYY' })
 		const d1 = new Date(2024, 5, 15, 0, 0, 0, 0)

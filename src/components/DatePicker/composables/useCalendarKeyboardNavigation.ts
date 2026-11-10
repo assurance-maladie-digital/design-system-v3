@@ -48,33 +48,6 @@ import {
 } from 'vue'
 import dayjs from 'dayjs'
 
-const describeFocusElement = (target: EventTarget | null) => {
-	if (!(target instanceof Element)) return null
-
-	return {
-		tag: target.tagName.toLowerCase(),
-		role: target.getAttribute('role'),
-		date: target.closest('[data-v-date]')?.getAttribute('data-v-date') ?? null,
-		tabindex: target.getAttribute('tabindex'),
-		adjacent: Boolean(target.closest('.v-date-picker-month__day--adjacent')),
-		connected: target.isConnected,
-	}
-}
-
-const traceCalendarFocus = (step: string, getDetails: () => Record<string, unknown>) => {
-	if (!import.meta.env.DEV || typeof window === 'undefined') return
-
-	try {
-		if (window.sessionStorage.getItem('synapse:date-picker-focus') !== '1') return
-	}
-	catch {
-		return
-	}
-
-	// eslint-disable-next-line no-console -- Diagnostic local activé à la demande.
-	console.info(`[Synapse DatePicker focus] ${step} ${JSON.stringify(getDetails())}`)
-}
-
 export interface CalendarKeyboardNavigationOptions {
 	isDatePickerVisible: Ref<boolean>
 	datePickerRef: Ref<ComponentPublicInstance | null>
@@ -465,14 +438,10 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 	const focusDateButton = (date: Date, attempt = 0, token = ++latestFocusToken, showFocusRing = false) => {
 		// Si un autre focus a été demandé entre-temps, on annule
-		if (token !== latestFocusToken) {
-			traceCalendarFocus('focus:cancelled', () => ({ date: toISO(date), attempt, token, latestFocusToken }))
-			return
-		}
+		if (token !== latestFocusToken) return
 
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 		if (!rootEl) {
-			traceCalendarFocus('focus:root-missing', () => ({ date: toISO(date), attempt, token }))
 			if (attempt < 15) {
 				setTimeout(() => focusDateButton(date, attempt + 1, token, showFocusRing), attempt === 0 ? 10 : 30)
 			}
@@ -521,29 +490,10 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			const bestCandidate = visibleCandidates[0]
 			if (bestCandidate) {
 				focusDayCell(bestCandidate, showFocusRing)
-				traceCalendarFocus('focus:attempt', () => ({
-					date: iso,
-					attempt,
-					token,
-					exactMatches: dataDateElements.length,
-					visibleCandidates: visibleCandidates.length,
-					candidate: describeFocusElement(bestCandidate),
-					active: describeFocusElement(document.activeElement),
-					focused: document.activeElement === bestCandidate,
-				}))
 
 				// Rattrapage si le DOM est encore modifié après la pose du focus.
 				if (attempt <= 1) {
 					setTimeout(() => {
-						traceCalendarFocus('focus:recheck', () => ({
-							date: iso,
-							attempt,
-							token,
-							latestFocusToken,
-							candidate: describeFocusElement(bestCandidate),
-							active: describeFocusElement(document.activeElement),
-							focused: document.activeElement === bestCandidate,
-						}))
 						if (
 							token === latestFocusToken
 							&& typeof document !== 'undefined'
@@ -558,15 +508,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			}
 		}
 
-		traceCalendarFocus('focus:no-visible-candidate', () => ({
-			date: iso,
-			attempt,
-			token,
-			exactMatches: dataDateElements.length,
-			candidates: candidates.length,
-			willRetry: attempt < 15,
-			active: describeFocusElement(document.activeElement),
-		}))
 		if (attempt < 15) {
 			setTimeout(() => focusDateButton(date, attempt + 1, token, showFocusRing), attempt === 0 ? 10 : 30)
 		}
@@ -622,16 +563,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 				nextDate = addDays(current, 7)
 				break
 		}
-
-		traceCalendarFocus('arrow', () => ({
-			key: event.key,
-			repeat: event.repeat,
-			from: toISO(current),
-			to: toISO(nextDate),
-			changesMonth: current.getMonth() !== nextDate.getMonth(),
-			target: describeFocusElement(event.target),
-			active: describeFocusElement(document.activeElement),
-		}))
 
 		navigateToDate(nextDate)
 	}
