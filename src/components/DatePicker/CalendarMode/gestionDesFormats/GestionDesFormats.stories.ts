@@ -36,31 +36,31 @@ export const DifferentFormats: Story = {
     <DatePicker
       v-model="value1"
       placeholder="JJ/MM/AAAA"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       format="DD/MM/YYYY"
     />
     <DatePicker
       v-model="value2"
       placeholder="MM/JJ/AAAA"
-      label="Date (MM/JJ/AAAA)"
+      label="Date de l'examen" help-text="Format attendu : mois en 2 chiffres / jour en 2 chiffres / année en 4 chiffres"
       format="MM/DD/YYYY"
     />
     <DatePicker
       v-model="value3"
       placeholder="AAAA-MM-JJ"
-      label="Date (AAAA-MM-JJ)"
+      label="Date de la prescription" help-text="Format attendu : année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres"
       format="YYYY-MM-DD"
     />
     <DatePicker
       v-model="value4"
       placeholder="JJ-MM-AA"
-      label="Date (JJ-MM-AA)"
+      label="Date de délivrance" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 2 chiffres"
       format="DD-MM-YY"
     />
     <DatePicker
       v-model="value5"
       placeholder="JJ.MM.AAAA"
-      label="Date (JJ.MM.AAAA)"
+      label="Date de sortie" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       format="DD.MM.YYYY"
     />
   </div>
@@ -103,7 +103,7 @@ const value5 = ref('24.12.2025')
 					v-bind="args"
 					v-model="value1"
 					placeholder="JJ/MM/AAAA"
-					label="Date (JJ/MM/AAAA)"
+					label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 					format="DD/MM/YYYY"
 					class="py-4"
 				/>
@@ -111,7 +111,7 @@ const value5 = ref('24.12.2025')
 					v-bind="args"
 					v-model="value2"
 					placeholder="MM/JJ/AAAA"
-					label="Date (MM/JJ/AAAA)"
+					label="Date de l'examen" help-text="Format attendu : mois en 2 chiffres / jour en 2 chiffres / année en 4 chiffres"
 					format="MM/DD/YYYY"
 					class="py-4"
 				/>
@@ -119,7 +119,7 @@ const value5 = ref('24.12.2025')
 					v-bind="args"
 					v-model="value3"
 					placeholder="AAAA-MM-JJ"
-					label="Date (AAAA-MM-JJ)"
+					label="Date de la prescription" help-text="Format attendu : année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres"
 					format="YYYY-MM-DD"
 					class="py-4"
 				/>
@@ -127,7 +127,7 @@ const value5 = ref('24.12.2025')
 					v-bind="args"
 					v-model="value4"
 					placeholder="JJ-MM-AA"
-					label="Date (JJ-MM-AA)"
+					label="Date de délivrance" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 2 chiffres"
 					format="DD-MM-YY"
 					class="py-4"
 				/>
@@ -135,7 +135,7 @@ const value5 = ref('24.12.2025')
 					v-bind="args"
 					v-model="value5"
 					placeholder="JJ.MM.AAAA"
-					label="Date (JJ.MM.AAAA)"
+					label="Date de sortie" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 					format="DD.MM.YYYY"
 					class="py-4"
 				/>
@@ -165,7 +165,7 @@ export const WithDateFormatReturn: Story = {
     <DatePicker
       v-model="value1"
       placeholder="JJ/MM/AAAA"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       format="DD/MM/YYYY"
     />
 
@@ -173,7 +173,7 @@ export const WithDateFormatReturn: Story = {
     <DatePicker
       v-model="value2"
       placeholder="JJ/MM/AAAA"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       format="DD/MM/YYYY"
       date-format-return="MM/DD/YYYY"
     />
@@ -182,7 +182,7 @@ export const WithDateFormatReturn: Story = {
     <DatePicker
       v-model="value3"
       placeholder="JJ/MM/AAAA"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       format="DD/MM/YYYY"
       date-format-return="YYYY-MM-DD"
     />
@@ -223,7 +223,7 @@ const value3 = ref('26/12/2025')
 					v-bind="args"
 					v-model="value1"
 					placeholder="JJ/MM/AAAA"
-					label="Date (JJ/MM/AAAA)"
+					label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 					format="DD/MM/YYYY"
 				/>
 
@@ -232,7 +232,7 @@ const value3 = ref('26/12/2025')
 					v-bind="args"
 					v-model="value2"
 					placeholder="JJ/MM/AAAA"
-					label="Date (JJ/MM/AAAA)"
+					label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 					format="DD/MM/YYYY"
 					date-format-return="MM/DD/YYYY"
 				/>
@@ -242,7 +242,7 @@ const value3 = ref('26/12/2025')
 					v-bind="args"
 					v-model="value3"
 					placeholder="JJ/MM/AAAA"
-					label="Date (JJ/MM/AAAA)"
+					label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 					format="DD/MM/YYYY"
 					date-format-return="YYYY-MM-DD"
 				/>
@@ -268,7 +268,7 @@ export const WithDayjsFormat: Story = {
     <DatePicker
       v-model="date"
       placeholder="JJ/MM/AAAA"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       format="DD/MM/YYYY"
     />
     <p class="mt-4">Date formatée avec dayjs: {{ formattedDate }}</p>
@@ -340,7 +340,7 @@ watch(date, (newDate) => {
 					v-bind="args"
 					v-model="date"
 					placeholder="JJ/MM/AAAA"
-					label="Date (JJ/MM/AAAA)"
+					label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 					format="DD/MM/YYYY"
 				/>
 				<p class="mt-4">Date formatée avec dayjs: {{ formattedDate }}</p>

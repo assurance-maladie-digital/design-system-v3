@@ -36,7 +36,8 @@ export const WithError: Story = {
   <DatePicker
     ref="datePickerRef"
     v-model="value"
-    label="Date (JJ/MM/AAAA)"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     :custom-rules="[
@@ -64,7 +65,8 @@ onMounted(() => {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		showSuccessMessages: true,
@@ -112,7 +114,8 @@ export const WithWarning: Story = {
   <DatePicker
     ref="datePickerRef"
     v-model="value"
-    label="Date avec avertissement (JJ/MM/AAAA)"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Une date antérieure au 01/01/2031 déclenche un avertissement"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     :custom-warning-rules="[
@@ -146,7 +149,8 @@ onMounted(() => {
 		],
 	},
 	args: {
-		label: 'Date avec avertissement (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Une date antérieure au 01/01/2031 déclenche un avertissement',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		customWarningRules: [
@@ -200,7 +204,8 @@ export const WithSuccess: Story = {
   <DatePicker
     ref="datePickerRef"
     v-model="value"
-    label="Date valide (JJ/MM/AAAA)"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     required
@@ -229,7 +234,8 @@ onMounted(() => {
 		],
 	},
 	args: {
-		label: 'Date valide (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -280,6 +286,7 @@ export const DisableErrorHandling: Story = {
     <DatePicker
       v-model="value1"
       label="Avec validation interne (défaut)"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -287,6 +294,7 @@ export const DisableErrorHandling: Story = {
     <DatePicker
       v-model="value2"
       label="Validation interne désactivée"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -309,6 +317,7 @@ const value2 = ref('')
 		],
 	},
 	args: {
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -354,7 +363,8 @@ export const CustomRules: Story = {
 <template>
   <DatePicker
     v-model="value"
-    label="Date (JJ/MM/AAAA)"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     :custom-rules="[
@@ -389,7 +399,8 @@ const value = ref('')
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		customRules: [
@@ -441,7 +452,8 @@ export const CustomRulesReturnFormat: Story = {
 <template>
   <DatePicker
     v-model="value"
-    label="Date (JJ/MM/AAAA)"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     date-format-return="YYYY-MM-DD"
@@ -477,7 +489,8 @@ const customRules = [
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: 'YYYY-MM-DD',
@@ -530,7 +543,8 @@ export const NoValidateOnBlur: Story = {
     <DatePicker
       ref="datePickerRef"
       :model-value="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -577,7 +591,8 @@ const resetValue = () => {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		isValidateOnBlur: false,
@@ -649,7 +664,8 @@ export const BidirectionalValidation: Story = {
         <DatePicker
           ref="startDatePickerRef"
           v-model="startDate"
-          label="Date de début (JJ/MM/AAAA)"
+          label="Date de début"
+          help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
           placeholder="JJ/MM/AAAA"
           :custom-rules="startDateRules"
           required
@@ -661,7 +677,8 @@ export const BidirectionalValidation: Story = {
         <DatePicker
           ref="endDatePickerRef"
           v-model="endDate"
-          label="Date de fin (JJ/MM/AAAA)"
+          label="Date de fin"
+          help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
           placeholder="JJ/MM/AAAA"
           :custom-rules="endDateRules"
           required
@@ -865,7 +882,8 @@ watch(endDate, () => {
 								ref="startDatePickerRef"
 								v-bind="args"
 								v-model="startDate"
-								label="Date de début (JJ/MM/AAAA)"
+								label="Date de début"
+								help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 								placeholder="JJ/MM/AAAA"
 								:custom-rules="startDateRules"
 								@update:model-value="validateEndDate"
@@ -877,7 +895,8 @@ watch(endDate, () => {
 								ref="endDatePickerRef"
 								v-bind="args"
 								v-model="endDate"
-								label="Date de fin (JJ/MM/AAAA)"
+								label="Date de fin"
+								help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 								placeholder="JJ/MM/AAAA"
 								:custom-rules="endDateRules"
 								@update:model-value="validateStartDate"
@@ -909,7 +928,8 @@ export const SyFormValidation: Story = {
   <SyForm @submit="onSubmit">
     <DatePicker
       v-model="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -945,7 +965,8 @@ const onSubmit = (event) => {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -1006,7 +1027,8 @@ export const VFormValidation: Story = {
     <DatePicker
       ref="datePickerRef"
       v-model="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -1044,7 +1066,8 @@ async function onSubmit() {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -1101,7 +1124,8 @@ export const SyFormCustomRulesValidation: Story = {
   <SyForm @submit="onSubmit">
     <DatePicker
       v-model="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -1149,7 +1173,8 @@ const onSubmit = (event) => {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -1220,7 +1245,8 @@ export const VFormVuetifyValidation: Story = {
     <DatePicker
       ref="datePickerRef"
       v-model="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       use-vuetify-validation
@@ -1259,7 +1285,8 @@ async function onSubmit() {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useVuetifyValidation: true,

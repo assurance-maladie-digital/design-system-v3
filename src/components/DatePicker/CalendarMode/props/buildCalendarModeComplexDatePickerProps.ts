@@ -42,6 +42,7 @@ export const buildCalendarModeComplexDatePickerProps = (
 	maxErrors: props.maxErrors,
 	placeholder: props.placeholder,
 	isValidateOnBlur: props.isValidateOnBlur,
+	helpText: props.helpText,
 	hint: props.hint,
 	persistentHint: props.persistentHint,
 	period: props.period,

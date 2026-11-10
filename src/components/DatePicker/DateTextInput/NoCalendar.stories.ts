@@ -8,6 +8,9 @@ import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 interface DatePickerProps {
 	'modelValue'?: string | string[] | null
 	'label'?: string
+	'helpText'?: string
+	'hint'?: string
+	'persistentHint'?: boolean
 	'placeholder'?: string
 	'format'?: string
 	'dateFormatReturn'?: string
@@ -131,7 +134,7 @@ const meta = {
 		},
 		'placeholder': {
 			control: 'text',
-			description: 'Texte indicatif affiché lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
+			description: 'Exemple de saisie affiché lorsque le champ est vide. Il ne remplace jamais le libellé ni le `helpText` (RGAA 11.1, 11.2).',
 			defaultValue: 'JJ/MM/AAAA',
 		},
 		'format': {
@@ -153,8 +156,21 @@ const meta = {
 		},
 		'label': {
 			control: 'text',
-			description: 'Libellé du champ affiché au-dessus ou dans le champ de saisie',
+			description: 'Libellé du champ affiché au-dessus ou dans le champ de saisie. RGAA 11.1 et 11.2 : utiliser un intitulé court, explicite et distinct pour chaque champ (ex : « Date de naissance »). Ne pas y répéter le format attendu, à placer dans `helpText`.',
 			defaultValue: 'Date',
+		},
+		'helpText': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ, y compris en cas d\'erreur (comme `SyTextField`). À privilégier pour indiquer le format attendu (ex : « Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres ») sans le répéter dans le `label` (RGAA 11.1, 11.2).',
+		},
+		'hint': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ et relié à celui-ci par `aria-describedby`. À utiliser avec `persistentHint`. Il est masqué dès qu\'un message est affiché : préférer `helpText` pour indiquer le format attendu ou une contrainte (RGAA 11.1).',
+		},
+		'persistentHint': {
+			control: 'boolean',
+			description: 'Garde le `hint` visible en permanence (sinon il n\'apparaît qu\'au focus).',
+			defaultValue: false,
 		},
 		'required': {
 			control: 'boolean',
@@ -305,7 +321,8 @@ export const Default: Story = {
 							v-model="date"
 							format="DD/MM/YYYY"
 							date-format-return=""
-							label="Date (JJ/MM/AAAA)"
+							label="Date de la consultation"
+							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 							required
 							is-outlined
 							display-icon
@@ -325,7 +342,8 @@ export const Default: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
+		'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		'required': true,
 		'disabled': false,
 		'readonly': false,
@@ -365,7 +383,7 @@ export const Default: Story = {
 
 /**
  * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
- * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire, et masquer le bouton d'effacement (`:clearable="false"`)
+ * utiliser `helpText` pour apporter une information complémentaire, et masquer le bouton d'effacement (`:clearable="false"`)
  * pour libérer de la place dans le champ.
  */
 export const MobileAccessibilityGuideline: Story = {
@@ -375,7 +393,7 @@ export const MobileAccessibilityGuideline: Story = {
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
 		createInfoNoticeDecorator(`
-			<code>hint</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			<code>helpText</code> complète le champ : y répéter l'intitulé
 			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
 			(précision), pas pour le copier.
 		`),
@@ -401,9 +419,8 @@ export const MobileAccessibilityGuideline: Story = {
 						v-model="date"
 						format="DD/MM/YYYY"
 						placeholder="JJ/MM/AAAA"
-						label="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
-						hint="Cette date figure sur votre prescription médicale"
-						persistent-hint
+						label="Date de début de votre arrêt de travail"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Cette date figure sur votre prescription médicale"
 						:no-calendar="true"
 						:clearable="false"
 					/>
@@ -415,11 +432,9 @@ export const MobileAccessibilityGuideline: Story = {
 	args: {
 		...Default.args,
 		required: false,
-		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
-		hint: 'Cette date figure sur votre prescription médicale',
-		persistentHint: true,
+		label: 'Date de début de votre arrêt de travail',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Cette date figure sur votre prescription médicale',
 		clearable: false,
-		// `hint` n'est pas une prop typée du DatePicker : il est transmis en attribut au champ.
 	} as typeof Default.args,
 }
 
@@ -442,11 +457,13 @@ export const Required: Story = {
 				code: `
 				<template>
 					<div>
+						<p>Les champs marqués d'un astérisque (*) sont obligatoires.</p>
 						<h4 class="mb-4">Sans astérisque :</h4>
 						<DatePicker
 							v-model="date"
 							format="DD/MM/YYYY"
-							label="Date (JJ/MM/AAAA)"
+							label="Date de la consultation"
+							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 							required
 							is-outlined
 							:no-calendar="true"
@@ -455,7 +472,8 @@ export const Required: Story = {
 						<DatePicker
 							v-model="date"
 							format="DD/MM/YYYY"
-							label="Date (JJ/MM/AAAA)"
+							label="Date de l'ordonnance"
+							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 							required
 							is-outlined
 							:no-calendar="true"
@@ -471,7 +489,8 @@ export const Required: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
+		'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		'required': true,
 		'disabled': false,
 		'readonly': false,
@@ -496,6 +515,7 @@ export const Required: Story = {
 			},
 			template: `
 				<div>
+					<p class="mb-4">Les champs marqués d'un astérisque (*) sont obligatoires.</p>
 					<h4 class="mb-4">Sans astérisque :</h4>
 					<DatePicker
 						v-model="date"
@@ -505,6 +525,7 @@ export const Required: Story = {
 					<DatePicker
 						v-model="date"
 						v-bind="args"
+						label="Date de l'ordonnance"
 						displayAsterisk
 					/>
 				</div>
@@ -524,7 +545,8 @@ export const WithoutClearButton: Story = {
             v-model="date"
             format="DD/MM/YYYY"
             placeholder="JJ/MM/AAAA"
-            label="Date sans bouton d'effacement (JJ/MM/AAAA)"
+            label="Date de la consultation"
+            help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
             no-calendar
             :clearable="false"
           />
@@ -548,7 +570,8 @@ export const WithoutClearButton: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date sans bouton d\'effacement (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
+		'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		'clearable': false,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
@@ -583,7 +606,8 @@ export const WithAppendIcon: Story = {
           <DatePicker
             v-model="date"
             format="DD/MM/YYYY"
-            label="Date avec icône en suffixe (JJ/MM/AAAA)"
+            label="Date de la consultation"
+            help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
             no-calendar
             display-append-icon
           />
@@ -595,7 +619,8 @@ export const WithAppendIcon: Story = {
 	args: {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
-		'label': 'Date avec icône en suffixe (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
+		'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		'displayAppendIcon': true,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),

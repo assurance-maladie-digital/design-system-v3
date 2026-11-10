@@ -31,7 +31,8 @@ const baseArgs = {
 	'format': 'DD/MM/YYYY',
 	'dateFormatReturn': '',
 	'placeholder': 'JJ/MM/AAAA',
-	'label': 'Date (JJ/MM/AAAA)',
+	'label': 'Date de la consultation',
+	'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 	'required': false,
 	'disabled': false,
 	'readonly': false,
@@ -52,7 +53,6 @@ export const WithError: Story = {
 	args: {
 		...baseArgs,
 		modelValue: '20/08/2026',
-		label: 'Date avec erreur injectée',
 		errorMessages: ['Date invalide côté métier'],
 		required: false,
 	},
@@ -86,7 +86,6 @@ export const WithWarning: Story = {
 	args: {
 		...baseArgs,
 		modelValue: '20/08/2026',
-		label: 'Date avec warning injecté',
 		warningMessages: ['Date inhabituelle, à vérifier'],
 		required: false,
 	},
@@ -120,7 +119,6 @@ export const WithSuccess: Story = {
 	args: {
 		...baseArgs,
 		modelValue: '20/08/2026',
-		label: 'Date avec succès injecté',
 		showSuccessMessages: true,
 		successMessages: ['Date validée'],
 		required: false,
@@ -163,7 +161,8 @@ export const CustomRules: Story = {
 						date-format-return="DD/MM/YYYY"
 						format="DD/MM/YYYY"
 						placeholder="JJ/MM/AAAA"
-						label="Date avec règles personnalisées (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2024 ne sont pas autorisées"
 						required
 						no-calendar
 						:custom-rules="[{
@@ -184,7 +183,8 @@ export const CustomRules: Story = {
 	args: {
 		...baseArgs,
 		dateFormatReturn: 'DD/MM/YYYY',
-		label: 'Date avec règles personnalisées (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2024 ne sont pas autorisées',
 		required: true,
 		customRules: [{
 			type: 'custom',
@@ -231,7 +231,8 @@ export const WarningRules: Story = {
             v-model="date"
             format="DD/MM/YYYY"
             placeholder="JJ/MM/AAAA"
-            label="Date avec règles d'avertissement (JJ/MM/AAAA)"
+            label="Date de la consultation"
+            help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2025 déclenchent un avertissement"
             no-calendar
             :custom-warning-rules="[{
               type: 'custom',
@@ -251,7 +252,8 @@ export const WarningRules: Story = {
 	},
 	args: {
 		...baseArgs,
-		label: 'Date avec règles d\'avertissement (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2025 déclenchent un avertissement',
 		customWarningRules: [{
 			type: 'custom',
 			options: {
@@ -301,7 +303,8 @@ export const WithErrorDisabled: Story = {
                 v-model="date1"
                 format="DD/MM/YYYY"
                 placeholder="JJ/MM/AAAA"
-                label="Date (JJ/MM/AAAA)"
+                label="Date de la consultation"
+                help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
                 required
                 no-icon
                 no-calendar
@@ -314,7 +317,8 @@ export const WithErrorDisabled: Story = {
                 v-model="date2"
                 format="DD/MM/YYYY"
                 placeholder="JJ/MM/AAAA"
-                label="Date (JJ/MM/AAAA)"
+                label="Date de la consultation"
+                help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
                 required
                 no-icon
                 no-calendar
@@ -362,7 +366,8 @@ export const WithErrorDisabled: Story = {
                 v-model="date2"
                 format="DD/MM/YYYY"
                 placeholder="JJ/MM/AAAA"
-                label="Date (JJ/MM/AAAA)"
+                label="Date de la consultation"
+                help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
                 required
                 no-icon
                 no-calendar
