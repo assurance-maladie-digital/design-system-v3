@@ -12,7 +12,7 @@ votre assistant de code via un serveur **MCP** (*Model Context Protocol*).
 Connectez-le pour obtenir de l’aide afin de choisir et d’intégrer les
 composants adaptés à votre projet.
 
-Endpoint MCP Synapse : https://main--66ab962f47d1fd65c7852d10.chromatic.com/mcp
+Endpoint MCP Synapse : https://prod--66ab962f47d1fd65c7852d10.chromatic.com/mcp
 
 ## 1. Connecter l’assistant au serveur MCP
 
@@ -28,7 +28,7 @@ pour les autres méthodes de configuration.
   "servers": {
     "synapse-storybook": {
       "type": "http",
-      "url": "https://main--66ab962f47d1fd65c7852d10.chromatic.com/mcp"
+      "url": "https://prod--66ab962f47d1fd65c7852d10.chromatic.com/mcp"
     }
   }
 }
@@ -42,7 +42,7 @@ autorisez ses outils dans la conversation Copilot.
 Depuis la racine du projet, ajoutez le serveur à la configuration du projet :
 
 <Source dark language="bash" code={`
-claude mcp add --transport http --scope project synapse-storybook https://main--66ab962f47d1fd65c7852d10.chromatic.com/mcp
+claude mcp add --transport http --scope project synapse-storybook https://prod--66ab962f47d1fd65c7852d10.chromatic.com/mcp
 `}/>
 
 Consultez la [documentation MCP de Claude Code](https://code.claude.com/docs/en/mcp)
