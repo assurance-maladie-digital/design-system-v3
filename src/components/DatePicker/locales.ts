@@ -6,6 +6,7 @@ export const locales = {
 
 	// Messages de description
 	formatHint: 'Format attendu :',
+	rangeFormatHint: 'Date de début, puis date de fin. Pour chaque date :',
 	// Libellés des jetons dayjs, pour décrire le format en langage naturel
 	dateFormatTokenLabels: {
 		D: 'jour',

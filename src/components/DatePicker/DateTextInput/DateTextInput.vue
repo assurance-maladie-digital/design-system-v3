@@ -249,7 +249,8 @@
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
 	const formatDescription = computed(() => {
-		const description = `${locales.formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
+		const formatHint = isRange.value ? locales.rangeFormatHint : locales.formatHint
+		const description = `${formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
 		// Quand le champ sert d'activateur de calendrier, on avertit qu'un élément va s'afficher
 		return props.calendarActivator ? `${description}. ${locales.activationOpensCalendar}` : description
 	})
