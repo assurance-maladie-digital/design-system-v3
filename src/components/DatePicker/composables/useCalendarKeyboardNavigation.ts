@@ -660,6 +660,15 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			return
 		}
 
+		// Les boutons d'entête (mois/année, précédent/suivant) ne se parcourent qu'à Tab :
+		// les flèches et Home/End ne doivent pas déplacer le focus vers la grille.
+		if (
+			['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(keyboardEvent.key)
+			&& target?.closest('.v-date-picker-controls, .v-date-picker-header')
+		) {
+			return
+		}
+
 		// Gérer les dialogues mois/année ouverts
 		if (handleMonthDialogNavigation(keyboardEvent) || handleYearDialogNavigation(keyboardEvent)) {
 			return

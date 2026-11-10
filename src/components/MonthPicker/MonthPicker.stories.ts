@@ -205,7 +205,7 @@ export const Default: Story = {
 }
 
 /**
- * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, ne pas utiliser `clearable`,
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, masquer le bouton d'effacement (`:clearable="false"`) pour libérer de la place,
  * conserver l'indication du format dans l'intitulé (« (MM/AAAA) ») puisque `help-text` est personnalisé, et
  * utiliser `help-text` pour apporter une information complémentaire.
  */

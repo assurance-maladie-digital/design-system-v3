@@ -2,6 +2,7 @@ import { type Ref, nextTick } from 'vue'
 import dayjs from 'dayjs'
 import { getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
 import type { ViewMode } from './useDatePickerViewMode'
+import { useYearListRegionAria } from './useYearListRegionAria'
 
 /**
  * Options du composable `useDatePickerCalendar`.
@@ -98,6 +99,12 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 		onYearViewFocus,
 		onYearChangeBridge,
 	} = options
+
+	const { applyYearListRegionAria } = useYearListRegionAria({
+		getRootEl,
+		isDatePickerVisible,
+		currentViewMode,
+	})
 
 	/**
 	 * Nettoie la sémantique grid ARIA injectée avant que Vuetify ne re-render le mois,
@@ -258,7 +265,12 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 					firstBtn?.focus({ preventScroll: true })
 				}
 
-				waitForTransitionEnd(yearsContainer, focusActiveYear)
+				waitForTransitionEnd(yearsContainer, () => {
+					// Le DOM de la vue années peut être recréé pendant la transition :
+					// réappliquer role=region + aria-label APRÈS la transition.
+					applyYearListRegionAria()
+					focusActiveYear()
+				})
 			})
 		}
 	}

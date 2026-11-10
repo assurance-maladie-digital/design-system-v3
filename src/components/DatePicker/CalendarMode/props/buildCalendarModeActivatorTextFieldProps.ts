@@ -38,7 +38,7 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	'density': props.density,
 	'hide-details': props.hideDetails,
 	'display-asterisk': false,
-	'is-clearable': !props.readonly,
+	'is-clearable': props.clearable && !props.readonly,
 	'auto-clamp': props.autoClamp,
 	'title': props.title === false ? props.title : props.title || props.placeholder,
 	'hint': props.hint,

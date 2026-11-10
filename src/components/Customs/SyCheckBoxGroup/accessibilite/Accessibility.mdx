@@ -90,6 +90,7 @@ import '@/stories/styles/shared.css';
 			<li>Pour un groupe requis, expliquez clairement la contrainte (ex. « choisissez au moins une option »).</li>
 			<li>Évitez de baser le sens uniquement sur la couleur (toujours fournir un message textuel).</li>
 			<li>Assurez-vous que les zones cliquables restent confortables sur mobile.</li>
+			<li>Évitez les groupes désactivés : même lorsque leur contraste est conforme (critère RGAA 3.2), un groupe désactivé via la prop <code>disabled</code> crée une charge mentale, l'utilisateur devant chercher comment l'activer. Préférez un groupe actif accompagné d'un message expliquant la contrainte, ou ne l'affichez que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi il est indisponible et comment l'activer.</li>
 		</ul>
 	</div>
 

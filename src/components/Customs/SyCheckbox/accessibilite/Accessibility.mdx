@@ -126,6 +126,7 @@ import {
       <li>Assurez-vous que la taille de la zone cliquable est suffisante (au moins 44×44 pixels pour les interfaces tactiles)</li>
       <li>Utilisez l'état indéterminé uniquement pour indiquer une sélection partielle, pas un troisième état fonctionnel</li>
       <li>Fournissez un retour visuel et textuel clair pour les erreurs de validation</li>
+      <li>Évitez les cases à cocher désactivées : même lorsque leur contraste est conforme (critère RGAA 3.2), une case désactivée via la prop <code>disabled</code> crée une charge mentale, l'utilisateur devant chercher comment l'activer. Préférez une case active accompagnée d'un message expliquant la contrainte, ou ne l'affichez que lorsqu'elle devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi elle est indisponible et comment l'activer</li>
     </ul>
   </BestPracticesSection>
 

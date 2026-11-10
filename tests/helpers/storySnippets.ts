@@ -1,3 +1,4 @@
+import ts from 'typescript'
 import { compileScript, compileTemplate, parse } from 'vue/compiler-sfc'
 
 /** Onglet du paramètre `sourceCode` d'une story. */
@@ -102,4 +103,54 @@ export function analyzeSnippet(story: StoryWithSourceCode): SnippetAnalysis {
 		untypedRefs: unique(descriptor.scriptSetup?.content ?? '', /\b(\w+)\s*=\s*ref\(null\)/g),
 		invalidAttributes: getStaticAttributeNames(descriptor.template?.ast).filter(name => name.endsWith(':')),
 	}
+}
+
+function importedNames(declaration: ts.ImportDeclaration): string[] {
+	const clause = declaration.importClause
+	if (!clause || clause.isTypeOnly) {
+		return []
+	}
+	const bindings = clause.namedBindings
+	const named = bindings && ts.isNamedImports(bindings)
+		? bindings.elements.filter(element => !element.isTypeOnly).map(element => element.name.text)
+		: bindings ? [bindings.name.text] : []
+	return clause.name ? [clause.name.text, ...named] : named
+}
+
+function declaresBinding(statement: ts.Statement, name: string): boolean {
+	if (ts.isVariableStatement(statement)) {
+		return statement.declarationList.declarations.some(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === name)
+	}
+	return (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) && statement.name?.text === name
+}
+
+/**
+ * Exécute le `<script setup>` de l'extrait d'une story, tel que recopié par un consommateur,
+ * et renvoie la valeur de la variable `name` déclarée à sa racine.
+ * Les imports sont retirés et remplacés par les valeurs de `imports` (fonction vide par défaut).
+ * Lève une erreur si l'extrait n'a pas de `<script setup>` ou ne déclare pas `name`.
+ */
+export function evaluateSnippetBinding(
+	story: StoryWithSourceCode,
+	name: string,
+	imports: Record<string, unknown> = {},
+): unknown {
+	const content = parseSnippet(story).descriptor.scriptSetup?.content
+	if (content === undefined) {
+		throw new Error('L\'extrait ne contient pas de <script setup>.')
+	}
+
+	const source = ts.createSourceFile(`${SNIPPET_ID}.ts`, content, ts.ScriptTarget.ES2022)
+	const statements = source.statements.filter(statement => !ts.isImportDeclaration(statement))
+	if (!statements.some(statement => declaresBinding(statement, name))) {
+		throw new Error(`L'extrait ne déclare pas « ${name} ».`)
+	}
+
+	const names = source.statements.filter(ts.isImportDeclaration).flatMap(importedNames)
+	const script = ts.factory.updateSourceFile(source, statements)
+	const { outputText } = ts.transpileModule(`${ts.createPrinter().printFile(script)}\nreturn ${name}`, {
+		compilerOptions: { target: ts.ScriptTarget.ES2022 },
+	})
+	const noop = () => undefined
+	return new Function(...names, outputText)(...names.map(imported => (imported in imports ? imports[imported] : noop)))
 }

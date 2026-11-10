@@ -61,6 +61,7 @@ import {
 			<li><strong>Validation appropriée</strong> : Utilisez la validation au blur (<code>isValidateOnBlur</code>) pour ne pas surcharger l'utilisateur pendant la saisie.</li>
 			<li><strong>Évitez les changements de contexte automatiques</strong> : Ne soumettez pas automatiquement le formulaire ou ne changez pas de page lors de la saisie.</li>
 			<li><strong>Préfixes et suffixes accessibles</strong> : Le composant ajoute automatiquement des spans screen-reader-only pour le contenu textuel des préfixes/suffixes.</li>
+			<li><strong>Éviter les champs désactivés</strong> : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférez un champ actif accompagné d'un message expliquant la contrainte, ou n'affichez le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.</li>
 		</ul>
 	</BestPracticesSection>
 

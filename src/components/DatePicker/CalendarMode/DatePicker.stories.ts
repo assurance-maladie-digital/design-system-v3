@@ -220,6 +220,11 @@ const meta = {
 			description: 'Désactive le champ, empêchant toute interaction utilisateur et appliquant un style grisé. ⚠️ Incompatible avec readonly.',
 			defaultValue: false,
 		},
+		'clearable': {
+			control: 'boolean',
+			description: 'Affiche le bouton d\'effacement du champ (jamais affiché en readonly). Mettre à false sur petit écran (RGAA 10.4) : `const { mobile } = useDisplay()` (Vuetify) puis `:clearable="!mobile"`.',
+			defaultValue: true,
+		},
 		'noIcon': {
 			control: 'boolean',
 			description: 'Masque toutes les icônes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. ⚠️ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
@@ -395,8 +400,8 @@ export const Default: Story = {
 
 /**
  * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
- * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire. Le bouton d'effacement est toujours
- * affiché hors lecture seule (non désactivable pour l'instant).
+ * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire, et masquer le bouton d'effacement (`:clearable="false"`)
+ * pour libérer de la place dans le champ.
  */
 export const MobileAccessibilityGuideline: Story = {
 	...Default,
@@ -423,6 +428,7 @@ export const MobileAccessibilityGuideline: Story = {
 						persistent-hint
 						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
+						:clearable="false"
 					/>
 				</template>
 				`,
@@ -445,6 +451,7 @@ export const MobileAccessibilityGuideline: Story = {
 		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
 		hint: 'Cette date figure sur votre prescription médicale',
 		persistentHint: true,
+		clearable: false,
 	},
 }
 
@@ -828,6 +835,58 @@ export const WithoutIcon: Story = {
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
                 <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithoutClearButton: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
+						format="DD/MM/YYYY"
+						:clearable="false"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref('01/01/2025')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'JJ/MM/AAAA',
+		label: 'Date (JJ/MM/AAAA)',
+		format: 'DD/MM/YYYY',
+		clearable: false,
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('01/01/2025')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
               </div>
             `,
 		}

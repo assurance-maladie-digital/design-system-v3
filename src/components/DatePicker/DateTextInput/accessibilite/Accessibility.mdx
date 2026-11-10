@@ -60,6 +60,7 @@ import {
 		- En lecture seule, désactiver les actions d’édition et d’effacement; ne pas utiliser le champ comme solution de remplacement d’un bouton calendrier.
 		- En mode plage, préciser dans le hint l’ordre attendu (début puis fin) et conserver la séparatrice <code>" - "</code>.
 		- Avec <code>autoClamp</code>, signaler que les séparateurs sont ajoutés automatiquement sans bloquer les corrections clavier.
+		- Éviter les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférer un champ actif accompagné d'un message expliquant la contrainte, ou n'afficher le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquer par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.
 	</BestPracticesSection>
 
 	<ResourcesSection>

@@ -18,6 +18,7 @@ export const buildSharedDateTextInputProps = (
 	'custom-warning-rules': props.customWarningRules,
 	'disabled': props.disabled,
 	'readonly': props.readonly,
+	'clearable': props.clearable,
 	'disable-click-button': false,
 	'is-outlined': props.isOutlined,
 	'display-icon': props.displayIcon,

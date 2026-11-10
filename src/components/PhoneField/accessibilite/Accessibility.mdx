@@ -134,6 +134,7 @@ import '@/stories/styles/shared.css';
 			<li>Pour un champ requis, expliquez clairement la contrainte via la prop <code>helpText</code>.</li>
 			<li>Évitez de baser le sens uniquement sur la couleur (toujours fournir un message textuel).</li>
 			<li>Assurez-vous que les zones cliquables restent confortables sur mobile.</li>
+			<li>Évitez les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale, l'utilisateur devant chercher comment l'activer. Préférez un champ actif accompagné d'un message expliquant la contrainte, ou n'affichez le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.</li>
 		</ul>
 	</div>
 

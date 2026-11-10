@@ -30,7 +30,7 @@ export const buildDateTextInputTextFieldProps = (
 	'has-success': isOnSuccess.value,
 	'show-success-messages': props.showSuccessMessages,
 	'bg-color': props.bgColor,
-	'is-clearable': !props.readonly,
+	'is-clearable': props.clearable && !props.readonly,
 	'aria-label': ariaLabel,
 	'is-validate-on-blur': props.isValidateOnBlur,
 	'density': props.density,
