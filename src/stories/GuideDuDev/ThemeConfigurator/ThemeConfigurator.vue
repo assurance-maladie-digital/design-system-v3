@@ -296,7 +296,7 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 	gap: 32px;
 }
 
-@media (min-width: 960px) {
+@media (width >= 960px) {
 	.theme-configurator {
 		grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
 	}
