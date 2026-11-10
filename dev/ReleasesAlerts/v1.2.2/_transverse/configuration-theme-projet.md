@@ -24,4 +24,25 @@ Sans configuration, le rendu est identique à la version précédente.
 ## Conduite à tenir
 
 - Aucune si vous n'utilisez pas la configuration.
-- Pour l'adopter, composez votre fichier avec le configurateur de la page *Guide Du Dev / Démarrage / Customisation du thème*, puis passez-le à `createVuetifyOptions(themeConfig)`.
+- Pour l'adopter, composez votre fichier avec le configurateur de la page *Guide Du Dev / Démarrage / Customisation du thème*, enregistrez-le en `src/synapse.theme.ts`, puis passez-le à `createVuetifyOptions(themeConfig)` :
+
+```ts
+// src/synapse.theme.ts
+import type { SynapseThemeConfigInput } from '@cnamts/synapse/vuetifyOptions'
+
+export default {
+  brand: 'pa',
+  focus: { width: 3 },
+} satisfies SynapseThemeConfigInput
+```
+
+```ts
+import { createVuetify } from 'vuetify'
+import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
+import themeConfig from './synapse.theme'
+
+const vuetify = createVuetify(createVuetifyOptions(themeConfig))
+```
+
+- N'utilisez pas de fichier JSON : TypeScript type ses valeurs en `string` (`brand: string`), que `createVuetifyOptions` refuse au build. Le `.ts` avec `satisfies SynapseThemeConfigInput` garde les valeurs exactes et l'éditeur propose les valeurs autorisées.
+- Pour bloquer une configuration refusée en CI, testez-la avec `checkThemeConfig(themeConfig)` (`@cnamts/synapse/vuetifyOptions`).

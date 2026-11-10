@@ -19,12 +19,24 @@ Composez votre configuration, vérifiez le rendu et la validation, puis copiez l
 
 ## Utilisation
 
-Passez la configuration à `createVuetifyOptions` (ou à `createVuetifyInstance`, qui accepte le même objet). Sans argument, le rendu Synapse par défaut est conservé à l'identique.
+Copiez le fichier généré dans votre projet (`src/synapse.theme.ts`), puis passez-le à `createVuetifyOptions` (ou à `createVuetifyInstance`, qui accepte le même objet). Sans argument, le rendu Synapse par défaut est conservé à l'identique.
+
+Écrivez la configuration dans un fichier `.ts` avec `satisfies SynapseThemeConfigInput`, plutôt qu'en JSON : TypeScript type les valeurs d'un fichier JSON importé en `string` (`brand: string`), que `createVuetifyOptions` refuse. Le `.ts` garde les valeurs exactes (`'pa'`) et l'éditeur propose les valeurs autorisées.
+
+<Source dark language="ts" code={`
+// src/synapse.theme.ts
+import type { SynapseThemeConfigInput } from '@cnamts/synapse/vuetifyOptions'
+
+export default {
+  brand: 'pa',
+  focus: { width: 3 },
+} satisfies SynapseThemeConfigInput
+`} />
 
 <Source dark language="ts" code={`
 import { createVuetify } from 'vuetify'
 import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
-import themeConfig from './synapse.theme.json'
+import themeConfig from './synapse.theme'
 
 app.use(createVuetify(createVuetifyOptions(themeConfig)))
 `} />
@@ -88,7 +100,7 @@ Le style des champs n'est pas configurable : la maquette Synapse ne définit qu'
 
 <Source dark language="ts" code={`
 import { checkThemeConfig } from '@cnamts/synapse/vuetifyOptions'
-import themeConfig from './synapse.theme.json'
+import themeConfig from './synapse.theme'
 
 const { valid, issues } = checkThemeConfig(themeConfig)
 if (!valid) {

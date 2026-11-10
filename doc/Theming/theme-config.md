@@ -7,10 +7,22 @@ Source : `src/themeConfig/`.
 
 ## Utilisation
 
+Écrivez la configuration dans un fichier `.ts` avec `satisfies SynapseThemeConfigInput`, plutôt qu'en JSON : TypeScript type les valeurs d'un fichier JSON importé en `string` (`brand: string`), que `createVuetifyOptions` refuse. Le `.ts` garde les valeurs exactes (`'pa'`) et l'éditeur propose les valeurs autorisées.
+
+```ts
+// src/synapse.theme.ts
+import type { SynapseThemeConfigInput } from '@cnamts/synapse/vuetifyOptions'
+
+export default {
+  brand: 'pa',
+  focus: { width: 3 },
+} satisfies SynapseThemeConfigInput
+```
+
 ```ts
 import { createVuetify } from 'vuetify'
 import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
-import themeConfig from './synapse.theme.json'
+import themeConfig from './synapse.theme'
 
 app.use(createVuetify(createVuetifyOptions(themeConfig)))
 ```
@@ -52,7 +64,7 @@ Pour bloquer en CI, utiliser `checkThemeConfig`, qui vérifie aussi les couleurs
 
 ```ts
 import { checkThemeConfig } from '@cnamts/synapse/vuetifyOptions'
-import themeConfig from './synapse.theme.json'
+import themeConfig from './synapse.theme'
 
 const { valid, issues } = checkThemeConfig(themeConfig)
 if (!valid) {

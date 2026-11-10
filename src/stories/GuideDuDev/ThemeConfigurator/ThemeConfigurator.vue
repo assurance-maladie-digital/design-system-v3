@@ -84,20 +84,33 @@
 		return `Thème appliqué : ${brandLabels[brand] ?? brand}${sharesPrimary ? ` (même couleur principale que ${brandLabels[defaultThemeConfig.brand]})` : ''}`
 	})
 
-	const configJson = computed(() => JSON.stringify(themeConfig.value, null, 2))
+	// Objet TypeScript : un import JSON typerait `brand: string`, refusé par `SynapseThemeConfigInput`
+	const toTsLiteral = (value: unknown, indent = ''): string => {
+		if (typeof value === 'string') return `'${value.replace(/\\/g, '\\\\').replace(/'/g, '\\\'')}'`
+		if (typeof value !== 'object' || value === null) return String(value)
+		const entries = Object.entries(value)
+		if (!entries.length) return '{}'
+		const inner = `${indent}  `
+		return `{\n${entries.map(([key, entry]) => `${inner}${key}: ${toTsLiteral(entry, inner)},`).join('\n')}\n${indent}}`
+	}
+
+	const configFile = computed(() => `import type { SynapseThemeConfigInput } from '@cnamts/synapse/vuetifyOptions'
+
+export default ${toTsLiteral(themeConfig.value)} satisfies SynapseThemeConfigInput
+`)
 	const usageCode = computed(() => `import { createVuetify } from 'vuetify'
 import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
-import themeConfig from './synapse.theme.json'
+import themeConfig from './synapse.theme'
 
 app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 
 	const copied = ref(false)
-	watch(configJson, () => {
+	watch(configFile, () => {
 		copied.value = false
 	})
 	async function copyConfig(): Promise<void> {
 		if (typeof navigator === 'undefined' || !navigator.clipboard) return
-		await navigator.clipboard.writeText(configJson.value)
+		await navigator.clipboard.writeText(configFile.value)
 		copied.value = true
 	}
 
@@ -271,9 +284,9 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 				Configuration
 			</h2>
 			<p class="text-body-2 mb-2">
-				Fichier <code>synapse.theme.json</code> (seuls les réglages modifiés y figurent) :
+				Fichier <code>synapse.theme.ts</code> (seuls les réglages modifiés y figurent) :
 			</p>
-			<pre class="theme-configurator__code"><code>{{ configJson }}</code></pre>
+			<pre class="theme-configurator__code"><code>{{ configFile }}</code></pre>
 			<VBtn
 				class="mt-2 mb-4"
 				variant="outlined"
