@@ -205,6 +205,9 @@ onMounted(() => {
 		label: 'Identifiant assuré',
 		customNumberWarningRules: maleNirWarningRules,
 	},
+	argTypes: {
+		customNumberWarningRules: { control: false },
+	},
 	render: args => ({
 		components: { NirField },
 		setup() {
@@ -372,10 +375,13 @@ export const CustomRules: Story = {
 		showSuccessMessages: true,
 		customNumberRules: nirFormatRules,
 	},
+	argTypes: {
+		customNumberRules: { control: false },
+	},
 	parameters: {
 		docs: {
 			description: {
-				story: 'Règle personnalisée avec prévalence (`customRulesPrecedence: true`) qui remplace la validation standard du numéro et contrôle son format : sexe, année, mois, département (`00` exclu, `2A`/`2B` acceptés), commune et numéro d\'ordre. Chaque contrôle renvoie son propre message d\'erreur. Un NIR valide est présaisi et validé au chargement : avec `showSuccessMessages`, le `successMessage` de la règle s\'affiche sous le champ (ainsi que celui de la clé, validée par la règle par défaut).',
+				story: 'Règle personnalisée avec prévalence (`customRulesPrecedence: true`) qui remplace la validation standard du numéro et contrôle son format : sexe, année, mois, département (`00` exclu, `2A`/`2B` acceptés), commune et numéro d\'ordre. Chaque contrôle renvoie son propre message d\'erreur. Avec `showSuccessMessages`, le `successMessage` de la règle s\'affiche sous le champ une fois la saisie validée (ainsi que celui de la clé, validée par la règle par défaut). Pour la démonstration, la story valide au chargement le NIR présaisi ; l\'extrait ne reproduit pas cet appel, car la validation doit suivre une action de l\'utilisateur.',
 			},
 		},
 		sourceCode: [
@@ -384,7 +390,6 @@ export const CustomRules: Story = {
 				code: `
 <template>
   <NirField
-    ref="nirRef"
     v-model="value"
     label="Identifiant assuré"
     custom-rules-precedence
@@ -398,11 +403,10 @@ export const CustomRules: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { NirField } from '@cnamts/synapse'
 
 const value = ref('184027512345674')
-const nirRef = ref<InstanceType<typeof NirField> | null>(null)
 
 const customNumberRules = [
   {
@@ -455,10 +459,6 @@ const customNumberRules = [
     },
   },
 ]
-
-onMounted(() => {
-  nirRef.value?.validateOnSubmit()
-})
 </script>`,
 			},
 		],
@@ -824,6 +824,10 @@ const onSubmit = (event) => {
 		numberRules: vuetifyNumberRules,
 		keyRules: vuetifyKeyRules,
 	},
+	argTypes: {
+		numberRules: { control: false },
+		keyRules: { control: false },
+	},
 	render: args => ({
 		components: { NirField, SyForm, VBtn },
 		setup() {
@@ -908,6 +912,10 @@ async function onSubmit() {
 		useVuetifyValidation: true,
 		numberRules: vuetifyNumberRules,
 		keyRules: vuetifyKeyRules,
+	},
+	argTypes: {
+		numberRules: { control: false },
+		keyRules: { control: false },
 	},
 	render: args => ({
 		components: { NirField, VBtn, VForm },

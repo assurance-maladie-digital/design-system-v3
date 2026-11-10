@@ -1,8 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
-import ts from 'typescript'
-import { analyzeSnippet, type StoryWithSourceCode } from '@tests/helpers/storySnippets'
+import { analyzeSnippet, evaluateSnippetBinding, type StoryWithSourceCode } from '@tests/helpers/storySnippets'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 import * as validationStories from '../validation/Validation.stories'
 
@@ -35,6 +34,7 @@ enableAutoUnmount(afterEach)
 
 afterEach(() => {
 	vi.restoreAllMocks()
+	vi.unstubAllGlobals()
 })
 
 function snippetCode(story: StoryWithSourceCode, tabName: string): string {
@@ -44,15 +44,8 @@ function snippetCode(story: StoryWithSourceCode, tabName: string): string {
 }
 
 /** Exécute le `<script setup>` de l'extrait, tel que recopié par un consommateur, et renvoie ses règles. */
-function runSnippetRules(story: StoryWithSourceCode): ValidationRule[] {
-	const script = snippetCode(story, 'Script')
-		.replace(/<\/?script[^>]*>/g, '')
-		.replace(/^import .*$/gm, '')
-	const { outputText } = ts.transpileModule(`${script}\nreturn customNumberRules`, {
-		compilerOptions: { target: ts.ScriptTarget.ES2022 },
-	})
-	const noop = () => undefined
-	return new Function('ref', 'onMounted', 'NirField', outputText)(noop, noop, {})
+function runSnippetRules(story: StoryWithSourceCode) {
+	return evaluateSnippetBinding(story, 'customNumberRules') as ValidationRule[]
 }
 
 function validateWith(rules: ValidationRule[] | undefined, value: string) {
@@ -77,18 +70,16 @@ describe('NirField validation stories', () => {
 
 	it.each([
 		{ name: 'WithWarning', prop: 'customNumberWarningRules' },
+		{ name: 'CustomRules', prop: 'customNumberRules' },
 		{ name: 'SyFormVuetifyValidation', prop: 'numberRules' },
 		{ name: 'SyFormVuetifyValidation', prop: 'keyRules' },
 		{ name: 'VFormAndVuetifyValidation', prop: 'numberRules' },
 		{ name: 'VFormAndVuetifyValidation', prop: 'keyRules' },
-	] as const)('$name expose $prop dans ses args, sans surcharge dans le template', ({ name, prop }) => {
+	] as const)('$name désactive le control JSON de $prop, dont les fonctions seraient perdues', ({ name, prop }) => {
 		const story = validationStories[name]
-		expect(story.args?.[prop]).toEqual(expect.any(Array))
 
-		const render = story.render?.(story.args ?? {}, {} as never) as { template?: string }
-		const kebab = prop.replace(/[A-Z]/g, c => `-${c.toLowerCase()}`)
-		expect(render.template).toContain('v-bind="args"')
-		expect(render.template).not.toContain(`:${kebab}=`)
+		expect(story.args?.[prop]).toEqual(expect.any(Array))
+		expect(story.argTypes?.[prop]).toMatchObject({ control: false })
 	})
 
 	it('WithWarning n\'affiche plus l\'avertissement quand le control vide les règles', async () => {
@@ -98,6 +89,32 @@ describe('NirField validation stories', () => {
 
 		expect(withRules.text()).toContain('Attention : NIR masculin (commence par 1).')
 		expect(withoutRules.text()).not.toContain('Attention : NIR masculin')
+	})
+
+	it('CustomRules applique les règles passées dans ses args', async () => {
+		const wrapper = mount(CustomRules({
+			customNumberRules: [{ type: 'custom', options: { validate: () => 'Erreur pilotée par les args' } }],
+		}))
+		await flushPromises()
+
+		expect(wrapper.find('.sy-number-errors').text()).toContain('Erreur pilotée par les args')
+	})
+
+	it.each([
+		{ name: 'SyFormVuetifyValidation', story: SyFormVuetifyValidation },
+		{ name: 'VFormAndVuetifyValidation', story: VFormAndVuetifyValidation },
+	])('$name applique les règles numberRules et keyRules passées dans ses args', async ({ story }) => {
+		vi.stubGlobal('alert', vi.fn())
+		const wrapper = mount(story({
+			numberRules: [() => 'Numéro piloté par les args'],
+			keyRules: [() => 'Clé pilotée par les args'],
+		}), { attachTo: document.body })
+
+		await wrapper.find('form').trigger('submit')
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('Numéro piloté par les args')
+		expect(wrapper.text()).toContain('Clé pilotée par les args')
 	})
 
 	it('DisableErrorHandling fige ses deux configurations, désactive ses Controls et l\'explique', () => {
@@ -182,7 +199,11 @@ describe('NirField validation stories', () => {
 			expect(template).toContain('custom-rules-precedence')
 			expect(template).toContain('show-success-messages')
 			expect(template).toContain(`label="${CustomRules.args.label}"`)
-			expect(snippetCode(CustomRules, 'Script')).toMatch(/onMounted\(\(\) => \{\s*nirRef\.value\?\.validateOnSubmit\(\)/)
+		})
+
+		it('l\'extrait ne déclenche pas de validation au montage', () => {
+			expect(snippetCode(CustomRules, 'Script')).not.toContain('onMounted')
+			expect(snippetCode(CustomRules, 'Script')).not.toContain('validateOnSubmit')
 		})
 
 		it('affiche le message de succès de la règle au chargement', async () => {
