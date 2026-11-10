@@ -281,12 +281,7 @@
 		getCurrentDate,
 		setCurrentDate: (date: Date) => {
 			keyboardNavigatedDate.value = date
-			syncDisplayedMonthYearFromDate(date)
-
-			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
-			nextTick(() => {
-				syncDisplayedMonthYearFromDate(date)
-			})
+			return syncDisplayedMonthYearFromDate(date, { restoreFocus: false })
 		},
 		onSelectDate: (date: Date) => {
 			keyboardNavigatedDate.value = null
@@ -625,7 +620,7 @@
 
 	// todayInString est maintenant fourni par le composable useTodayButton
 
-	const syncDisplayedMonthYearFromDate = (date: Date) => {
+	const syncDisplayedMonthYearFromDate = (date: Date, options?: { restoreFocus?: boolean }) => {
 		const displayedState = getDisplayedMonthYearState(date)
 		const hasMonthChanged = currentMonth.value !== displayedState.month
 		const hasYearChanged = currentYear.value !== displayedState.year
@@ -642,8 +637,7 @@
 		}
 
 		if (hasMonthChanged || hasYearChanged) {
-			reapplyAccessibility()
-			nextTick(() => {
+			return reapplyAccessibility(options)?.then(() => {
 				if (isDatePickerVisible.value) {
 					updateSelectedDayAria()
 				}

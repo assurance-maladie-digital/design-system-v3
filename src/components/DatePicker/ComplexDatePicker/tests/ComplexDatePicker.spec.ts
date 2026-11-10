@@ -1741,13 +1741,13 @@ describe('ComplexDatePicker.clean', () => {
 
 		focusedDay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
 		await flushPromises()
-		await vi.advanceTimersByTimeAsync(800)
-		await flushPromises()
-		await wrapper.vm.$nextTick()
+		await nextTick()
 
-		expect(wrapper.vm.currentMonth).toBe('6')
-		expect(wrapper.vm.currentYear).toBe('2024')
-		expect(document.activeElement?.closest('[data-v-date="2024-07-01"]')).not.toBeNull()
+		const firstOfJuly = document.activeElement
+		expect(firstOfJuly?.matches('[role="gridcell"][data-v-date="2024-07-01"]:not(.v-date-picker-month__day--adjacent)')).toBe(true)
+
+		firstOfJuly?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		expect(document.activeElement?.getAttribute('data-v-date')).toBe('2024-07-02')
 
 		vi.useRealTimers()
 		wrapper.unmount()
