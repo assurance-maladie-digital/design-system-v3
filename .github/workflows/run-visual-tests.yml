@@ -60,6 +60,18 @@ jobs:
         run: pnpm cypress install
       - name: Run visual regression tests
         run: pnpm test:visual
+      # Le plugin crée automatiquement les références manquantes : elles doivent
+      # être validées et committées avant que le contrôle puisse passer.
+      - name: Verify visual snapshots are committed
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          SNAPSHOT_CHANGES=$(git status --porcelain --untracked-files=all -- ':(glob)src/**/__snapshots__/**/*.png')
+          if [ -n "$SNAPSHOT_CHANGES" ]; then
+            printf '%s\n' "$SNAPSHOT_CHANGES"
+            echo "::error::Références visuelles absentes ou modifiées pendant les tests. Examiner les captures, lancer Update Visual Test Snapshots sur la branche de la PR, puis relancer Visual Tests sur le nouveau commit."
+            exit 1
+          fi
       - name: Upload visual test diffs
         if: always()
         uses: actions/upload-artifact@v7
