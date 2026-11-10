@@ -60,6 +60,7 @@ export const locales = {
 	openMonthSelector: 'Ouvrir le sélecteur de mois',
 	openYearSelector: 'Ouvrir le sélecteur d\'année',
 	selectYearDirectly: 'Sélectionner une année',
+	yearListRegionLabel: 'Liste des années',
 	previousMonth: 'Mois précédent',
 	nextMonth: 'Mois suivant',
 	calendarGridLabel: 'Calendrier des dates',
