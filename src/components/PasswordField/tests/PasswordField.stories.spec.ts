@@ -5,7 +5,16 @@ import { analyzeSnippet } from '@tests/helpers/storySnippets'
 import * as stories from '../Validation/Validation.stories'
 
 const composed = composeStories(stories)
-const { ValidateOnInput, ExternalMessages, VFormValidation, WithSuccessMessages, DisableErrorHandling } = composed
+const {
+	ValidateOnInput,
+	ExternalMessages,
+	SyFormValidation,
+	SyFormVuetifyValidation,
+	VFormValidation,
+	VFormVuetifyValidation,
+	WithSuccessMessages,
+	DisableErrorHandling,
+} = composed
 
 enableAutoUnmount(afterEach)
 
@@ -35,6 +44,16 @@ describe('PasswordField validation stories', () => {
 	})
 
 	it.each([
+		SyFormValidation,
+		SyFormVuetifyValidation,
+		VFormValidation,
+		VFormVuetifyValidation,
+	])('initializes the form field from the modelValue Control', (story) => {
+		const wrapper = mount(story({ modelValue: 'PRESET' }))
+		expect(wrapper.get('input').element.value).toBe('PRESET')
+	})
+
+	it.each([
 		['Simuler une erreur', 'Ce mot de passe a déjà été utilisé'],
 		['Simuler un avertissement', 'Ce mot de passe figure dans une liste de mots de passe courants'],
 		['Simuler un succès', 'Mot de passe accepté par le serveur'],
@@ -51,13 +70,30 @@ describe('PasswordField validation stories', () => {
 		expect(wrapper.text()).not.toContain(message)
 	})
 
+	it.each([
+		{
+			name: 'WithSuccessMessages',
+			story: stories.WithSuccessMessages,
+			props: ['label', 'required', 'modelValue', 'showSuccessMessages', 'customSuccessRules'],
+		},
+		{
+			name: 'DisableErrorHandling',
+			story: stories.DisableErrorHandling,
+			props: ['label', 'required', 'modelValue', 'disableErrorHandling', 'customRules'],
+		},
+	])('$name disables Controls for fixed props', ({ story, props }) => {
+		for (const prop of props) {
+			expect(story.argTypes?.[prop]?.control, prop).toBe(false)
+		}
+	})
+
 	it.each([WithSuccessMessages, DisableErrorHandling])('applies shared Controls to both comparison fields', (story) => {
 		const wrapper = mount(story({ readonly: true }))
 		for (const input of wrapper.findAll('input')) {
 			expect(input.attributes('readonly')).toBeDefined()
 		}
-		const editable = mount(story({ disabled: true }))
-		for (const input of editable.findAll('input')) {
+		const disabledWrapper = mount(story({ disabled: true }))
+		for (const input of disabledWrapper.findAll('input')) {
 			expect(input.attributes('disabled')).toBeDefined()
 		}
 	})

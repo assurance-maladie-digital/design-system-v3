@@ -506,6 +506,13 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
 </script>` },
 		],
 	},
+	argTypes: {
+		label: { control: false },
+		required: { control: false },
+		modelValue: { control: false },
+		showSuccessMessages: { control: false },
+		customSuccessRules: { control: false },
+	},
 	render: args => ({
 		components: { PasswordField },
 		setup() {
@@ -612,6 +619,13 @@ const customRules = [{
 }]
 </script>` },
 		],
+	},
+	argTypes: {
+		label: { control: false },
+		required: { control: false },
+		modelValue: { control: false },
+		disableErrorHandling: { control: false },
+		customRules: { control: false },
 	},
 	render: args => ({
 		components: { PasswordField },
@@ -956,7 +970,10 @@ async function handleSubmit(e: PromiseLike<{ valid: boolean }>) {
 	render: args => ({
 		components: { VForm, PasswordField, VBtn },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 
 			const rules = [
 				(value: string) => !!value || 'Le mot de passe est requis',
@@ -1066,7 +1083,10 @@ function handleSubmit(e: { isValid: boolean }) {
 	render: args => ({
 		components: { PasswordField, VBtn, SyForm },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 
 			const customRules = [
 				{
@@ -1174,7 +1194,10 @@ function handleSubmit(e: { isValid: boolean }) {
 	render: args => ({
 		components: { PasswordField, VBtn, SyForm },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 
 			const vuetifyRules = [
 				(value: string) => !!value || 'Le mot de passe est requis',
@@ -1276,7 +1299,10 @@ async function handleSubmit() {
 	render: args => ({
 		components: { PasswordField, VBtn, VForm },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 			const fieldRef = ref<InstanceType<typeof PasswordField> | null>(null)
 
 			const customRules = [
