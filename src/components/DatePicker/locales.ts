@@ -51,7 +51,12 @@ export const locales = {
 	dateInputDescription: 'Date en cours de saisie',
 	openCalendar: 'Ouvrir le calendrier',
 	activationOpensCalendar: 'Activation ouvre un calendrier',
-	selectMonth: (month?: string): string => month ? `Sélectionner le mois (${month})` : 'Sélectionner un mois',
+	selectMonth: (month?: string, fullMonth?: string): string => {
+		if (!month) return 'Sélectionner un mois'
+		return fullMonth && fullMonth !== month
+			? `Sélectionner le mois ${month} : ${fullMonth}`
+			: `Sélectionner le mois ${month}`
+	},
 	selectYear: (year?: string): string => year ? `${year}` : 'Sélectionner une année',
 	selectYearForDisplay: (year: string): string => `Sélectionner l'année ${year}`,
 	selectMonthWithYear: (month: string, year?: string): string => {

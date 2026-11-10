@@ -14,9 +14,9 @@ export const BonnesPratiquesLabels: StoryObj = {
 		docs: {
 			description: {
 				story: `
-**RGAA 11.1, 11.2 et 11.10** : chaque champ date doit avoir un intitulé explicite et distinct, les informations complémentaires (format attendu, contrainte) vont dans \`helpText\` (affiché sous le champ, y compris en cas d'erreur), et l'obligation est indiquée par un texte visible.
+**RGAA 11.1, 11.2 et 11.10** : chaque champ date doit avoir un intitulé explicite et distinct, les informations complémentaires (précision métier ou, en mode saisie, le format attendu) vont dans \`helpText\` (affiché sous le champ, y compris en cas d'erreur), et l'obligation est indiquée par un texte visible.
 
-- **À faire** : \`label="Date de naissance"\`, \`help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"\`.
+- **À faire** : \`label="Date de naissance"\`, \`help-text="Ouvre un calendrier pour choisir la date"\`. En mode saisie (combiné ou \`noCalendar\`), \`helpText\` sert au format attendu (ex : « Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres ») ; en mode calendrier seul, l'utilisateur ne tape pas : le format n'est pas nécessaire.
 - **À éviter** : \`label="Date (JJ/MM/AAAA)"\` (format répété, plusieurs fois annoncé par le lecteur d'écran), ou des intitulés identiques (« Date ») sur plusieurs champs.
 - **Champs obligatoires** : \`required\` et \`displayAsterisk\`, accompagnés de la mention visible « Les champs marqués d'un astérisque (*) sont obligatoires ».
 `,
@@ -31,7 +31,7 @@ export const BonnesPratiquesLabels: StoryObj = {
 					<DatePicker
 						v-model="birthDate"
 						label="Date de naissance"
-						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+						help-text="Ouvre un calendrier pour choisir la date"
 						required
 						displayAsterisk
 						isBirthDate
@@ -40,7 +40,7 @@ export const BonnesPratiquesLabels: StoryObj = {
 					<DatePicker
 						v-model="appointmentDate"
 						label="Date du rendez-vous"
-						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+						help-text="Ouvre un calendrier pour choisir la date"
 						format="DD/MM/YYYY"
 					/>
 				</template>
@@ -73,7 +73,7 @@ export const BonnesPratiquesLabels: StoryObj = {
 				<DatePicker
 					v-model="birthDate"
 					label="Date de naissance"
-					help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+					help-text="Ouvre un calendrier pour choisir la date"
 					required
 					display-asterisk
 					is-birth-date
@@ -82,7 +82,7 @@ export const BonnesPratiquesLabels: StoryObj = {
 				<DatePicker
 					v-model="appointmentDate"
 					label="Date du rendez-vous"
-					help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+					help-text="Ouvre un calendrier pour choisir la date"
 					format="DD/MM/YYYY"
 				/>
 			</div>
