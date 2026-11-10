@@ -17,6 +17,7 @@ export const buildCalendarModeComplexDatePickerProps = (
 	hasWarning: props.hasWarning,
 	disabled: props.disabled,
 	readonly: props.readonly,
+	clearable: props.clearable,
 	isOutlined: props.isOutlined,
 	displayIcon: props.displayIcon,
 	displayAppendIcon: props.displayAppendIcon,

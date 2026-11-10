@@ -55,6 +55,12 @@ export interface DatePickerCommonProps {
 	bgColor?: string
 	/** @deprecated Utilisez isBirthDate à la place */
 	birthDate?: boolean
+	/**
+	 * Affiche le bouton d'effacement du champ (jamais affiché en `readonly`).
+	 * Mettre à `false` sur petit écran (RGAA 10.4).
+	 * @default true
+	 */
+	clearable?: boolean
 	customRules?: DatePickerRule[]
 	customSuccessRules?: DatePickerRule[]
 	customWarningRules?: DatePickerRule[]
@@ -224,6 +230,7 @@ export const DatePickerCommonDefaults = {
 	autoClamp: false,
 	bgColor: 'white',
 	birthDate: false,
+	clearable: true,
 	customRules: () => [],
 	customSuccessRules: () => [],
 	customWarningRules: () => [],

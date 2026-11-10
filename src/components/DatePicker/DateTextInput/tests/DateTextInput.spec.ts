@@ -17,6 +17,24 @@ describe('DateTextInput.clean', () => {
 		}
 	}
 
+	it('affiche le bouton d\'effacement par défaut', () => {
+		const wrapper = mountComponent({})
+
+		expect(wrapper.findComponent(SyTextField).props('isClearable')).toBe(true)
+	})
+
+	it('masque le bouton d\'effacement avec clearable=false', () => {
+		const wrapper = mountComponent({ clearable: false })
+
+		expect(wrapper.findComponent(SyTextField).props('isClearable')).toBe(false)
+	})
+
+	it('masque le bouton d\'effacement en readonly même avec clearable=true', () => {
+		const wrapper = mountComponent({ clearable: true, readonly: true })
+
+		expect(wrapper.findComponent(SyTextField).props('isClearable')).toBe(false)
+	})
+
 	it('renders a single-date text field by default', () => {
 		const wrapper = mountComponent({
 			label: 'Date',
