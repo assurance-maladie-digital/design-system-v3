@@ -312,6 +312,7 @@
 	// `validateField` et `replaceErrors` sont conservés pour validateCalendarSelection
 	// et useDatePickerInputBlurHandler qui ont besoin d'un accès bas niveau.
 	const {
+		validity: formValidity,
 		validate,
 		validateField,
 		clearValidation,
@@ -1514,7 +1515,8 @@
 		fieldKey.value++
 	}
 
-	const publicApi: ComplexDatePickerPublicApi = {
+	const publicApi: ComplexDatePickerPublicApi & { formValidity: typeof formValidity } = {
+		formValidity,
 		validateOnSubmit,
 		isDatePickerVisible,
 		selectedDates,

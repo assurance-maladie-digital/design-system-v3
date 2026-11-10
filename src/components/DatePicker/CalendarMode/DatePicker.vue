@@ -343,6 +343,12 @@
 		hasBlurred,
 		revalidateOnCustomRulesChange: true,
 		formRegistration: {
+			getValidity: () => {
+				// Le champ externe reste enregistré auprès de SyForm. En saisie manuelle,
+				// la validation interactive est effectuée par le composant enfant.
+				if (props.noCalendar) return dateTextInputRef.value?.formValidity ?? null
+				if (props.useCombinedMode) return complexDatePickerRef.value?.formValidity ?? null
+			},
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,
 			reset: resetField,

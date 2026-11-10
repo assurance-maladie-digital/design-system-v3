@@ -25,6 +25,8 @@ export interface UseCustomValidationOptions {
 	 */
 	forcedError?: Ref<boolean>
 	formRegistration?: {
+		/** Validité d'un champ enfant validé séparément. undefined conserve la validation locale. */
+		getValidity?: () => boolean | null | undefined
 		validateOnSubmit?: () => Promise<boolean> | boolean
 		clearValidation?: () => void
 		reset?: () => void
@@ -196,24 +198,25 @@ export function useCustomValidation(
 		}
 	}
 
+	const delegatedValidity = computed(() => options.formRegistration?.getValidity?.())
+	const validity = computed(() => {
+		// Les champs désactivés ou en lecture seule sont ignorés par la validation Synapse.
+		if (readonly?.value || disabled?.value) return true
+		if (hasExternalErrors.value || hasForcedError.value) return false
+		if (delegatedValidity.value !== undefined) return delegatedValidity.value
+		return isPristine.value ? silentValide.value : errors.value.length === 0
+	})
+
 	if (options.registerWithForm !== false) {
 		useValidatable(
 			validateOnSubmit,
 			options.formRegistration?.clearValidation ?? clearValidationForForm,
 			reset,
-			// Un champ désactivé ou en lecture seule n'est pas validé (cf. watch ci-dessus) et
-			// ne peut pas être corrigé : il ne doit pas bloquer le formulaire. C'est un choix
-			// Synapse : Vuetify, lui, évalue les rules de ces champs et peut les compter invalides.
-			computed(() => {
-				if (readonly?.value || disabled?.value) return true
-				// Une erreur injectée ou forcée par le parent est affichée : elle invalide
-				// le champ même s'il est vierge ou si ses propres règles sont satisfaites.
-				if (hasExternalErrors.value || hasForcedError.value) return false
-				return isPristine.value ? silentValide.value : errors.value.length < 1
-			}),
+			validity,
 			computed(() => (options.enabled?.value ?? true)
 				&& (!disableErrorHandling.value || errors.value.length > 0 || hasExternalErrors.value || hasForcedError.value)),
-			computed(() => isPristine.value && !hasExternalErrors.value && !hasForcedError.value),
+			computed(() => !hasExternalErrors.value && !hasForcedError.value
+				&& (delegatedValidity.value !== undefined ? delegatedValidity.value === null : isPristine.value)),
 		)
 	}
 
@@ -265,5 +268,5 @@ export function useCustomValidation(
 		}, { flush: 'sync' })
 	}
 
-	return { validate, validateValue, hasSuccess, clearValidation, reset, isPristine }
+	return { validate, validateValue, hasSuccess, clearValidation, reset, isPristine, validity }
 }

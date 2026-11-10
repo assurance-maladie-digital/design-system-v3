@@ -5,6 +5,7 @@ import { onMounted, ref, watch, computed } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
 import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+import DatePickerSyFormValidity from '../../docExamples/DatePickerSyFormValidity.vue'
 
 const meta: Meta<typeof DatePicker> = {
 	title: 'Composants/Formulaires/DatePicker/CalendarMode/Validation',
@@ -20,6 +21,22 @@ const meta: Meta<typeof DatePicker> = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+
+export const SyFormLiveValidity: Story = {
+	name: 'Validité du SyForm avant soumission',
+	parameters: {
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: 'Sélectionnez une date et quittez le champ. Le formulaire passe de `null` à `true` et le bouton Soumettre devient disponible.',
+			},
+		},
+	},
+	render: () => ({
+		components: { DatePickerSyFormValidity },
+		template: '<DatePickerSyFormValidity mode="calendar" />',
+	}),
+}
 
 export const WithError: Story = {
 	parameters: {
