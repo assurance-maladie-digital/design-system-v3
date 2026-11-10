@@ -81,7 +81,7 @@ const meta = {
 			},
 		},
 		'onFocus': {
-			description: 'Émis lorsque le champ reÃ§oit le focus',
+			description: 'Émis lorsque le champ reçoit le focus',
 			table: {
 				category: 'events',
 				type: { summary: '() => void' },
@@ -102,7 +102,7 @@ const meta = {
 			},
 		},
 		'onDate-selected': {
-			description: 'Emis lorsqu\'une date complÃ¨te est saisie manuellement',
+			description: 'Emis lorsqu\'une date complète est saisie manuellement',
 			table: {
 				category: 'events',
 				type: { summary: '(value: DateValue) => void' },
@@ -131,19 +131,19 @@ const meta = {
 		},
 		'placeholder': {
 			control: 'text',
-			description: 'Texte indicatif affichÃ© lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
+			description: 'Texte indicatif affiché lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
 			defaultValue: 'JJ/MM/AAAA',
 		},
 		'format': {
 			control: 'select',
 			options: ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format d\'affichage de la date dans le champ (ex: DD/MM/YYYY pour jour/mois/annÃ©e)',
+			description: 'Format d\'affichage de la date dans le champ (ex: DD/MM/YYYY pour jour/mois/année)',
 			defaultValue: 'DD/MM/YYYY',
 		},
 		'dateFormatReturn': {
 			control: 'select',
 			options: ['', 'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format de la date Ã©mise par le v-model. Si vide, utilise le mÃªme format que la prop "format"',
+			description: 'Format de la date émise par le v-model. Si vide, utilise le même format que la prop "format"',
 			defaultValue: '',
 		},
 		'validateWithReturnFormat': {
@@ -153,37 +153,37 @@ const meta = {
 		},
 		'label': {
 			control: 'text',
-			description: 'LibellÃ© du champ affichÃ© au-dessus ou dans le champ de saisie',
+			description: 'Libellé du champ affiché au-dessus ou dans le champ de saisie',
 			defaultValue: 'Date',
 		},
 		'required': {
 			control: 'boolean',
-			description: 'DÃ©finit si le champ est obligatoire et active la validation correspondante',
+			description: 'Définit si le champ est obligatoire et active la validation correspondante',
 			defaultValue: false,
 		},
 		'disabled': {
 			control: 'boolean',
-			description: 'DÃ©sactive le champ, empÃªchant toute interaction utilisateur et appliquant un style grisÃ©. âš ï¸ Incompatible avec readonly.',
+			description: 'Désactive le champ, empêchant toute interaction utilisateur et appliquant un style grisé. ⚠️ Incompatible avec readonly.',
 			defaultValue: false,
 		},
 		'readonly': {
 			control: 'boolean',
-			description: 'Rend le champ en lecture seule, la valeur peut Ãªtre affichÃ©e mais pas modifiÃ©e par l\'utilisateur. âš ï¸ DÃ©sactive toutes les validations (required, customRules, customWarningRules). Incompatible avec disabled.',
+			description: 'Rend le champ en lecture seule, la valeur peut être affichée mais pas modifiée par l\'utilisateur. ⚠️ Désactive toutes les validations (required, customRules, customWarningRules). Incompatible avec disabled.',
 			defaultValue: false,
 		},
 		'isOutlined': {
 			control: 'boolean',
-			description: 'Affiche le champ avec un contour complet (style outlined de Vuetify) plutÃ´t qu\'un soulignÃ© simple',
+			description: 'Affiche le champ avec un contour complet (style outlined de Vuetify) plutôt qu\'un souligné simple',
 			defaultValue: true,
 		},
 		'displayIcon': {
 			control: 'boolean',
-			description: 'ContrÃ´le l\'affichage de l\'icône calendrier, Ã  utiliser en conjonction avec displayPrependIcon ou displayAppendIcon. âš ï¸ Sans effet si noIcon est true.',
+			description: 'Contrôle l\'affichage de l\'icône calendrier, à utiliser en conjonction avec displayPrependIcon ou displayAppendIcon. ⚠️ Sans effet si noIcon est true.',
 			defaultValue: true,
 		},
 		'displayAppendIcon': {
 			control: 'boolean',
-			description: 'Affiche l\'icône calendrier Ã  la fin du champ (Ã  droite). âš ï¸ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
+			description: 'Affiche l\'icône calendrier à la fin du champ (à droite). ⚠️ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
 			defaultValue: false,
 		},
 		'clearable': {
@@ -193,47 +193,47 @@ const meta = {
 		},
 		'noIcon': {
 			control: 'boolean',
-			description: 'Masque toutes les icônes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. âš ï¸ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
+			description: 'Masque toutes les icônes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. ⚠️ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
 			defaultValue: false,
 		},
 		'customRules': {
 			control: 'object',
-			description: 'RÃ¨gles de validation personnalisÃ©es pour la date saisie, affichant des erreurs si non respectÃ©es',
+			description: 'Règles de validation personnalisées pour la date saisie, affichant des erreurs si non respectées',
 			defaultValue: [],
 		},
 		'customWarningRules': {
 			control: 'object',
-			description: 'RÃ¨gles d\'avertissement pour afficher des messages d\'attention sans bloquer la validation',
+			description: 'Règles d\'avertissement pour afficher des messages d\'attention sans bloquer la validation',
 			defaultValue: [],
 		},
 		'errorMessages': {
 			control: 'object',
-			description: 'Messages d\'erreur injectÃ©s depuis le parent',
+			description: 'Messages d\'erreur injectés depuis le parent',
 			defaultValue: null,
 		},
 		'warningMessages': {
 			control: 'object',
-			description: 'Messages d\'avertissement injectÃ©s depuis le parent',
+			description: 'Messages d\'avertissement injectés depuis le parent',
 			defaultValue: null,
 		},
 		'successMessages': {
 			control: 'object',
-			description: 'Messages de succÃ¨s injectÃ©s depuis le parent',
+			description: 'Messages de succès injectés depuis le parent',
 			defaultValue: null,
 		},
 		'displayPrependIcon': {
 			control: 'boolean',
-			description: 'Affiche l\'icône calendrier au dÃ©but du champ (Ã  gauche). âš ï¸ Sans effet si displayIcon est false, si noIcon est true, ou si displayAppendIcon est true.',
+			description: 'Affiche l\'icône calendrier au début du champ (à gauche). ⚠️ Sans effet si displayIcon est false, si noIcon est true, ou si displayAppendIcon est true.',
 			defaultValue: true,
 		},
 		'disableErrorHandling': {
 			control: 'boolean',
-			description: 'DÃ©sactive la gestion interne des erreurs, permettant Ã  l\'application parente de gÃ©rer les validations. âš ï¸ Peut crÃ©er une incohÃ©rence si showSuccessMessages est true.',
+			description: 'Désactive la gestion interne des erreurs, permettant à l\'application parente de gérer les validations. ⚠️ Peut créer une incohérence si showSuccessMessages est true.',
 			defaultValue: false,
 		},
 		'showSuccessMessages': {
 			control: 'boolean',
-			description: 'Affiche les messages de succÃ¨s quand la validation est passÃ©e avec succÃ¨s',
+			description: 'Affiche les messages de succès quand la validation est passée avec succès',
 			defaultValue: false,
 		},
 		'bgColor': {
@@ -243,22 +243,22 @@ const meta = {
 		},
 		'displayRange': {
 			control: 'boolean',
-			description: 'Active la sÃ©lection de plage de dates (date dÃ©but - date fin), le v-model retournera un tableau de deux dates. âš ï¸ NÃ©cessite que modelValue soit un tableau de deux dates [startDate, endDate] pour fonctionner correctement.',
+			description: 'Active la sélection de plage de dates (date début - date fin), le v-model retournera un tableau de deux dates. ⚠️ Nécessite que modelValue soit un tableau de deux dates [startDate, endDate] pour fonctionner correctement.',
 			defaultValue: false,
 		},
 		'autoClamp': {
 			control: 'boolean',
-			description: 'Active la mise en forme automatique lors de la saisie (ajout des sÃ©parateurs automatiquement). âš ï¸ Peut court-circuiter certaines validations manuelles.',
+			description: 'Active la mise en forme automatique lors de la saisie (ajout des séparateurs automatiquement). ⚠️ Peut court-circuiter certaines validations manuelles.',
 			defaultValue: false,
 		},
 		'displayAsterisk': {
 			control: 'boolean',
-			description: 'Affiche un astérisque (*) Ã  cÃ´tÃ© du label pour indiquer visuellement que le champ est obligatoire',
+			description: 'Affiche un astérisque (*) à côté du label pour indiquer visuellement que le champ est obligatoire',
 			defaultValue: false,
 		},
 		'width': {
 			control: 'text',
-			description: 'Largeur du champ (peut Ãªtre en px, %, em, rem ou toute unitÃ© CSS valide)',
+			description: 'Largeur du champ (peut être en px, %, em, rem ou toute unité CSS valide)',
 			defaultValue: '100%',
 		},
 		'isValidateOnBlur': {
@@ -269,7 +269,7 @@ const meta = {
 		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
-			description: 'DensitÃ© du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
+			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
 			defaultValue: 'default',
 		},
 		'title': {
