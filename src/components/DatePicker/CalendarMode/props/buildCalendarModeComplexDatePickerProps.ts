@@ -1,7 +1,9 @@
 import type { DatePickerCommonProps, FormRegistration } from '../../types'
+import type { DatePickerFieldAppearance } from '../../composables/useDatePickerFieldAppearance'
 
 export const buildCalendarModeComplexDatePickerProps = (
 	props: DatePickerCommonProps,
+	appearance: DatePickerFieldAppearance,
 	formRegistration?: FormRegistration,
 ) => ({
 	modelValue: props.modelValue,
@@ -18,7 +20,7 @@ export const buildCalendarModeComplexDatePickerProps = (
 	disabled: props.disabled,
 	readonly: props.readonly,
 	clearable: props.clearable,
-	isOutlined: props.isOutlined,
+	isOutlined: appearance.isOutlined,
 	displayIcon: props.displayIcon,
 	displayAppendIcon: props.displayAppendIcon,
 	displayPrependIcon: props.displayPrependIcon,
@@ -26,7 +28,7 @@ export const buildCalendarModeComplexDatePickerProps = (
 	disableErrorHandling: props.disableErrorHandling,
 	showSuccessMessages: props.showSuccessMessages,
 	bgColor: props.bgColor,
-	density: props.density,
+	density: appearance.density,
 	hideDetails: props.hideDetails,
 	displayRange: props.displayRange,
 	displayWeekendDays: props.displayWeekendDays,

@@ -6,6 +6,7 @@
 	import type { SearchListItem } from './types'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
+	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	import { SyTextField, SyCheckbox } from '@/components'
@@ -45,6 +46,13 @@
 			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
 			default: () => ({}),
 		},
+	})
+
+	// Réglage `fields.variant` de la configuration de thème, appliqué si outlined n'est pas passée
+	const { themeFields, isPropExplicit } = useFieldsThemeConfig()
+	const fieldVariant = computed(() => {
+		if (!isPropExplicit('outlined') && themeFields.value.variant) return themeFields.value.variant
+		return props.outlined ? 'outlined' : 'underlined'
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
@@ -117,7 +125,7 @@
 			:label="props.label"
 			hide-details
 			color="primary"
-			:variant="outlined ? 'outlined' : 'underlined'"
+			:variant="fieldVariant"
 			clearable
 			tabindex="0"
 			data-test-id="search-input"

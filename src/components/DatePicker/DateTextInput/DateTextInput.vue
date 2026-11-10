@@ -66,6 +66,7 @@
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { buildDateTextInputTextFieldProps } from './props/buildDateTextInputTextFieldProps'
+	import { useDatePickerFieldAppearance } from '../composables/useDatePickerFieldAppearance'
 	import { locales } from '../locales'
 	import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue, DateTextInputProps, DateTextInputPublicApi } from '../types'
@@ -1355,6 +1356,9 @@
 		&& !bridgeHasWarning.value,
 	)
 
+	// Variante et densité des champs internes, avec les réglages `fields` de la configuration de thème
+	const fieldAppearance = useDatePickerFieldAppearance(props)
+
 	// Props du SyTextField rendu par DateTextInput
 	const textFieldProps = computed(() => buildDateTextInputTextFieldProps(
 		props,
@@ -1365,6 +1369,7 @@
 		isOnWarning,
 		isOnSuccess,
 		ariaLabel.value,
+		fieldAppearance.value,
 	))
 
 	function onMouseDown(event: MouseEvent) {

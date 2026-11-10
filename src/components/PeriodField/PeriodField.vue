@@ -6,6 +6,7 @@
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import { useDatePickerFieldAppearance } from '@/components/DatePicker/composables/useDatePickerFieldAppearance'
 
 	const { parseDate } = useFieldValidation()
 
@@ -69,6 +70,9 @@
 		showWeekNumber: false,
 		locales: () => ({}),
 	})
+
+	// Variante et densité des deux champs date, avec les réglages `fields` de la configuration de thème
+	const fieldAppearance = useDatePickerFieldAppearance(props)
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
@@ -364,7 +368,7 @@
 				:format="props.format"
 				:disabled="props.disabled"
 				:heading-level="props.headingLevel"
-				:is-outlined="props.isOutlined"
+				:is-outlined="fieldAppearance.isOutlined"
 				:no-calendar="props.noCalendar"
 				:no-icon="props.noIcon"
 				:placeholder="props.placeholderFrom"
@@ -374,7 +378,7 @@
 				:show-success-messages="showSuccessMessagesActual"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
-				:density="props.density"
+				:density="fieldAppearance.density"
 				:hide-details="props.hideDetails"
 				@blur="handleDateBlur(fromDateRef)"
 			/>
@@ -391,7 +395,7 @@
 				:heading-level="props.headingLevel"
 				:format="props.format"
 				:disabled="props.disabled"
-				:is-outlined="props.isOutlined"
+				:is-outlined="fieldAppearance.isOutlined"
 				:no-calendar="props.noCalendar"
 				:no-icon="props.noIcon"
 				:placeholder="props.placeholderTo"
@@ -401,7 +405,7 @@
 				:show-success-messages="showSuccessMessagesActual"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
-				:density="props.density"
+				:density="fieldAppearance.density"
 				:hide-details="props.hideDetails"
 				@blur="handleDateBlur(toDateRef)"
 			/>

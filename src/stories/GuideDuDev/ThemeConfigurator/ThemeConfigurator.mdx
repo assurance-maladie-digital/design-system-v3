@@ -1,0 +1,102 @@
+import { Meta, Source, Story } from '@storybook/addon-docs/blocks';
+import * as ThemeConfiguratorStories from './ThemeConfigurator.stories';
+import '../../styles/shared.css';
+
+<Meta of={ThemeConfiguratorStories} />
+
+<div className="header">
+  <h1>Configuration de thème projet</h1>
+</div>
+
+Un projet peut ajuster un nombre **limité** de réglages de Synapse : la marque par défaut, l'anneau de focus clavier et le style des champs de formulaire.
+Tout le reste est verrouillé, pour garder un rendu cohérent entre les projets. Chaque réglage est validé : une valeur hors bornes ou non accessible est refusée et remplacée par sa valeur par défaut.
+
+## Configurateur
+
+Composez votre configuration, vérifiez le rendu et la validation, puis copiez le fichier généré.
+
+<Story of={ThemeConfiguratorStories.Configurator} />
+
+## Utilisation
+
+Passez la configuration à `createVuetifyOptions` (ou à `createVuetifyInstance`, qui accepte le même objet). Sans argument, le rendu Synapse par défaut est conservé à l'identique.
+
+<Source dark language="ts" code={`
+import { createVuetify } from 'vuetify'
+import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
+import themeConfig from './synapse.theme.json'
+
+app.use(createVuetify(createVuetifyOptions(themeConfig)))
+`} />
+
+## Réglages disponibles
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Réglage</th>
+      <th scope="col">Valeurs</th>
+      <th scope="col">Défaut</th>
+      <th scope="col">Effet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>brand</code></td>
+      <td><code>cnam</code>, <code>pa</code>, <code>ap</code></td>
+      <td><code>cnam</code></td>
+      <td>Thème Vuetify par défaut</td>
+    </tr>
+    <tr>
+      <td><code>focus.width</code></td>
+      <td>2 à 4 (px)</td>
+      <td>2</td>
+      <td>Épaisseur de l'anneau de focus (boutons, liens, menus)</td>
+    </tr>
+    <tr>
+      <td><code>focus.offset</code></td>
+      <td>0 à 4 (px)</td>
+      <td>3</td>
+      <td>Écart de l'anneau des boutons</td>
+    </tr>
+    <tr>
+      <td><code>focus.color</code></td>
+      <td><code>primary</code>, <code>pinkDarken20</code></td>
+      <td><code>primary</code></td>
+      <td>Couleur de l'anneau ; un contraste d'au moins 3:1 avec le fond est exigé</td>
+    </tr>
+    <tr>
+      <td><code>fields.variant</code></td>
+      <td><code>outlined</code>, <code>filled</code>, <code>underlined</code></td>
+      <td><code>outlined</code></td>
+      <td>Style des champs de formulaire</td>
+    </tr>
+    <tr>
+      <td><code>fields.density</code></td>
+      <td><code>default</code>, <code>comfortable</code>, <code>compact</code></td>
+      <td><code>default</code></td>
+      <td>Densité des champs de formulaire</td>
+    </tr>
+  </tbody>
+</table>
+
+### Champs concernés par `fields`
+
+`fields` ne s'applique que si le projet le renseigne. Il concerne les champs Vuetify (`VTextField`, `VTextarea`, `VSelect`, `VAutocomplete`, `VCombobox`, `VFileInput`) et les champs Synapse : `SyTextField`, `SyTextArea`, `SySelect`, `SyAutocomplete`, `PasswordField`, `NirField`, `PhoneField`, `LunarCalendar`, `SearchListField`, `DatePicker` et `PeriodField`.
+
+Une prop passée explicitement sur un champ (par exemple `variant-style`, `outlined`, `is-outlined` ou `density`) reste toujours prioritaire sur la configuration.
+
+## Valider la configuration en CI
+
+`checkThemeConfig` vérifie la configuration avec les couleurs réelles de la marque choisie :
+
+<Source dark language="ts" code={`
+import { checkThemeConfig } from '@cnamts/synapse/vuetifyOptions'
+import themeConfig from './synapse.theme.json'
+
+const { valid, issues } = checkThemeConfig(themeConfig)
+if (!valid) {
+  console.error(issues)
+  process.exit(1)
+}
+`} />

@@ -30,7 +30,18 @@ Sans argument, `createVuetifyOptions()` garde exactement le rendu actuel. `creat
 
 Le focus est exposé en variables CSS sur tous les thèmes : `--v-focus-width`, `--v-focus-offset`, `--v-focus-color`.
 
-> `fields` ne s'applique qu'aux champs Vuetify natifs (`VTextField`, `VTextarea`, `VSelect`, `VAutocomplete`, `VCombobox`, `VFileInput`), et uniquement si le projet le renseigne. Les composants `Sy*` (ex. `SyTextField`) ne le lisent pas encore.
+### Champs concernés par `fields`
+
+`fields` ne s'applique que si le projet le renseigne :
+
+- champs Vuetify natifs (`VTextField`, `VTextarea`, `VSelect`, `VAutocomplete`, `VCombobox`, `VFileInput`), via leurs `defaults` ;
+- champs Synapse (`SyTextField`, `SyTextArea`, `SySelect`, `SyAutocomplete`, `PasswordField`, `NirField`, `PhoneField`, `LunarCalendar`, `SearchListField`, `DatePicker`, `PeriodField`), via le composable `useFieldsThemeConfig`.
+
+Les champs Synapse passent leur `variant` explicitement à Vuetify : les `defaults` ne les atteignent pas. `applyThemeConfig` range donc aussi les réglages sous la clé `FIELDS_DEFAULTS_KEY` (`SyFields`) des `defaults`, que `useFieldsThemeConfig` lit. Ordre de priorité : prop passée explicitement (`variant-style`, `variant`, `outlined`, `is-outlined`, `density`), puis configuration du projet, puis valeur par défaut du composant. Un composant qui encapsule un autre champ transmet la valeur résolue (ou `undefined` pour `is-outlined`, afin que le champ imbriqué résolve lui-même la configuration : voir `useDatePickerFieldAppearance`).
+
+`SyInputSelect` (rendu en bouton) et les composants Amelipro ne lisent pas `fields`.
+
+Un configurateur interactif est disponible dans Storybook : *Guide Du Dev / Démarrage / Configuration de thème projet*.
 
 ## Validation
 

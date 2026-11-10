@@ -8,6 +8,7 @@
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
+	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 	import { isEmptySelectValue } from '@/utils/functions/isEmptySelectValue'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 	import type { ItemType, SelectArray, SelectPrimitive, SelectValue } from './types'
@@ -76,6 +77,11 @@
 			locales: () => ({}),
 		},
 	)
+
+	// Réglage `fields.density` de la configuration de thème, appliqué si density n'est pas passée
+	// (la variante est résolue par SyTextField lui-même)
+	const { resolveDensity } = useFieldsThemeConfig()
+	const fieldDensity = resolveDensity('density', () => props.density)
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
@@ -413,7 +419,7 @@
 					:readonly="readonly"
 					:disabled="disabled"
 					:bg-color="bgColor"
-					:density="density"
+					:density="fieldDensity"
 					:autocomplete="'off'"
 					:class="{ 'sy-autocomplete--clearable': clearable, 'sy-autocomplete__field--has-chips': hasInlineSelections }"
 					:error-messages="displayErrors"

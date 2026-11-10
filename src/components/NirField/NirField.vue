@@ -6,6 +6,7 @@
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
 	import { useNirValidation, type NirValidationProps } from './useNirValidation'
 	import { devWarn } from '@/utils/devWarn'
+	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -87,6 +88,11 @@
 		maxErrors: 1,
 		validateOn: undefined,
 	})
+
+	// Réglages `fields` de la configuration de thème, appliqués si variant / density ne sont pas passés
+	const { resolveVariant, resolveDensity } = useFieldsThemeConfig()
+	const fieldVariant = resolveVariant('variant', () => props.variant)
+	const fieldDensity = resolveDensity('density', () => props.density)
 
 	const emit = defineEmits(['update:modelValue'])
 	const modelValueRef = toRef(props, 'modelValue')
@@ -451,7 +457,7 @@
 				v-model="numberValue"
 				v-maska="numberMask"
 				:label="numberLabelWithAsterisk"
-				:variant-style="props.variant"
+				:variant-style="fieldVariant"
 				:prepend-icon="nirTooltip && nirTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="nirTooltip && nirTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="nirTooltip && nirTooltipPosition === 'prepend' ? nirTooltip : undefined"
@@ -465,7 +471,7 @@
 				:disabled="disabled"
 				:disable-error-handling="true"
 				:bg-color="bgColor"
-				:density="props.density"
+				:density="fieldDensity"
 				:hide-details="props.hideDetails"
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
@@ -496,7 +502,7 @@
 				v-model="keyValue"
 				v-maska="keyMask"
 				:label="keyLabelWithAsterisk"
-				:variant-style="props.variant"
+				:variant-style="fieldVariant"
 				:prepend-icon="keyTooltip && keyTooltipPosition === 'prepend' ? 'info' : undefined"
 				:append-icon="keyTooltip && keyTooltipPosition === 'append' ? 'info' : undefined"
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
@@ -504,7 +510,7 @@
 				:error="keyValidation.errors.value.length > 0"
 				:disabled="disabled"
 				:bg-color="bgColor"
-				:density="props.density"
+				:density="fieldDensity"
 				:disable-error-handling="true"
 				:hide-details="props.hideDetails"
 				:hide-spin-buttons="props.hideSpinButtons"

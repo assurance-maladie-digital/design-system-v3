@@ -8,6 +8,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
+	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiInformationOutline } from '@mdi/js'
@@ -133,10 +134,14 @@
 		return 'rgb(var(--v-theme-on-surface))'
 	})
 
+	// Réglages `fields` de la configuration de thème, appliqués si ni variantStyle ni outlined ne sont passés
+	const { themeFields, isPropExplicit, resolveDensity } = useFieldsThemeConfig()
 	const variant = computed(() => {
 		if (props.variantStyle) return props.variantStyle
+		if (!isPropExplicit('outlined') && themeFields.value.variant) return themeFields.value.variant
 		return props.outlined ? 'outlined' : 'underlined'
 	})
+	const density = resolveDensity('density', () => props.density)
 
 	const isOpen = ref(false)
 	// Initialize selectedItem with props.modelValue or empty array for multiple mode
@@ -983,7 +988,7 @@
 						:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : undefined))"
 						:variant="variant"
 						:bg-color="props.bgColor"
-						:density="props.density"
+						:density="density"
 						:active="isFieldActive"
 						readonly
 						:hide-details="props.hideDetails && !showHelpTextAsMessage"

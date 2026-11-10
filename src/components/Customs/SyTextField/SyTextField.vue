@@ -23,6 +23,7 @@
 	import { useLocales } from '@/composables/useLocales'
 	import type { SyTextFieldProps } from './types'
 	import FieldState from './FieldState.vue'
+	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 
 	const props = withDefaults(
 		defineProps<SyTextFieldProps>(),
@@ -192,6 +193,11 @@
 		focused,
 		locales,
 	})
+
+	// Réglages `fields` de la configuration de thème, appliqués si variantStyle / density ne sont pas passés
+	const { resolveVariant, resolveDensity } = useFieldsThemeConfig()
+	const variant = resolveVariant('variantStyle', () => props.variantStyle)
+	const density = resolveDensity('density', () => props.density)
 
 	const forwardedAttrs = computed(() => {
 		const filteredAttrs = Object.fromEntries(
@@ -593,7 +599,7 @@
 			:color="props.color"
 			:counter="props.counter"
 			:counter-value="props.counterValue"
-			:density="props.density"
+			:density="density"
 			:dirty="props.isDirty"
 			:disabled="props.disabled"
 			:error="hasError"
@@ -626,7 +632,7 @@
 			:tile="props.isTiled"
 			:type="nativeInputType"
 			:inputmode="isNumberField ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
-			:variant="props.variantStyle"
+			:variant="variant"
 			:width="props.width"
 			v-bind="forwardedAttrs"
 			:class="{

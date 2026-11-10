@@ -15,3 +15,6 @@ export * from './useLocales'
 
 // Home link fallback
 export * from './useHomeLinkFallback'
+
+// Theme configuration (fields)
+export * from './useFieldsThemeConfig'

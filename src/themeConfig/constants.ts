@@ -26,6 +26,12 @@ export const FIELD_COMPONENTS = [
 	'VFileInput',
 ] as const
 
+/**
+ * Clé des `defaults` Vuetify qui transporte les réglages `fields` jusqu'aux composants Synapse
+ * (`SyTextField`, `SySelect`, `DatePicker`…). Elle n'est renseignée que si le projet configure `fields`.
+ */
+export const FIELDS_DEFAULTS_KEY = 'SyFields'
+
 /** Valeurs par défaut : reproduisent le rendu actuel de Synapse. */
 export const defaultThemeConfig: SynapseThemeConfig = {
 	brand: 'cnam',

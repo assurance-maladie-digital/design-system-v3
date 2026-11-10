@@ -1,6 +1,7 @@
 import type { Ref } from 'vue'
 import type { DatePickerCommonProps } from '../../types'
 import { locales } from '../../locales'
+import type { DatePickerFieldAppearance } from '../../composables/useDatePickerFieldAppearance'
 
 export const buildCalendarModeActivatorTextFieldProps = (
 	props: DatePickerCommonProps,
@@ -11,6 +12,7 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	hasError: Ref<boolean>,
 	hasWarning: Ref<boolean>,
 	isOnSuccess: Ref<boolean>,
+	appearance: DatePickerFieldAppearance,
 ) => ({
 	'aria-label': labelWithAsterisk.value || props.placeholder || locales.label,
 	'aria-labelledby': undefined,
@@ -32,10 +34,10 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	'placeholder': props.placeholder,
 	'no-icon': props.noIcon,
 	'prepend-icon': props.displayIcon && !props.displayAppendIcon ? 'calendar' : undefined,
-	'variant-style': props.isOutlined ? 'outlined' : 'underlined',
+	'variant-style': appearance.variant,
 	'show-success-messages': props.showSuccessMessages,
 	'bg-color': props.bgColor,
-	'density': props.density,
+	'density': appearance.density,
 	'hide-details': props.hideDetails,
 	'display-asterisk': false,
 	'is-clearable': props.clearable && !props.readonly,

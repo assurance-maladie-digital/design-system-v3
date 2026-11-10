@@ -1,9 +1,9 @@
 import type { VuetifyOptions } from 'vuetify'
 import { toKebabCase } from '@/designTokens/utils/toKebabCase'
 import { devWarn } from '@/utils/devWarn'
-import { FIELD_COMPONENTS, SYNAPSE_BRANDS, defaultThemeConfig } from './constants'
+import { FIELD_COMPONENTS, FIELDS_DEFAULTS_KEY, SYNAPSE_BRANDS, defaultThemeConfig } from './constants'
 import { resolveThemeConfig } from './resolveThemeConfig'
-import type { SynapseThemeConfigInput } from './types'
+import type { SynapseFieldsConfig, SynapseFocusConfig, SynapseThemeConfigInput } from './types'
 import { validateThemeConfig } from './validateThemeConfig'
 
 type ThemeColors = Record<string, string>
@@ -16,6 +16,27 @@ export const getThemeColors = (options: VuetifyOptions, brand: string): ThemeCol
 	return colors
 		? Object.fromEntries(Object.entries(colors).filter((entry): entry is [string, string] => typeof entry[1] === 'string'))
 		: undefined
+}
+
+/**
+ * Variables de thème Vuetify du ring de focus (`--v-focus-width`, `--v-focus-offset`, `--v-focus-color`).
+ */
+export const getFocusVariables = (focus: SynapseFocusConfig): Record<string, string> => ({
+	'focus-width': `${focus.width}px`,
+	'focus-offset': `${focus.offset}px`,
+	'focus-color': `var(--v-theme-${toKebabCase(focus.color)})`,
+})
+
+/**
+ * `defaults` Vuetify des réglages `fields` : champs Vuetify natifs et champs Synapse (clé `FIELDS_DEFAULTS_KEY`).
+ */
+export const getFieldsDefaults = (fields: SynapseFieldsConfig): Record<string, Record<string, unknown>> => {
+	const fieldDefaults = { variant: fields.variant, density: fields.density }
+	return {
+		...Object.fromEntries(FIELD_COMPONENTS.map(component => [component, fieldDefaults])),
+		// Lu par `useFieldsThemeConfig` dans les champs Synapse, qui passent leur `variant` explicitement à Vuetify.
+		[FIELDS_DEFAULTS_KEY]: fieldDefaults,
+	}
 }
 
 /**
@@ -37,11 +58,7 @@ export function applyThemeConfig(options: VuetifyOptions, input: SynapseThemeCon
 
 	const config = resolveThemeConfig(input, issues)
 	const theme = options.theme && typeof options.theme === 'object' ? options.theme : {}
-	const focusVariables = {
-		'focus-width': `${config.focus.width}px`,
-		'focus-offset': `${config.focus.offset}px`,
-		'focus-color': `var(--v-theme-${toKebabCase(config.focus.color)})`,
-	}
+	const focusVariables = getFocusVariables(config.focus)
 
 	const themes = Object.fromEntries(
 		Object.entries(theme.themes ?? {}).map(([name, definition]) => [
@@ -52,8 +69,7 @@ export function applyThemeConfig(options: VuetifyOptions, input: SynapseThemeCon
 
 	const defaults = { ...options.defaults }
 	if (input.fields) {
-		const fieldDefaults = { variant: config.fields.variant, density: config.fields.density }
-		for (const component of FIELD_COMPONENTS) {
+		for (const [component, fieldDefaults] of Object.entries(getFieldsDefaults(config.fields))) {
 			defaults[component] = { ...defaults[component], ...fieldDefaults }
 		}
 	}
