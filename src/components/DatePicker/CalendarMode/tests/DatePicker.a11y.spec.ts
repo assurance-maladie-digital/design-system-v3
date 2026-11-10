@@ -235,7 +235,7 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 		expect(yearsContainer).not.toBeNull()
 		const yearsContent = yearsContainer?.querySelector<HTMLElement>('.v-date-picker-years__content')
 		expect(yearsContent?.getAttribute('tabindex')).toBe('-1')
-		expect(yearsContainer?.querySelectorAll('[tabindex="0"]').length).toBeLessThanOrEqual(1)
+		expect(yearsContainer?.querySelectorAll('[tabindex="0"]')).toHaveLength(1)
 
 		const firstYear = yearsContainer?.querySelector<HTMLElement>('button')
 		firstYear?.focus()
@@ -245,7 +245,7 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 		await nextTick()
 
 		expect(yearsContent?.getAttribute('tabindex')).toBe('-1')
-		expect(yearsContainer?.querySelectorAll('[tabindex="0"]').length).toBeLessThanOrEqual(1)
+		expect(yearsContainer?.querySelectorAll('[tabindex="0"]')).toHaveLength(1)
 
 		wrapper.unmount()
 	}, 60000)
