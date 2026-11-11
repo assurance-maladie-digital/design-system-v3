@@ -454,6 +454,31 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
   />
 </template>`,
 			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { MonthPicker } from '@cnamts/synapse'
+
+const value1 = ref('')
+const value2 = ref('')
+
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
+          return 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).'
+        }
+        return true
+      },
+      fieldIdentifier: 'selectedMonth',
+    },
+  },
+]
+</script>`,
+			},
 		],
 	},
 	render: () => ({
@@ -637,6 +662,7 @@ des messages depuis le parent sans déclencher de règle de validation.
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { MonthPicker } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const selectedMonth = ref('')
 const errorMessages = ref<string[] | null>(null)
@@ -724,6 +750,9 @@ function reset() {
 }
 
 export const SyFormValidation: Story = {
+	args: {
+		required: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -747,6 +776,7 @@ export const SyFormValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { MonthPicker, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const selectedMonth = ref('')
 
@@ -806,11 +836,10 @@ function handleSubmit(e) {
 			<div>
 				<SyForm @submit="handleSubmit">
 					<MonthPicker
-						v-model="selectedMonth"
 						v-bind="args"
+						v-model="selectedMonth"
 						:custom-rules="customRules"
 						width="400px"
-						required
 					/>
 					<div class="mt-4">
 						<VBtn type="submit" color="primary">Valider</VBtn>
@@ -822,6 +851,9 @@ function handleSubmit(e) {
 }
 
 export const VFormValidation: Story = {
+	args: {
+		required: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -846,6 +878,7 @@ export const VFormValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { MonthPicker } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
 
 const selectedMonth = ref('')
 const fieldRef = ref<InstanceType<typeof MonthPicker> | null>(null)
@@ -910,9 +943,7 @@ async function handleSubmit() {
 						v-bind="args"
 						ref="fieldRef"
 						v-model="selectedMonth"
-						label="Mois de début"
 						:custom-rules="customRules"
-						required
 						width="400px"
 					/>
 					<div class="mt-4">
@@ -925,6 +956,9 @@ async function handleSubmit() {
 }
 
 export const SyFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -948,6 +982,7 @@ export const SyFormVuetifyValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { MonthPicker, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const selectedMonth = ref('')
 
@@ -985,9 +1020,8 @@ function handleSubmit(e) {
 			<div>
 				<SyForm @submit="handleSubmit">
 					<MonthPicker
-						v-model="selectedMonth"
 						v-bind="args"
-						:use-vuetify-validation="true"
+						v-model="selectedMonth"
 						:rules="vuetifyRules"
 						width="400px"
 					/>
@@ -1001,6 +1035,9 @@ function handleSubmit(e) {
 }
 
 export const VFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -1038,6 +1075,7 @@ native de Vuetify.
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { MonthPicker } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
 
 const selectedMonth = ref('')
 
@@ -1082,10 +1120,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						label="Mois de début"
-						:use-vuetify-validation="true"
 						:rules="rules"
-						:is-validate-on-blur="true"
 						width="400px"
 					/>
 					<div class="mt-4">

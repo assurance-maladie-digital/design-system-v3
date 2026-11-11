@@ -82,7 +82,6 @@ const meta = {
 		},
 	},
 	args: {
-		'modelValue': '',
 		'variantStyle': 'outlined',
 		'color': 'primary',
 		'label': 'Mot de passe',
@@ -493,6 +492,16 @@ ne sont pas nécessaires dans certains contextes.
   />
 </template>`,
 			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { PasswordField } from '@cnamts/synapse'
+
+const value1 = ref('P@ssw0rd123')
+const value2 = ref('P@ssw0rd123')
+</script>`,
+			},
 		],
 	},
 	render: () => ({
@@ -580,6 +589,31 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
   />
 </template>`,
 			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { PasswordField } from '@cnamts/synapse'
+
+const value1 = ref('')
+const value2 = ref('')
+
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        if (!value || value.length < 8) {
+          return 'Le mot de passe doit contenir au moins 8 caractères'
+        }
+        return true
+      },
+      fieldIdentifier: 'password',
+    },
+  },
+]
+</script>`,
+			},
 		],
 	},
 	render: () => ({
@@ -607,7 +641,7 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
 		},
 		template: `
 			<div>
-				<p class="mb-4">Cette démonstration compare un PasswordField standard et un avec \`disableErrorHandling=true\`.</p>
+				<p class="mb-4">Cette démonstration compare un PasswordField standard et un avec <code>disableErrorHandling=true</code>.</p>
 
 				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
 					<div>
@@ -762,6 +796,7 @@ Les props \`errorMessages\`, \`warningMessages\` et \`successMessages\`
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { PasswordField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const password = ref('')
 const errorMessages = ref<string[] | null>(null)
@@ -886,6 +921,7 @@ Cela permet de réutiliser des règles existantes écrites pour Vuetify sans ada
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { PasswordField } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
 
 const password = ref('')
 
@@ -957,7 +993,6 @@ export const SyFormValidation: Story = {
 				code: `<template>
     <SyForm @submit="handleSubmit">
         <PasswordField
-            ref="fieldRef"
             v-model="password"
             label="Mot de passe"
             :custom-rules="customRules"
@@ -973,7 +1008,8 @@ export const SyFormValidation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
-import { PasswordField } from '@cnamts/synapse'
+import { PasswordField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const password = ref('')
 
@@ -1096,7 +1132,8 @@ export const SyFormVuetifyValidation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
-import { PasswordField } from '@cnamts/synapse'
+import { PasswordField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const password = ref('')
 
@@ -1179,6 +1216,7 @@ export const VFormValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { PasswordField } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
 
 const password = ref('')
 const fieldRef = ref()

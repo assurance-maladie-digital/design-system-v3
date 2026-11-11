@@ -15,6 +15,8 @@ const {
 	WithSuccess,
 	NoValidateOnBlur,
 	DisableErrorHandling,
+	SyFormValidation,
+	VFormValidation,
 	SyFormVuetifyValidation,
 	VFormVuetifyValidation,
 } = composeStories(validationStories)
@@ -162,5 +164,29 @@ describe('SyTextArea stories', () => {
 
 		expect(wrapper.text()).not.toContain('Le contenu est valide.')
 		expect(textarea.element.value).toBe('')
+	})
+
+	it.each([
+		{ name: 'SyFormValidation', story: SyFormValidation },
+		{ name: 'VFormValidation', story: VFormValidation },
+	])('$name rend le champ requis par défaut', ({ story }) => {
+		const wrapper = mount(story())
+
+		expect(wrapper.find('textarea').attributes('aria-required')).toBe('true')
+	})
+
+	it.each([
+		{ name: 'SyFormValidation', story: SyFormValidation },
+		{ name: 'VFormValidation', story: VFormValidation },
+	])('$name laisse les controls required et label effectifs', ({ story }) => {
+		const notRequired = mount(story({ required: false, displayAsterisk: false }))
+
+		// `required: false` retire l'attribut ARIA et l'astérisque du libellé
+		expect(notRequired.find('textarea').attributes('aria-required')).toBeUndefined()
+
+		const relabeled = mount(story({ label: 'Autre description' }))
+
+		expect(relabeled.text()).toContain('Autre description')
+		expect(relabeled.text()).not.toContain('Description obligatoire')
 	})
 })
