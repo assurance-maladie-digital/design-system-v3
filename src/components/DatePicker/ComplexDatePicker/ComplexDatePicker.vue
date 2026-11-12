@@ -102,6 +102,7 @@
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { buildComplexDatePickerTextInputProps } from './props/buildComplexDatePickerTextInputProps'
 	import { buildComplexDatePickerMenuTextInputProps } from './props/buildComplexDatePickerMenuTextInputProps'
+	import { useDatePickerFieldAppearance } from '../composables/useDatePickerFieldAppearance'
 	import { locales } from '../locales'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import {
@@ -370,6 +371,9 @@
 		'v-messages__message--success': hasSuccess.value && !hasError.value && !hasWarning.value,
 	}))
 
+	// Densité des champs internes, avec le réglage `fields.density` de la configuration de thème
+	const fieldAppearance = useDatePickerFieldAppearance(props)
+
 	// Props du champ texte utilisé dans le flux noCalendar
 	const noCalendarTextInputProps = computed(() => buildComplexDatePickerTextInputProps(
 		props,
@@ -377,6 +381,7 @@
 		errorMessages,
 		warningMessages,
 		successMessages,
+		fieldAppearance.value,
 	))
 
 	// Props du champ texte utilisé comme activateur du menu calendrier
@@ -386,6 +391,7 @@
 		errorMessages,
 		warningMessages,
 		successMessages,
+		fieldAppearance.value,
 	))
 
 	const {

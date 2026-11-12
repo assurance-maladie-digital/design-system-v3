@@ -7,6 +7,7 @@
 	import type { LunarCalendarProps } from './types'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales.ts'
+	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 
 	const model = defineModel<string>()
 	const mask = '##/##/####'
@@ -41,6 +42,10 @@
 		locales: () => ({}),
 		...validationPropsDefaults,
 	})
+
+	// Réglage `fields.density` de la configuration de thème, appliqué si density n'est pas passée
+	const { resolveDensity } = useFieldsThemeConfig()
+	const fieldDensity = resolveDensity('density', () => props.density)
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
@@ -84,7 +89,7 @@
 		:tooltip-location="props.tooltipLocation"
 		:variant-style="props.variantStyle"
 		:color="props.color"
-		:density="props.density"
+		:density="fieldDensity"
 		:loading="props.loading"
 		:hint="props.hint"
 		:bg-color="props.bgColor"

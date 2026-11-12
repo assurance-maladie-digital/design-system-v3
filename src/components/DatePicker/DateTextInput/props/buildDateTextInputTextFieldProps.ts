@@ -1,5 +1,6 @@
 import type { Ref } from 'vue'
 import type { DateTextInputProps } from '../../types'
+import type { DatePickerFieldAppearance } from '../../composables/useDatePickerFieldAppearance'
 
 export const buildDateTextInputTextFieldProps = (
 	props: DateTextInputProps,
@@ -10,6 +11,7 @@ export const buildDateTextInputTextFieldProps = (
 	isOnWarning: Ref<boolean>,
 	isOnSuccess: Ref<boolean>,
 	ariaLabel: string,
+	appearance: DatePickerFieldAppearance,
 ) => ({
 	'append-icon': props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined,
 	'disabled': props.disabled,
@@ -33,7 +35,7 @@ export const buildDateTextInputTextFieldProps = (
 	'is-clearable': props.clearable && !props.readonly,
 	'aria-label': ariaLabel,
 	'is-validate-on-blur': props.isValidateOnBlur,
-	'density': props.density,
+	'density': appearance.density,
 	'title': props.title,
 	'hint': props.hint,
 	'persistent-hint': props.persistentHint,

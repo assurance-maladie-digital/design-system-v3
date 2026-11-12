@@ -6,6 +6,7 @@
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import { useDatePickerFieldAppearance } from '@/components/DatePicker/composables/useDatePickerFieldAppearance'
 
 	const { parseDate } = useFieldValidation()
 
@@ -69,6 +70,9 @@
 		showWeekNumber: false,
 		locales: () => ({}),
 	})
+
+	// Densité des deux champs date, avec le réglage `fields.density` de la configuration de thème
+	const fieldAppearance = useDatePickerFieldAppearance(props)
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
@@ -374,7 +378,7 @@
 				:show-success-messages="showSuccessMessagesActual"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
-				:density="props.density"
+				:density="fieldAppearance.density"
 				:hide-details="props.hideDetails"
 				@blur="handleDateBlur(fromDateRef)"
 			/>
@@ -401,7 +405,7 @@
 				:show-success-messages="showSuccessMessagesActual"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
-				:density="props.density"
+				:density="fieldAppearance.density"
 				:hide-details="props.hideDetails"
 				@blur="handleDateBlur(toDateRef)"
 			/>

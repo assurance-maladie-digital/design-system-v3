@@ -20,8 +20,9 @@
 // ainsi que les <button> natifs du design system.
 .v-btn:focus-visible,
 button:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-primary));
-	outline-offset: 3px;
+	// Réglables par la configuration de thème du projet (cf. themeConfig) ; repli = rendu Synapse.
+	outline: var(--v-focus-width, 2px) solid rgb(var(--v-focus-color, var(--v-theme-primary)));
+	outline-offset: var(--v-focus-offset, 3px);
 }
 
 // Sur fond sombre (thème dark), le ring passe en onPrimary.

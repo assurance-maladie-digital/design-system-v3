@@ -1,5 +1,6 @@
 import { type Ref } from 'vue'
 import type { DatePickerCommonProps } from '../types'
+import type { DatePickerFieldAppearance } from '../composables/useDatePickerFieldAppearance'
 
 export const buildSharedDateTextInputProps = (
 	props: DatePickerCommonProps,
@@ -7,6 +8,7 @@ export const buildSharedDateTextInputProps = (
 	errorMessages: Ref<string[]>,
 	warningMessages: Ref<string[]>,
 	successMessages: Ref<string[]>,
+	appearance: DatePickerFieldAppearance,
 ) => ({
 	'date-format-return': props.dateFormatReturn,
 	'format': props.format,
@@ -28,7 +30,7 @@ export const buildSharedDateTextInputProps = (
 	'disable-error-handling': props.disableErrorHandling,
 	'show-success-messages': props.showSuccessMessages,
 	'bg-color': props.bgColor,
-	'density': props.density,
+	'density': appearance.density,
 	'hide-details': props.hideDetails,
 	'auto-clamp': props.autoClamp,
 	'error-messages': errorMessages.value,
