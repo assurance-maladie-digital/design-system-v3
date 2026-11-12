@@ -94,6 +94,7 @@ export const Default: Story = {
 				code: `<script setup lang="ts">
 	import { SyAlert } from '@cnamts/synapse'
 	import { ref } from 'vue'
+	import { VBtn } from 'vuetify/components'
 	
 	const showAlert = ref(true);
 </script>
@@ -152,6 +153,7 @@ export const Outlined: Story = {
 				code: `<script setup lang="ts">
 	import { SyAlert } from '@cnamts/synapse'
 	import { ref } from 'vue'
+	import { VBtn } from 'vuetify/components'
 	
 	const showAlert = ref(true);
 </script>
@@ -206,6 +208,13 @@ export const Density: Story = {
 	</div>
 </template>`,
 			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { SyAlert } from '@cnamts/synapse'
+</script>
+				`,
+			},
 		],
 	},
 	render: (args) => {
@@ -249,10 +258,11 @@ export const SlotIcon: Story = {
 				code: `<script setup lang="ts">
 	import { SyAlert } from '@cnamts/synapse'
 	import { ref } from 'vue'
+	import { VBtn } from 'vuetify/components'
 	import { mdiAccountCheck } from '@mdi/js'
 	
 	const showAlert = ref(true);
-    const icon = mdiAccountCheck;
+	const icon = mdiAccountCheck;
 </script>
 				`,
 			},
