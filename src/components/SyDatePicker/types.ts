@@ -1,0 +1,86 @@
+import { type Ref } from 'vue'
+import { type TextFieldProps } from '@/composables/useTextField'
+import { type PickerView } from '@/components/Common/Calendar/locales'
+import { type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+import { locales as defaultLocales } from './locales'
+import type { DeepPartial } from '@/utils/locales/mergeLocales'
+import type { SyDatePickerVisualProps } from './SyDatePickerVisual/SyDatePickerVisualProps'
+
+export type SyDatePickerRange = [Date, Date]
+export type SyDatePickerMultiple = Date[]
+export type SyDatePickerMode = 'single' | 'range' | 'multiple'
+// The model's empty value follows the Vuetify convention: a cleared field emits `null`.
+export type SyDatePickerValue = Date | SyDatePickerRange | SyDatePickerMultiple | null
+
+export type SyDatePickerProps =
+	TextFieldProps
+	& FieldValidationProps
+	& Partial<SyDatePickerVisualProps>
+	& {
+		modelValue?: SyDatePickerValue
+		/** Panel displayed by the visual picker, two-way (`v-model:view`). Reopen restores `initialView`. */
+		view?: PickerView
+		mode?: SyDatePickerMode
+		inputFormat?: string
+		separator?: string
+		displayAsterisk?: boolean
+		locales?: DeepPartial<typeof defaultLocales>
+		disabled?: boolean
+		readonly?: boolean
+	}
+
+/** Props ready to be v-bind on a custom text field (attrs + field props + validation state) */
+export type SyDatePickerInputProps =
+	TextFieldProps
+	& {
+		required?: boolean
+		displayAsterisk?: boolean
+		inputFormat?: string
+		separator?: string
+		mode: SyDatePickerMode
+		locale: string
+		errorMessages?: string[] | null
+		warningMessages?: string[] | null
+		successMessages?: string[] | null
+		hasError?: boolean
+		hasWarning?: boolean
+		hasSuccess?: boolean
+		showSuccessMessages?: boolean
+	}
+	// Attributes forwarded by the root (classes, listeners, etc.)
+	& Record<string, unknown>
+
+/** Slot props for the `input` slot of SyDatePicker */
+export interface SyDatePickerInputSlotProps {
+	/** Props to `v-bind` on a custom text field: field props, validation state and picker props (`mode`, `locale`, …) */
+	inputProps: SyDatePickerInputProps
+	/** Raw text of the field — formatted by the component from the model (per `inputFormat`/`separator`), to bind on the custom field */
+	textValue: string | null | undefined
+	/** Reported text feeds validation and parses to the model per `inputFormat`/`separator` */
+	updateTextValue: (value: string | undefined) => void
+	setFocused: (value: boolean) => void
+	/** Attach via `:ref` to the button that opens the visual picker */
+	toggleBtnRef: Ref<HTMLButtonElement | null>
+}
+
+/** Slot props for the `menu` slot of SyDatePicker */
+export interface SyDatePickerMenuSlotProps {
+	modelValue: SyDatePickerValue
+	locale: string
+	view: PickerView
+	readonly: boolean
+	disabled: boolean
+	isOpen: boolean
+	setOpen: (value: boolean) => void
+}
+
+/** Slot props for the `header` slot of SyDatePicker */
+export interface SyDatePickerHeaderSlotProps {
+	view: PickerView
+	modelValue: Date | undefined
+	currentMonth: Date
+	minYear: number
+	maxYear: number
+	previousMonth: () => void
+	nextMonth: () => void
+}
