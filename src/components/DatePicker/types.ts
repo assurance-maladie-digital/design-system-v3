@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import type { ValidationResult, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 
@@ -165,6 +165,10 @@ export type InitializeSelectedDatesFn = (
 ) => DateObjectValue
 
 export interface DateTextInputPublicApi {
+	/** Validité remontée au SyForm par le DatePicker parent (plomberie interne, cf. formRegistration.getValidity). */
+	formValidity: ComputedRef<boolean | null>
+	/** État « jamais validé » remonté au SyForm par le DatePicker parent (plomberie interne, cf. formRegistration.getIsPristine). */
+	formIsPristine: ComputedRef<boolean>
 	validateOnSubmit: () => Promise<boolean> | boolean
 	validate: (options?: DatePickerPublicValidateOptions) => DatePickerPublicValidateResult
 	reset: () => void

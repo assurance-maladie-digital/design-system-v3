@@ -3,6 +3,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
 import { fn } from 'storybook/test'
+import DatePickerSyFormValidity from '../../docExamples/DatePickerSyFormValidity.vue'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/DateInput/Validation',
@@ -25,6 +26,22 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+
+export const SyFormLiveValidity: Story = {
+	name: 'Validité du SyForm avant soumission',
+	parameters: {
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: 'Une saisie invalide fait passer le formulaire à `false`. Après correction et sortie du champ, la validité passe à `true` avant la soumission.',
+			},
+		},
+	},
+	render: () => ({
+		components: { DatePickerSyFormValidity },
+		template: '<DatePickerSyFormValidity mode="text" />',
+	}),
+}
 
 const baseArgs = {
 	'noCalendar': true,

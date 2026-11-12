@@ -338,6 +338,17 @@
 		hasBlurred,
 		revalidateOnCustomRulesChange: true,
 		formRegistration: {
+			getValidity: () => {
+				// Le champ externe reste enregistré auprès de SyForm. En saisie seule,
+				// la validation interactive est effectuée par le DateTextInput enfant.
+				// Pas de délégation en mode combiné : la validité du ComplexDatePicker bascule
+				// quand ses règles sont recréées au rendu du parent, ce qui bouclait avec le
+				// v-model de SyForm (page figée).
+				if (props.noCalendar) return dateTextInputRef.value?.formValidity ?? null
+			},
+			getIsPristine: () => {
+				if (props.noCalendar) return dateTextInputRef.value?.formIsPristine
+			},
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,
 			reset: resetField,

@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn } from 'vuetify/components'
 import type { CalendarModeProps } from '../../types'
+import DatePickerSyFormValidity from '../../docExamples/DatePickerSyFormValidity.vue'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/CombinedMode/Validation',
@@ -26,6 +27,22 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+
+export const SyFormLiveValidity: Story = {
+	name: 'Validité du SyForm avant soumission',
+	parameters: {
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: 'Corrigez une date invalide au clavier ou sélectionnez une date dans le calendrier. À la sortie du champ, le formulaire passe à `true` et le bouton Soumettre devient disponible.',
+			},
+		},
+	},
+	render: () => ({
+		components: { DatePickerSyFormValidity },
+		template: '<DatePickerSyFormValidity mode="combined" />',
+	}),
+}
 
 const baseArgs = {
 	'label': 'Date de la consultation',

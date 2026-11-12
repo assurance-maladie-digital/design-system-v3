@@ -22,7 +22,7 @@
  */
 import { computed, ref, watch, unref, type ComputedRef, type Ref, type MaybeRef } from 'vue'
 import { type ValidationResult, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
-import { useCustomValidation } from '@/composables/unifyValidation/useCustomValidation'
+import { useCustomValidation, type UseCustomValidationOptions } from '@/composables/unifyValidation/useCustomValidation'
 import { evaluateVuetifyRules } from '@/composables/unifyValidation/vuetifyRuleEvaluation'
 import {
 	normalizeMessages as normalizeMessagesUtil,
@@ -85,11 +85,7 @@ export type DatePickerValidationOptions = {
 	returnFormat?: MaybeRef<string | undefined>
 	parseDate?: (dateStr: string, format: string) => Date | null
 	hasInteracted?: Ref<boolean>
-	formRegistration?: {
-		validateOnSubmit?: () => Promise<boolean> | boolean
-		clearValidation?: () => void
-		reset?: () => void
-	}
+	formRegistration?: UseCustomValidationOptions['formRegistration']
 }
 
 /**
@@ -161,6 +157,9 @@ export interface ValidateOptions {
  * Dans les nouveaux développements, utiliser `validate()` directement.
  */
 export interface DatePickerValidationController {
+	validity: ComputedRef<boolean | null>
+	/** true tant qu'aucune validation réelle n'a eu lieu (champ vierge ou validé silencieusement). */
+	isPristine: ComputedRef<boolean>
 	errors: Ref<string[]>
 	warnings: Ref<string[]>
 	successes: Ref<string[]>
@@ -624,6 +623,8 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 
 	// --- Retour du contrôleur ---
 	return {
+		validity: computed(() => validation?.validity.value ?? null),
+		isPristine: computed(() => validation?.isPristine.value ?? true),
 		errors,
 		warnings,
 		successes,
