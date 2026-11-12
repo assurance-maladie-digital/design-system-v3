@@ -23,7 +23,7 @@ const meta: Meta<typeof SyCheckBoxGroup> = {
 		readonly: { control: 'boolean', description: 'Lecture seule' },
 		useVuetifyValidation: { control: 'boolean', description: 'Validation Vuetify native' },
 		showSuccessMessages: { control: 'boolean', description: 'Afficher les messages de succès' },
-		multiple: { control: 'boolean', description: 'Sélection multiple' },
+		multiple: { control: false, description: 'Sélection multiple' },
 	},
 	args: {
 		label: 'Choisissez une option',
@@ -63,7 +63,7 @@ Utilise les **customRules** pour définir des règles de validation personnalis�
 Le mode multiple est imposé car la règle valide le nombre d'éléments du tableau sélectionné.
 
 **Caractéristiques :**
-- Règles de type ValidationRule (Synapse)
+- Règles de type SyValidationRule (Synapse)
 - Support des messages d'erreur, warning, success
 - Validation programmatique via validateOnSubmit
 			`,
@@ -94,7 +94,7 @@ Le mode multiple est imposé car la règle valide le nombre d'éléments du tabl
 import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { SyValidationRule } from '@cnamts/synapse'
 
 const selected = ref<string[]>(['a'])
 const checkboxGroupRef = ref(null)
@@ -105,7 +105,7 @@ const options = [
 	{ label: 'Option C', value: 'c' },
 ]
 
-const customRules: ValidationRule[] = [
+const customRules: SyValidationRule[] = [
 	{
 		type: 'custom',
 		options: {
@@ -214,7 +214,7 @@ Utilise les **customWarningRules** pour afficher un avertissement non bloquant.
 import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { SyValidationRule } from '@cnamts/synapse'
 
 const selected = ref<string | null>('b')
 const checkboxGroupRef = ref(null)
@@ -225,7 +225,7 @@ const options = [
 	{ label: 'Option C', value: 'c' },
 ]
 
-const customWarningRules: ValidationRule[] = [
+const customWarningRules: SyValidationRule[] = [
 	{
 		type: 'custom',
 		options: {
@@ -328,7 +328,7 @@ export const WithSuccess: Story = {
 import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { SyValidationRule } from '@cnamts/synapse'
 
 const selected = ref<string | null>('a')
 const checkboxGroupRef = ref(null)
@@ -339,7 +339,7 @@ const options = [
 	{ label: 'Option C', value: 'c' },
 ]
 
-const customSuccessRules: ValidationRule[] = [
+const customSuccessRules: SyValidationRule[] = [
 	{
 		type: 'custom',
 		options: {
@@ -889,7 +889,7 @@ Valide que l'utilisateur a sélectionné au moins 2 options.
 import { ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { SyValidationRule } from '@cnamts/synapse'
 
 const selected = ref<string[]>([])
 
@@ -900,7 +900,7 @@ const options = [
 	{ label: 'Option D', value: 'd' },
 ]
 
-const minSelectionRules: ValidationRule[] = [
+const minSelectionRules: SyValidationRule[] = [
 	{
 		type: 'custom',
 		options: {
@@ -999,7 +999,6 @@ Ce story démontre l'utilisation simultanée des **customWarningRules** et **cus
 		:custom-success-rules="successRules"
 		show-success-messages
 		:is-validate-on-blur="false"
-		@update:model-value="onUpdate"
 	/>
 </template>`,
 			},
@@ -1008,19 +1007,16 @@ Ce story démontre l'utilisation simultanée des **customWarningRules** et **cus
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { SyCheckBoxGroup } from '@cnamts/synapse'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { SyValidationRule } from '@cnamts/synapse'
 
 const selected = ref<string | null>('A')
-const onUpdate = (value: string | null) => {
-	selected.value = value
-}
 
 const options = [
 	{ label: 'Option A', value: 'A' },
 	{ label: 'Option B', value: 'B' },
 ]
 
-const warningRules: ValidationRule[] = [
+const warningRules: SyValidationRule[] = [
 	{
 		type: 'custom',
 		options: {
@@ -1035,7 +1031,7 @@ const warningRules: ValidationRule[] = [
 	},
 ]
 
-const successRules: ValidationRule[] = [
+const successRules: SyValidationRule[] = [
 	{
 		type: 'custom',
 		options: {
@@ -1054,10 +1050,6 @@ const successRules: ValidationRule[] = [
 		components: { SyCheckBoxGroup },
 		setup() {
 			const selected = ref<string | null>('A')
-			const options = [
-				{ label: 'Option A', value: 'A' },
-				{ label: 'Option B', value: 'B' },
-			]
 			const warningRules = [
 				{
 					type: 'custom',
@@ -1082,7 +1074,7 @@ const successRules: ValidationRule[] = [
 					},
 				},
 			]
-			return { args, selected, options, warningRules, successRules }
+			return { args, selected, warningRules, successRules }
 		},
 		template: `
 			<SyCheckBoxGroup
