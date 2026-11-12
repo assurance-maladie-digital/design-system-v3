@@ -15,7 +15,9 @@ const forbidThe15th = [
 ]
 
 describe('SyForm avec un DatePicker requis', () => {
-	it.each(['useCombinedMode', 'noCalendar'] as const)(
+	// Le mode combiné est couvert par SyForm.datePickerValidity.cy.ts : `setValue` ne passe
+	// pas par le masque de saisie du ComplexDatePicker et ne reproduit pas la saisie réelle.
+	it.each(['noCalendar'] as const)(
 		'actualise la validité à la sortie du champ en mode %s',
 		async (mode) => {
 			const valid = ref<boolean | null>(null)

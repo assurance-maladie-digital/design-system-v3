@@ -180,10 +180,6 @@ export interface DateTextInputPublicApi {
 }
 
 export interface ComplexDatePickerPublicApi {
-	/** Validité remontée au SyForm par le DatePicker parent (plomberie interne, cf. formRegistration.getValidity). */
-	formValidity: ComputedRef<boolean | null>
-	/** État « jamais validé » remonté au SyForm par le DatePicker parent (plomberie interne, cf. formRegistration.getIsPristine). */
-	formIsPristine: ComputedRef<boolean>
 	validateOnSubmit: () => Promise<boolean> | boolean
 	isDatePickerVisible: Ref<boolean>
 	selectedDates: Ref<DateObjectValue>
