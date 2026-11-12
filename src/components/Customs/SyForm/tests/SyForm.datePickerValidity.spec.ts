@@ -14,87 +14,73 @@ const forbidThe15th = [
 	},
 ]
 
+// Un seul composant de test : un SyForm qui contient le DatePicker et un bouton Soumettre
+// actif seulement quand le formulaire est valide.
+const mountForm = (datePickerProps: Record<string, unknown>) => {
+	const valid = ref<boolean | null>(null)
+	const date = ref<string | null>('')
+	const wrapper = mount(defineComponent({
+		setup: () => () => h(SyForm, {
+			'modelValue': valid.value,
+			'onUpdate:modelValue': (value: boolean | null) => { valid.value = value },
+		}, () => [
+			h(DatePicker, {
+				'modelValue': date.value,
+				'onUpdate:modelValue': (value: string | string[] | null) => {
+					date.value = typeof value === 'string' ? value : null
+				},
+				'label': 'Date',
+				'required': true,
+				'format': 'DD/MM/YYYY',
+				...datePickerProps,
+			}),
+			h('button', { type: 'submit', disabled: valid.value !== true }, 'Soumettre'),
+		]),
+	}), { attachTo: document.body })
+
+	return { wrapper, valid, date }
+}
+
 describe('SyForm avec un DatePicker requis', () => {
 	// Le mode combiné est couvert par SyForm.datePickerValidity.cy.ts : `setValue` ne passe
 	// pas par le masque de saisie du ComplexDatePicker et ne reproduit pas la saisie réelle.
-	it.each(['noCalendar'] as const)(
-		'actualise la validité à la sortie du champ en mode %s',
-		async (mode) => {
-			const valid = ref<boolean | null>(null)
-			const date = ref<string | null>('')
-			const wrapper = mount(defineComponent({
-				setup: () => () => h(SyForm, {
-					'modelValue': valid.value,
-					'onUpdate:modelValue': (value: boolean | null) => { valid.value = value },
-				}, () => [
-					h(DatePicker, {
-						'modelValue': date.value,
-						'onUpdate:modelValue': (value: string | string[] | null) => {
-							date.value = typeof value === 'string' ? value : null
-						},
-						'label': 'Date',
-						'required': true,
-						'format': 'DD/MM/YYYY',
-						[mode]: true,
-					}),
-					h('button', { type: 'submit', disabled: valid.value !== true }, 'Soumettre'),
-				]),
-			}), { attachTo: document.body })
+	it('actualise la validité à la sortie du champ en mode noCalendar', async () => {
+		const { wrapper, valid, date } = mountForm({ noCalendar: true })
 
-			const input = wrapper.get('input')
-			const button = wrapper.get<HTMLButtonElement>('button[type="submit"]')
-			const enterDate = async (value: string) => {
-				await input.trigger('focus')
-				await input.setValue(value)
-				await input.trigger('blur')
-				await flushPromises()
-			}
+		const input = wrapper.get('input')
+		const button = wrapper.get<HTMLButtonElement>('button[type="submit"]')
+		const enterDate = async (value: string) => {
+			await input.trigger('focus')
+			await input.setValue(value)
+			await input.trigger('blur')
+			await flushPromises()
+		}
 
-			try {
-				await flushPromises()
-				expect(valid.value).toBeNull()
-				expect(button.element.disabled).toBe(true)
+		try {
+			await flushPromises()
+			expect(valid.value).toBeNull()
+			expect(button.element.disabled).toBe(true)
 
-				await enterDate('32/11/2026')
-				expect(valid.value).toBe(false)
-				expect(button.element.disabled).toBe(true)
+			await enterDate('32/11/2026')
+			expect(valid.value).toBe(false)
+			expect(button.element.disabled).toBe(true)
 
-				await enterDate('30/11/2026')
-				expect(date.value).toBe('30/11/2026')
-				expect(valid.value).toBe(true)
-				expect(button.element.disabled).toBe(false)
+			await enterDate('30/11/2026')
+			expect(date.value).toBe('30/11/2026')
+			expect(valid.value).toBe(true)
+			expect(button.element.disabled).toBe(false)
 
-				await enterDate('12/11/20')
-				expect(valid.value).not.toBe(true)
-				expect(button.element.disabled).toBe(true)
-			}
-			finally {
-				wrapper.unmount()
-			}
-		},
-	)
+			await enterDate('12/11/20')
+			expect(valid.value).not.toBe(true)
+			expect(button.element.disabled).toBe(true)
+		}
+		finally {
+			wrapper.unmount()
+		}
+	})
 
 	it('actualise la validité à la sélection en mode calendrier (custom rule)', async () => {
-		const valid = ref<boolean | null>(null)
-		const date = ref<string | null>('')
-		const wrapper = mount(defineComponent({
-			setup: () => () => h(SyForm, {
-				'modelValue': valid.value,
-				'onUpdate:modelValue': (value: boolean | null) => { valid.value = value },
-			}, () => [
-				h(DatePicker, {
-					'modelValue': date.value,
-					'onUpdate:modelValue': (value: string | string[] | null) => {
-						date.value = typeof value === 'string' ? value : null
-					},
-					'label': 'Date',
-					'required': true,
-					'format': 'DD/MM/YYYY',
-					'customRules': forbidThe15th,
-				}),
-				h('button', { type: 'submit', disabled: valid.value !== true }, 'Soumettre'),
-			]),
-		}), { attachTo: document.body })
+		const { wrapper, valid } = mountForm({ customRules: forbidThe15th })
 
 		const input = wrapper.get('input')
 		const button = wrapper.get<HTMLButtonElement>('button[type="submit"]')
