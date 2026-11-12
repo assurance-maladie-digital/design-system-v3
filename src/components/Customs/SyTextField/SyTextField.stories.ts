@@ -165,6 +165,30 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
+		'disabled': {
+			description: 'Désactive le champ : il n\'est ni modifiable, ni focusable, et le bouton de vidage est masqué',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
+		'readonly': {
+			description: 'Passe le champ en lecture seule : il reste focusable mais sa valeur n\'est pas modifiable',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
+		'allowIconButtonWhenReadonly': {
+			description: 'Garde les boutons d\'icônes prepend et append actifs lorsque le champ est en lecture seule',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
 		'baseColor': {
 			type: { name: 'string', required: false },
 			description: 'Couleur de base du champ (par défaut hérite de color)',
@@ -696,6 +720,140 @@ L'astérisque ne peut être affiché que sur un champ requis, en activant la pro
 	import { ref } from 'vue'
 
 	const value = ref('')
+</script>`,
+			},
+		],
+	},
+}
+
+export const Disabled: Story = {
+	args: {
+		...Default.args,
+		label: 'Numéro de dossier',
+		modelValue: 'DOS-2024-0042',
+		disabled: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div>
+					<p class="mb-4">Le champ désactivé n'est ni modifiable, ni focusable, et le bouton de vidage est masqué.</p>
+					<SyTextField v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Champ désactivé
+
+La prop \`disabled\` rend le champ inactif : il est retiré de l'ordre de tabulation, sa valeur n'est pas modifiable et le bouton de vidage (\`isClearable\`) n'est pas affiché.
+À réserver aux champs qui ne s'appliquent pas dans le contexte courant. Pour afficher une valeur consultable mais non modifiable, préférer \`readonly\`.`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p class="mb-4">Le champ désactivé n'est ni modifiable, ni focusable, et le bouton de vidage est masqué.</p>
+	<SyTextField
+		v-model="value"
+		label="Numéro de dossier"
+		disabled
+		is-clearable
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { SyTextField } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const value = ref('DOS-2024-0042')
+</script>`,
+			},
+		],
+	},
+}
+
+export const Readonly: Story = {
+	args: {
+		...Default.args,
+		isClearable: false,
+		label: 'Adresse e-mail',
+		modelValue: 'jean.dupont@example.com',
+		readonly: true,
+		appendIcon: 'info',
+		disableClickButton: false,
+		allowIconButtonWhenReadonly: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div>
+					<p class="mb-4">Le champ en lecture seule reste focusable et sa valeur peut être sélectionnée, mais pas modifiée. L'icône d'information reste cliquable grâce à la prop allowIconButtonWhenReadonly.</p>
+					<SyTextField v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Champ en lecture seule
+
+La prop \`readonly\` empêche la modification de la valeur tout en laissant le champ focusable : la valeur reste lisible par les lecteurs d'écran et peut être copiée.
+
+Par défaut, les boutons d'icônes \`prependIcon\` / \`appendIcon\` (actifs avec \`disableClickButton\` à \`false\`) sont désactivés en lecture seule. La prop \`allowIconButtonWhenReadonly\` les garde actifs, par exemple pour afficher une information complémentaire.`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p class="mb-4">Le champ en lecture seule reste focusable et sa valeur peut être sélectionnée, mais pas modifiée. L'icône d'information reste cliquable grâce à la prop allowIconButtonWhenReadonly.</p>
+	<SyTextField
+		v-model="value"
+		label="Adresse e-mail"
+		readonly
+		append-icon="info"
+		:disable-click-button="false"
+		allow-icon-button-when-readonly
+		@append-icon-click="onInfoClick"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { SyTextField } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const value = ref('jean.dupont@example.com')
+
+	function onInfoClick(): void {
+		// Afficher l'information complémentaire
+	}
 </script>`,
 			},
 		],
