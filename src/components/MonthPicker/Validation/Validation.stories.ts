@@ -670,7 +670,6 @@ des messages depuis le parent sans déclencher de règle de validation.
 import { ref } from 'vue'
 import { VBtn } from 'vuetify/components'
 import { MonthPicker } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
 
 const selectedMonth = ref('')
 const errorMessages = ref<string[] | null>(null)
@@ -787,7 +786,6 @@ export const SyFormValidation: Story = {
 import { ref } from 'vue'
 import { VBtn } from 'vuetify/components'
 import { MonthPicker, SyForm } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
 
 const selectedMonth = ref('')
 
@@ -890,7 +888,6 @@ export const VFormValidation: Story = {
 import { ref } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import { MonthPicker } from '@cnamts/synapse'
-import { VBtn, VForm } from 'vuetify/components'
 
 const selectedMonth = ref('')
 const fieldRef = ref<InstanceType<typeof MonthPicker> | null>(null)
@@ -995,7 +992,6 @@ export const SyFormVuetifyValidation: Story = {
 import { ref } from 'vue'
 import { VBtn } from 'vuetify/components'
 import { MonthPicker, SyForm } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
 
 const selectedMonth = ref('')
 
@@ -1089,7 +1085,6 @@ native de Vuetify.
 import { ref } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import { MonthPicker } from '@cnamts/synapse'
-import { VBtn, VForm } from 'vuetify/components'
 
 const selectedMonth = ref('')
 
