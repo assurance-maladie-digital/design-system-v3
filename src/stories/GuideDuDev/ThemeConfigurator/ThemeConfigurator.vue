@@ -240,7 +240,6 @@ app.use(createVuetify(createVuetifyOptions(themeConfig)))`)
 							>
 								Annuler
 							</VBtn>
-							<a href="#theme-configurator-code-title">Voir la configuration</a>
 						</div>
 					</div>
 				</VDefaultsProvider>
