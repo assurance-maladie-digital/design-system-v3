@@ -671,6 +671,60 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useRealTimers()
 	})
 
+	it('does not move focus out of the header controls with arrow keys while the month or year view is open', () => {
+		vi.useFakeTimers()
+		const isDatePickerVisible = ref(true)
+		const setCurrentDate = vi.fn()
+
+		let savedKeydownListener: ((e: KeyboardEvent) => void) | null = null
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
+			if (type === 'keydown') savedKeydownListener = listener as (e: KeyboardEvent) => void
+		})
+
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref(null),
+					getCurrentDate: vi.fn(() => new Date(2023, 0, 15)),
+					setCurrentDate,
+				})
+				attachListeners = result.attachListeners
+				return () => null
+			},
+		})
+		mount(TestComponent)
+		attachListeners()
+		vi.advanceTimersByTime(150)
+
+		const controls = document.createElement('div')
+		controls.className = 'v-date-picker-controls'
+		const headerBtn = document.createElement('button')
+		controls.appendChild(headerBtn)
+		const monthsContainer = document.createElement('div')
+		monthsContainer.className = 'v-date-picker-months'
+		const monthBtn = document.createElement('button')
+		monthsContainer.appendChild(monthBtn)
+		document.body.append(controls, monthsContainer)
+
+		const focusSpy = vi.spyOn(monthBtn, 'focus')
+		for (const key of ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End']) {
+			const keydownEvent = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true })
+			Object.defineProperty(keydownEvent, 'target', { value: headerBtn })
+			savedKeydownListener!(keydownEvent)
+			expect(keydownEvent.defaultPrevented).toBe(false)
+		}
+
+		expect(focusSpy).not.toHaveBeenCalled()
+		expect(setCurrentDate).not.toHaveBeenCalled()
+
+		document.body.removeChild(controls)
+		document.body.removeChild(monthsContainer)
+		addEventListenerSpy.mockRestore()
+		vi.useRealTimers()
+	})
+
 	it('handles month dialog navigation even when the key event target is not the month button', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)

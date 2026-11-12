@@ -30,8 +30,8 @@
  *
  * Quand la navigation par flèches fait sortir le jour du mois actuellement affiché,
  * le composable appelle `setCurrentDate` qui déclenche `syncDisplayedMonthYearFromDate`
- * pour changer le mois affiché par VDatePicker, puis re-focalise le bon jour après
- * le re-render (via double `nextTick`).
+ * pour changer le mois affiché par VDatePicker. Le focus attend alors que la
+ * nouvelle grille soit rendue et que sa sémantique ARIA soit appliquée.
  *
  * ## Sélecteurs
  *
@@ -55,8 +55,8 @@ export interface CalendarKeyboardNavigationOptions {
 	// Renvoie la date actuellement "active" sur le calendrier
 	getCurrentDate: () => Date | null
 
-	// Applique la nouvelle date (typiquement via updateSelectedDates)
-	setCurrentDate: (date: Date) => void
+	// En cas de changement de mois, renvoie une promesse résolue quand la grille est prête.
+	setCurrentDate: (date: Date) => void | Promise<void>
 
 	// Déclenche la sélection effective de la date courante
 	onSelectDate?: (date: Date) => void
@@ -169,6 +169,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	}
 
 	const isActiveTransitionContext = (el: Element) => {
+		if (el.closest('.v-date-picker-month__days[class*="-leave-"]')) return false
+
 		const windowItem = el.closest('.v-window-item')
 		if (!windowItem) return true
 		const classes = Array.from(windowItem.classList)
@@ -434,12 +436,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 	let latestFocusToken = 0
 
-	const focusDateButton = (date: Date, attempt = 0, token?: number, showFocusRing = false) => {
-		if (attempt === 0) {
-			latestFocusToken++
-			token = latestFocusToken
-		}
-
+	const focusDateButton = (date: Date, attempt = 0, token = ++latestFocusToken, showFocusRing = false) => {
 		// Si un autre focus a été demandé entre-temps, on annule
 		if (token !== latestFocusToken) return
 
@@ -454,29 +451,20 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const iso = toISO(date)
 		const dayNum = date.getDate()
 
-		// Exclure les éléments qui sont dans une fenêtre en cours de disparition
-		const isActiveContext = (el: Element) => {
-			const windowItem = el.closest('.v-window-item')
-			if (!windowItem) return true
-			const classes = Array.from(windowItem.classList)
-			const isLeaving = classes.some(c => c.includes('leave-active') || c.includes('leave-to') || c === 'v-window-item--leave')
-			return !isLeaving
-		}
-
 		const candidates: HTMLElement[] = []
 
 		// 1. Chercher par data-v-date
 		const dataDateElements = rootEl.querySelectorAll(`[data-v-date="${iso}"]`)
 		for (const el of Array.from(dataDateElements)) {
 			const cell = el.closest<HTMLElement>('[role="gridcell"]') ?? (el as HTMLElement)
-			if (cell && isActiveContext(cell)) candidates.push(cell)
+			if (isActiveTransitionContext(cell)) candidates.push(cell)
 		}
 
 		// 2. Chercher par texte ou aria-label si vide
 		if (candidates.length === 0) {
 			const allButtons = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-month__day .v-btn')
 			for (const btn of Array.from(allButtons)) {
-				if (!isActiveContext(btn)) continue
+				if (!isActiveTransitionContext(btn)) continue
 				const text = btn.textContent?.trim() || ''
 				const ariaLabel = btn.getAttribute('aria-label') || ''
 				if (text === dayNum.toString() || new RegExp(`\\b${dayNum}\\b`).test(ariaLabel)) {
@@ -503,10 +491,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			if (bestCandidate) {
 				focusDayCell(bestCandidate, showFocusRing)
 
-				// Revérifier le focus après la durée typique d'une transition Vuetify (~350ms)
-				// car le DOM peut être re-rendu et l'élément détruit, ou le focus perdu pendant l'animation.
-				// On le fait aussi sur la première réussite immédiate, utile lors des passages de mois
-				// où le jour adjacent initialement focusé est remplacé par le DOM du mois suivant.
+				// Rattrapage si le DOM est encore modifié après la pose du focus.
 				if (attempt <= 1) {
 					setTimeout(() => {
 						if (
@@ -526,6 +511,17 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if (attempt < 15) {
 			setTimeout(() => focusDateButton(date, attempt + 1, token, showFocusRing), attempt === 0 ? 10 : 30)
 		}
+	}
+
+	const navigateToDate = (date: Date) => {
+		const token = ++latestFocusToken
+		const showFocusRing = document.activeElement?.classList.contains('sy-date-picker-keyboard-focus')
+		const calendarUpdate = setCurrentDate(date)
+		if (calendarUpdate) {
+			void calendarUpdate.then(() => focusDateButton(date, 0, token, showFocusRing))
+			return
+		}
+		focusDateButton(date, 0, token)
 	}
 
 	const handleArrowNavigation = (event: KeyboardEvent) => {
@@ -568,11 +564,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 				break
 		}
 
-		// Mettre à jour l'état (ce qui peut déclencher un changement de mois dans Vuetify)
-		setCurrentDate(nextDate)
-
-		// Forcer le focus sur le nouveau jour de manière résiliente
-		focusDateButton(nextDate)
+		navigateToDate(nextDate)
 	}
 
 	const handleHomeEndPageNavigation = (event: KeyboardEvent) => {
@@ -612,8 +604,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			nextDate = base.date(clampedDay).toDate()
 		}
 
-		setCurrentDate(nextDate)
-		focusDateButton(nextDate)
+		navigateToDate(nextDate)
 	}
 
 	const handleEnterSpaceNavigation = (event: KeyboardEvent) => {
@@ -657,6 +648,15 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		// Ignorer les modificateurs sauf Shift pour PageUp/PageDown (année)
 		if (keyboardEvent.ctrlKey || keyboardEvent.altKey || keyboardEvent.metaKey) {
+			return
+		}
+
+		// Les boutons d'entête (mois/année, précédent/suivant) ne se parcourent qu'à Tab :
+		// les flèches et Home/End ne doivent pas déplacer le focus vers la grille.
+		if (
+			['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(keyboardEvent.key)
+			&& target?.closest('.v-date-picker-controls, .v-date-picker-header')
+		) {
 			return
 		}
 

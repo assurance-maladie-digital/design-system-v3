@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import type { ValidationResult, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 
@@ -55,6 +55,12 @@ export interface DatePickerCommonProps {
 	bgColor?: string
 	/** @deprecated Utilisez isBirthDate à la place */
 	birthDate?: boolean
+	/**
+	 * Affiche le bouton d'effacement du champ (jamais affiché en `readonly`).
+	 * Mettre à `false` sur petit écran (RGAA 10.4).
+	 * @default true
+	 */
+	clearable?: boolean
 	customRules?: DatePickerRule[]
 	customSuccessRules?: DatePickerRule[]
 	customWarningRules?: DatePickerRule[]
@@ -76,6 +82,11 @@ export interface DatePickerCommonProps {
 	displayWeekendDays?: boolean
 	format?: string
 	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	/**
+	 * Texte d'aide affiché sous le champ, y compris en cas d'erreur (comme `SyTextField`).
+	 * Préférer `helpText` à `hint` pour indiquer le format attendu ou une contrainte.
+	 */
+	helpText?: string
 	hideDetails?: boolean | 'auto'
 	hint?: string
 	isBirthDate?: boolean
@@ -117,6 +128,8 @@ export interface DatePickerCommonProps {
  * Props spécifiques à DateTextInput
  */
 export interface DateTextInputProps extends Omit<DatePickerCommonProps, 'displayAsterisk' | 'displayHolidayDays' | 'displayTodayButton' | 'displayWeekendDays' | 'headingLevel' | 'hideDetails' | 'noCalendar' | 'period' | 'showWeekNumber' | 'textFieldActivator' | 'width'> {
+	/** Annonce aux technologies d'assistance que l'activation du champ ouvre un calendrier. */
+	calendarActivator?: boolean
 	disableClickButton?: boolean
 	externalErrorMessages?: string[]
 	/** Contrôle la validation déclenchée par une synchronisation externe du modèle. */
@@ -152,6 +165,10 @@ export type InitializeSelectedDatesFn = (
 ) => DateObjectValue
 
 export interface DateTextInputPublicApi {
+	/** Validité remontée au SyForm par le DatePicker parent (plomberie interne, cf. formRegistration.getValidity). */
+	formValidity: ComputedRef<boolean | null>
+	/** État « jamais validé » remonté au SyForm par le DatePicker parent (plomberie interne, cf. formRegistration.getIsPristine). */
+	formIsPristine: ComputedRef<boolean>
 	validateOnSubmit: () => Promise<boolean> | boolean
 	validate: (options?: DatePickerPublicValidateOptions) => DatePickerPublicValidateResult
 	reset: () => void
@@ -222,6 +239,7 @@ export const DatePickerCommonDefaults = {
 	autoClamp: false,
 	bgColor: 'white',
 	birthDate: false,
+	clearable: true,
 	customRules: () => [],
 	customSuccessRules: () => [],
 	customWarningRules: () => [],
@@ -243,6 +261,7 @@ export const DatePickerCommonDefaults = {
 	displayWeekendDays: true,
 	format: 'DD/MM/YYYY',
 	headingLevel: 3 as const,
+	helpText: undefined,
 	hideDetails: false,
 	hint: undefined,
 	isBirthDate: false,

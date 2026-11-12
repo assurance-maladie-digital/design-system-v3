@@ -5,7 +5,7 @@ Suite de l'audit des stories de validation (PR #<pr>). Points relevés mais non 
 ### Transverse (tous fichiers)
 
 - [ ] **medium** — Code affiché incomplet : imports manquants (`VBtn`, `VForm`, `SyForm`, `LunarCalendar`), onglets Script absents, variables non déclarées.
-- [ ] **medium** — MonthPicker `WithWarning` / `WithSuccess` : personne ne déclenche la validation au montage (rendu et code affiché).
+- [x] **medium** — MonthPicker `WithWarning` / `WithSuccess` : personne ne déclenche la validation au montage (rendu et code affiché).
 - [ ] **medium** — `args` retournés mais non liés au template (Controls / Actions inopérants) : SelectBtnField (toutes), SyCheckbox `WithCustomRules`, SyCheckBoxGroup `CustomRules`, `ValidateOnInput` / `ExternalMessages` (SyTextField, MonthPicker, PasswordField), SyTextArea `SyForm*`.
 - [ ] **low** — Code affiché : `ref(null)` non typé (`Ref<null>` casse `?.validateOnSubmit()` en TS strict), `handleSubmit(e)` non typé. Déjà corrigé dans LunarCalendar.
 - [ ] **low** — Code affiché : import de types via l'alias interne `@/composables/...` (inutilisable par un consommateur ; `ValidationRule` n'est pas exporté publiquement).
@@ -63,11 +63,11 @@ Suite de l'audit des stories de validation (PR #<pr>). Points relevés mais non 
 
 ### MonthPicker / LunarCalendar
 
-- [ ] **medium** — MonthPicker `WithError` / `WithWarning` / `WithSuccess` : pas de `render`, messages visibles uniquement après `play`.
-- [ ] **medium** — MonthPicker `WithSuccess` : valeur `'06/2026'` en dur alors que la règle dépend de l'année courante (cassera en 2027).
-- [ ] **medium** — MonthPicker `DisableErrorHandling` : pas de Script, labels identiques pour les deux champs ; `ExternalMessages` : `VBtn` non importé.
-- [ ] **low** — MonthPicker `SyForm*` : `v-bind="args"` après `v-model` écrase la valeur liée.
-- [ ] **low** — MonthPicker `WithCustomRules` : `width="400px"` n'est pas une prop.
-- [ ] **medium** — LunarCalendar : imports absents de tous les codes affichés, validation au montage non reproduite.
-- [ ] **medium** — LunarCalendar `WithMinYearOnly` / `WithMaxYearOnly` : valeur dans les bornes, aucun message, la contrainte n'est pas démontrée.
-- [ ] **low** — LunarCalendar `WithError` et `WithYearConstraints` identiques ; `WithWarning` : `value.split` sans garde.
+- [x] **medium** — MonthPicker `WithError` / `WithWarning` / `WithSuccess` : pas de `render`, messages visibles uniquement après `play`.
+- [x] **medium** — MonthPicker `WithSuccess` : valeur `'06/2026'` en dur alors que la règle dépend de l'année courante (cassera en 2027).
+- [x] **medium** — MonthPicker `DisableErrorHandling` : pas de Script, labels identiques pour les deux champs ; `ExternalMessages` : `VBtn` non importé.
+- [x] **low** — MonthPicker `SyForm*` : `v-bind="args"` après `v-model` écrase la valeur liée.
+- [x] **low** — MonthPicker `WithCustomRules` : `width="400px"` n'est pas une prop. Non applicable : `width` est un attribut transmis volontairement au `SyTextField` interne (voir `MonthPicker.vue`), il est bien appliqué au rendu.
+- [x] **medium** — LunarCalendar : imports absents de tous les codes affichés, validation au montage non reproduite.
+- [x] **medium** — LunarCalendar `WithMinYearOnly` / `WithMaxYearOnly` : valeur dans les bornes, aucun message, la contrainte n'est pas démontrée.
+- [x] **low** — LunarCalendar `WithError` et `WithYearConstraints` identiques ; `WithWarning` : `value.split` sans garde.

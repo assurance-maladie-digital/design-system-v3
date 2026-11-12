@@ -68,6 +68,7 @@ import {
 			<li><strong>Évitez les placeholders comme seuls indicateurs</strong> : Le placeholder disparaît lors de la saisie, il doit compléter le label mais pas le remplacer.</li>
 			<li><strong>Traitement du texte</strong> : Utilisez les options de traitement (<code>trim</code>, <code>normalize</code>, <code>replaceTabs</code>) pour améliorer la qualité des données saisies.</li>
 			<li><strong>Saisie confortable</strong> : Assurez-vous que la hauteur du textarea est suffisante pour une saisie confortable du contenu attendu.</li>
+			<li><strong>Éviter les champs désactivés</strong> : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférez un champ actif accompagné d'un message expliquant la contrainte, ou n'affichez le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.</li>
 		</ul>
 	</BestPracticesSection>
 

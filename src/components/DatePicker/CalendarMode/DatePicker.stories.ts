@@ -3,7 +3,7 @@ import DatePicker from './DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, computed } from 'vue'
 import { fn } from 'storybook/test'
-import { createInfoNotice } from '@/stories/InfoNotice/InfoNotice'
+import { createInfoNotice, createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import utc from 'dayjs/plugin/utc'
@@ -146,12 +146,25 @@ const meta = {
 		},
 		'label': {
 			control: 'text',
-			description: 'Libellé du champ affiché au-dessus de l\'input',
+			description: 'Libellé du champ affiché au-dessus de l\'input. RGAA 11.1 et 11.2 : utiliser un intitulé court, explicite et distinct pour chaque champ (ex : « Date de naissance »). Ne pas y répéter le format attendu : en mode saisie (combiné ou `noCalendar`), l\'indiquer dans `helpText` ; en mode calendrier seul, il n\'est pas nécessaire.',
 			defaultValue: 'Date',
+		},
+		'helpText': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ, y compris en cas d\'erreur (comme `SyTextField`). Utile pour une précision métier (ex : où trouver la date) ; l\'indication du format attendu n\'est nécessaire qu\'en mode saisie (combiné ou `noCalendar`), pas en mode calendrier seul où l\'utilisateur ne tape pas (RGAA 11.1, 11.2).',
+		},
+		'hint': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ et relié à celui-ci par `aria-describedby`. À utiliser avec `persistentHint`. Il est masqué dès qu\'un message est affiché : préférer `helpText` pour une contrainte métier ou, en mode saisie, le format attendu (RGAA 11.1).',
+		},
+		'persistentHint': {
+			control: 'boolean',
+			description: 'Garde le `hint` visible en permanence (sinon il n\'apparaît qu\'au focus).',
+			defaultValue: false,
 		},
 		'placeholder': {
 			control: 'text',
-			description: 'Texte indicatif affiché lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
+			description: 'Exemple de saisie affiché lorsque le champ est vide. Il ne remplace jamais le libellé ni le `helpText` (RGAA 11.1, 11.2).',
 		},
 		'format': {
 			control: 'select',
@@ -219,6 +232,11 @@ const meta = {
 			control: 'boolean',
 			description: 'Désactive le champ, empêchant toute interaction utilisateur et appliquant un style grisé. ⚠️ Incompatible avec readonly.',
 			defaultValue: false,
+		},
+		'clearable': {
+			control: 'boolean',
+			description: 'Affiche le bouton d\'effacement du champ (jamais affiché en readonly). Mettre à false sur petit écran (RGAA 10.4) : `const { mobile } = useDisplay()` (Vuetify) puis `:clearable="!mobile"`.',
+			defaultValue: true,
 		},
 		'noIcon': {
 			control: 'boolean',
@@ -339,8 +357,8 @@ export const Default: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
+						label="Date de la consultation"
+						help-text="Ouvre un calendrier pour choisir la date"
 						format="DD/MM/YYYY"
 					  />
 				</template>
@@ -358,8 +376,8 @@ export const Default: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'label': 'Date (JJ/MM/AAAA)',
-		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date de la consultation',
+		'helpText': 'Ouvre un calendrier pour choisir la date',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -395,7 +413,23 @@ export const Default: Story = {
 	},
 }
 
-export const Required: Story = {
+/**
+ * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
+ * utiliser `helpText` pour apporter une information complémentaire, et masquer le bouton d'effacement (`:clearable="false"`)
+ * pour libérer de la place dans le champ.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>helpText</code> complète le champ : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(précision), pas pour le copier.
+		`),
+	],
 	parameters: {
 		sourceCode: [
 			{
@@ -403,16 +437,54 @@ export const Required: Story = {
 				code: `
 				<template>
 					<DatePicker
-						v-model="date1"
+						v-model="date"
+						label="Date de début de votre arrêt de travail"
+						help-text="Cette date figure sur votre prescription médicale"
 						placeholder="JJ/MM/AAAA"
-						label="Date (JJ/MM/AAAA)"
+						format="DD/MM/YYYY"
+						:clearable="false"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		label: 'Date de début de votre arrêt de travail',
+		helpText: 'Cette date figure sur votre prescription médicale',
+		clearable: false,
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<p>Les champs marqués d'un astérisque (*) sont obligatoires.</p>
+					<DatePicker
+						v-model="date1"
+						label="Date de la consultation"
 						required
 						format="DD/MM/YYYY"
 					  />
 					  	<DatePicker
 						v-model="date2"
-						label="Date (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
+						label="Date de l'ordonnance"
 						required
 						displayAsterisk
 						format="DD/MM/YYYY"
@@ -432,8 +504,7 @@ export const Required: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -462,10 +533,11 @@ export const Required: Story = {
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
+				<p class="mb-4 w-100">Les champs marqués d'un astérisque (*) sont obligatoires.</p>
 				<h4 class="mb-4">Sans astérisque :</h4>
                 <DatePicker v-bind="args" v-model="value1"/>
 				<h4 class="mb-4">Avec astérisque :</h4>
-				<DatePicker v-bind="args" v-model="value2" displayAsterisk/>
+				<DatePicker v-bind="args" v-model="value2" label="Date de l'ordonnance" displayAsterisk/>
 				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
               </div>
             `,
@@ -482,8 +554,8 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
-						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
+						label="Période d'hospitalisation"
+						help-text="Sélectionnez la date de début puis la date de fin dans le calendrier"
 						format="DD/MM/YYYY"
 						displayRange
 					/>
@@ -505,8 +577,8 @@ export const DateRange: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
-		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
+		'label': 'Période d\'hospitalisation',
+		'helpText': 'Sélectionnez la date de début puis la date de fin dans le calendrier',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -550,8 +622,8 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="JJ/MM/AAAA"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Dates sélectionnables du 01/01/1995 au 31/12/2005"
 						format="DD/MM/YYYY"
 						:period="{
 							min: '01/01/1995',
@@ -591,8 +663,8 @@ export const WithCustomPeriod: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
+		'helpText': 'Dates sélectionnables du 01/01/1995 au 31/12/2005',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -665,8 +737,7 @@ export const WithAppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="JJ/MM/AAAA"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
 						format="DD/MM/YYYY"
 						displayAppendIcon
 					/>
@@ -688,8 +759,7 @@ export const WithAppendIcon: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -733,8 +803,7 @@ export const WithoutIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="JJ/MM/AAAA"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
 						format="DD/MM/YYYY"
 						:displayIcon="false"
 					/>
@@ -756,8 +825,7 @@ export const WithoutIcon: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -792,6 +860,58 @@ export const WithoutIcon: Story = {
 	},
 }
 
+export const WithoutClearButton: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="JJ/MM/AAAA"
+						label="Date de la consultation"
+						format="DD/MM/YYYY"
+						:clearable="false"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref('01/01/2025')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		placeholder: 'JJ/MM/AAAA',
+		label: 'Date de la consultation',
+		format: 'DD/MM/YYYY',
+		clearable: false,
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('01/01/2025')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
 export const BirthDate: Story = {
 	parameters: {
 		sourceCode: [
@@ -801,8 +921,7 @@ export const BirthDate: Story = {
 				<template>
 					<DatePicker
 						v-model="birthDate"
-						placeholder="JJ/MM/AAAA"
-						label="Date de naissance (JJ/MM/AAAA)"
+						label="Date de naissance"
 						format="DD/MM/YYYY"
 						isBirthDate
 					/>
@@ -824,8 +943,7 @@ export const BirthDate: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date de naissance (JJ/MM/AAAA)',
+		'label': 'Date de naissance',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': true,
@@ -870,8 +988,7 @@ export const UTC: Story = {
 					<div>
 						<DatePicker
 							v-model="dateString"
-							placeholder="JJ/MM/AAAA"
-							label="Date (JJ/MM/AAAA)"
+							label="Date de la consultation"
 							format="DD/MM/YYYY"
 						/>
 
@@ -936,8 +1053,7 @@ export const UTC: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,

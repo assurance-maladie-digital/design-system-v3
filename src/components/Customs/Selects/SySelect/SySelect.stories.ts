@@ -5,6 +5,7 @@ import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/component
 import { ref } from 'vue'
 import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 const meta: Meta<typeof SySelect> = {
 	title: 'Composants/Formulaires/Selects/SySelect',
@@ -139,11 +140,14 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
+					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
+
+					const value = ref<string | null>(null)
 					
 					const items =  [
 						{ text: 'Lorem Ipsum is simply dummy text of the printing and typesetting', value: 'Adrien' },
-						{ text: 'Industry. Lorem Ipsum has been the industry's standard dummy', value: 'Axel' },
+						{ text: "Industry. Lorem Ipsum has been the industry's standard dummy", value: 'Axel' },
 						{ text: 'Text ever since the 1500s, when an unknown printer took a galley', value: 'Baptiste' },
 						{ text: 'Of type and scrambled it to make a type specimen book. It has', value: 'Clement' },
 						{ text: 'Survived not only five centuries, but also the leap into electronic', value: 'Corentin' },
@@ -152,7 +156,7 @@ export const Default: Story = {
 						{ text: 'Expositas semper eius modi rumoribus et patentes, varia', value: 'Eloi' },
 						{ text: 'Emensis itaque difficultatibus multis et nive obrutis callibus', value: 'Louis' },
 						{ text: 'Plurimis ubi prope Rauracum ventum est ad supercilia', value: 'Valentin' },
-					],
+					]
 				</script>
 				`,
 			},
@@ -184,11 +188,85 @@ export const Default: Story = {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
+					<SySelect
+						v-model="value"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, masquer le bouton d'effacement (`:clearable="false"`)
+ * pour libérer de la place et utiliser `help-text` pour apporter une information complémentaire à l'intitulé.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	decorators: [
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
+			(format attendu, précision), pas pour le copier.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SySelect
+						v-model="value"
+						:items="items"
+						label="Moyen de contact que vous souhaitez utiliser pour être informé de vos remboursements"
+						help-text="Vous pourrez modifier ce choix à tout moment"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SySelect } from '@cnamts/synapse'
+
+					const value = ref<string | null>(null)
+					const items = [
+						{ text: 'Email', value: 'email' },
+						{ text: 'Courrier', value: 'courrier' },
+						{ text: 'SMS', value: 'sms' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
+		],
+		label: 'Moyen de contact que vous souhaitez utiliser pour être informé de vos remboursements',
+		helpText: 'Vous pourrez modifier ce choix à tout moment',
+		clearable: false,
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				const value = ref(null)
+				return { args, value }
+			},
+			template: `
+				<div style="max-width: 320px;">
 					<SySelect
 						v-model="value"
 						v-bind="args"
@@ -218,7 +296,10 @@ export const HelpText: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
+					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
+
+					const value = ref<string | null>(null)
 					
 					const items =  [
 						{ text: 'Adrien', value: 'Adrien' },
@@ -231,7 +312,7 @@ export const HelpText: Story = {
 						{ text: 'Eloi', value: 'Eloi' },
 						{ text: 'Louis', value: 'Louis' },
 						{ text: 'Valentin', value: 'Valentin' },
-					],
+					]
 				</script>
 				`,
 			},
@@ -265,7 +346,7 @@ export const HelpText: Story = {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -302,7 +383,7 @@ export const Required: Story = {
 				<script setup lang="ts">
 					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
-					const value = ref(null)
+					const value = ref<string | null>(null)
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
@@ -324,7 +405,7 @@ export const Required: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -367,7 +448,7 @@ export const RequiredWithAsterisk: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SySelect from '@cnamts/synapse'
+import { SySelect } from '@cnamts/synapse'
 
 const value = ref('')
 const items = [
@@ -390,7 +471,7 @@ const items = [
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -428,7 +509,7 @@ export const SlotPrepend: Story = {
 					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
 
-					const value = ref(null)
+					const value = ref<string | null>(null)
 					const items = [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
@@ -452,7 +533,7 @@ export const SlotPrepend: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				const onPrependIconClick = fn()
 				return { args, value, onPrependIconClick }
 			},
@@ -492,7 +573,7 @@ export const SlotAppend: Story = {
 					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
 
-					const value = ref(null)
+					const value = ref<string | null>(null)
 					const items = [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
@@ -516,7 +597,7 @@ export const SlotAppend: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				const onAppendIconClick = fn()
 				return { args, value, onAppendIconClick }
 			},
@@ -550,7 +631,7 @@ export const WithTooltips: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -596,7 +677,7 @@ export const WithTooltips: Story = {
 	import { ref } from 'vue'
 	import { SySelect } from '@cnamts/synapse'
 
-	const value = ref(null)
+	const value = ref<string | null>(null)
 	const items = [
 		{ text: 'Option 1', value: '1' },
 		{ text: 'Option 2', value: '2' },
@@ -637,7 +718,7 @@ export const MultipleSelection: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SySelect from '@cnamts/synapse'
+import { SySelect } from '@cnamts/synapse'
 
 const selectedOptions = ref([])
 const options = [
@@ -725,7 +806,7 @@ export const ChipsDisplay: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SySelect from '@cnamts/synapse'
+import { SySelect } from '@cnamts/synapse'
 
 const selectedOptions = ref([])
 const options = [
@@ -791,12 +872,15 @@ export const WithCustomKey: Story = {
 				name: 'Script',
 				code: `
 					<script setup lang="ts">
+						import { ref } from 'vue'
 						import { SySelect } from '@cnamts/synapse'
+
+						const value = ref<string | null>(null)
 						
 						const items =  [
 							{ customKey: 'Choix 1', value: '1' },
 							{ customKey: 'Choix 2', value: '2' },
-						],
+						]
 					</script>
 					`,
 			},
@@ -820,7 +904,7 @@ export const WithCustomKey: Story = {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -876,7 +960,7 @@ export const StringArray: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `

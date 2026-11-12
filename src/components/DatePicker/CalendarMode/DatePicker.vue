@@ -53,6 +53,7 @@
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTarget, useDatePickerFocusTrap, useDatePickerIds, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
+	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
 	import { locales } from '../locales'
 	import type { CalendarModeDatePickerPublicApi, CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
@@ -168,7 +169,7 @@
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
-	const { contentId: datePickerContentId, dialogId: datePickerDialogId, titleId: datePickerTitleId, headingId: datePickerHeadingId, inputId: datePickerInputId } = useDatePickerIds()
+	const { contentId: datePickerContentId, dialogId: datePickerDialogId, titleId: datePickerTitleId, headingId: datePickerHeadingId, inputId: datePickerInputId, activatorHintId } = useDatePickerIds()
 
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 
@@ -280,12 +281,7 @@
 		getCurrentDate,
 		setCurrentDate: (date: Date) => {
 			keyboardNavigatedDate.value = date
-			syncDisplayedMonthYearFromDate(date)
-
-			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
-			nextTick(() => {
-				syncDisplayedMonthYearFromDate(date)
-			})
+			return syncDisplayedMonthYearFromDate(date, { restoreFocus: false })
 		},
 		onSelectDate: (date: Date) => {
 			keyboardNavigatedDate.value = null
@@ -342,6 +338,17 @@
 		hasBlurred,
 		revalidateOnCustomRulesChange: true,
 		formRegistration: {
+			getValidity: () => {
+				// Le champ externe reste enregistré auprès de SyForm. En saisie seule,
+				// la validation interactive est effectuée par le DateTextInput enfant.
+				// Pas de délégation en mode combiné : la validité du ComplexDatePicker bascule
+				// quand ses règles sont recréées au rendu du parent, ce qui bouclait avec le
+				// v-model de SyForm (page figée).
+				if (props.noCalendar) return dateTextInputRef.value?.formValidity ?? null
+			},
+			getIsPristine: () => {
+				if (props.noCalendar) return dateTextInputRef.value?.formIsPristine
+			},
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,
 			reset: resetField,
@@ -624,7 +631,7 @@
 
 	// todayInString est maintenant fourni par le composable useTodayButton
 
-	const syncDisplayedMonthYearFromDate = (date: Date) => {
+	const syncDisplayedMonthYearFromDate = (date: Date, options?: { restoreFocus?: boolean }) => {
 		const displayedState = getDisplayedMonthYearState(date)
 		const hasMonthChanged = currentMonth.value !== displayedState.month
 		const hasYearChanged = currentYear.value !== displayedState.year
@@ -641,8 +648,7 @@
 		}
 
 		if (hasMonthChanged || hasYearChanged) {
-			reapplyAccessibility()
-			nextTick(() => {
+			return reapplyAccessibility(options)?.then(() => {
 				if (isDatePickerVisible.value) {
 					updateSelectedDayAria()
 				}
@@ -957,6 +963,7 @@
 							v-model="displayFormattedDate"
 							:class="[messageClasses, 'label-hidden-on-focus']"
 							v-bind="menuActivatorTextFieldProps"
+							:aria-describedby="isInteractionDisabled ? undefined : activatorHintId"
 							@click="openDatePickerOnClick"
 							@focus="openDatePickerOnFocus"
 							@blur="handleInputBlur"
@@ -964,6 +971,12 @@
 							@update:model-value="updateSelectedDates"
 							@prepend-icon-click="openDatePickerOnIconClick"
 							@append-icon-click="openDatePickerOnIconClick"
+						/>
+						<!-- Avertit l'utilisateur (via aria-describedby) que l'activation du champ affiche un calendrier -->
+						<DatePickerLiveRegion
+							:id="activatorHintId"
+							:text="locales.activationOpensCalendar"
+							live="off"
 						/>
 					</div>
 				</template>

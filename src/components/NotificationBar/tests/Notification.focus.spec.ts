@@ -26,6 +26,48 @@ describe('Notification - Focus', () => {
 		expect(closeBtn.attributes('aria-label')).toBe('Fermer la notification')
 	})
 
+	// RGAA 11.9 : le nom accessible du bouton de fermeture contient son intitulé visible
+	it('builds the accessible name from a custom closeBtnText', () => {
+		const wrapper = mount(Notification, {
+			props: { notification: makeNotification('info'), options: {}, closeBtnText: 'Masquer' },
+		})
+
+		const closeBtn = wrapper.find('.notification__close')
+		expect(closeBtn.text()).toBe('Masquer')
+		expect(closeBtn.attributes('aria-label')).toBe('Masquer la notification')
+	})
+
+	it('uses the same accessible name when only the close icon is displayed', () => {
+		const wrapper = mount(Notification, {
+			props: { notification: makeNotification('info'), options: {}, closeBtnText: 'Masquer' },
+			slots: { action: () => h(VBtn, () => 'Voir le détail') },
+		})
+
+		const closeBtn = wrapper.find('.notification__close')
+		expect(closeBtn.text()).toBe('')
+		expect(closeBtn.attributes('aria-label')).toBe('Masquer la notification')
+	})
+
+	it('falls back to the default accessible name when closeBtnText is empty', () => {
+		const wrapper = mount(Notification, {
+			props: { notification: makeNotification('info'), options: {}, closeBtnText: '' },
+		})
+
+		expect(wrapper.find('.notification__close').attributes('aria-label')).toBe('Fermer la notification')
+	})
+
+	it('lets an aria-label passed through the btn options take precedence', () => {
+		const wrapper = mount(Notification, {
+			props: {
+				notification: makeNotification('info'),
+				options: { btn: { 'aria-label': 'Ignorer ce message' } },
+				closeBtnText: 'Masquer',
+			},
+		})
+
+		expect(wrapper.find('.notification__close').attributes('aria-label')).toBe('Ignorer ce message')
+	})
+
 	it('renders a real focusable button provided via the action slot', () => {
 		const wrapper = mount(Notification, {
 			props: { notification: makeNotification('info'), options: {} },

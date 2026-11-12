@@ -77,6 +77,8 @@
 	const props = withDefaults(defineProps<DateTextInputProps>(), {
 		autoClamp: false,
 		bgColor: 'white',
+		calendarActivator: false,
+		clearable: true,
 		customSuccessRules: () => [],
 		customRules: () => [],
 		customWarningRules: () => [],
@@ -147,6 +149,8 @@
 	// `pushError` est conservé pour failWithDisplayedError() qui a besoin d'un accès direct
 	// pour afficher des erreurs locales (ex: format invalide) sans passer par le flow complet.
 	const {
+		validity: formValidity,
+		isPristine: formIsPristine,
 		hasError: bridgeHasError,
 		hasWarning: bridgeHasWarning,
 		hasSuccess: bridgeHasSuccess,
@@ -246,7 +250,11 @@
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
-	const formatDescription = computed(() => `${locales.formatHint} ${locales.dateFormatDescription(displayFormat.value)}`)
+	const formatDescription = computed(() => {
+		const description = `${locales.formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
+		// Quand le champ sert d'activateur de calendrier, on avertit qu'un élément va s'afficher
+		return props.calendarActivator ? `${description}. ${locales.activationOpensCalendar}` : description
+	})
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => {
@@ -1308,6 +1316,8 @@
 	}
 
 	const publicApi: DateTextInputPublicApi = {
+		formValidity,
+		formIsPristine,
 		validateOnSubmit,
 		validate: bridgeValidate,
 		reset,

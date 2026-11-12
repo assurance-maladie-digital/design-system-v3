@@ -92,6 +92,13 @@ import '@/stories/styles/shared.css';
       <li>Désactive l'auto-complétion du navigateur pour éviter les conflits</li>
     </ul>
   </div>
+
+  <div className="implementation-section">
+    <h2>Bonnes pratiques d'utilisation</h2>
+    <ul>
+      <li><strong>Éviter les champs désactivés</strong> : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférez un champ actif accompagné d'un message expliquant la contrainte, ou n'affichez le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.</li>
+    </ul>
+  </div>
 </div>
 
 <style>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { VBtn } from 'vuetify/components'
 import PasswordField from '../PasswordField.vue'
 import type { PasswordFieldProps } from '../types'
@@ -480,6 +480,7 @@ ne sont pas nécessaires dans certains contextes.
     v-model="value1"
     label="Mot de passe avec messages de succès"
     required
+    :custom-success-rules="customSuccessRules"
     show-success-messages
   />
 
@@ -488,6 +489,7 @@ ne sont pas nécessaires dans certains contextes.
     v-model="value2"
     label="Mot de passe sans messages de succès"
     required
+    :custom-success-rules="customSuccessRules"
     :showSuccessMessages="false"
   />
 </template>`,
@@ -500,17 +502,32 @@ import { PasswordField } from '@cnamts/synapse'
 
 const value1 = ref('P@ssw0rd123')
 const value2 = ref('P@ssw0rd123')
+const customSuccessRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: string) => value.length >= 8,
+    successMessage: 'Mot de passe valide',
+  },
+}]
 </script>`,
 			},
 		],
 	},
-	render: () => ({
+	argTypes: {
+		label: { control: false },
+		required: { control: false },
+		modelValue: { control: false },
+		showSuccessMessages: { control: false },
+		customSuccessRules: { control: false },
+	},
+	render: args => ({
 		components: { PasswordField },
 		setup() {
 			const value1 = ref('P@ssw0rd123')
 			const value2 = ref('P@ssw0rd123')
+			const customSuccessRules = [{ type: 'custom', options: { validate: (value: string) => value.length >= 8, successMessage: 'Mot de passe valide' } }]
 
-			return { value1, value2 }
+			return { args, value1, value2, customSuccessRules }
 		},
 		template: `
       <div>
@@ -520,9 +537,11 @@ const value2 = ref('P@ssw0rd123')
           <div>
             <p class="text-subtitle-2 mb-2">Avec messages de succès</p>
             <PasswordField
+              v-bind="args"
               v-model="value1"
               label="Mot de passe avec messages de succès"
               required
+              :custom-success-rules="customSuccessRules"
               showSuccessMessages
             />
           </div>
@@ -530,9 +549,11 @@ const value2 = ref('P@ssw0rd123')
           <div>
             <p class="text-subtitle-2 mb-2">Sans messages de succès</p>
             <PasswordField
+              v-bind="args"
               v-model="value2"
               label="Mot de passe sans messages de succès"
               required
+              :custom-success-rules="customSuccessRules"
               :showSuccessMessages="false"
             />
           </div>
@@ -542,8 +563,8 @@ const value2 = ref('P@ssw0rd123')
           <p>Observations :</p>
           <ul>
             <li class="ml-4">Les deux champs ont la même valeur valide</li>
-            <li class="ml-4">Le champ de gauche affiche un message de succès et un indicateur visuel vert</li>
-            <li class="ml-4">Le champ de droite n'affiche pas de message de succès, mais conserve l'indicateur visuel</li>
+            <li class="ml-4">Après modification puis perte de focus avec une valeur valide, le champ de gauche affiche le succès</li>
+            <li class="ml-4">Après validation, le champ de droite conserve l’indicateur de succès sans afficher son message</li>
             <li class="ml-4">Essayez de modifier les valeurs puis de les rendre à nouveau valides</li>
           </ul>
         </div>
@@ -616,7 +637,14 @@ const customRules = [
 			},
 		],
 	},
-	render: () => ({
+	argTypes: {
+		label: { control: false },
+		required: { control: false },
+		modelValue: { control: false },
+		disableErrorHandling: { control: false },
+		customRules: { control: false },
+	},
+	render: args => ({
 		components: { PasswordField },
 		setup() {
 			const value1 = ref('')
@@ -637,7 +665,7 @@ const customRules = [
 				},
 			]
 
-			return { value1, value2, customRules }
+			return { args, value1, value2, customRules }
 		},
 		template: `
 			<div>
@@ -647,6 +675,7 @@ const customRules = [
 					<div>
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<PasswordField
+							v-bind="args"
 							v-model="value1"
 							label="Mot de passe avec validation"
 							required
@@ -657,6 +686,7 @@ const customRules = [
 					<div>
 						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
 						<PasswordField
+							v-bind="args"
 							v-model="value2"
 							label="Mot de passe sans gestion d'erreurs"
 							required
@@ -727,31 +757,31 @@ const password = ref('')
 			},
 		],
 	},
+	args: {
+		required: true,
+		isValidateOnBlur: false,
+		showSuccessMessages: true,
+		customRules: [{
+			type: 'custom',
+			options: {
+				message: 'Au moins 8 caractères requis',
+				validate: (value: string) => value.length >= 8,
+			},
+		}],
+	},
 	render: args => ({
 		components: { PasswordField },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 			return { args, password }
 		},
 		template: `
 			<div>
 				<p class="mb-4">La validation se déclenche à chaque frappe (<code>isValidateOnBlur="false"</code>).</p>
-				<PasswordField
-					v-model="password"
-					label="Mot de passe"
-					required
-					:is-validate-on-blur="false"
-					:custom-rules="[
-						{
-							type: 'custom',
-							options: {
-								message: 'Au moins 8 caractères requis',
-								validate: (value) => value.length >= 8,
-							},
-						},
-					]"
-					show-success-messages
-				/>
+				<PasswordField v-bind="args" v-model="password" />
 			</div>
 		`,
 	}),
@@ -767,7 +797,7 @@ export const ExternalMessages: Story = {
 				story: `
 ### Messages externes
 
-Les props \`errorMessages\`, \`warningMessages\` et \`successMessages\`
+Les props \`errorMessages\`, \`warningMessages\` et \`successMessages\` permettent au parent d’injecter des messages sans déclencher de règle de validation. Les boutons pilotent ces messages ; leurs Controls sont désactivés. Réinitialiser efface les trois listes.
 `,
 			},
 		},
@@ -827,10 +857,19 @@ function reset() {
 			},
 		],
 	},
+	argTypes: {
+		errorMessages: { control: false },
+		warningMessages: { control: false },
+		successMessages: { control: false },
+	},
+	args: { showSuccessMessages: true },
 	render: args => ({
-		components: { PasswordField },
+		components: { PasswordField, VBtn },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 			const errorMessages = ref<string[] | null>(null)
 			const warningMessages = ref<string[] | null>(null)
 			const successMessages = ref<string[] | null>(null)
@@ -864,12 +903,11 @@ function reset() {
 					Les messages ci-dessous sont injectés par le parent sans déclencher de règle de validation.
 				</p>
 				<PasswordField
+					v-bind="args"
 					v-model="password"
-					label="Mot de passe"
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
-					:showSuccessMessages='true'
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2">
 					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
@@ -933,7 +971,7 @@ const rules = [
 	(value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Au moins un caractère spécial requis',
 ]
 
-async function handleSubmit(e) {
+async function handleSubmit(e: PromiseLike<{ valid: boolean }>) {
 	const isValid = (await e).valid
 	alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -941,10 +979,18 @@ async function handleSubmit(e) {
 			},
 		],
 	},
+	argTypes: {
+		rules: { control: false },
+		useVuetifyValidation: { control: false },
+		isValidateOnBlur: { control: false },
+	},
 	render: args => ({
 		components: { VForm, PasswordField, VBtn },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 
 			const rules = [
 				(value: string) => !!value || 'Le mot de passe est requis',
@@ -954,7 +1000,7 @@ async function handleSubmit(e) {
 				(value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Au moins un caractère spécial requis',
 			]
 
-			async function handleSubmit(e) {
+			async function handleSubmit(e: PromiseLike<{ valid: boolean }>) {
 				const isValid = (await e).valid
 				alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
 			}
@@ -971,7 +1017,6 @@ async function handleSubmit(e) {
 					<PasswordField
 						v-bind="args"
 						v-model="password"
-						label="Mot de passe"
 						:use-vuetify-validation="true"
 						:rules="rules"
 						:is-validate-on-blur="true"
@@ -1040,7 +1085,7 @@ const customRules = [
     },
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
     // La validation est gérée par SyForm, on peut juste vérifier le résultat
     const isValid = e.isValid
     alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
@@ -1049,10 +1094,16 @@ function handleSubmit(e) {
 			},
 		],
 	},
+	argTypes: {
+		customRules: { control: false },
+	},
 	render: args => ({
 		components: { PasswordField, VBtn, SyForm },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 
 			const customRules = [
 				{
@@ -1081,7 +1132,7 @@ function handleSubmit(e) {
 				},
 			]
 
-			function handleSubmit(e) {
+			function handleSubmit(e: { isValid: boolean }) {
 				// La validation est gérée par SyForm, on peut juste vérifier le résultat
 				const isValid = e.isValid
 				alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
@@ -1093,8 +1144,8 @@ function handleSubmit(e) {
             <div>
                 <SyForm @submit="handleSubmit">
                     <PasswordField
-                        v-model="password"
                         v-bind="args"
+                        v-model="password"
                         :custom-rules="customRules"
                     />
                     <div class="mt-4">
@@ -1145,7 +1196,7 @@ const vuetifyRules = [
     (value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Au moins un caractère spécial requis',
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
     const isValid = e.isValid
     alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -1153,10 +1204,17 @@ function handleSubmit(e) {
 			},
 		],
 	},
+	argTypes: {
+		rules: { control: false },
+		useVuetifyValidation: { control: false },
+	},
 	render: args => ({
 		components: { PasswordField, VBtn, SyForm },
 		setup() {
-			const password = ref('')
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
 
 			const vuetifyRules = [
 				(value: string) => !!value || 'Le mot de passe est requis',
@@ -1166,7 +1224,7 @@ function handleSubmit(e) {
 				(value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Au moins un caractère spécial requis',
 			]
 
-			function handleSubmit(e) {
+			function handleSubmit(e: { isValid: boolean }) {
 				const isValid = e.isValid
 				alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
 			}
@@ -1177,8 +1235,8 @@ function handleSubmit(e) {
             <div>
                 <SyForm @submit="handleSubmit">
                     <PasswordField
-                        v-model="password"
                         v-bind="args"
+                        v-model="password"
                         :use-vuetify-validation="true"
                         :rules="vuetifyRules"
                     />
@@ -1219,7 +1277,7 @@ import { PasswordField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const password = ref('')
-const fieldRef = ref()
+const fieldRef = ref<InstanceType<typeof PasswordField> | null>(null)
 
 const customRules = [
 	{
@@ -1252,11 +1310,17 @@ async function handleSubmit() {
 			},
 		],
 	},
+	argTypes: {
+		customRules: { control: false },
+	},
 	render: args => ({
-		components: { PasswordField, VBtn },
+		components: { PasswordField, VBtn, VForm },
 		setup() {
-			const password = ref('')
-			const fieldRef = ref()
+			const password = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (value) => {
+				password.value = value ?? ''
+			})
+			const fieldRef = ref<InstanceType<typeof PasswordField> | null>(null)
 
 			const customRules = [
 				{
@@ -1298,8 +1362,6 @@ async function handleSubmit() {
 						v-bind="args"
 						ref="fieldRef"
 						v-model="password"
-						label="Mot de passe"
-						required
 						:custom-rules="customRules"
 					/>
 					<div class="mt-4">
@@ -1310,6 +1372,7 @@ async function handleSubmit() {
 		`,
 	}),
 	args: {
+		required: true,
 		modelValue: '',
 	},
 }

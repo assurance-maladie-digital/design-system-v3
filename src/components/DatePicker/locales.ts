@@ -50,7 +50,13 @@ export const locales = {
 	// Messages d'accessibilité
 	dateInputDescription: 'Date en cours de saisie',
 	openCalendar: 'Ouvrir le calendrier',
-	selectMonth: (month?: string): string => month ? `Sélectionner le mois (${month})` : 'Sélectionner un mois',
+	activationOpensCalendar: 'Activation ouvre un calendrier',
+	selectMonth: (month?: string, fullMonth?: string): string => {
+		if (!month) return 'Sélectionner un mois'
+		return fullMonth && fullMonth !== month
+			? `Sélectionner le mois ${month} : ${fullMonth}`
+			: `Sélectionner le mois ${month}`
+	},
 	selectYear: (year?: string): string => year ? `${year}` : 'Sélectionner une année',
 	selectYearForDisplay: (year: string): string => `Sélectionner l'année ${year}`,
 	selectMonthWithYear: (month: string, year?: string): string => {
@@ -59,6 +65,7 @@ export const locales = {
 	openMonthSelector: 'Ouvrir le sélecteur de mois',
 	openYearSelector: 'Ouvrir le sélecteur d\'année',
 	selectYearDirectly: 'Sélectionner une année',
+	yearListRegionLabel: 'Liste des années',
 	previousMonth: 'Mois précédent',
 	nextMonth: 'Mois suivant',
 	calendarGridLabel: 'Calendrier des dates',

@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn } from 'vuetify/components'
 import type { CalendarModeProps } from '../../types'
+import DatePickerSyFormValidity from '../../docExamples/DatePickerSyFormValidity.vue'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/CombinedMode/Validation',
@@ -27,8 +28,25 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+export const SyFormLiveValidity: Story = {
+	name: 'Validité du SyForm avant soumission',
+	parameters: {
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: 'Corrigez une date invalide au clavier ou sélectionnez une date dans le calendrier. À la sortie du champ, le formulaire passe à `true` et le bouton Soumettre devient disponible.',
+			},
+		},
+	},
+	render: () => ({
+		components: { DatePickerSyFormValidity },
+		template: '<DatePickerSyFormValidity mode="combined" />',
+	}),
+}
+
 const baseArgs = {
-	'label': 'Date (JJ/MM/AAAA)',
+	'label': 'Date de la consultation',
+	'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 	'placeholder': 'JJ/MM/AAAA',
 	'format': 'DD/MM/YYYY',
 	'isBirthDate': false,
@@ -57,7 +75,6 @@ export const WithError: Story = {
 	args: {
 		...baseArgs,
 		modelValue: '20/08/2026',
-		label: 'Date avec erreur injectée',
 		errorMessages: ['Date invalide côté métier'],
 		required: false,
 	},
@@ -89,7 +106,6 @@ export const WithWarning: Story = {
 	args: {
 		...baseArgs,
 		modelValue: '20/08/2026',
-		label: 'Date avec warning injecté',
 		warningMessages: ['Date inhabituelle, à vérifier'],
 		required: false,
 	},
@@ -121,7 +137,6 @@ export const WithSuccess: Story = {
 	args: {
 		...baseArgs,
 		modelValue: '20/08/2026',
-		label: 'Date avec succès injecté',
 		showSuccessMessages: true,
 		successMessages: ['Date validée'],
 		required: false,
@@ -164,7 +179,8 @@ export const WithValidation: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						required
@@ -203,7 +219,8 @@ export const WithValidation: Story = {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -257,7 +274,8 @@ export const WithFormSubmission: Story = {
 						<DatePicker
 							ref="datePicker"
 							v-model="date"
-							label="Date (JJ/MM/AAAA)"
+							label="Date de la consultation"
+							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							required
@@ -294,7 +312,8 @@ export const WithFormSubmission: Story = {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -357,7 +376,8 @@ export const CustomRules: Story = {
 					<template>
 						<DatePicker
 							v-model="date"
-							label="Date de rendez-vous (JJ/MM/AAAA)"
+							label="Date de rendez-vous"
+							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							required
@@ -391,7 +411,8 @@ export const CustomRules: Story = {
 		],
 	},
 	args: {
-		label: 'Date de rendez-vous (JJ/MM/AAAA)',
+		label: 'Date de rendez-vous',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -443,7 +464,8 @@ export const CustomWarningRules: Story = {
 					<template>
 						<DatePicker
 							v-model="date"
-							label="Date (JJ/MM/AAAA)"
+							label="Date de la consultation"
+							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							required
@@ -488,7 +510,8 @@ export const CustomWarningRules: Story = {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,

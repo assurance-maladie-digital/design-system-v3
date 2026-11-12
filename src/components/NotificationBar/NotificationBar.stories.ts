@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import type { Meta, StoryFn } from '@storybook/vue3-vite'
 import NotificationBar from './NotificationBar.vue'
 import { VBtn } from 'vuetify/components'
@@ -123,18 +122,20 @@ Default.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-wrap align-center justify-center">
-				<NotificationBar
-					close-btn-text="Fermer"
-				/>
-				<VBtn
-					color="primary"
-					@click="envoyerNotification('Ceci est une notification')"
-					class="ma-6"
-				>
-					Afficher la notification
-				</VBtn>
-			</div>
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar
+						close-btn-text="Fermer"
+					/>
+					<VBtn
+						color="primary"
+						@click="envoyerNotification('Ceci est une notification')"
+						class="ma-6"
+					>
+						Afficher la notification
+					</VBtn>
+				</div>
+			</template>
 			`,
 		},
 		{
@@ -142,19 +143,17 @@ Default.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-                import { NotificationBar, useNotificationService } from '@cnamts/synapse'
-				import { ref } from 'vue'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 
 				const { addNotification } = useNotificationService()
 
 				const envoyerNotification = (message: string) => {
-					const notification = {
+					addNotification({
 						id: Date.now().toString(),
 						message,
 						type: 'info',
 						timeout: -1,
-					}
-					addNotification(notification)
+					})
 				}
 			</script>
 			`,
@@ -172,18 +171,20 @@ Success.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-wrap align-center justify-center">
-				<NotificationBar
-					close-btn-text="Fermer"
-				/>
-				<VBtn
-					color="success"
-					@click="envoyerNotification('Ceci est une notification de succès')"
-					class="ma-6"
-				>
-					Afficher la notification
-				</VBtn>
-			</div>
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar
+						close-btn-text="Fermer"
+					/>
+					<VBtn
+						color="success"
+						@click="envoyerNotification('Ceci est une notification de succès')"
+						class="ma-6"
+					>
+						Afficher la notification
+					</VBtn>
+				</div>
+			</template>
 			`,
 		},
 		{
@@ -191,19 +192,17 @@ Success.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-				import { ref } from 'vue'
 				import { useNotificationService, NotificationBar } from '@cnamts/synapse'
 
 				const { addNotification } = useNotificationService()
 
 				const envoyerNotification = (message: string) => {
-					const notification = {
+					addNotification({
 						id: Date.now().toString(),
 						message,
 						type: 'success',
 						timeout: -1,
-					}
-					addNotification(notification)
+					})
 				}
 			</script>
 			`,
@@ -221,18 +220,20 @@ Warning.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-wrap align-center justify-center">
-				<NotificationBar
-					close-btn-text="Fermer"
-				/>
-				<VBtn
-					color="warning"
-					@click="envoyerNotification('Ceci est une notification d\'avertissement')"
-					class="ma-6"
-				>
-					Afficher la notification
-				</VBtn>
-			</div>
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar
+						close-btn-text="Fermer"
+					/>
+					<VBtn
+						color="warning"
+						@click="envoyerNotification('Ceci est une notification d\\'avertissement')"
+						class="ma-6"
+					>
+						Afficher la notification
+					</VBtn>
+				</div>
+			</template>
 			`,
 		},
 		{
@@ -241,18 +242,16 @@ Warning.parameters = {
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
-				import { ref } from 'vue'
 
 				const { addNotification } = useNotificationService()
 
 				const envoyerNotification = (message: string) => {
-					const notification = {
+					addNotification({
 						id: Date.now().toString(),
 						message,
 						type: 'warning',
 						timeout: -1,
-					}
-					addNotification(notification)
+					})
 				}
 			</script>
 			`,
@@ -270,18 +269,20 @@ Error.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-wrap align-center justify-center">
-				<NotificationBar
-					close-btn-text="Fermer"
-				/>
-				<VBtn
-					color="error"
-					@click="envoyerNotification('Ceci est une notification d\'erreur')"
-					class="ma-6"
-				>
-					Afficher la notification
-				</VBtn>
-			</div>
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar
+						close-btn-text="Fermer"
+					/>
+					<VBtn
+						color="error"
+						@click="envoyerNotification('Ceci est une notification d\\'erreur')"
+						class="ma-6"
+					>
+						Afficher la notification
+					</VBtn>
+				</div>
+			</template>
 			`,
 		},
 		{
@@ -290,18 +291,16 @@ Error.parameters = {
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
-				import { ref } from 'vue'
 
 				const { addNotification } = useNotificationService()
 
 				const envoyerNotification = (message: string) => {
-					const notification = {
+					addNotification({
 						id: Date.now().toString(),
 						message,
 						type: 'error',
 						timeout: -1,
-					}
-					addNotification(notification)
+					})
 				}
 			</script>
 			`,
@@ -319,19 +318,21 @@ Bottom.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-wrap align-center justify-center">
-				<NotificationBar
-					close-btn-text="Fermer"
-					bottom
-				/>
-				<VBtn
-					color="primary"
-					@click="envoyerNotification('Ceci est une notification affichée en bas de l\'écran')"
-					class="ma-6"
-				>
-					Afficher la notification
-				</VBtn>
-			</div>
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar
+						close-btn-text="Fermer"
+						bottom
+					/>
+					<VBtn
+						color="primary"
+						@click="envoyerNotification('Ceci est une notification affichée en bas de l\\'écran')"
+						class="ma-6"
+					>
+						Afficher la notification
+					</VBtn>
+				</div>
+			</template>
 			`,
 		},
 		{
@@ -340,18 +341,16 @@ Bottom.parameters = {
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
-				import { ref } from 'vue'
 
 				const { addNotification } = useNotificationService()
 
 				const envoyerNotification = (message: string) => {
-					const notification = {
+					addNotification({
 						id: Date.now().toString(),
 						message,
 						type: 'info',
 						timeout: -1,
-					}
-					addNotification(notification)
+					})
 				}
 			</script>
 			`,
@@ -369,18 +368,20 @@ CustomCloseBtnText.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-wrap align-center justify-center">
-				<NotificationBar
-					close-btn-text="Masquer"
-				/>
-				<VBtn
-					color="primary"
-					@click="envoyerNotification('Ceci est une notification avec un texte de bouton personnalisé')"
-					class="ma-6"
-				>
-					Afficher la notification
-				</VBtn>
-			</div>
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar
+						close-btn-text="Masquer"
+					/>
+					<VBtn
+						color="primary"
+						@click="envoyerNotification('Ceci est une notification avec un texte de bouton personnalisé')"
+						class="ma-6"
+					>
+						Afficher la notification
+					</VBtn>
+				</div>
+			</template>
 			`,
 		},
 		{
@@ -389,18 +390,16 @@ CustomCloseBtnText.parameters = {
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
-				import { ref } from 'vue'
 
 				const { addNotification } = useNotificationService()
 
 				const envoyerNotification = (message: string) => {
-					const notification = {
+					addNotification({
 						id: Date.now().toString(),
 						message,
 						type: 'info',
 						timeout: -1,
-					}
-					addNotification(notification)
+					})
 				}
 			</script>
 			`,
@@ -454,17 +453,29 @@ DefaultSlot.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<NotificationBar>
-				<template #default="{ notification }">
-					Contenu personnalisé pour <strong>{{ notification.id }}</strong>
-				</template>
-			</NotificationBar>
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar>
+						<template #default="{ notification }">
+							Contenu personnalisé pour <strong>{{ notification.id }}</strong>
+						</template>
+					</NotificationBar>
+					<VBtn
+						color="primary"
+						@click="envoyerNotification()"
+						class="ma-6"
+					>
+						Afficher la notification
+					</VBtn>
+				</div>
+			</template>
 			`,
 		},
 		{
 			name: 'Script',
 			code: `
 			<script setup lang="ts">
+				import { VBtn } from 'vuetify/components'
 				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 
 				const { addNotification } = useNotificationService()
@@ -531,19 +542,31 @@ ActionSlot.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<NotificationBar>
-				<template #action>
-					<VBtn variant="outlined">
-						Voir le détail
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar>
+						<template #action>
+							<VBtn variant="outlined">
+								Voir le détail
+							</VBtn>
+						</template>
+					</NotificationBar>
+					<VBtn
+						color="primary"
+						@click="envoyerNotification()"
+						class="ma-6"
+					>
+						Afficher la notification
 					</VBtn>
-				</template>
-			</NotificationBar>
+				</div>
+			</template>
 			`,
 		},
 		{
 			name: 'Script',
 			code: `
 			<script setup lang="ts">
+				import { VBtn } from 'vuetify/components'
 				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 
 				const { addNotification } = useNotificationService()
@@ -573,19 +596,21 @@ Customization.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-wrap align-center justify-center">
-				<NotificationBar
-					close-btn-text="closeBtnText"
-					rounded="pill"
-				/>
-				<VBtn
-					color="success"
-					@click="envoyerNotification('Ceci est une notification de succès')"
-					class="ma-6"
-				>
-					Afficher la notification
-				</VBtn>
-			</div>
+			<template>
+				<div class="d-flex flex-wrap align-center justify-center">
+					<NotificationBar
+						close-btn-text="Fermer"
+						rounded="pill"
+					/>
+					<VBtn
+						color="success"
+						@click="envoyerNotification('Ceci est une notification de succès')"
+						class="ma-6"
+					>
+						Afficher la notification
+					</VBtn>
+				</div>
+			</template>
 			`,
 		},
 		{
@@ -594,18 +619,16 @@ Customization.parameters = {
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
-				import { ref } from 'vue'
 
 				const { addNotification } = useNotificationService()
 
 				const envoyerNotification = (message: string) => {
-					const notification = {
+					addNotification({
 						id: Date.now().toString(),
 						message,
 						type: 'success',
 						timeout: -1,
-					}
-					addNotification(notification)
+					})
 				}
 			</script>
 			`,
@@ -684,6 +707,78 @@ WithClearQueue.args = {
 	bottom: true,
 }
 
+WithClearQueue.parameters = {
+	sourceCode: [
+		{
+			name: 'Template',
+			code: `
+			<template>
+				<div class="d-flex flex-column align-center justify-center ga-4">
+					<NotificationBar
+						close-btn-text="Fermer"
+						bottom
+					/>
+					<div class="d-flex flex-wrap justify-center ga-4">
+						<VBtn
+							color="primary"
+							@click="envoyerNotification('Notification info', 'info')"
+						>
+							Ajouter info
+						</VBtn>
+						<VBtn
+							color="on-success-variant"
+							@click="envoyerNotification('Notification succès', 'success')"
+						>
+							Ajouter succès
+						</VBtn>
+						<VBtn
+							color="on-warning-variant"
+							@click="envoyerNotification('Notification avertissement', 'warning')"
+						>
+							Ajouter avertissement
+						</VBtn>
+						<VBtn
+							color="error"
+							@click="envoyerNotification('Notification erreur', 'error')"
+						>
+							Ajouter erreur
+						</VBtn>
+						<VBtn
+							color="grey-darken-1"
+							@click="clearQueue()"
+						>
+							Fermer toutes les notifications
+						</VBtn>
+					</div>
+					<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+				</div>
+			</template>
+			`,
+		},
+		{
+			name: 'Script',
+			code: `
+			<script setup lang="ts">
+				import { VBtn } from 'vuetify/components'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
+				import type { Notification } from '@cnamts/synapse'
+
+				const { addNotification, clearQueue } = useNotificationService()
+
+				const envoyerNotification = (message: string, type: Notification['type'] = 'info') => {
+					addNotification({
+						id: Date.now().toString(),
+						message,
+						type,
+						timeout: -1,
+					})
+				}
+			</script>
+			`,
+		},
+	],
+}
+
 export const ShowAll: Story = (args) => {
 	return {
 		components: { NotificationBar, VBtn },
@@ -760,39 +855,41 @@ ShowAll.parameters = {
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-column align-center justify-center ga-4">
-				<div class="d-flex flex-wrap justify-center ga-4">
-					<VBtn
-						color="primary"
-						@click="envoyerNotification('Notification info', 'info')"
-					>
-						Ajouter une notification info
-					</VBtn>
-					<VBtn
-						color="on-success-variant"
-						@click="envoyerNotification('Notification succès', 'on-success-variant')"
-					>
-						Ajouter une notification succès
-					</VBtn>
-					<VBtn
-						color="on-warning-variant"
-						@click="envoyerNotification('Notification avertissement', 'on-warning-variant')"
-					>
-						Ajouter une notification avertissement
-					</VBtn>
-					<VBtn
-						color="error"
-						@click="envoyerNotification('Notification erreur', 'error')"
-					>
-						Ajouter une notification erreur
-					</VBtn>
+			<template>
+				<div class="d-flex flex-column align-center justify-center ga-4">
+					<div class="d-flex flex-wrap justify-center ga-4">
+						<VBtn
+							color="primary"
+							@click="envoyerNotification('Notification info', 'info')"
+						>
+							Ajouter une notification info
+						</VBtn>
+						<VBtn
+							color="on-success-variant"
+							@click="envoyerNotification('Notification succès', 'success')"
+						>
+							Ajouter une notification succès
+						</VBtn>
+						<VBtn
+							color="on-warning-variant"
+							@click="envoyerNotification('Notification avertissement', 'warning')"
+						>
+							Ajouter une notification avertissement
+						</VBtn>
+						<VBtn
+							color="error"
+							@click="envoyerNotification('Notification erreur', 'error')"
+						>
+							Ajouter une notification erreur
+						</VBtn>
+					</div>
+					<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+					<NotificationBar
+						close-btn-text="Fermer"
+						show-all
+					/>
 				</div>
-				<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
-				<NotificationBar
-					close-btn-text="Fermer"
-					show-all
-				/>
-			</div>
+			</template>
 			`,
 		},
 		{
@@ -801,18 +898,17 @@ ShowAll.parameters = {
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
 				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
-				import { ref } from 'vue'
+				import type { Notification } from '@cnamts/synapse'
 
 				const { addNotification } = useNotificationService()
 
-				const envoyerNotification = (message: string, type: string = 'info') => {
-					const notification = {
+				const envoyerNotification = (message: string, type: Notification['type'] = 'info') => {
+					addNotification({
 						id: Date.now().toString(),
 						message,
 						type,
 						timeout: -1,
-					}
-					addNotification(notification)
+					})
 				}
 			</script>
 			`,

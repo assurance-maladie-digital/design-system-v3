@@ -5,7 +5,7 @@ import * as stories from '../DialogBox.stories'
 
 const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({ name, story }))
 
-describe('DialogBox stories', () => {
+describe('DialogBox snippets', () => {
 	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
 		expect(analyzeSnippet(story)).toEqual({
 			parseErrors: [],
