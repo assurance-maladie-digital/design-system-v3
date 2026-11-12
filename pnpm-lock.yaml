@@ -96,8 +96,8 @@ importers:
         specifier: ^5.10.0
         version: 5.10.0(eslint@9.39.5(jiti@2.7.0))
       '@stylistic/stylelint-config':
-        specifier: ^3.0.0
-        version: 3.0.1(stylelint@16.26.1(typescript@5.9.3))
+        specifier: ^6.0.0
+        version: 6.1.0(stylelint@16.26.1(typescript@5.9.3))
       '@tsconfig/node22':
         specifier: ^22.0.6
         version: 22.0.6
@@ -361,6 +361,13 @@ packages:
     peerDependencies:
       '@csstools/css-parser-algorithms': ^3.0.5
       '@csstools/css-tokenizer': ^3.0.4
+
+  '@csstools/media-query-list-parser@5.0.2':
+    resolution: {integrity: sha512-qx19O8AbbLLbDSAcI6YOby/Vq8rV51psgIvlF5OZT/L8fQJDCyQifL6k+kYU4a8ySpzJ4RBzZkIs530bAn8y4Q==}
+    engines: {node: '>=20.19.0'}
+    peerDependencies:
+      '@csstools/css-parser-algorithms': ^4.0.2
+      '@csstools/css-tokenizer': ^4.0.2
 
   '@csstools/selector-specificity@5.0.0':
     resolution: {integrity: sha512-PCqQV3c4CoVm3kdPhyeZ07VmBRdH2EpMFA/pd9OASpOEC3aXNGoqPDAZ80D0cLpMBxnmk0+yNhGsEx31hq7Gtw==}
@@ -1650,17 +1657,15 @@ packages:
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
 
-  '@stylistic/stylelint-config@3.0.1':
-    resolution: {integrity: sha512-Ohon4rLAxZpYTCyjP1blVe2Z0sx4XZ+K1VIM51m4coHFVSU+Mb8OMsdxkXizkZi4qjr8AhseHXXfRhiv84knrg==}
-    engines: {node: ^18.12 || >=20.9}
+  '@stylistic/stylelint-config@6.1.0':
+    resolution: {integrity: sha512-ySdWLMgEUhjOGsUFP9NnXf7YO/aXyDGZFRrg2wKeh1UaKeoAdJKrIDp/+lKw1ZLIEV8gGDJl/28mPD3avP64Ww==}
     peerDependencies:
-      stylelint: ^16.22.0
+      stylelint: ^18.0.0
 
-  '@stylistic/stylelint-plugin@4.0.1':
-    resolution: {integrity: sha512-jKZSZr/S/NehfgayNJI3O/JEq+W5lSeHUJNvdOebRPNFP2ZylTbAx/p5qR8scQFpiVzy1VQM9R+G0kIB62r1Pw==}
-    engines: {node: ^18.12 || >=20.9}
+  '@stylistic/stylelint-plugin@6.0.1':
+    resolution: {integrity: sha512-+lCF7MCl7tGZnWjx853TjTHPdIFK1QZsYJ6mJtUbbhVjERRhIvZdWlzUI3IhtAyHU9pjSpfcfMComsal6coIag==}
     peerDependencies:
-      stylelint: ^16.22.0
+      stylelint: ^18.0.0
 
   '@testing-library/dom@10.4.2':
     resolution: {integrity: sha512-yzr2S9HyAIdhz2/6qHgbs665Q7PKVcDF05vsOlHPxG1mo36gKVesdYVeDLnXgfjJ03CrKRk08knc6+E/9m8v2Q==}
@@ -4387,6 +4392,7 @@ packages:
 
   tldts-core@7.4.20:
     resolution: {integrity: sha512-C630TWXZCZmLq0F2bW4QqwnaaxCQ/svpAqvJwnC4JvgEM5ohhBnGsEzTLSOXcN+xjz+kEaHS5uoWIw2klnqd0A==}
+    deprecated: Partial release, see https://github.com/remusao/tldts/issues/2735. Use >=7.4.22.
 
   tldts@6.1.86:
     resolution: {integrity: sha512-WMi/OQ2axVTf/ykqCQgXiIct+mSQDFdH2fkwhPwgEwvJ1kSzZRiinb0zF2Xb8u4+OqPChmyI6MEu4EezNJz+FQ==}
@@ -5001,6 +5007,11 @@ snapshots:
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
+
+  '@csstools/media-query-list-parser@5.0.2(@csstools/css-parser-algorithms@4.0.2(@csstools/css-tokenizer@4.0.2))(@csstools/css-tokenizer@4.0.2)':
+    dependencies:
+      '@csstools/css-parser-algorithms': 4.0.2(@csstools/css-tokenizer@4.0.2)
+      '@csstools/css-tokenizer': 4.0.2
 
   '@csstools/selector-specificity@5.0.0(postcss-selector-parser@7.1.7)':
     dependencies:
@@ -5980,16 +5991,16 @@ snapshots:
       estraverse: 5.3.0
       picomatch: 4.0.7
 
-  '@stylistic/stylelint-config@3.0.1(stylelint@16.26.1(typescript@5.9.3))':
+  '@stylistic/stylelint-config@6.1.0(stylelint@16.26.1(typescript@5.9.3))':
     dependencies:
-      '@stylistic/stylelint-plugin': 4.0.1(stylelint@16.26.1(typescript@5.9.3))
+      '@stylistic/stylelint-plugin': 6.0.1(stylelint@16.26.1(typescript@5.9.3))
       stylelint: 16.26.1(typescript@5.9.3)
 
-  '@stylistic/stylelint-plugin@4.0.1(stylelint@16.26.1(typescript@5.9.3))':
+  '@stylistic/stylelint-plugin@6.0.1(stylelint@16.26.1(typescript@5.9.3))':
     dependencies:
-      '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
-      '@csstools/css-tokenizer': 3.0.4
-      '@csstools/media-query-list-parser': 4.0.3(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)
+      '@csstools/css-parser-algorithms': 4.0.2(@csstools/css-tokenizer@4.0.2)
+      '@csstools/css-tokenizer': 4.0.2
+      '@csstools/media-query-list-parser': 5.0.2(@csstools/css-parser-algorithms@4.0.2(@csstools/css-tokenizer@4.0.2))(@csstools/css-tokenizer@4.0.2)
       postcss: 8.5.32
       postcss-selector-parser: 7.1.7
       postcss-value-parser: 4.2.0
