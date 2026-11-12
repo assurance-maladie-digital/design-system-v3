@@ -9,6 +9,7 @@ import DateTextInput from '../DateTextInput/DateTextInput.vue'
  * n'a pas de message, puis sous le champ dès qu'un message d'erreur est présent.
  */
 const helpText = 'Jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres'
+const hint = 'Indice affiché sous le champ'
 
 const modes = [
 	{ name: 'DatePicker (calendrier)', component: DatePicker, props: {} },
@@ -53,6 +54,28 @@ describe.each(modes)('helpText – $name', ({ component, props }) => {
 		})
 
 		expect(wrapper.find('.help-text-below').exists()).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('garde le hint affiché hors focus avec persistentHint', async () => {
+		const wrapper = mount(component, {
+			props: { label: 'Date de naissance', hint, persistentHint: true, ...props },
+		})
+		await flushPromises()
+
+		expect(wrapper.find('.v-messages').text()).toContain(hint)
+
+		wrapper.unmount()
+	})
+
+	it('masque le hint hors focus sans persistentHint', async () => {
+		const wrapper = mount(component, {
+			props: { label: 'Date de naissance', hint, ...props },
+		})
+		await flushPromises()
+
+		expect(wrapper.text()).not.toContain(hint)
 
 		wrapper.unmount()
 	})

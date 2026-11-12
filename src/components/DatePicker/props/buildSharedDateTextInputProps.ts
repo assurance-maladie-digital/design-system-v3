@@ -43,7 +43,7 @@ export const buildSharedDateTextInputProps = (
 	'title': props.title === false ? props.title : props.title || props.placeholder || undefined,
 	'help-text': props.helpText,
 	'hint': props.hint,
-	'display-persistent-hint': props.persistentHint,
+	'persistent-hint': props.persistentHint,
 	'use-vuetify-validation': props.useVuetifyValidation,
 	'rules': props.rules,
 	'validate-with-return-format': props.validateWithReturnFormat,
