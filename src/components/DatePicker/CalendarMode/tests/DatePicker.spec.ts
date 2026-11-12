@@ -961,6 +961,42 @@ describe('DatePicker', () => {
 		wrapper.unmount()
 	})
 
+	it('keeps focus in the incoming month when navigating across the boundary in both directions', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '03/11/2026',
+				format: 'DD/MM/YYYY',
+			},
+			attachTo: document.body,
+		})
+
+		try {
+			await wrapper.get('input').trigger('click')
+			await flushPromises()
+			await vi.runAllTimersAsync()
+			expect(document.activeElement?.getAttribute('data-v-date')).toBe('2026-11-03')
+
+			const pressArrow = async (key: string, date: string) => {
+				document.activeElement?.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }))
+				await flushPromises()
+				expect(document.activeElement?.matches(
+					`[role="gridcell"][data-v-date="${date}"]:not(.v-date-picker-month__day--adjacent)`,
+				)).toBe(true)
+			}
+
+			// Les cellules doivent recevoir le focus avant le rattrapage temporisé.
+			await pressArrow('ArrowUp', '2026-10-27')
+			await pressArrow('ArrowDown', '2026-11-03')
+			await pressArrow('ArrowDown', '2026-11-10')
+		}
+		finally {
+			wrapper.unmount()
+			vi.useRealTimers()
+		}
+	})
+
 	it('does not change the selected date when navigating the calendar with arrow keys (calendar-only mode)', async () => {
 		vi.useFakeTimers()
 		const wrapper = mount(DatePicker, {

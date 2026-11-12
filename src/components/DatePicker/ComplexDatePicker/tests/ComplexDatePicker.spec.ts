@@ -1741,13 +1741,46 @@ describe('ComplexDatePicker.clean', () => {
 
 		focusedDay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
 		await flushPromises()
-		await vi.advanceTimersByTimeAsync(800)
-		await flushPromises()
-		await wrapper.vm.$nextTick()
+		await nextTick()
 
-		expect(wrapper.vm.currentMonth).toBe('6')
-		expect(wrapper.vm.currentYear).toBe('2024')
-		expect(document.activeElement?.closest('[data-v-date="2024-07-01"]')).not.toBeNull()
+		const firstOfJuly = document.activeElement
+		expect(firstOfJuly?.matches('[role="gridcell"][data-v-date="2024-07-01"]:not(.v-date-picker-month__day--adjacent)')).toBe(true)
+
+		firstOfJuly?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		expect(document.activeElement?.getAttribute('data-v-date')).toBe('2024-07-02')
+
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
+	it('updates the displayed month and refocuses the target day when keyboard navigation crosses to the previous month', async () => {
+		vi.useFakeTimers()
+
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '01/07/2024',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+		await vi.advanceTimersByTimeAsync(600)
+		await flushPromises()
+
+		const focusedDay = document.activeElement as HTMLElement | null
+		expect(focusedDay?.closest('[data-v-date="2024-07-01"]')).not.toBeNull()
+
+		focusedDay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }))
+		await flushPromises()
+		await nextTick()
+
+		const lastOfJune = document.activeElement
+		expect(lastOfJune?.matches('[role="gridcell"][data-v-date="2024-06-30"]:not(.v-date-picker-month__day--adjacent)')).toBe(true)
+
+		lastOfJune?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }))
+		expect(document.activeElement?.getAttribute('data-v-date')).toBe('2024-06-29')
 
 		vi.useRealTimers()
 		wrapper.unmount()
