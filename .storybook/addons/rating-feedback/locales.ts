@@ -1,0 +1,20 @@
+export const locales = {
+	issueTypeLabel: 'Type de demande',
+	issueTypes: [
+		'Demande d\'ajout d\'un nouveau composant',
+		'Documentation',
+		'Demande de déclinaison d\'une fonctionnalité',
+		'Demande d\'une nouvelle fonctionnalité',
+		'Optimisation',
+	],
+	close: 'Fermer',
+	commentLabel: 'Votre commentaire',
+	formTitle: 'Formulaire de notation du composant',
+	loading: 'Chargement…',
+	open: 'Donner votre avis sur ce composant',
+	ratingLabel: 'Comment évaluez-vous ce composant ?',
+	send: 'Envoyer mon avis',
+	sending: 'Envoi en cours…',
+	thanks: 'Nous vous remercions pour votre avis.',
+	title: (component: string) => `Votre avis sur ${component}`,
+}
