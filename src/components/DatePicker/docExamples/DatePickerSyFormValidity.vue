@@ -47,7 +47,9 @@
 			</p>
 			<DatePicker
 				v-model="date"
-				label="Date (JJ/MM/AAAA)"
+				label="Date"
+				hint="Format attendu : JJ/MM/AAAA"
+				persistent-hint
 				placeholder="JJ/MM/AAAA"
 				format="DD/MM/YYYY"
 				required
