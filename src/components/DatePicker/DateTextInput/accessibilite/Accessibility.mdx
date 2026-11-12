@@ -41,7 +41,7 @@ import {
 		<CriteriaCard title="Messages et retours" icon="">
 			<ul>
 				<li><strong>Statuts</strong> : erreurs/avertissements/succès affichés sous le champ (zone annoncée via <code>aria-live</code> si activé côté navigateur/lecteur).</li>
-				<li><strong>Formats attendus</strong> : placeholder et hint expliquent la structure (JJ/MM/AAAA…).</li>
+				<li><strong>Formats attendus</strong> : placeholder et <code>helpText</code> expliquent la structure (JJ/MM/AAAA…) ; <code>helpText</code> reste visible sous le champ même en cas d’erreur.</li>
 				<li><strong>Validation manuelle</strong> : <code>customRules</code> / <code>customWarningRules</code> exposent des messages dédiés.</li>
 			</ul>
 		</CriteriaCard>
@@ -53,12 +53,12 @@ import {
 
 	<BestPracticesSection>
 		- Fournir un <code>label</code> explicite; utiliser <code>aria-label</code> ou <code>aria-labelledby</code> uniquement lorsque le label visible n’est pas disponible.
-		- Ne pas dupliquer le format attendu entre <code>label</code> et <code>placeholder</code> : indiquer le format une seule fois, idéalement dans le <code>label</code> (ex. « Date (JJ/MM/AAAA) »), sinon les technologies d’assistance l’annoncent en double.
+		- Garder un <code>label</code> court et distinct (ex. « Date de naissance ») et indiquer le format attendu une seule fois, dans <code>helpText</code> (ex. « Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres ») : il reste visible même en cas d’erreur. Ne pas répéter le format dans le <code>label</code>, sinon les technologies d’assistance l’annoncent en double.
 		- Si le champ sert d’activateur d’un calendrier, activer la prop <code>calendarActivator</code> pour que l’utilisateur soit averti de l’affichage du calendrier (« Activation ouvre un calendrier » ajouté à la description <code>aria-describedby</code>).
-		- Afficher un placeholder cohérent avec le <code>format</code> attendu et conserver un hint persistent pour les formats non standards.
+		- Afficher un placeholder cohérent avec le <code>format</code> attendu et conserver un <code>helpText</code> pour les formats non standards.
 		- Laisser <code>isValidateOnBlur</code> à <code>true</code> si la validation doit attendre la sortie du champ; déclencher <code>validateOnSubmit()</code> au submit.
 		- En lecture seule, désactiver les actions d’édition et d’effacement; ne pas utiliser le champ comme solution de remplacement d’un bouton calendrier.
-		- En mode plage, préciser dans le hint l’ordre attendu (début puis fin) et conserver la séparatrice <code>" - "</code>.
+		- En mode plage, préciser dans le <code>helpText</code> l’ordre attendu (début puis fin) et conserver la séparatrice <code>" - "</code>.
 		- Avec <code>autoClamp</code>, signaler que les séparateurs sont ajoutés automatiquement sans bloquer les corrections clavier.
 		- Éviter les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférer un champ actif accompagné d'un message expliquant la contrainte, ou n'afficher le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquer par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.
 	</BestPracticesSection>

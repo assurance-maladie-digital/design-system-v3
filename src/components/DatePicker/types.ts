@@ -82,6 +82,11 @@ export interface DatePickerCommonProps {
 	displayWeekendDays?: boolean
 	format?: string
 	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	/**
+	 * Texte d'aide affiché sous le champ, y compris en cas d'erreur (comme `SyTextField`).
+	 * Préférer `helpText` à `hint` pour indiquer le format attendu ou une contrainte.
+	 */
+	helpText?: string
 	hideDetails?: boolean | 'auto'
 	hint?: string
 	isBirthDate?: boolean
@@ -252,6 +257,7 @@ export const DatePickerCommonDefaults = {
 	displayWeekendDays: true,
 	format: 'DD/MM/YYYY',
 	headingLevel: 3 as const,
+	helpText: undefined,
 	hideDetails: false,
 	hint: undefined,
 	isBirthDate: false,

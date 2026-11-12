@@ -133,7 +133,8 @@ describe('DatePicker', () => {
 
 		const monthButton = document.querySelector<HTMLElement>('.sy-date-picker-controls__month-btn')
 		const yearButton = document.querySelector<HTMLElement>('.sy-date-picker-controls__year-btn')
-		expect(monthButton?.getAttribute('aria-label')).toMatch(/^Sélectionner le mois \(/)
+		expect(monthButton?.getAttribute('aria-label')).toContain(monthButton?.textContent?.trim())
+		expect(monthButton?.getAttribute('aria-label')).toMatch(/^Sélectionner le mois /)
 		expect(monthButton?.getAttribute('aria-label')).not.toContain('sélectionné')
 		expect(yearButton?.getAttribute('aria-label')).toBe('Sélectionner l\'année 2026')
 	})

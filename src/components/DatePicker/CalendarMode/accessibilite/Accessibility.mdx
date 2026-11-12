@@ -70,12 +70,12 @@ import {
 
 <BestPracticesSection>
 - Fournir un <code>label</code> explicite; utiliser <code>placeholder</code> uniquement comme aide complémentaire, jamais comme seul libellé.
-- Ne pas dupliquer le format attendu entre <code>label</code> et <code>placeholder</code> : indiquer le format une seule fois, idéalement dans le <code>label</code> (ex. « Date (JJ/MM/AAAA) »), sinon les technologies d’assistance l’annoncent en double.
-- Le champ activateur avertit nativement l’utilisateur de l’affichage du calendrier (« Activation ouvre un calendrier » via <code>aria-describedby</code>, annonce désactivée quand le champ est <code>disabled</code>) : inutile de répéter cette information dans le <code>label</code> ou le <code>hint</code>.
-- Conserver <code>format</code> et le texte d’aide cohérents avec la valeur attendue; utiliser <code>hint</code> pour expliquer le format métier.
+- Garder un <code>label</code> court et distinct (ex. « Date de naissance »), sans y répéter le format : en mode calendrier seul l’utilisateur ne saisit pas, le format attendu n’a pas à être annoncé. <code>helpText</code> reste utile pour une précision métier (ex. « Dates sélectionnables du 01/01/1995 au 31/12/2005 ») ou pour indiquer que le champ ouvre un calendrier ; c’est en mode saisie (combiné ou <code>noCalendar</code>) qu’il doit porter le format attendu.
+- Le champ activateur avertit nativement l’utilisateur de l’affichage du calendrier (« Activation ouvre un calendrier » via <code>aria-describedby</code>, annonce désactivée quand le champ est <code>disabled</code>) : cette information n’est annoncée qu’aux technologies d’assistance, l’indiquer dans le <code>helpText</code> la rend visible pour tous.
+- Conserver <code>format</code> et le texte d’aide cohérents avec la valeur attendue; utiliser <code>helpText</code> pour expliquer le format métier (préférer <code>helpText</code> à <code>hint</code> : il reste visible en cas d’erreur).
 - Laisser <code>isValidateOnBlur</code> à <code>true</code> si les erreurs ne doivent apparaître qu’après la sortie du champ; réserver <code>validateOnSubmit()</code> à la soumission.
 - En lecture seule, le champ n’est pas éditable et le calendrier ne doit pas être proposé; pour un champ sélectionnable mais non saisissable, utiliser le mode calendrier normal, pas <code>readonly</code>.
-- En plage de dates, préciser l’ordre attendu dans le hint et laisser la séparatrice visible.
+- En plage de dates, préciser l’ordre attendu dans le <code>helpText</code> et laisser la séparatrice visible.
 - Vérifier la cohérence des bornes <code>period</code> pour ne pas masquer les jours attendus.
 - Ne pas ajouter <code>role="combobox"</code> au mode calendrier seul : ce mode ne permet pas la saisie d’une valeur.
 - Éviter les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférer un champ actif accompagné d'un message expliquant la contrainte, ou n'afficher le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquer par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.

@@ -49,7 +49,7 @@ import {
 	<CriteriaCard title="Messages et annonces" icon="">
 		<ul>
 			<li><strong>Statuts</strong> : erreurs/avertissements/succès affichés sous le champ; bouton « Aujourd’hui » avec <code>title</code>.</li>
-			<li><strong>Formats attendus</strong> : placeholder + hint décrivent la saisie; autoClamp optionnel sur la saisie interne.</li>
+			<li><strong>Formats attendus</strong> : placeholder + <code>helpText</code> décrivent la saisie (<code>helpText</code> reste visible même en cas d’erreur); autoClamp optionnel sur la saisie interne.</li>
 			<li><strong>Lecture/voix</strong> : libellé/placeholder alimentent <code>aria-label</code>; les messages sont reliés via <code>aria-describedby</code>; les changements de mois/année sont annoncés via une unique région de statut dédiée.</li>
 		</ul>
 	</CriteriaCard>
@@ -61,13 +61,13 @@ import {
 
 <BestPracticesSection>
 - Fournir un <code>label</code> explicite; utiliser <code>placeholder</code> uniquement comme aide complémentaire.
-- Ne pas dupliquer le format attendu entre <code>label</code> et <code>placeholder</code> : indiquer le format une seule fois, idéalement dans le <code>label</code> (ex. « Date (JJ/MM/AAAA) »), sinon les technologies d’assistance l’annoncent en double.
-- Le champ avertit nativement l’utilisateur de l’affichage du calendrier (« Activation ouvre un calendrier » ajouté à la description <code>aria-describedby</code>, annonce désactivée quand le champ est <code>disabled</code>) : inutile de répéter cette information dans le <code>label</code> ou le <code>hint</code>. La saisie manuelle reste possible : elle ne doit jamais être bloquée au profit du seul calendrier.
-- Conserver <code>format</code>, <code>dateFormatReturn</code> et le <code>hint</code> cohérents pour éviter une valeur affichée différente de la valeur émise.
+- Garder un <code>label</code> court et distinct (ex. « Date de naissance ») et indiquer le format attendu une seule fois, dans <code>helpText</code> (ex. « Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres ») : il reste visible même en cas d’erreur. Ne pas répéter le format dans le <code>label</code>, sinon les technologies d’assistance l’annoncent en double.
+- Le champ avertit nativement l’utilisateur de l’affichage du calendrier (« Activation ouvre un calendrier » ajouté à la description <code>aria-describedby</code>, annonce désactivée quand le champ est <code>disabled</code>) : inutile de répéter cette information dans le <code>label</code> ou le <code>helpText</code>. La saisie manuelle reste possible : elle ne doit jamais être bloquée au profit du seul calendrier.
+- Conserver <code>format</code>, <code>dateFormatReturn</code> et le <code>helpText</code> cohérents pour éviter une valeur affichée différente de la valeur émise.
 - Laisser <code>isValidateOnBlur</code> à <code>true</code> si les erreurs et le succès doivent être annoncés au blur; utiliser <code>validateOnSubmit()</code> pour le contrôle de soumission.
 - Avec <code>textFieldActivator</code>, s’assurer que toute la zone d’activation reste compréhensible au clavier et que l’icône n’est pas le seul point d’entrée.
 - Si <code>readonly</code>, le champ ne doit pas être utilisé pour saisir ou effacer une date; ne pas le présenter comme un combobox éditable.
-- En plage de dates, conserver la séparatrice <code>" - "</code> et préciser l’ordre début/fin dans le hint.
+- En plage de dates, conserver la séparatrice <code>" - "</code> et préciser l’ordre début/fin dans le <code>helpText</code>.
 - Ajuster <code>period</code> pour ne pas masquer des dates attendues; vérifier <code>min/max</code> cohérents avec la plage.
 - Éviter les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférer un champ actif accompagné d'un message expliquant la contrainte, ou n'afficher le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquer par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.
 </BestPracticesSection>

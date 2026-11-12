@@ -41,6 +41,7 @@ export const buildSharedDateTextInputProps = (
 	'is-validate-on-blur': props.isValidateOnBlur,
 	'max-errors': props.maxErrors,
 	'title': props.title === false ? props.title : props.title || props.placeholder || undefined,
+	'help-text': props.helpText,
 	'hint': props.hint,
 	'persistent-hint': props.persistentHint,
 	'use-vuetify-validation': props.useVuetifyValidation,
