@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils'
-import { describe, expect, it, vi, afterAll } from 'vitest'
+import { flushPromises, mount } from '@vue/test-utils'
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerHeaderMenuKey } from '../../consts'
 import HeaderBurgerMenu from '../HeaderBurgerMenu.vue'
 import { defineComponent, toRef } from 'vue'
@@ -170,5 +170,76 @@ describe('HeaderBurgerMenu', () => {
 		expect(renderStyle).toContain('left: 40px; top: 60px;')
 
 		wrapper.unmount()
+	})
+
+	describe('page scroll lock (issue #2759)', () => {
+		const mountMenu = (modelValue = false) => mount(HeaderBurgerMenu, {
+			props: { modelValue },
+			global: {
+				stubs: {
+					teleport: true,
+					HeaderMenuBtn: BtnTestComponent,
+				},
+			},
+			attachTo: document.body,
+		})
+		const overflow = () => ({
+			html: document.documentElement.style.overflow,
+			body: document.body.style.overflow,
+		})
+
+		beforeEach(() => {
+			document.documentElement.style.overflow = 'scroll'
+			document.body.style.overflow = 'clip'
+		})
+
+		afterEach(() => {
+			document.documentElement.style.overflow = ''
+			document.body.style.overflow = ''
+		})
+
+		it('keeps the page overflow untouched while the menu has not been opened', async () => {
+			const wrapper = mountMenu()
+			await flushPromises()
+
+			expect(overflow()).toEqual({ html: 'scroll', body: 'clip' })
+
+			wrapper.unmount()
+			expect(overflow()).toEqual({ html: 'scroll', body: 'clip' })
+		})
+
+		it('blocks the page scroll while the menu is open and restores the initial overflow when it closes', async () => {
+			const wrapper = mountMenu()
+
+			await wrapper.setProps({ modelValue: true })
+			expect(overflow()).toEqual({ html: 'hidden', body: 'hidden' })
+
+			await wrapper.setProps({ modelValue: false })
+			expect(overflow()).toEqual({ html: 'scroll', body: 'clip' })
+
+			wrapper.unmount()
+		})
+
+		it('restores the initial overflow when unmounted while the menu is open', async () => {
+			const wrapper = mountMenu(true)
+			await flushPromises()
+			expect(overflow()).toEqual({ html: 'hidden', body: 'hidden' })
+
+			wrapper.unmount()
+
+			expect(overflow()).toEqual({ html: 'scroll', body: 'clip' })
+		})
+
+		it('lets a stylesheet overflow apply again after closing the menu', async () => {
+			document.documentElement.style.overflow = ''
+			document.body.style.overflow = ''
+			const wrapper = mountMenu()
+
+			await wrapper.setProps({ modelValue: true })
+			await wrapper.setProps({ modelValue: false })
+
+			expect(overflow()).toEqual({ html: '', body: '' })
+			wrapper.unmount()
+		})
 	})
 })
