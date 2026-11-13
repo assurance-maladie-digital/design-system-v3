@@ -42,8 +42,8 @@ describe('HeaderNavigationBar', () => {
 		})
 
 		await wrapper.vm.$nextTick()
-		// le vtabs generait des btn dans lesquels le text etait en majuscule ici cela se via le code de SyTabs (toUpperCase() sur les items)
-		expect(wrapper.html()).toContain('HOME')
+		// La casse visuelle est gérée par le style text-transform de SyTabs.
+		expect(wrapper.text()).toContain('Home')
 		expect(wrapper.findComponent(HeaderBurgerMenu).exists()).toBe(false)
 		expect(wrapper.findComponent(HorizontalNavbar).exists()).toBe(true)
 

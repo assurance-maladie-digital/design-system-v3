@@ -12,6 +12,7 @@ export const config = {
 		'base-color': 'rgb(var(--v-theme-grey-base))',
 		'active-color': 'rgb(var(--v-theme-primary))',
 		'slider-color': 'rgb(var(--v-theme-primary))',
+		'text-transform': 'uppercase',
 		'ripple': false,
 	},
 }
