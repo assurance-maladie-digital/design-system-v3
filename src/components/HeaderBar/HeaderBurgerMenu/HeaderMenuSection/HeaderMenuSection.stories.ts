@@ -51,7 +51,7 @@ export const Default: Story = {
 									{{ args.title }}
 								</template>
 								<HeaderMenuItem>
-									<a>lorem ipsum</a>
+									<a href="#">lorem ipsum</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 
@@ -61,7 +61,7 @@ export const Default: Story = {
 								</template>
 
 								<HeaderMenuItem>
-									<a>lorem ipsum</a>
+									<a href="#">lorem ipsum</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
@@ -81,7 +81,7 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-				<Template>
+				<template>
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
@@ -90,7 +90,7 @@ export const Default: Story = {
 										{{ args.title }}
 									</template>
 									<HeaderMenuItem>
-										<a>lorem ipsum</a>
+										<a href="#">lorem ipsum</a>
 									</HeaderMenuItem>
 								</HeaderMenuSection>
 
@@ -99,13 +99,13 @@ export const Default: Story = {
 										section 2
 									</template>
 									<HeaderMenuItem>
-										<a>lorem ipsum</a>
+										<a href="#">lorem ipsum</a>
 									</HeaderMenuItem>
 								</HeaderMenuSection>
 							</HeaderBurgerMenu>
 						</template>
 					</HeaderBar>
-				</Template>
+				</template>
 				`,
 			},
 			{
