@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
+	import { locales } from '../locales'
 	import type { FilterOption, TableColumnHeader } from '../types'
 	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 
@@ -136,7 +137,7 @@
 <template>
 	<SyAutocomplete
 		v-model="modelValue"
-		:label="props.header.title || ''"
+		:label="props.header.title || locales.filterLabel"
 		:items="filterItems"
 		:clearable="clearable"
 		:density="inputConfig?.density ?? density"
@@ -148,7 +149,6 @@
 		:chips="props.header.chips"
 		:filter="true"
 		class="filter-input"
-		:aria-label="props.header.title || 'Filtre'"
 		@click:clear="handleClear"
 	/>
 </template>

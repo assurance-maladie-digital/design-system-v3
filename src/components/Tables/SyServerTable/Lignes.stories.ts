@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, useId } from 'vue'
 import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
@@ -50,9 +50,6 @@ const clickableUsers = [
  */
 export const ClickableRow: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -243,9 +240,6 @@ export const ClickableRow: Story = {
  */
 export const ExpandableRows: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -262,12 +256,14 @@ export const ExpandableRows: Story = {
 		suffix="server-expandable"
 		@update:options="fetchData"
 	>
-		<template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
+		<template #item.data-table-expand="{ item, internalItem, isExpanded, toggleExpand }">
 			<v-btn
+				:aria-expanded="isExpanded(internalItem)"
+				:aria-controls="isExpanded(internalItem) ? \`\${detailsId}-\${item.email}\` : undefined"
 				:append-icon="isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown"
 				:text="isExpanded(internalItem) ? 'Fermer' : \`Plus d'info\`"
 				class="text-none"
-				color="medium-emphasis"
+				color="primary"
 				size="small"
 				variant="text"
 				width="105"
@@ -278,7 +274,7 @@ export const ExpandableRows: Story = {
 		</template>
 
 		<template #expanded-row="{ columns, item }">
-			<tr>
+			<tr :id="\`\${detailsId}-\${item.email}\`">
 				<td :colspan="columns.length" class="py-2">
 					<strong>Informations complémentaires :</strong>
 					<p>Plus de détails pour {{ item.firstname }} {{ item.lastname }}.</p>
@@ -293,12 +289,13 @@ export const ExpandableRows: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { ref, useId } from 'vue'
 	import { SyServerTable } from '@cnamts/synapse'
 	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 	import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
 	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 
+	const detailsId = useId()
 	const users = ref([])
 	const totalUsers = ref(0)
 	const state = ref(StateEnum.IDLE)
@@ -348,7 +345,7 @@ export const ExpandableRows: Story = {
 		components: { SyServerTable },
 		setup() {
 			const { items, totalItems, state, options, fetchData, StateEnum } = useServerTableDemo(args, serverUsers)
-			return { args, items, totalItems, state, options, fetchData, StateEnum, mdiChevronDown, mdiChevronUp }
+			return { detailsId: useId(), args, items, totalItems, state, options, fetchData, StateEnum, mdiChevronDown, mdiChevronUp }
 		},
 		template: `
 			<SyServerTable
@@ -362,12 +359,14 @@ export const ExpandableRows: Story = {
 				suffix="server-expandable"
 				@update:options="fetchData"
 			>
-				<template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
+				<template #item.data-table-expand="{ item, internalItem, isExpanded, toggleExpand }">
 					<VBtn
+						:aria-expanded="isExpanded(internalItem)"
+						:aria-controls="isExpanded(internalItem) ? \`\${detailsId}-\${item.email}\` : undefined"
 						:append-icon="isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown"
 						:text="isExpanded(internalItem) ? 'Fermer' : \`Plus d'info\`"
 						class="text-none"
-						color="medium-emphasis"
+						color="primary"
 						size="small"
 						variant="text"
 						width="105"
@@ -378,7 +377,7 @@ export const ExpandableRows: Story = {
 				</template>
 
 				<template #expanded-row="{ columns, item }">
-					<tr>
+					<tr :id="\`\${detailsId}-\${item.email}\`">
 						<td :colspan="columns.length" class="py-2">
 							<strong>Informations complémentaires :</strong>
 							<p>Plus de détails pour {{ item.firstname }} {{ item.lastname }}.</p>
