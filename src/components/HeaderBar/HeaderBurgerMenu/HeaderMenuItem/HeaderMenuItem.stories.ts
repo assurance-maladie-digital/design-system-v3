@@ -41,7 +41,7 @@ export const Default: Story = {
 						<HeaderBurgerMenu>
 							<HeaderMenuSection title="Rubrique">
 								<HeaderMenuItem>
-									<a href="">{{ args.default }}</a>
+									<a href="#" @click.prevent>{{ args.default }}</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>

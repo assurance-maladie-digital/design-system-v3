@@ -133,7 +133,7 @@ export const WithAnItem: Story = {
 							@update:modelValue="args['onUpdate:modelValue']"
 						>
 							<HeaderMenuItem>
-								<a href="">Item 1</a>
+								<a href="#" @click.prevent>Item 1</a>
 							</HeaderMenuItem>
 						</HeaderBurgerMenu>
 					</template>
@@ -200,10 +200,10 @@ export const Populated: Story = {
 									Section 1
 								</template>
 								<HeaderMenuItem>
-									<a href="">Item 1</a>
+									<a href="#" @click.prevent>Item 1</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a href="">Item 2</a>
+									<a href="#" @click.prevent>Item 2</a>
 								</HeaderMenuItem>
 								<headerMenuItem>
 									<HeaderSubMenu>
@@ -217,7 +217,7 @@ export const Populated: Story = {
 												Section
 											</template>
 											<HeaderMenuItem>
-												<a href="">Item</a>
+												<a href="#" @click.prevent>Item</a>
 											</HeaderMenuItem>
 											<HeaderMenuItem>
 												<HeaderSubMenu>
@@ -225,7 +225,7 @@ export const Populated: Story = {
 														Menu de deuxième niveau 1
 													</template>
 													<HeaderMenuItem>
-														<a href="">Item</a>
+														<a href="#" @click.prevent>Item</a>
 													</HeaderMenuItem>
 												</HeaderSubMenu>
 											</HeaderMenuItem>
@@ -243,7 +243,7 @@ export const Populated: Story = {
 											Menu de premier niveau 2
 										</template>
 										<HeaderMenuItem>
-											<a href="">Item 1</a>
+											<a href="#" @click.prevent>Item 1</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
 											<HeaderSubMenu>
@@ -251,7 +251,7 @@ export const Populated: Story = {
 													Menu de deuxième niveau 2
 												</template>
 												<HeaderMenuItem>
-													<a href="">Item 1</a>
+													<a href="#" @click.prevent>Item 1</a>
 												</HeaderMenuItem>
 											</HeaderSubMenu>
 										</HeaderMenuItem>
@@ -267,7 +267,7 @@ export const Populated: Story = {
 														Section 1
 													</template>
 													<HeaderMenuItem>
-														<a href="">Item 1</a>
+														<a href="#" @click.prevent>Item 1</a>
 													</HeaderMenuItem>
 												</HeaderMenuSection>
 											</HeaderSubMenu>
@@ -275,7 +275,7 @@ export const Populated: Story = {
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a href="">Item 3</a>
+									<a href="#" @click.prevent>Item 3</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 							<HeaderMenuSection
@@ -463,7 +463,7 @@ export const WithScroll: Story = {
 												sous menu
 											</template>
 											<HeaderMenuItem>
-												<a href="">Item 1</a>
+												<a href="#" @click.prevent>Item 1</a>
 											</HeaderMenuItem>
 										</HeaderMenuSection>
 									</HeaderSubMenu>
