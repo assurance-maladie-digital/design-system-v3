@@ -237,6 +237,7 @@ export const SlotAction: Story = {
 				code: `
 				<script setup lang="ts">
 					import { StatusPage } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 				</script>
 				`,
 			},
