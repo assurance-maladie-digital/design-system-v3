@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import StatusPage from './StatusPage.vue'
+import { VBtn } from 'vuetify/components'
 
 const meta = {
 	title: 'Templates/StatusPage',
@@ -7,6 +8,9 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 	},
+	decorators: [
+		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
+	],
 	argTypes: {
 		'headingLevel': {
 			control: { type: 'select' },
@@ -71,37 +75,27 @@ export const Default: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<div style="padding: 20px; background: rgb(231, 236, 245)">
-							<StatusPage
-								page-title="une erreur est survenue"
-								code="500"
-								message="Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646"
-							>
-					</div>
-				</template>
-				`,
-			}, {
+				code: `<template>
+	<StatusPage
+		page-title="une erreur est survenue"
+		code="500"
+		message="Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646"
+	/>
+</template>`,
+			},
+			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { StatusPage } from '@cnamts/synapse'
-				</script>
-				
-				`,
+				code: `<script setup lang="ts">
+import { StatusPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 }
 
 export const WithLink: Story = {
 	args: {
 		...Default.args,
-		headingLevel: 1,
 		btnHref: '/',
 		btnText: 'Retour à l\'accueil',
 	},
@@ -109,33 +103,24 @@ export const WithLink: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<div style="padding: 20px; background: rgb(231, 236, 245)">
-							<StatusPage
-								page-title="une erreur est survenue"
-								code="500"
-								message="Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646"
-								btn-href=""
-								btn-text="Retour à l'accueil"
-							>
-					</div>
-				</template>
-				`,
-			}, {
+				code: `<template>
+	<StatusPage
+		page-title="une erreur est survenue"
+		code="500"
+		message="Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646"
+		btn-href="/"
+		btn-text="Retour à l'accueil"
+	/>
+</template>`,
+			},
+			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { StatusPage } from '@cnamts/synapse'
-				</script>
-				
-				`,
+				code: `<script setup lang="ts">
+import { StatusPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 }
 
 export const CustomIllustration: Story = {
@@ -143,45 +128,38 @@ export const CustomIllustration: Story = {
 		...Default.args,
 		btnHref: '/',
 		btnText: 'Retour à l\'accueil',
-		headingLevel: 1,
 	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<div style="padding: 20px; background: rgb(231, 236, 245)">
-							<StatusPage
-								page-title="une erreur est survenue"
-								code="500"
-								message="Une erreur est survenue de notre côté, veuillez réessayer plus tard."
-								btn-href="/"
-								btn-text="Retour à l'accueil"
-							>
-								<template #illustration>
-									<div style="width: 260px; height: 200px; display: grid; place-items: center; border-radius: 12px; background: white; border: 2px dashed #0D419A;">
-										<span style="font-weight: 700; color: #0D419A;">Illustration</span>
-									</div>
-								</template>
-							</StatusPage>
-					</div>
-				</template>
-				`,
+				code: `<template>
+	<StatusPage
+		page-title="une erreur est survenue"
+		code="500"
+		message="Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646"
+		btn-href="/"
+		btn-text="Retour à l'accueil"
+	>
+		<template #illustration>
+			<div
+				class="d-flex align-center justify-center rounded-lg bg-surface border-md border-dashed border-primary border-opacity-100"
+				style="width: 260px; height: 200px;"
+			>
+				<span class="font-weight-bold text-primary">Illustration</span>
+			</div>
+		</template>
+	</StatusPage>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { StatusPage } from '@cnamts/synapse'
-				</script>
-				`,
+				code: `<script setup lang="ts">
+import { StatusPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	render: args => ({
 		components: { StatusPage },
 		setup() {
@@ -190,8 +168,11 @@ export const CustomIllustration: Story = {
 		template: `
 			<StatusPage v-bind="args">
 				<template #illustration>
-					<div style="width: 260px; height: 200px; display: grid; place-items: center; border-radius: 12px; background: white; border: 2px dashed #0D419A;">
-						<span style="font-weight: 700; color: #0D419A;">Illustration</span>
+					<div
+						class="d-flex align-center justify-center rounded-lg bg-surface border-md border-dashed border-primary border-opacity-100"
+						style="width: 260px; height: 200px;"
+					>
+						<span class="font-weight-bold text-primary">Illustration</span>
 					</div>
 				</template>
 			</StatusPage>
@@ -202,57 +183,71 @@ export const CustomIllustration: Story = {
 export const SlotAction: Story = {
 	args: {
 		...Default.args,
-		headingLevel: 1,
-		hideBtn: true,
 	},
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	parameters: {
+		docs: {
+			description: {
+				story: 'Le contenu du slot `action` remplace le bouton par défaut : il n\'est pas nécessaire de passer `hide-btn`.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<div style="padding: 20px; background: rgb(231, 236, 245)">
-						<StatusPage
-							page-title="une erreur est survenue"
-							code="500"
-							message="Une erreur est survenue de notre côté, veuillez réessayer plus tard."
-							:hide-btn="true"
-						>
-							<template #action>
-								<div style="display: flex; gap: 8px; margin-top: 16px;">
-									<VBtn href="/" color="primary">Retour à l'accueil</VBtn>
-									<VBtn variant="outlined" color="primary">Déconnexion</VBtn>
-								</div>
-							</template>
-						</StatusPage>
-					</div>
-				</template>
-				`,
+				code: `<template>
+	<StatusPage
+		page-title="une erreur est survenue"
+		code="500"
+		message="Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646"
+	>
+		<template #action>
+			<div class="d-flex ga-2 mt-4">
+				<VBtn
+					href="/"
+					color="primary"
+				>
+					Retour à l'accueil
+				</VBtn>
+				<VBtn
+					variant="outlined"
+					color="primary"
+				>
+					Déconnexion
+				</VBtn>
+			</div>
+		</template>
+	</StatusPage>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { StatusPage } from '@cnamts/synapse'
-				</script>
-				`,
+				code: `<script setup lang="ts">
+import { StatusPage } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+</script>`,
 			},
 		],
 	},
 	render: args => ({
-		components: { StatusPage },
+		components: { StatusPage, VBtn },
 		setup() {
 			return { args }
 		},
 		template: `
 			<StatusPage v-bind="args">
 				<template #action>
-					<div style="display: flex; gap: 8px; margin-top: 16px;">
-						<VBtn href="/" color="primary">Retour à l'accueil</VBtn>
-						<VBtn variant="outlined" color="primary">Déconnexion</VBtn>
+					<div class="d-flex ga-2 mt-4">
+						<VBtn
+							href="/"
+							color="primary"
+						>
+							Retour à l'accueil
+						</VBtn>
+						<VBtn
+							variant="outlined"
+							color="primary"
+						>
+							Déconnexion
+						</VBtn>
 					</div>
 				</template>
 			</StatusPage>
@@ -263,40 +258,30 @@ export const SlotAction: Story = {
 export const SlotAdditionalContent: Story = {
 	args: {
 		...Default.args,
-		headingLevel: 1,
 	},
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<div style="padding: 20px; background: rgb(231, 236, 245)">
-						<StatusPage
-							page-title="une erreur est survenue"
-							code="500"
-							message="Une erreur est survenue de notre côté, veuillez réessayer plus tard."
-						>
-							<template #additional-content>
-								<p style="text-align: center; color: #555;">
-									Si le problème persiste, veuillez contacter le support technique.
-								</p>
-							</template>
-						</StatusPage>
-					</div>
-				</template>
-				`,
+				code: `<template>
+	<StatusPage
+		page-title="une erreur est survenue"
+		code="500"
+		message="Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646"
+	>
+		<template #additional-content>
+			<p class="text-center">
+				Si le problème persiste, veuillez contacter le support technique.
+			</p>
+		</template>
+	</StatusPage>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { StatusPage } from '@cnamts/synapse'
-				</script>
-				`,
+				code: `<script setup lang="ts">
+import { StatusPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
@@ -308,7 +293,7 @@ export const SlotAdditionalContent: Story = {
 		template: `
 			<StatusPage v-bind="args">
 				<template #additional-content>
-					<p style="text-align: center; color: #555;">
+					<p class="text-center">
 						Si le problème persiste, veuillez contacter le support technique.
 					</p>
 				</template>
@@ -329,25 +314,21 @@ export const WithRole: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<StatusPage
-						page-title="Une erreur est survenue"
-						message="Veuillez réessayer ultérieurement."
-						code="500"
-						role="main"
-						unique-id="status-page-main"
-					/>
-				</template>
-				`,
+				code: `<template>
+	<StatusPage
+		page-title="Une erreur est survenue"
+		message="Veuillez réessayer ultérieurement."
+		code="500"
+		role="main"
+		unique-id="status-page-main"
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { StatusPage } from '@cnamts/synapse'
-				</script>
-				`,
+				code: `<script setup lang="ts">
+import { StatusPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
