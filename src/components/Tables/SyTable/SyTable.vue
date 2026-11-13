@@ -228,8 +228,6 @@
 		statusRegionId,
 		setupAria,
 	} = useTableAria({
-		announceRowCount: false,
-		keepHeaderControlsAccessible: true,
 		table,
 		items: filteredItems,
 		totalItemsCount: itemsLength,

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import dayjs from 'dayjs'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls, syServerTableItemsArgTypes } from '../common/storyArgTypes'
 import type { FilterOption, FilterType } from '../common/types'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
@@ -109,9 +110,6 @@ const serverCustomFilterUsers: Record<string, unknown>[] = [
 ]
 export const ServerFilterByText: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -315,9 +313,6 @@ export const ServerFilterByText: Story = {
 
 export const ServerFilterByNumber: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -530,9 +525,6 @@ export const ServerFilterByNumber: Story = {
 
 export const ServerFilterBySelect: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -775,9 +767,6 @@ export const ServerFilterBySelect: Story = {
 
 export const ServerFilterBySelectMultiple: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1028,9 +1017,6 @@ export const ServerFilterBySelectMultiple: Story = {
 
 export const ServerFilterByAutocomplete: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1209,9 +1195,6 @@ export const ServerFilterByAutocomplete: Story = {
 
 export const ServerFilterByExacteDate: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1397,9 +1380,6 @@ export const ServerFilterByExacteDate: Story = {
 
 export const ServerFilterByPeriod: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1602,9 +1582,6 @@ export const ServerFilterByPeriod: Story = {
 
 export const CustomFilterSlot: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1625,7 +1602,7 @@ export const CustomFilterSlot: Story = {
 								<div class="custom-filter-info mb-2">
 									Filtre personnalisé :
 								</div>
-								<v-select
+								<SySelect
 									v-model="customFilterValue"
 									:items="statusOptions"
 									label="Statut"
@@ -1649,7 +1626,7 @@ export const CustomFilterSlot: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref, watch } from 'vue'
-					import { SyServerTable } from '@cnamts/synapse'
+					import { SyServerTable, SySelect } from '@cnamts/synapse'
 					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 					import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
 					
@@ -1850,7 +1827,7 @@ export const CustomFilterSlot: Story = {
 		...commonTableEventArgs(),
 	},
 	render: args => ({
-		components: { SyServerTable },
+		components: { SyServerTable, SySelect },
 		setup() {
 			const { items, totalItems, state, options, fetchData, StateEnum } = useServerTableDemo(args, serverCustomFilterUsers)
 
@@ -1893,7 +1870,7 @@ export const CustomFilterSlot: Story = {
 						<div class="custom-filter-info mb-2">
 							Filtre personnalisé :
 						</div>
-						<VSelect
+						<SySelect
 							v-model="customFilterValue"
 							:items="statusOptions"
 							label="Statut"
@@ -1915,9 +1892,6 @@ export const CustomFilterSlot: Story = {
 
 export const CustomFilterInputs: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

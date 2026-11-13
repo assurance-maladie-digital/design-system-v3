@@ -53,9 +53,6 @@ const alignmentData = [
  */
 export const DataAlignment: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -152,9 +149,6 @@ export const DataAlignment: Story = {
  */
 export const ResizableColumns: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -253,9 +247,6 @@ export const ResizableColumns: Story = {
  */
 export const PinnedColumns: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -362,9 +353,6 @@ export const PinnedColumns: Story = {
  */
 export const ColumnControls: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
