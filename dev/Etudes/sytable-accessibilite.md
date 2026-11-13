@@ -83,3 +83,4 @@ Une fois les deux composants alignés, les options de compatibilité ajoutées �
 ### `SyTable` : vérification manuelle sous NVDA
 
 Vérifier en mode navigation (sans focus sur la poignée) que la largeur de colonne est bien restituée, ainsi que les annonces de la zone de statut après une pagination, un tri, un filtre et une sélection.
+

@@ -130,7 +130,6 @@ export const WithAnItem: Story = {
 					<template #menu>
 						<HeaderBurgerMenu
 							v-model="args.modelValue"
-							inner-tag="ul"
 							@update:modelValue="args['onUpdate:modelValue']"
 						>
 							<HeaderMenuItem>
@@ -150,9 +149,7 @@ export const WithAnItem: Story = {
 				<template>
 					<HeaderBar>
 						<template #menu>
-							<HeaderBurgerMenu
-								inner-tag="ul"
-							>
+							<HeaderBurgerMenu>
 								<HeaderMenuItem>
 									<a href="">Item 1</a>
 								</HeaderMenuItem>
@@ -288,7 +285,7 @@ export const Populated: Story = {
 									Section 3
 								</template>
 								<div class="pl-6 pb-6 pt-4">
-									<p class="font-weight-bold">Veillez vous connecter</p>
+									<p class="font-weight-bold">Veuillez vous connecter</p>
 									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
 								</div>
 							</HeaderMenuSection>
@@ -400,7 +397,7 @@ export const Populated: Story = {
 									Section 3
 								</template>
 								<div class="pl-6 pb-6 pt-4">
-									<p class="font-weight-bold">Veillez vous connecter</p>
+									<p class="font-weight-bold">Veuillez vous connecter</p>
 									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
 								</div>
 							</HeaderMenuSection>
