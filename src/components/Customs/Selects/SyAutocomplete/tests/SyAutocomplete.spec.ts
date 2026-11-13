@@ -1480,7 +1480,7 @@ describe('SyAutocomplete', () => {
 			expect(wrapper.emitted('search')?.at(-1)).toEqual(['O'])
 		})
 
-		it('keeps search results when the field receives focus after a search', async () => {
+		it('clears an unconfirmed search on blur and shows all items when reopened', async () => {
 			const input = wrapper.find('input')
 			await input.trigger('click')
 			await flushPromises()
@@ -1489,9 +1489,219 @@ describe('SyAutocomplete', () => {
 			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
 
 			await input.trigger('blur')
-			await input.trigger('focus')
 			await flushPromises()
 
+			expect((input.element as HTMLInputElement).value).toBe('')
+
+			await input.trigger('click')
+			await flushPromises()
+
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(3)
+		})
+
+		it('restores the selected label on blur and shows all items when reopened', async () => {
+			await wrapper.setProps({ modelValue: '1' })
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+			await flushPromises()
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
+
+			await input.trigger('blur')
+			await flushPromises()
+
+			expect((input.element as HTMLInputElement).value).toBe('Option 1')
+			expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+
+			await input.trigger('click')
+			await flushPromises()
+
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(3)
+		})
+
+		describe('selected label when items change', () => {
+			const allItems = [
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+				{ text: 'Xavier', value: 'x' },
+			]
+			const inputValue = () => (wrapper.find('input').element as HTMLInputElement).value
+
+			it('shows the selected label once items are loaded after the value', async () => {
+				wrapper.unmount()
+				wrapper = mount(SyAutocomplete, {
+					props: { modelValue: '1', items: [], label: 'Test late items', textKey: 'text', valueKey: 'value', menuId },
+					attachTo: document.body,
+				})
+				expect(inputValue()).toBe('')
+
+				await wrapper.setProps({ items: allItems })
+				await flushPromises()
+
+				expect(inputValue()).toBe('Option 1')
+				expect(isMenuOverlayActive()).toBe(false)
+			})
+
+			it('reads the label from the selected object with returnObject when items do not contain it', async () => {
+				wrapper.unmount()
+				wrapper = mount(SyAutocomplete, {
+					props: { modelValue: { text: 'Option 1', value: '1' }, items: [], label: 'Test returnObject', textKey: 'text', valueKey: 'value', returnObject: true, menuId },
+					attachTo: document.body,
+				})
+				await flushPromises()
+
+				expect(inputValue()).toBe('Option 1')
+			})
+
+			it('restores the selected label on blur when the selected item is absent from server results', async () => {
+				wrapper.unmount()
+				wrapper = mount(SyAutocomplete, {
+					props: { modelValue: null, items: allItems, label: 'Test server items', textKey: 'text', valueKey: 'value', filter: false, debounce: 0, menuId },
+					attachTo: document.body,
+				})
+				await wrapper.setProps({ modelValue: '1' })
+				const input = wrapper.find('input')
+				await input.trigger('click')
+				wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Xa')
+				await flushPromises()
+				await wrapper.setProps({ items: [allItems[2]] })
+
+				await input.trigger('blur')
+				await flushPromises()
+
+				expect(inputValue()).toBe('Option 1')
+				expect(wrapper.props('modelValue')).toBe('1')
+			})
+
+			it('keeps the typed search when items change during typing', async () => {
+				await wrapper.setProps({ modelValue: '1' })
+				const input = wrapper.find('input')
+				await input.trigger('click')
+				wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Opt')
+				await flushPromises()
+
+				await wrapper.setProps({ items: [...allItems] })
+				await flushPromises()
+
+				expect(inputValue()).toBe('Opt')
+			})
+		})
+
+		it('emits search for the first character typed when mounted with an initial value', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test initial value',
+					textKey: 'text',
+					valueKey: 'value',
+					debounce: 0,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await flushPromises()
+			expect(isMenuOverlayActive()).toBe(false)
+
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option')
+			await flushPromises()
+			await new Promise(resolve => setTimeout(resolve, 0))
+
+			expect(wrapper.emitted('search')).toEqual([['Option']])
+		})
+
+		describe('search event on blur', () => {
+			const mountWithDebounce = (debounce: number) => {
+				wrapper.unmount()
+				wrapper = mount(SyAutocomplete, {
+					props: {
+						modelValue: null,
+						items,
+						label: 'Test search on blur',
+						textKey: 'text',
+						valueKey: 'value',
+						debounce,
+						menuId,
+					},
+					attachTo: document.body,
+				})
+			}
+			const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+			it('emits an empty search when a typed search is abandoned on blur', async () => {
+				mountWithDebounce(0)
+				const input = wrapper.find('input')
+				await input.trigger('click')
+				wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+				await flushPromises()
+				await wait(0)
+
+				await input.trigger('blur')
+				await flushPromises()
+
+				expect(wrapper.emitted('search')).toEqual([['Option 2'], ['']])
+			})
+
+			it('cancels the pending debounced search when the field is blurred', async () => {
+				// Avec une valeur sélectionnée, le timer en attente émettrait le libellé
+				// restauré (« Option 1 ») après la recherche vide.
+				mountWithDebounce(50)
+				await wrapper.setProps({ modelValue: '1' })
+				const input = wrapper.find('input')
+				await input.trigger('click')
+				wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+				await flushPromises()
+
+				await input.trigger('blur')
+				await flushPromises()
+				await wait(100)
+
+				expect(wrapper.emitted('search')).toEqual([['']])
+			})
+
+			it('does not emit search on blur after a selection', async () => {
+				mountWithDebounce(0)
+				const input = wrapper.find('input')
+				await input.trigger('click')
+				await flushPromises()
+				getOption(1)?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 }))
+				await flushPromises()
+
+				await input.trigger('blur')
+				await flushPromises()
+				await wait(0)
+
+				expect(wrapper.emitted('search')).toBeUndefined()
+			})
+
+			it('does not emit search when focus moves into the menu', async () => {
+				mountWithDebounce(50)
+				const input = wrapper.find('input')
+				await input.trigger('click')
+				wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+				await flushPromises()
+
+				await input.trigger('blur', { relatedTarget: getMenu() })
+				await flushPromises()
+				await wait(100)
+
+				expect(wrapper.emitted('search')).toEqual([['Option 2']])
+			})
+		})
+
+		it('keeps the search when focus moves into the menu', async () => {
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+			await flushPromises()
+
+			await input.trigger('blur', { relatedTarget: getMenu() })
+			await flushPromises()
+
+			expect((input.element as HTMLInputElement).value).toBe('Option 2')
 			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
 		})
 
@@ -1577,7 +1787,6 @@ describe('SyAutocomplete', () => {
 				},
 				attachTo: document.body,
 			})
-			await wrapper.find('input').trigger('focus')
 
 			// '★' est dans textKey mais pas dans plainTextKey → aucun résultat
 			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', '★')

@@ -143,6 +143,32 @@
 		valueKey: props.valueKey,
 	}, getValueKey, getStoredValue, getPlainText, selected, search, emit)
 
+	// Dernier libellé connu de la valeur sélectionnée. Avec une recherche côté serveur,
+	// l'item sélectionné peut être absent des `items` courants : le champ doit tout de
+	// même afficher son libellé plutôt que de se vider.
+	const lastSelectedLabel = ref<{ key: SelectPrimitive, label: string } | null>(null)
+
+	const rememberSelectedLabel = (item: ItemType) => {
+		lastSelectedLabel.value = { key: getValueKey(item), label: getPlainText(item) }
+	}
+
+	const resolveSelectedLabel = (): string => {
+		const selectedKey = props.returnObject
+			? (selected.value as ItemType)[props.valueKey] as SelectPrimitive
+			: selected.value as SelectPrimitive
+
+		const found = formattedItems.value.find(i => i[props.valueKey] === selectedKey)
+		if (found) {
+			rememberSelectedLabel(found)
+			return getPlainText(found)
+		}
+		if (props.returnObject) {
+			const label = getPlainText(selected.value as ItemType)
+			if (label) return label
+		}
+		return lastSelectedLabel.value?.key === selectedKey ? lastSelectedLabel.value.label : ''
+	}
+
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
 
@@ -156,22 +182,12 @@
 			return
 		}
 
-		const found = formattedItems.value.find(i =>
-			props.returnObject
-				? i[props.valueKey] === (selected.value as ItemType)[props.valueKey]
-				: i[props.valueKey] === selected.value,
-		)
-
-		const nextSearch = found ? getPlainText(found) : ''
+		const nextSearch = resolveSelectedLabel()
 
 		if (search.value !== nextSearch) {
 			suppressMenuOpen.value = true
 			search.value = nextSearch
 		}
-	}
-
-	const handleFocus = () => {
-		if (!props.multiple && !focused.value && !search.value) isPristine.value = true
 	}
 
 	const normalizedSearch = computed(() => (search.value || '').toLowerCase())
@@ -198,6 +214,7 @@
 			if (search.value !== selectedText) {
 				suppressMenuOpen.value = true
 			}
+			if (typeof item === 'object') rememberSelectedLabel(item)
 		}
 		updateValue(item ?? null)
 		if (!props.multiple) isPristine.value = true
@@ -214,6 +231,20 @@
 			: val as SelectValue | SelectArray
 		syncSearchFromValue()
 	}, { immediate: true })
+
+	// L'appel immédiat ci-dessus a pu armer `suppressMenuOpen` avant la déclaration de
+	// `watch(search)` : ce changement de `search` ne sera jamais observé. Sans remise à
+	// zéro, le drapeau avalerait la première frappe et son événement `search`.
+	suppressMenuOpen.value = false
+
+	// Les `items` peuvent arriver après la valeur (formulaire pré-rempli, recherche côté
+	// serveur) : le libellé est alors résolu à leur arrivée. Une recherche en cours de
+	// saisie (`isPristine` à false) n'est jamais écrasée.
+	watch(formattedItems, () => {
+		if (!props.multiple && isPristine.value && !isEmptySelectValue(selected.value)) {
+			syncSearchFromValue()
+		}
+	})
 
 	let debounceHandle: ReturnType<typeof setTimeout> | null = null
 
@@ -324,6 +355,24 @@
 				focusInput(textFieldRef)
 			})
 			return
+		}
+		// Comme VAutocomplete : une recherche non validée par une sélection est abandonnée
+		// au blur. Le champ réaffiche le libellé de la valeur sélectionnée (ou se vide) et
+		// la liste complète sera proposée à la prochaine ouverture.
+		if (!relatedTarget?.closest(`#${uniqueMenuId.value}`)) {
+			const isSearchAbandoned = !props.multiple && !isPristine.value && search.value !== ''
+			syncSearchFromValue()
+			// La recherche abandonnée est remplacée par une recherche vide, comme
+			// `update:search` dans VAutocomplete : un consommateur qui filtre côté serveur
+			// recharge la liste complète. Le debounce en cours est annulé pour qu'une
+			// recherche abandonnée ne soit pas émise après la recherche vide.
+			if (isSearchAbandoned) {
+				if (debounceHandle) {
+					clearTimeout(debounceHandle)
+					debounceHandle = null
+				}
+				emit('search', '')
+			}
 		}
 		validateOnBlur()
 	}
@@ -464,7 +513,6 @@
 					:hide-details="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
-					@focus="handleFocus"
 					@update:model-value="handleInput"
 					@blur="checkErrorOnBlur"
 					@keydown.tab="handleTabKey"

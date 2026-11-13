@@ -26,26 +26,28 @@ Dans `SyAutocomplete.vue` :
 
 **Cause identifiée :** le composant ne distinguait pas le texte affiché après une sélection du texte saisi pour effectuer une recherche.
 
-## Correctif envisagé
+## Correctif
 
 L’état `isPristine` distingue le texte affiché après une sélection d’une recherche saisie.
 
 - Après une sélection ou une synchronisation de la valeur, remettre `isPristine` à `true`.
 - Tant que cet état est vrai, afficher toutes les propositions.
 - Dès que l’utilisateur saisit du texte, passer `isPristine` à `false` et appliquer le filtrage habituel.
-- Lors d’une reprise de focus après blur, remettre `isPristine` à `true`, conformément au comportement de Vuetify : la liste complète réapparaît.
+- Au blur, comme `VAutocomplete` : abandonner la recherche non validée par une sélection. Le champ réaffiche le libellé de la valeur sélectionnée (ou se vide s’il n’y en a pas) et `isPristine` repasse à `true`, donc la liste complète est proposée à la prochaine ouverture. Un blur vers le menu (focus déplacé dans la liste) ne déclenche pas cette restauration.
 - Conserver le comportement actuel du mode multiple.
 
 Le flag `suppressMenuOpen` n’est armé que lorsque `search` va changer. La première frappe suivant une sélection peut ainsi émettre normalement `search` (avec le debounce configuré).
+
+Le libellé affiché pour la valeur sélectionnée ne dépend plus uniquement des `items` courants. Avec une recherche côté serveur, l’item sélectionné peut en être absent : le dernier libellé connu (ou, avec `returnObject`, celui de l’objet sélectionné) est alors utilisé, au lieu de vider le champ alors qu’une valeur reste sélectionnée. Quand les `items` changent et qu’aucune recherche n’est en cours de saisie, le libellé est résolu de nouveau : une valeur initiale dont les `items` arrivent plus tard (formulaire pré-rempli) s’affiche à leur arrivée (bug présent aussi sur `dev`).
+
+Correctif associé : au montage avec une valeur initiale, la synchronisation immédiate armait `suppressMenuOpen` avant la déclaration de `watch(search)`. Le drapeau n’était jamais consommé et avalait la première frappe et son événement `search` (bug présent aussi sur `dev`). Il est remis à zéro juste après cette synchronisation.
 
 ## Fichier concerné
 
 | Fichier | Modification |
 |---|---|
-| `src/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue` | Distinguer texte sélectionné et recherche saisie, réinitialiser l’état au focus après blur et éviter de laisser `suppressMenuOpen` actif si `search` ne change pas. |
-| `src/components/Customs/Selects/SyAutocomplete/tests/SyAutocomplete.spec.ts` | Couvrir la liste complète après synchronisation/sélection, la re-filtration après une frappe, l’émission de `search` après sélection et le reset au focus. |
-
-Les fichiers de tests et les stories concernés restent à identifier dans le dépôt.
+| `src/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue` | Distinguer texte sélectionné et recherche saisie, restaurer le libellé de la sélection au blur, le résoudre quand les `items` changent et éviter de laisser `suppressMenuOpen` actif si `search` ne change pas. |
+| `src/components/Customs/Selects/SyAutocomplete/tests/SyAutocomplete.spec.ts` | Couvrir la liste complète après synchronisation/sélection, la re-filtration après une frappe, l’émission de `search` après sélection, la restauration du libellé (ou le vidage du champ) au blur, la conservation de la recherche quand le focus passe dans le menu, et le libellé de la sélection quand les `items` changent (chargement tardif, résultats serveur, `returnObject`). |
 
 ## Vérifications à réaliser
 
@@ -55,12 +57,14 @@ Les fichiers de tests et les stories concernés restent à identifier dans le d�
 - Vérifier que le mode multiple n’est pas impacté.
 - La suite a11y axe du composant n’a pas été relancée pour cette modification ; la navigation clavier et les annonces avec un lecteur d’écran restent à vérifier manuellement.
 
-Vérifications exécutées : les tests unitaires ciblés de `SyAutocomplete.spec.ts` passent (76 tests) et ESLint passe sur le composant et son fichier de tests. Un premier run avant l’ajustement du scénario focus a révélé un test existant qui saisissait sans focus ; ce scénario a été aligné sur une interaction avec focus, puis la suite est passée.
+Vérifications exécutées : les tests unitaires ciblés de `SyAutocomplete.spec.ts` passent (87 tests), ainsi que les suites `Selects`, `SyForm` et `Tables` (qui utilise `SyAutocomplete` dans `AutocompleteFilter`) et le test axe du composant. ESLint et `vue-tsc` passent.
 
 ## Décisions
 
 - Le comportement s’applique par défaut ; aucune prop de configuration n’a été ajoutée.
-- Au focus initial, la liste complète est disponible. Après une recherche suivie d’un blur, la reprise de focus réinitialise aussi le filtre et montre toutes les propositions, conformément à Vuetify.
+- Au focus initial, la liste complète est disponible. Le cycle focus/blur est aligné sur `VAutocomplete` (Vuetify 3.12) : une recherche saisie puis abandonnée par un blur est effacée, le champ réaffiche le libellé de la sélection, et la liste complète réapparaît à la réouverture. Le texte visible et `resultsLiveText` restent ainsi cohérents avec la liste.
+- Écart volontaire avec Vuetify : à la fermeture du menu par Échap sans quitter le champ, Vuetify réaffiche la liste complète alors que le texte saisi reste dans le champ. `SyAutocomplete` conserve le filtre saisi : la liste et `resultsLiveText` restent cohérents avec le texte visible, ce qui prime sur l’alignement avec Vuetify.
+- Au blur après une recherche abandonnée, `search` est émis avec une chaîne vide, comme `update:search` dans `VAutocomplete`, et le debounce en cours est annulé. Un consommateur qui filtre côté serveur recharge ainsi la liste complète. On émet une chaîne vide et non le libellé restauré : ce dernier filtrerait la liste côté serveur sur la seule valeur sélectionnée.
 
 ## Statut
 
