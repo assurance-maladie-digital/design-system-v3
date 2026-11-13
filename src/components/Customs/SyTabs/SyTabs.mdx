@@ -25,14 +25,14 @@ import * as SyTabsStories from "./SyTabs.stories";
 
 Le composant `SyTabs` attend un tableau d'objets `TabItem` avec la structure suivante :
 
-```typescript
+<Source dark language="typescript" code={`
 export interface TabItem {
   label: string       // Texte affiché dans l'onglet
   value: string | number  // Valeur unique utilisée pour v-model
   content?: string    // Contenu textuel de l'onglet (optionnel)
   disabled?: boolean  // État désactivé (optionnel)
 }
-```
+`} />
 
 
 ## Personnalisation
@@ -41,7 +41,7 @@ Le composant peut être personnalisé via l'objet `vuetifyOptions` qui permet de
 
 > **Important** : Ces options de personnalisation doivent être passées via la prop `vuetifyOptions` et non comme props directes du composant. Par exemple, utilisez `:vuetify-options="{ sheet: { dense: true } }"` plutôt que `:sheet="{ dense: true }"`.
 
-```javascript
+<Source dark language="javascript" code={`
 {
   sheet: { 
     theme: 'default|dark|light',  // Thème de l'arrière-plan
@@ -60,7 +60,7 @@ Le composant peut être personnalisé via l'objet `vuetifyOptions` qui permet de
     'ripple': false               // Effet de ripple
   }
 }
-```
+`} />
 
 <Canvas of={SyTabsStories.CustomTabStyles} />
 

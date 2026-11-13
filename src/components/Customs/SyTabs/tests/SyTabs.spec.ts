@@ -70,15 +70,9 @@ describe('SyTabs', () => {
 					},
 				},
 			})
-			const tabButton = wrapper.get('.sy-tabs__button')
-			expect(tabButton.element.style.textTransform).toBe('none')
-			expect(tabButton.text()).toBe(testItems[0]?.label)
-		})
-
-		it('applique uppercase par défaut', () => {
-			const wrapper = createWrapper()
-
-			expect(wrapper.get('.sy-tabs__button').element.style.textTransform).toBe('uppercase')
+			// La casse visuelle (règle CSS text-transform) est vérifiée dans SyTabs.visual.cy.ts :
+			// les styles scopés et leurs v-bind() ne sont pas appliqués dans l'environnement Vitest.
+			expect(wrapper.get('.sy-tabs__button').text()).toBe(testItems[0]?.label)
 		})
 
 		it('doit afficher le contenu de l\'onglet actif', () => {
