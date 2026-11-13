@@ -282,6 +282,35 @@ describe('Captcha', () => {
 		expect(wrapper.text()).toContain('est requis')
 	})
 
+	it('does not display required validation error when required prop is false', async () => {
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				required: false,
+				modelValue: '',
+			},
+		})
+
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+
+		await input.trigger('focus')
+		await input.trigger('blur')
+
+		expect(wrapper.text()).not.toContain('est requis')
+	})
+
 	it('applies customRules and displays custom error message on blur', async () => {
 		const response = {
 			ok: true,

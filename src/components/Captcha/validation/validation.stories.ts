@@ -74,11 +74,12 @@ export const WithError: Story = {
 	<Captcha
 		v-model="modelValue"
 		required
+		show-success-messages
 		:custom-rules="[
 			{
 				type: 'custom',
 				options: {
-					validate: (v) => (v as string).length >= 6,
+					validate: (v) => (String(v || '')).length >= 6,
 					message: 'Le captcha doit contenir au moins 6 caractères.',
 					successMessage: 'Le captcha contient au moins 6 caractères.'
 				}
@@ -124,6 +125,7 @@ const modelValue = ref('ytq')
 	},
 	args: {
 		modelValue: 'ytq',
+		required: true,
 		// Validation à la saisie pour que l'état (erreur/succès) se mette à jour
 		// immédiatement quand on modifie le champ, sans attendre le blur.
 		isValidateOnBlur: false,
@@ -223,6 +225,7 @@ export const WithSuccess: Story = {
 	<Captcha
 		v-model="modelValue"
 		required
+		show-success-messages
 		:custom-rules="[
 			{
 				type: 'custom',
@@ -302,6 +305,7 @@ export const ValidateOnInput: Story = {
 	<Captcha
 		v-model="value"
 		required
+		show-success-messages
 		:is-validate-on-blur="false"
 		:custom-rules="[
 			{
@@ -352,6 +356,9 @@ const verifyCaptcha = () => {
 `,
 			},
 		],
+	},
+	args: {
+		required: true,
 	},
 	render: (args) => {
 		return {

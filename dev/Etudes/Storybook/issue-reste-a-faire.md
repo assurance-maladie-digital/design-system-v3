@@ -1,6 +1,6 @@
 ## Stories de validation : reste à faire
 
-Suite de l'audit des stories de validation (PR #<pr>). Points relevés mais non corrigés dans la PR.
+Suite de l'audit des stories de validation. Points relevés lors de la revue, non corrigés dans la PR (sauf mention contraire).
 
 ### Transverse (tous fichiers)
 
@@ -52,8 +52,8 @@ Suite de l'audit des stories de validation (PR #<pr>). Points relevés mais non 
 
 ### NirField / PhoneField / Captcha
 
-- [ ] **high** — `Captcha/useCaptchaValidation.ts` : `params.required` est un `Ref` (toujours vrai) → le Captcha est toujours obligatoire, même avec `required: false`. Utiliser `params.required.value` + test de régression.
-- [ ] **high** — Captcha `WithError` / `WithWarning` / `WithSuccess` / `ValidateOnInput` : `required` absent du rendu (appliqué uniquement grâce au bug ci-dessus) ; `show-success-messages` absent du code affiché ; `(v as string).length` sans garde.
+- [x] **high** — `Captcha/useCaptchaValidation.ts` : `params.required` est un `Ref` (toujours vrai) → le Captcha est toujours obligatoire, même avec `required: false`. Utiliser `params.required.value` + test de régression.
+- [x] **high** — Captcha `WithError` / `WithWarning` / `WithSuccess` / `ValidateOnInput` : `required` absent du rendu (appliqué uniquement grâce au bug ci-dessus) ; `show-success-messages` absent du code affiché ; `(v as string).length` sans garde.
 - [x] **medium** — Captcha `ExternalMessages` : pas d'onglet Script ; stories `SyForm*` / `VForm*` : `verifyCaptcha` absent ou vide dans le code affiché, imports manquants.
 - [x] **low** — Captcha : `width="400px"` n'est pas une prop ; `verifyCaptcha` inutilisé dans `ExternalMessages` ; `Meta` sans paramètre de type ; description citant `validate()` au lieu de `validateOnSubmit()`.
 - [x] **medium** — NirField `CustomRules` : règle affichée simplifiée par rapport aux args ; `successMessage` sans `showSuccessMessages`.
