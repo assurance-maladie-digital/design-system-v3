@@ -51,9 +51,6 @@ const serverMultiSortDataset: Record<string, string>[] = [
  */
 export const ServerSortBy: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -150,9 +147,6 @@ export const ServerSortBy: Story = {
  */
 export const ServerMultiSort: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

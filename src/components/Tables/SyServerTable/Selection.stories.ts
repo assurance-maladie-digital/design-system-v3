@@ -40,9 +40,6 @@ const serverHeaders = [
  */
 export const RowSelection: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -156,9 +153,6 @@ export const RowSelection: Story = {
  */
 export const SingleRowSelection: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

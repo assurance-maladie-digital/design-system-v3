@@ -219,6 +219,7 @@ export const CustomEditor: Story = {
 			>
 				<template #edit.lastname="{ value, update }">
 					<input
+						aria-label="Nom"
 						:value="value"
 						style="width:100%;padding:4px;border:1px solid #767676;border-radius:4px;background:#fff"
 						@input="update($event.target.value)"
@@ -256,6 +257,7 @@ export const CustomEditor: Story = {
 		<!-- Éditeur personnalisé pour la colonne "Nom" (input HTML) -->
 		<template #edit.lastname="{ value, update }">
 			<input
+				aria-label="Nom"
 				:value="value"
 				style="width:100%;padding:4px;border:1px solid #767676;border-radius:4px;background:#fff"
 				@input="update($event.target.value)"

@@ -1,6 +1,5 @@
-import { computed, nextTick, onMounted, onUnmounted, ref, watch, type Ref } from 'vue'
+import { computed, nextTick, onMounted, watch, type Ref } from 'vue'
 import type { VDataTable, VDataTableServer } from 'vuetify/components'
-import { locales } from './locales'
 import type { DataOptions, Items } from './types'
 
 export interface UseTableAriaOptions {
@@ -9,10 +8,6 @@ export interface UseTableAriaOptions {
 	totalItemsCount: Ref<number>
 	options: Ref<Partial<DataOptions>>
 	uniqueTableId: string
-	/** Keep the historical row-count announcement until the table uses useTableStatus. */
-	announceRowCount?: boolean
-	/** Keep all header controls exposed to assistive technology, including without focus. */
-	keepHeaderControlsAccessible?: boolean
 }
 
 export function useTableAria({
@@ -21,13 +16,8 @@ export function useTableAria({
 	totalItemsCount,
 	options,
 	uniqueTableId,
-	announceRowCount = true,
-	keepHeaderControlsAccessible = false,
 }: UseTableAriaOptions) {
-	// Registre des éléments avec des écouteurs d'événements pour le nettoyage
-	const elementsWithListeners = ref<HTMLElement[]>([])
 	const statusRegionId = `${uniqueTableId}-status`
-	const statusMessage = ref('')
 
 	// Calculate the total row count including header rows
 	const totalRowCount = computed(() => {
@@ -117,27 +107,12 @@ export function useTableAria({
 			rowIndex++
 		})
 	}
-
-	// Nettoyer les écouteurs d'événements des éléments enregistrés
-	const cleanupListeners = () => {
-		elementsWithListeners.value.forEach((element) => {
-			if (element) {
-				element.removeEventListener('focus', handleInteractiveElementFocus)
-				element.removeEventListener('blur', handleInteractiveElementBlur)
-			}
-		})
-		elementsWithListeners.value = []
-	}
-
 	// Update ARIA sort attributes on header cells
 	const updateHeaderAria = async () => {
 		await nextTick()
 
 		const tableElement = table.value?.$el?.querySelector('table')
 		if (!tableElement) return
-
-		// Nettoyer les anciens listeners avant de reconstruire le registre
-		cleanupListeners()
 
 		const headerCells = tableElement.querySelectorAll('thead tr.headers th')
 		headerCells.forEach((cell) => {
@@ -165,59 +140,7 @@ export function useTableAria({
 				// Default to 'none' if no column key found
 				cell.setAttribute('aria-sort', 'none')
 			}
-
-			if (keepHeaderControlsAccessible) return
-
-			// Handle accessibility for header cell interactive elements
-			// Only apply to non-checkbox columns
-			if (!cell.querySelector('input[type="checkbox"]')) {
-				const interactiveElements = cell.querySelectorAll('button, [tabindex]:not([tabindex="-1"])')
-
-				interactiveElements.forEach((element, index) => {
-					if (index === 0) {
-						// First interactive element (usually the sort button) should be accessible
-						element.removeAttribute('aria-hidden')
-					}
-					else {
-						// Other elements should be hidden initially
-						element.setAttribute('aria-hidden', 'true')
-					}
-
-					// Add event listeners
-					element.addEventListener('focus', handleInteractiveElementFocus)
-					element.addEventListener('blur', handleInteractiveElementBlur)
-
-					// Stocker l'élément pour le nettoyage lors du démontage
-					elementsWithListeners.value.push(element as HTMLElement)
-				})
-			}
 		})
-	}
-
-	// Event handlers for interactive elements
-	const handleInteractiveElementFocus = (event: Event) => {
-		const element = event.target as HTMLElement
-		element.removeAttribute('aria-hidden')
-	}
-
-	const handleInteractiveElementBlur = (event: Event) => {
-		const element = event.target as HTMLElement
-		const cell = element.closest('th')
-		if (!cell) return
-
-		const interactiveElements = cell.querySelectorAll('button, [tabindex]:not([tabindex="-1"])')
-		const isPrimary = element === interactiveElements[0]
-
-		if (!isPrimary) {
-			element.setAttribute('aria-hidden', 'true')
-		}
-	}
-
-	// Update status message for screen readers
-	const updateStatusMessage = () => {
-		if (!announceRowCount) return
-		const count = items.value.length
-		statusMessage.value = locales.rowCountStatus(count)
 	}
 
 	// Ensure tabbable elements are never hidden from screen readers
@@ -260,12 +183,10 @@ export function useTableAria({
 		await updateRowAria()
 		await updateHeaderAria()
 		await ensureTabbableElementsAccessible()
-		updateStatusMessage()
 	}
 
 	// Watch for changes that require ARIA updates
 	watch(() => items.value.length, () => {
-		updateStatusMessage()
 		updateRowAria()
 		updateTableAria()
 	})
@@ -287,20 +208,13 @@ export function useTableAria({
 		setupAria()
 	})
 
-	// Nettoyer les écouteurs d'événements lors du démontage du composant
-	onUnmounted(() => {
-		cleanupListeners()
-	})
-
 	return {
 		statusRegionId,
-		statusMessage,
 		totalRowCount,
 		getSortState,
 		setupAria,
 		updateTableAria,
 		updateRowAria,
 		updateHeaderAria,
-		updateStatusMessage,
 	}
 }
