@@ -356,25 +356,42 @@
 			})
 			return
 		}
-		// Comme VAutocomplete : une recherche non validée par une sélection est abandonnée
-		// au blur. Le champ réaffiche le libellé de la valeur sélectionnée (ou se vide) et
-		// la liste complète sera proposée à la prochaine ouverture.
-		if (!relatedTarget?.closest(`#${uniqueMenuId.value}`)) {
-			const isSearchAbandoned = !props.multiple && !isPristine.value && search.value !== ''
-			syncSearchFromValue()
-			// La recherche abandonnée est remplacée par une recherche vide, comme
-			// `update:search` dans VAutocomplete : un consommateur qui filtre côté serveur
-			// recharge la liste complète. Le debounce en cours est annulé pour qu'une
-			// recherche abandonnée ne soit pas émise après la recherche vide.
-			if (isSearchAbandoned) {
-				if (debounceHandle) {
-					clearTimeout(debounceHandle)
-					debounceHandle = null
-				}
-				emit('search', '')
-			}
-		}
 		validateOnBlur()
+	}
+
+	// Comme VAutocomplete : une recherche non validée par une sélection est abandonnée
+	// au blur. Le champ réaffiche le libellé de la valeur sélectionnée (ou se vide) et
+	// la liste complète sera proposée à la prochaine ouverture. Cette logique reste
+	// hors de `checkErrorOnBlur`, méthode exposée qu'un consommateur peut appeler
+	// pour forcer la validation sans perdre la saisie en cours.
+	const abandonSearch = () => {
+		const isSearchAbandoned = !props.multiple && !isPristine.value && search.value !== ''
+		syncSearchFromValue()
+		// La recherche abandonnée est remplacée par une recherche vide, comme
+		// `update:search` dans VAutocomplete : un consommateur qui filtre côté serveur
+		// recharge la liste complète. Le debounce en cours est annulé pour qu'une
+		// recherche abandonnée ne soit pas émise après la recherche vide.
+		if (isSearchAbandoned) {
+			if (debounceHandle) {
+				clearTimeout(debounceHandle)
+				debounceHandle = null
+			}
+			emit('search', '')
+		}
+	}
+
+	const handleBlur = (event: FocusEvent) => {
+		const relatedTarget = event.relatedTarget as HTMLElement | null
+		const focusStaysInComponent = relatedTarget?.closest(
+			`#${uniqueMenuId.value}, .sy-autocomplete__chip, .sy-autocomplete__clear-button`,
+		)
+		if (!focusStaysInComponent) {
+			abandonSearch()
+			// Comme VAutocomplete : le menu se ferme quand le focus quitte le composant,
+			// y compris quand il est déplacé par script ou par une aide technique.
+			isOpen.value = false
+		}
+		checkErrorOnBlur(event)
 	}
 
 	const getInputValue = (value: string | Event): string | null => {
@@ -420,6 +437,9 @@
 
 	const resultsLiveText = computed(() => {
 		if (!hasInteracted.value) return
+		// Menu fermé : rien à annoncer. Sans cela, le retour à la liste complète après une
+		// sélection ou un blur ferait annoncer « N options disponibles » hors contexte.
+		if (!isOpen.value) return ''
 		if (props.loading) return locales.value.loading
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
@@ -514,7 +534,7 @@
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"
-					@blur="checkErrorOnBlur"
+					@blur="handleBlur"
 					@keydown.tab="handleTabKey"
 				>
 					<template #append-inner>

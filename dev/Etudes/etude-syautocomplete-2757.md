@@ -57,13 +57,16 @@ Correctif associé : au montage avec une valeur initiale, la synchronisation imm
 - Vérifier que le mode multiple n’est pas impacté.
 - La suite a11y axe du composant n’a pas été relancée pour cette modification ; la navigation clavier et les annonces avec un lecteur d’écran restent à vérifier manuellement.
 
-Vérifications exécutées : les tests unitaires ciblés de `SyAutocomplete.spec.ts` passent (87 tests), ainsi que les suites `Selects`, `SyForm` et `Tables` (qui utilise `SyAutocomplete` dans `AutocompleteFilter`) et le test axe du composant. ESLint et `vue-tsc` passent.
+Vérifications exécutées : les tests unitaires ciblés de `SyAutocomplete.spec.ts` passent (89 tests), ainsi que les suites `Selects`, `SyForm` et `Tables` (qui utilise `SyAutocomplete` dans `AutocompleteFilter`) et le test axe du composant. ESLint et `vue-tsc` passent.
 
 ## Décisions
 
 - Le comportement s’applique par défaut ; aucune prop de configuration n’a été ajoutée.
 - Au focus initial, la liste complète est disponible. Le cycle focus/blur est aligné sur `VAutocomplete` (Vuetify 3.12) : une recherche saisie puis abandonnée par un blur est effacée, le champ réaffiche le libellé de la sélection, et la liste complète réapparaît à la réouverture. Le texte visible et `resultsLiveText` restent ainsi cohérents avec la liste.
 - Écart volontaire avec Vuetify : à la fermeture du menu par Échap sans quitter le champ, Vuetify réaffiche la liste complète alors que le texte saisi reste dans le champ. `SyAutocomplete` conserve le filtre saisi : la liste et `resultsLiveText` restent cohérents avec le texte visible, ce qui prime sur l’alignement avec Vuetify.
+- Quand le focus quitte le composant, le menu se ferme, comme dans `VAutocomplete`, y compris quand le focus est déplacé par script ou par une aide technique.
+- L’annonce du nombre de résultats (`role="status"`) est vide tant que le menu est fermé : le retour à la liste complète après une sélection ou un blur n’est pas annoncé hors contexte. Le nombre est annoncé à la réouverture.
+- La logique de blur (recherche abandonnée, fermeture du menu) est portée par le handler `@blur` et non par `checkErrorOnBlur` : cette méthode exposée garde son comportement d’avant (validation seule), et un consommateur qui l’appelle pour forcer la validation ne perd pas la saisie en cours.
 - Au blur après une recherche abandonnée, `search` est émis avec une chaîne vide, comme `update:search` dans `VAutocomplete`, et le debounce en cours est annulé. Un consommateur qui filtre côté serveur recharge ainsi la liste complète. On émet une chaîne vide et non le libellé restauré : ce dernier filtrerait la liste côté serveur sur la seule valeur sélectionnée.
 
 ## Statut

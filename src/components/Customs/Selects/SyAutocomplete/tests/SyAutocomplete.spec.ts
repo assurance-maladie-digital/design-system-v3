@@ -1612,6 +1612,53 @@ describe('SyAutocomplete', () => {
 			expect(wrapper.emitted('search')).toEqual([['Option']])
 		})
 
+		describe('results announcement', () => {
+			const liveText = () => wrapper.find('[role="status"]').text()
+
+			it('announces nothing once the menu closes after a selection or a blur', async () => {
+				const input = wrapper.find('input')
+				await input.trigger('click')
+				await flushPromises()
+				wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+				await flushPromises()
+				expect(liveText()).toBe('1 option disponible')
+
+				getOption(0)?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 }))
+				await flushPromises()
+				expect(liveText()).toBe('')
+
+				await input.trigger('click')
+				await flushPromises()
+				expect(liveText()).toBe('3 options disponibles')
+
+				wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 3')
+				await flushPromises()
+				await input.trigger('blur')
+				await flushPromises()
+				expect(isMenuOverlayActive()).toBe(false)
+				expect(liveText()).toBe('')
+			})
+		})
+
+		it('keeps the typed search when the exposed checkErrorOnBlur is called', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: { modelValue: null, items, label: 'Test exposed blur', textKey: 'text', valueKey: 'value', debounce: 0, menuId },
+				attachTo: document.body,
+			})
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+			await flushPromises()
+			await new Promise(resolve => setTimeout(resolve, 0))
+
+			;(wrapper.vm as unknown as { checkErrorOnBlur: () => void }).checkErrorOnBlur()
+			await flushPromises()
+
+			expect((input.element as HTMLInputElement).value).toBe('Option 2')
+			expect(wrapper.emitted('search')).toEqual([['Option 2']])
+		})
+
 		describe('search event on blur', () => {
 			const mountWithDebounce = (debounce: number) => {
 				wrapper.unmount()
@@ -1701,6 +1748,7 @@ describe('SyAutocomplete', () => {
 			await input.trigger('blur', { relatedTarget: getMenu() })
 			await flushPromises()
 
+			expect(isMenuOverlayActive()).toBe(true)
 			expect((input.element as HTMLInputElement).value).toBe('Option 2')
 			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
 		})

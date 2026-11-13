@@ -10,6 +10,10 @@ Comme dans `VAutocomplete`, une recherche saisie puis abandonnée (blur sans sé
 
 Dans ce cas, l’événement `search` est émis avec une chaîne vide, comme `update:search` dans `VAutocomplete`, et une recherche encore en attente de debounce est annulée. Un consommateur qui filtre côté serveur peut ainsi recharger la liste complète.
 
+Quand le focus quitte le champ, le menu se ferme désormais aussi lorsque le focus est déplacé par script ou par une aide technique (auparavant, seuls Tab et le clic extérieur le fermaient). Le nombre de résultats n’est plus annoncé aux lecteurs d’écran tant que le menu est fermé.
+
+La méthode exposée `checkErrorOnBlur()` n’est pas concernée : elle valide le champ sans modifier la saisie en cours.
+
 Le comportement du mode multiple reste inchangé.
 
 ## Conduite à tenir
