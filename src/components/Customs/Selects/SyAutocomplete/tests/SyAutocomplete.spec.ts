@@ -1612,6 +1612,64 @@ describe('SyAutocomplete', () => {
 			expect(wrapper.emitted('search')).toEqual([['Option']])
 		})
 
+		describe('closing the menu with a typed search in multiple mode', () => {
+			const typeInMultiple = async () => {
+				wrapper.unmount()
+				wrapper = mount(SyAutocomplete, {
+					props: { modelValue: [], items, label: 'Test multiple', textKey: 'text', valueKey: 'value', multiple: true, debounce: 0, menuId },
+					attachTo: document.body,
+				})
+				const input = wrapper.find('input')
+				await input.trigger('click')
+				await flushPromises()
+				wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Opt')
+				await flushPromises()
+				await new Promise(resolve => setTimeout(resolve, 0))
+				return input
+			}
+			const settle = async () => {
+				await flushPromises()
+				await new Promise(resolve => setTimeout(resolve, 0))
+				await flushPromises()
+			}
+
+			it('closes the menu on Escape and emits an empty search once', async () => {
+				const input = await typeInMultiple()
+
+				await input.trigger('keydown', { key: 'Escape' })
+				await settle()
+
+				expect(isMenuOverlayActive()).toBe(false)
+				expect((input.element as HTMLInputElement).value).toBe('')
+				expect(wrapper.emitted('search')).toEqual([['Opt'], ['']])
+			})
+
+			it('closes the menu on Tab', async () => {
+				const input = await typeInMultiple()
+
+				await input.trigger('keydown', { key: 'Tab' })
+				await settle()
+
+				expect(isMenuOverlayActive()).toBe(false)
+				expect(wrapper.emitted('search')).toEqual([['Opt'], ['']])
+			})
+
+			it('does not take the focus back when it moves to another element', async () => {
+				const input = await typeInMultiple()
+				const other = document.createElement('button')
+				document.body.appendChild(other)
+
+				other.focus()
+				await input.trigger('blur', { relatedTarget: other })
+				await settle()
+
+				expect(document.activeElement).toBe(other)
+				expect(isMenuOverlayActive()).toBe(false)
+				expect(wrapper.emitted('search')).toEqual([['Opt'], ['']])
+				other.remove()
+			})
+		})
+
 		describe('results announcement', () => {
 			const liveText = () => wrapper.find('[role="status"]').text()
 

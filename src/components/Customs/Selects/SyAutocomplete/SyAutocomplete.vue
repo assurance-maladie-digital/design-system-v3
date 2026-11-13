@@ -359,6 +359,18 @@
 		validateOnBlur()
 	}
 
+	// La recherche abandonnée est remplacée par une recherche vide, comme `update:search`
+	// dans VAutocomplete : un consommateur qui filtre côté serveur recharge la liste
+	// complète. Le debounce en cours est annulé pour qu'une recherche abandonnée ne soit
+	// pas émise après la recherche vide.
+	const emitEmptySearch = () => {
+		if (debounceHandle) {
+			clearTimeout(debounceHandle)
+			debounceHandle = null
+		}
+		emit('search', '')
+	}
+
 	// Comme VAutocomplete : une recherche non validée par une sélection est abandonnée
 	// au blur. Le champ réaffiche le libellé de la valeur sélectionnée (ou se vide) et
 	// la liste complète sera proposée à la prochaine ouverture. Cette logique reste
@@ -367,17 +379,7 @@
 	const abandonSearch = () => {
 		const isSearchAbandoned = !props.multiple && !isPristine.value && search.value !== ''
 		syncSearchFromValue()
-		// La recherche abandonnée est remplacée par une recherche vide, comme
-		// `update:search` dans VAutocomplete : un consommateur qui filtre côté serveur
-		// recharge la liste complète. Le debounce en cours est annulé pour qu'une
-		// recherche abandonnée ne soit pas émise après la recherche vide.
-		if (isSearchAbandoned) {
-			if (debounceHandle) {
-				clearTimeout(debounceHandle)
-				debounceHandle = null
-			}
-			emit('search', '')
-		}
+		if (isSearchAbandoned) emitEmptySearch()
 	}
 
 	const handleBlur = (event: FocusEvent) => {
@@ -457,9 +459,15 @@
 		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label, props.required, displayHasError.value)
 	}, { flush: 'post' })
 
+	// En sélection multiple, la recherche est effacée à la fermeture du menu. Sans
+	// `suppressMenuOpen`, ce changement relançait `watch(search)`, qui rouvrait le menu et
+	// reprenait le focus : Échap ne fermait pas le menu et le focus revenait dans le champ
+	// quand il en sortait. La recherche vide est émise explicitement.
 	watch(isOpen, (open) => {
-		if (!open && props.multiple) {
+		if (!open && props.multiple && search.value !== '') {
+			suppressMenuOpen.value = true
 			search.value = ''
+			emitEmptySearch()
 		}
 	})
 
