@@ -1075,18 +1075,22 @@
 }
 
 .sy-textfield-readonly {
-	:deep(.v-input:not(.calendar-activator-editable) .v-field__outline) {
+	// Le DatePicker force readonly pour bloquer la saisie ; son activateur reste modifiable via le calendrier.
+	// calendar-activator-editable conserve donc les styles habituels de cet activateur.
+	:deep(.v-input:not(.calendar-activator-editable) .v-field:not(.v-field--focused, .v-field--error) .v-field__outline) {
 		--v-field-border-opacity: 1;
 
 		color: rgb(var(--v-theme-on-disabled)) !important;
 	}
 
-	:deep(.v-input:not(.calendar-activator-editable) .v-label.v-field-label) {
+	:deep(.v-input:not(.calendar-activator-editable) .v-field:not(.v-field--error) .v-label.v-field-label) {
 		color: rgb(var(--v-theme-on-surface)) !important;
 		opacity: 1;
 	}
 
-	:deep(.v-input:not(.calendar-activator-editable) .v-label.v-field-label.v-field-label--floating) {
+	:deep(
+		.v-input:not(.calendar-activator-editable) .v-field:not(.v-field--error) .v-label.v-field-label--floating
+	) {
 		color: rgb(var(--v-theme-grey-base)) !important;
 	}
 }
