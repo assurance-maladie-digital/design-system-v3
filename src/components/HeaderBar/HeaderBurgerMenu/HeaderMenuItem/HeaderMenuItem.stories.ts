@@ -61,7 +61,7 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-				<Template>
+				<template>
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
@@ -73,7 +73,7 @@ export const Default: Story = {
 							</HeaderBurgerMenu>
 						</template>
 					</HeaderBar>
-				</Template>
+				</template>
 				`,
 			},
 			{

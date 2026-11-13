@@ -54,10 +54,10 @@ export const Default: Story = {
 									Section 1
 								</template>
 								<HeaderMenuItem>
-									<a>Item</a>
+									<a href="#">Item</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a>Item</a>
+									<a href="#">Item</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
 									<HeaderSubMenu v-bind="args">
@@ -71,13 +71,13 @@ export const Default: Story = {
 												{{ args.title }}
 											</template>
 											<HeaderMenuItem>
-												<a>Item</a>
+												<a href="#">Item</a>
 											</HeaderMenuItem>
 										</HeaderMenuSection>
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a>Item</a>
+									<a href="#">Item</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
@@ -110,10 +110,10 @@ export const Default: Story = {
 									Section 1
 								</template>
 								<HeaderMenuItem>
-									<a>Item</a>
+									<a href="#">Item</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a>Item</a>
+									<a href="#">Item</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
 									<HeaderSubMenu>
@@ -121,12 +121,12 @@ export const Default: Story = {
 											Menu de premier niveau
 										</template>
 										<HeaderMenuItem>
-											<a>Item</a>
+											<a href="#">Item</a>
 										</HeaderMenuItem>
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a>Item</a>
+									<a href="#">Item</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
@@ -157,7 +157,6 @@ export const Deep: Story = {
 				return { args }
 			},
 			template: `
-			<Template>
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu>
@@ -168,10 +167,10 @@ export const Deep: Story = {
 									Section 1
 								</template>
 								<HeaderMenuItem>
-									<a>Item 1</a>
+									<a href="#">Item 1</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a>Item 2</a>
+									<a href="#">Item 2</a>
 								</HeaderMenuItem>
 								<headerMenuItem>
 									<HeaderSubMenu>
@@ -179,10 +178,10 @@ export const Deep: Story = {
 											Menu de premier niveau
 										</template>
 										<HeaderMenuItem>
-											<a>Item 2.1</a>
+											<a href="#">Item 2.1</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
-											<a>Item 2.2</a>
+											<a href="#">Item 2.2</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
 											<HeaderSubMenu v-bind="args">
@@ -190,23 +189,22 @@ export const Deep: Story = {
 													{{ args.title }}
 												</template>
 												<HeaderMenuItem>
-													<a>Item 3.1</a>
+													<a href="#">Item 3.1</a>
 												</HeaderMenuItem>
 												<HeaderMenuItem>
-													<a>Item 3.2</a>
+													<a href="#">Item 3.2</a>
 												</HeaderMenuItem>
 											</HeaderSubMenu>
 										</HeaderMenuItem>
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a>Item 3</a>
+									<a href="#">Item 3</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
-			</Template>
 			`,
 		}
 	},
@@ -226,7 +224,7 @@ export const Deep: Story = {
 			{
 				name: 'Template',
 				code: `
-				<Template>
+				<template>
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
@@ -237,10 +235,10 @@ export const Deep: Story = {
 										Section 1
 									</template>
 									<HeaderMenuItem>
-										<a>Item 1</a>
+										<a href="#">Item 1</a>
 									</HeaderMenuItem>
 									<HeaderMenuItem>
-										<a>Item 2</a>
+										<a href="#">Item 2</a>
 									</HeaderMenuItem>
 									<headerMenuItem>
 										<HeaderSubMenu>
@@ -248,10 +246,10 @@ export const Deep: Story = {
 												Menu de premier niveau
 											</template>
 											<HeaderMenuItem>
-												<a>Item 2.1</a>
+												<a href="#">Item 2.1</a>
 											</HeaderMenuItem>
 											<HeaderMenuItem>
-												<a>Item 2.2</a>
+												<a href="#">Item 2.2</a>
 											</HeaderMenuItem>
 											<HeaderMenuItem>
 												<HeaderSubMenu>
@@ -259,23 +257,23 @@ export const Deep: Story = {
 														Menu de deuxième niveau
 													</template>
 													<HeaderMenuItem>
-														<a>Item 3.1</a>
+														<a href="#">Item 3.1</a>
 													</HeaderMenuItem>
 													<HeaderMenuItem>
-														<a>Item 3.2</a>
+														<a href="#">Item 3.2</a>
 													</HeaderMenuItem>
 												</HeaderSubMenu>
 											</HeaderMenuItem>
 										</HeaderSubMenu>
 									</headerMenuItem>
 									<HeaderMenuItem>
-										<a>Item 3</a>
+										<a href="#">Item 3</a>
 									</HeaderMenuItem>
 								</HeaderMenuSection>
 							</HeaderBurgerMenu>
 						</template>
 					</HeaderBar>
-				</Template>
+				</template>
 				`,
 			},
 			{
