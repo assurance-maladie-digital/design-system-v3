@@ -1030,7 +1030,7 @@ function handleSubmit(e) {
 				<SyForm @submit="handleSubmit">
 					<MonthPicker
 						v-bind="args"
-						:use-vuetify-validation="true"
+						v-model="selectedMonth"
 						:rules="vuetifyRules"
 						width="400px"
 					/>

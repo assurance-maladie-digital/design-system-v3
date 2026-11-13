@@ -37,13 +37,38 @@ describe('PasswordField validation stories', () => {
 	})
 
 	it('SyFormValidation laisse la saisie mettre à jour le champ', async () => {
-		const wrapper = mount(SyFormValidation(), { attachTo: document.body })
+		const alertMock = vi.fn()
+		vi.stubGlobal('alert', alertMock)
+		const onUpdate = vi.fn()
+		const wrapper = mount(SyFormValidation({ 'onUpdate:modelValue': onUpdate }), { attachTo: document.body })
 		const input = wrapper.find('input[type="password"]')
 
 		await input.setValue('MotDePasse1')
 		await flushPromises()
+		// Vérifie ce qui sort du composant : la saisie est bien émise vers le parent
+		expect(onUpdate).toHaveBeenCalledWith('MotDePasse1')
 
-		expect((input.element as HTMLInputElement).value).toBe('MotDePasse1')
+		// La soumission valide la valeur saisie (et non une valeur fantôme) : le résultat remonte à handleSubmit
+		await wrapper.find('form').trigger('submit')
+		await flushPromises()
+		expect(alertMock).toHaveBeenCalledWith('Mot de passe valide !')
+	})
+
+	it.each([
+		{
+			name: 'WithSuccessMessages',
+			story: validationStories.WithSuccessMessages,
+			props: ['label', 'required', 'modelValue', 'showSuccessMessages', 'customSuccessRules'],
+		},
+		{
+			name: 'DisableErrorHandling',
+			story: validationStories.DisableErrorHandling,
+			props: ['label', 'required', 'modelValue', 'disableErrorHandling', 'customRules'],
+		},
+	])('$name disables Controls for fixed props', ({ story, props }) => {
+		for (const prop of props) {
+			expect(story.argTypes?.[prop]?.control, prop).toBe(false)
+		}
 	})
 
 	it.each([ValidateOnInput, ExternalMessages])('forwards Controls and model updates to Actions', async (story) => {

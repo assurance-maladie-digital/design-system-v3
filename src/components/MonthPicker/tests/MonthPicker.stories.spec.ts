@@ -27,12 +27,20 @@ describe('MonthPicker validation stories', () => {
 	})
 
 	it('SyFormValidation ne laisse pas args écraser la valeur saisie', async () => {
-		const wrapper = mount(SyFormValidation(), { attachTo: document.body })
+		const alertMock = vi.fn()
+		vi.stubGlobal('alert', alertMock)
+		const onUpdate = vi.fn()
+		const wrapper = mount(SyFormValidation({ 'onUpdate:modelValue': onUpdate }), { attachTo: document.body })
 		const input = wrapper.find('input')
 
 		await input.setValue('03/2026')
 		await flushPromises()
+		// Vérifie ce qui sort du composant : la saisie est bien émise vers le parent
+		expect(onUpdate).toHaveBeenCalledWith('03/2026')
 
-		expect((input.element as HTMLInputElement).value).toContain('03/2026')
+		// La soumission valide la valeur saisie (et non une valeur fantôme) : le résultat remonte à handleSubmit
+		await wrapper.find('form').trigger('submit')
+		await flushPromises()
+		expect(alertMock).toHaveBeenCalledWith('Mois valide !')
 	})
 })

@@ -69,8 +69,5 @@ describe('SyForm stories', () => {
 		// Correspondance rétablie : le v-model repasse à true
 		expect(status.text()).toContain('formulaire : valide')
 		expect(status.text()).not.toContain('formulaire : invalide')
-		// Correspondance rétablie : le v-model passe à true
-		expect(status.text()).toContain('formulaire : valide')
-		expect(status.text()).not.toContain('formulaire : invalide')
 	})
 })

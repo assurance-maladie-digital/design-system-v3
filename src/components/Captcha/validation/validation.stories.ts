@@ -6,7 +6,7 @@ import { VBtn, VCard, VForm } from 'vuetify/components'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
-const meta: Meta = {
+const meta: Meta<typeof Captcha> = {
 	title: 'Composants/Formulaires/Captcha/Validation',
 	component: Captcha,
 	argTypes: {
@@ -497,13 +497,6 @@ function reset() {
 			const warningMessages = ref<string[] | null>(null)
 			const successMessages = ref<string[] | null>(null)
 
-			const verifyCaptcha = () => {
-				if (captchaValue.value === 'ytqZNq' || captchaValue.value === '941335') {
-					return Promise.resolve({ response: { data: { message: 'Success' } } })
-				}
-				return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
-			}
-
 			function setError() {
 				errorMessages.value = ['Ce captcha est déjà utilisé']
 				warningMessages.value = null
@@ -528,7 +521,7 @@ function reset() {
 				successMessages.value = null
 			}
 
-			return { args, captchaValue, errorMessages, warningMessages, successMessages, verifyCaptcha, setError, setWarning, setSuccess, reset }
+			return { args, captchaValue, errorMessages, warningMessages, successMessages, setError, setWarning, setSuccess, reset }
 		},
 		template: `
 			<VCard class="pa-8" max-width="400" min-width="400">
@@ -849,7 +842,6 @@ function handleSubmit(e: { isValid: boolean }) {
 							v-bind="args"
 							v-model="captchaValue"
 							:custom-rules="customRules"
-							width="400px"
 							required
 						/>
 						<div class="mt-4">
@@ -866,7 +858,7 @@ export const VFormValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Validation déclenchée à la soumission du formulaire via l\'API exposée `validate()` du Captcha.',
+				story: 'Validation déclenchée à la soumission du formulaire via l\'API exposée `validateOnSubmit()` du Captcha.',
 			},
 		},
 		sourceCode: [
@@ -1005,7 +997,6 @@ async function handleSubmit() {
 							v-model="value"
 							:custom-rules="customRules"
 							required
-							width="400px"
 						/>
 						<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 					</VCard>
@@ -1124,7 +1115,6 @@ function handleSubmit(e: { isValid: boolean }) {
 							v-model="captchaValue"
 							:use-vuetify-validation="true"
 							:rules="rules"
-							width="400px"
 							required
 						/>
 						<div class="mt-4">
@@ -1247,7 +1237,6 @@ async function handleSubmit(e) {
 							v-model="captchaValue"
 							:use-vuetify-validation="true"
 							:rules="rules"
-							width="400px"
 						/>
 						<div class="mt-4">
 							<VBtn type="submit" color="primary">Valider</VBtn>
