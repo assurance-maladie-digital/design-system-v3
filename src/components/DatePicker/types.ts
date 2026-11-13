@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import type { ValidationResult, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 
@@ -82,6 +82,11 @@ export interface DatePickerCommonProps {
 	displayWeekendDays?: boolean
 	format?: string
 	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	/**
+	 * Texte d'aide affiché sous le champ, y compris en cas d'erreur (comme `SyTextField`).
+	 * Préférer `helpText` à `hint` pour indiquer le format attendu ou une contrainte.
+	 */
+	helpText?: string
 	hideDetails?: boolean | 'auto'
 	hint?: string
 	isBirthDate?: boolean
@@ -160,6 +165,10 @@ export type InitializeSelectedDatesFn = (
 ) => DateObjectValue
 
 export interface DateTextInputPublicApi {
+	/** Validité remontée au SyForm par le DatePicker parent (plomberie interne, cf. formRegistration.getValidity). */
+	formValidity: ComputedRef<boolean | null>
+	/** État « jamais validé » remonté au SyForm par le DatePicker parent (plomberie interne, cf. formRegistration.getIsPristine). */
+	formIsPristine: ComputedRef<boolean>
 	validateOnSubmit: () => Promise<boolean> | boolean
 	validate: (options?: DatePickerPublicValidateOptions) => DatePickerPublicValidateResult
 	reset: () => void
@@ -252,6 +261,7 @@ export const DatePickerCommonDefaults = {
 	displayWeekendDays: true,
 	format: 'DD/MM/YYYY',
 	headingLevel: 3 as const,
+	helpText: undefined,
 	hideDetails: false,
 	hint: undefined,
 	isBirthDate: false,

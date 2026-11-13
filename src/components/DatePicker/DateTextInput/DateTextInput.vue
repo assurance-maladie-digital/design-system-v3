@@ -149,6 +149,8 @@
 	// `pushError` est conservé pour failWithDisplayedError() qui a besoin d'un accès direct
 	// pour afficher des erreurs locales (ex: format invalide) sans passer par le flow complet.
 	const {
+		validity: formValidity,
+		isPristine: formIsPristine,
 		hasError: bridgeHasError,
 		hasWarning: bridgeHasWarning,
 		hasSuccess: bridgeHasSuccess,
@@ -1314,6 +1316,8 @@
 	}
 
 	const publicApi: DateTextInputPublicApi = {
+		formValidity,
+		formIsPristine,
 		validateOnSubmit,
 		validate: bridgeValidate,
 		reset,

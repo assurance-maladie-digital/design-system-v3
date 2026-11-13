@@ -373,6 +373,8 @@ const ensureMonthAndYearLabelAnnouncer = (
 	})
 }
 
+const ACTIVE_DAYS_SELECTOR = '.v-date-picker-month__days:not([class*="-leave-"])'
+
 const observeGridSemantics = (
 	pickerEl: HTMLElement,
 	registerCleanup: (cleanup: () => void) => void,
@@ -384,7 +386,7 @@ const observeGridSemantics = (
 		const monthEls = pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month')
 
 		return Array.from(monthEls).some((monthEl) => {
-			const daysContainer = monthEl.querySelector<HTMLElement>('.v-date-picker-month__days')
+			const daysContainer = monthEl.querySelector<HTMLElement>(ACTIVE_DAYS_SELECTOR)
 			if (!daysContainer) return false
 
 			if (monthEl.getAttribute('role') !== 'grid') return true
@@ -401,6 +403,8 @@ const observeGridSemantics = (
 		scheduled = true
 		setTimeout(() => {
 			scheduled = false
+			if (!needsGridSemantics()) return
+
 			isApplying = true
 			try {
 				applyGridSemantics(pickerEl)
@@ -528,7 +532,7 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 	const monthEls = pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month')
 
 	monthEls.forEach((monthEl) => {
-		const daysContainer = monthEl.querySelector<HTMLElement>('.v-date-picker-month__days')
+		const daysContainer = monthEl.querySelector<HTMLElement>(ACTIVE_DAYS_SELECTOR)
 		if (!daysContainer) return
 
 		monthEl.setAttribute('role', 'grid')

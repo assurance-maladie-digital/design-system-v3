@@ -236,8 +236,8 @@ export const MobileAccessibilityGuideline: Story = {
 				<script setup lang="ts">
 					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
-					
-					const value = ref(null)
+
+					const value = ref<string | null>(null)
 					const items = [
 						{ text: 'Email', value: 'email' },
 						{ text: 'Courrier', value: 'courrier' },

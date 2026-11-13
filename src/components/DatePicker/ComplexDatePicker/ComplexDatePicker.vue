@@ -1078,17 +1078,11 @@
 		getCurrentDate,
 		setCurrentDate: (date: Date) => {
 			keyboardNavigatedDate.value = date
+			const displayedState = getDisplayedMonthYearState(date)
+			if (currentMonth.value === displayedState.month && currentYear.value === displayedState.year) return
 
-			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
-			nextTick(() => {
-				if (datePickerRef.value) {
-					const displayedState = getDisplayedMonthYearState(date)
-					if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
-						syncDisplayedMonthYearFromDate(date)
-						nextTick(() => refreshVisibleCalendarUi({ focusDay: true }))
-					}
-				}
-			})
+			syncDisplayedMonthYearFromDate(date)
+			return reapplyAccessibility({ restoreFocus: false })?.then(() => refreshVisibleCalendarUi())
 		},
 		onSelectDate: (date: Date) => {
 			void updateSelectedDates(date)
@@ -1267,6 +1261,7 @@
 		)
 
 	const {
+		reapplyAccessibility,
 		handleViewModeUpdateWrapper,
 		syncDisplayedMonthYearFromDate,
 		onUpdateMonth,

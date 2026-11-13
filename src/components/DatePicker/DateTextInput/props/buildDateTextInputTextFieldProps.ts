@@ -35,8 +35,9 @@ export const buildDateTextInputTextFieldProps = (
 	'is-validate-on-blur': props.isValidateOnBlur,
 	'density': props.density,
 	'title': props.title,
+	'help-text': props.helpText,
 	'hint': props.hint,
-	'persistent-hint': props.persistentHint,
+	'display-persistent-hint': props.persistentHint,
 	// En mode Vuetify, les `rules` sont portées par le champ texte, comme l'activateur du
 	// mode calendrier : il s'enregistre dans le VForm, qui les évalue au submit même si
 	// le champ n'a jamais été touché.

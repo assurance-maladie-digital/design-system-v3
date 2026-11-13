@@ -154,7 +154,7 @@ const meta = {
 		},
 		'placeholder': {
 			control: 'text',
-			description: 'Texte indicatif affiché lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
+			description: 'Exemple de saisie affiché lorsque le champ est vide. Il ne remplace jamais le libellé ni le `helpText` (RGAA 11.1, 11.2).',
 			defaultValue: 'Sélectionner une date',
 		},
 		'period': {
@@ -312,8 +312,21 @@ const meta = {
 		},
 		'label': {
 			control: 'text',
-			description: 'Libellé du champ affiché au-dessus ou dans le champ de saisie',
+			description: 'Libellé du champ affiché au-dessus ou dans le champ de saisie. RGAA 11.1 et 11.2 : utiliser un intitulé court, explicite et distinct pour chaque champ (ex : « Date de naissance »). Ne pas y répéter le format attendu, à placer dans `helpText`.',
 			defaultValue: 'Sélectionner une date',
+		},
+		'helpText': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ, y compris en cas d\'erreur (comme `SyTextField`). À privilégier pour indiquer le format attendu (ex : « Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres ») sans le répéter dans le `label` (RGAA 11.1, 11.2).',
+		},
+		'hint': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ et relié à celui-ci par `aria-describedby`. À utiliser avec `persistentHint`. Il est masqué dès qu\'un message est affiché : préférer `helpText` pour indiquer le format attendu ou une contrainte (RGAA 11.1).',
+		},
+		'persistentHint': {
+			control: 'boolean',
+			description: 'Garde le `hint` visible en permanence (sinon il n\'apparaît qu\'au focus).',
+			defaultValue: false,
 		},
 		'isValidateOnBlur': {
 			control: 'boolean',
@@ -388,7 +401,8 @@ export const Default: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						useCombinedMode
 						format="DD/MM/YYYY"
 					/>
@@ -409,7 +423,8 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
+		'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -451,7 +466,7 @@ export const Default: Story = {
 
 /**
  * Recommandation RGAA 10.4 (reflow, petits écrans) : avec un intitulé long, conserver l'intitulé complet et
- * utiliser `hint` (avec `persistent-hint`) pour apporter une information complémentaire, et masquer le bouton d'effacement (`:clearable="false"`)
+ * utiliser `helpText` pour apporter une information complémentaire, et masquer le bouton d'effacement (`:clearable="false"`)
  * pour libérer de la place dans le champ.
  */
 export const MobileAccessibilityGuideline: Story = {
@@ -461,7 +476,7 @@ export const MobileAccessibilityGuideline: Story = {
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
 		createInfoNoticeDecorator(`
-			<code>hint</code> est lié au champ via <code>aria-describedby</code> : y répéter l'intitulé
+			<code>helpText</code> complète le champ : y répéter l'intitulé
 			le ferait lire deux fois par le lecteur d'écran. Utilisez-le pour compléter l'intitulé
 			(précision), pas pour le copier.
 		`),
@@ -474,9 +489,8 @@ export const MobileAccessibilityGuideline: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
-						hint="Cette date figure sur votre prescription médicale"
-						persistent-hint
+						label="Date de début de votre arrêt de travail"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Cette date figure sur votre prescription médicale"
 						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						format="DD/MM/YYYY"
@@ -500,9 +514,8 @@ export const MobileAccessibilityGuideline: Story = {
 	},
 	args: {
 		...Default.args,
-		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
-		hint: 'Cette date figure sur votre prescription médicale',
-		persistentHint: true,
+		label: 'Date de début de votre arrêt de travail',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Cette date figure sur votre prescription médicale',
 		clearable: false,
 	},
 }
@@ -519,16 +532,19 @@ export const Required: Story = {
 				name: 'Template',
 				code: `
 				<template>
+					<p>Les champs marqués d'un astérisque (*) sont obligatoires.</p>
 					<DatePicker
 						v-model="date1"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						useCombinedMode
 						required
 						format="DD/MM/YYYY"
 					/>	
 					<DatePicker
 						v-model="date2"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de l'ordonnance"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						useCombinedMode
 						required
 						displayAsterisk
@@ -552,7 +568,8 @@ export const Required: Story = {
 		],
 	},
 	args: {
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
+		'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -585,10 +602,11 @@ export const Required: Story = {
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
+				<p class="mb-4 w-100">Les champs marqués d'un astérisque (*) sont obligatoires.</p>
 				<h4 class="mb-4">Sans astérisque & isValidateOnBlur à true (par defaut):</h4>
                 <DatePicker v-bind="args" v-model="value1"/>
 				<h4 class="mb-4">Avec astérisque & isValidateOnBlur à false:</h4>
-				<DatePicker v-bind="args" displayAsterisk  v-model="value2" :isValidateOnBlur='false'/>
+				<DatePicker v-bind="args" label="Date de l'ordonnance" displayAsterisk  v-model="value2" :isValidateOnBlur='false'/>
 				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
               </div>
             `,
@@ -610,7 +628,8 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
-						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+						label="Période d'hospitalisation"
+						help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret"
 						format="DD/MM/YYYY"
 						display-range
 						use-combined-mode
@@ -632,7 +651,8 @@ export const DateRange: Story = {
 		],
 	},
 	args: {
-		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
+		'label': 'Période d\'hospitalisation',
+		'helpText': 'Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -684,7 +704,8 @@ export const BirthDate: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date de naissance (JJ/MM/AAAA)"
+						label="Date de naissance"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						format="DD/MM/YYYY"
 						isBirthDate
 						useCombinedMode
@@ -706,7 +727,8 @@ export const BirthDate: Story = {
 		],
 	},
 	args: {
-		label: 'Date de naissance (JJ/MM/AAAA)',
+		label: 'Date de naissance',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		format: 'DD/MM/YYYY',
 		isBirthDate: true,
 		showWeekNumber: false,
@@ -752,7 +774,8 @@ export const DisablePickerInteraction: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						noCalendar
@@ -774,7 +797,8 @@ export const DisablePickerInteraction: Story = {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		format: 'DD/MM/YYYY',
 		displayIcon: true,
 		useCombinedMode: true,
@@ -814,7 +838,8 @@ export const ReadonlyMode: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date en lecture seule (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						readonly
@@ -841,7 +866,8 @@ export const ReadonlyMode: Story = {
 		],
 	},
 	args: {
-		label: 'Date en lecture seule (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		readonly: true,
@@ -885,7 +911,8 @@ export const AppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date avec icône à la fin (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:displayPrependIcon="false"
@@ -908,7 +935,8 @@ export const AppendIcon: Story = {
 		],
 	},
 	args: {
-		label: 'Date avec icône à la fin (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		displayPrependIcon: false,
@@ -943,7 +971,8 @@ export const WithoutClearButton: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
@@ -966,7 +995,8 @@ export const WithoutClearButton: Story = {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
@@ -1002,7 +1032,8 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date (JJ/MM/AAAA)"
+						label="Date de la consultation"
+						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:period="{
@@ -1051,7 +1082,8 @@ export const WithCustomPeriod: Story = {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		period: {
