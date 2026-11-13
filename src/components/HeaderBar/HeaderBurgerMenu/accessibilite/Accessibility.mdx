@@ -50,9 +50,10 @@ import {
         </li>
         <li>
           Le développeur qui compose le menu doit vérifier l’arborescence HTML
-          réellement produite. Les props <code>tag</code> et{' '}
-          <code>innerTag</code> de <code>HeaderBurgerMenu</code>,{' '}
-          <code>HeaderMenuItem</code>, <code>HeaderMenuSection</code> et{' '}
+          réellement produite. La prop <code>innerTag</code> de{' '}
+          <code>HeaderBurgerMenu</code>, la prop <code>tag</code> de{' '}
+          <code>HeaderMenuItem</code>, et les props <code>tag</code> et{' '}
+          <code>innerTag</code> de <code>HeaderMenuSection</code> et{' '}
           <code>HeaderSubMenu</code> permettent de changer les balises : elles
           doivent être configurées ensemble pour que chaque parent accepte le
           type d’enfant rendu. Par exemple, ne placez pas un <code>li</code>{' '}
@@ -119,7 +120,8 @@ import {
         </li>
         <li>
           Les props <code>tag</code>, <code>innerTag</code> et{' '}
-          <code>titleTag</code> peuvent modifier la sémantique HTML : vérifiez le
+          <code>titleTag</code> (selon les composants) peuvent modifier la
+          sémantique HTML : vérifiez le
           DOM rendu après toute personnalisation.
         </li>
         <li>

@@ -25,11 +25,13 @@
 		:is="tag"
 		class="header-menu-section"
 	>
+		<!-- Sans titre (prop ou slot) : ni balise de titre vide, ni aria-labelledby vers un nom vide. -->
 		<section
-			:aria-labelledby="titleId"
+			:aria-labelledby="title || $slots.title ? titleId : undefined"
 		>
 			<component
 				:is="titleTag"
+				v-if="title || $slots.title"
 				:id="titleId"
 				class="header-menu-section-title"
 				:class="{

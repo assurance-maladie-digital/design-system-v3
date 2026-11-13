@@ -144,6 +144,8 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 		})
 
 		expect(wrapper.find('ul.header-menu__list > li').exists()).toBe(true)
+		// Régression : le menu mobile ne doit plus contenir de titre de section vide.
+		expect(wrapper.findAll('h2').filter(heading => heading.text().trim() === '')).toHaveLength(0)
 
 		await runAxe(
 			wrapper,

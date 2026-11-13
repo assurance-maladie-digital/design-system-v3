@@ -39,7 +39,7 @@ export const Default: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu>
-							<HeaderMenuSection>
+							<HeaderMenuSection title="Rubrique">
 								<HeaderMenuItem>
 									<a href="">{{ args.default }}</a>
 								</HeaderMenuItem>
@@ -65,7 +65,7 @@ export const Default: Story = {
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
-								<HeaderMenuSection>
+								<HeaderMenuSection title="Rubrique">
 									<HeaderMenuItem>
 										<a href="">lorem ipsum</a>
 									</HeaderMenuItem>
