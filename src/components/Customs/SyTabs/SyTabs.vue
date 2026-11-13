@@ -375,6 +375,7 @@
 								:id="`${uid}-tab-${index}`"
 								:to="item.to"
 								class="sy-tabs__button"
+								:style="{ textTransform: options.tab['text-transform'] }"
 								:class="{
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': item.disabled
@@ -413,6 +414,7 @@
 								:id="`${uid}-tab-${index}`"
 								:href="item.href"
 								class="sy-tabs__button"
+								:style="{ textTransform: options.tab['text-transform'] }"
 								:class="{
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': item.disabled
@@ -458,6 +460,7 @@
 								v-else-if="item.to && router && item.disabled"
 								:id="`${uid}-tab-${index}`"
 								class="sy-tabs__button"
+								:style="{ textTransform: options.tab['text-transform'] }"
 								:class="{
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': true
@@ -489,6 +492,7 @@
 								v-else-if="item.href && item.disabled"
 								:id="`${uid}-tab-${index}`"
 								class="sy-tabs__button"
+								:style="{ textTransform: options.tab['text-transform'] }"
 								:class="{
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': true
@@ -520,6 +524,7 @@
 								v-else
 								:id="`${uid}-tab-${index}`"
 								class="sy-tabs__button"
+								:style="{ textTransform: options.tab['text-transform'] }"
 								:class="{
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': item.disabled
@@ -623,7 +628,6 @@
 	min-height: v-bind("options.tabs.height + 'px'");
 	font-size: 0.875rem;
 	font-weight: 700;
-	text-transform: v-bind("options.tab['text-transform']");
 	background: none;
 	border: none;
 	color: v-bind("options.tab['base-color']");

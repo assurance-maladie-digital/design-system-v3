@@ -57,7 +57,7 @@ describe('SyTabs', () => {
 
 			// Vérifier le texte des onglets
 			testItems.forEach((item, index) => {
-				expect(tabButtons[index]?.text()).toBe(item.label.toUpperCase())
+				expect(tabButtons[index]?.text()).toBe(item.label)
 			})
 		})
 
@@ -70,7 +70,15 @@ describe('SyTabs', () => {
 					},
 				},
 			})
-			expect(wrapper.get('.sy-tabs__button').text()).toBe(testItems[0]?.label)
+			const tabButton = wrapper.get('.sy-tabs__button')
+			expect(tabButton.element.style.textTransform).toBe('none')
+			expect(tabButton.text()).toBe(testItems[0]?.label)
+		})
+
+		it('applique uppercase par défaut', () => {
+			const wrapper = createWrapper()
+
+			expect(wrapper.get('.sy-tabs__button').element.style.textTransform).toBe('uppercase')
 		})
 
 		it('doit afficher le contenu de l\'onglet actif', () => {
@@ -88,7 +96,7 @@ describe('SyTabs', () => {
 			// Le premier onglet devrait avoir la classe active
 			const activeTab = wrapper.find('.sy-tabs__button--active')
 			expect(activeTab.exists()).toBe(true)
-			expect(activeTab.text()).toBe(testItems[0]?.label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[0]?.label)
 		})
 	})
 
@@ -106,7 +114,7 @@ describe('SyTabs', () => {
 
 			// Vérifier que le deuxième onglet est actif
 			const activeTab = wrapper.find('.sy-tabs__button--active')
-			expect(activeTab.text()).toBe(testItems[1]?.label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[1]?.label)
 
 			// Vérifier que le bon panneau est affiché
 			const visiblePanel = wrapper.find('.sy-tabs-panel:not([hidden])')
@@ -125,7 +133,7 @@ describe('SyTabs', () => {
 
 			// Vérifier que le bon onglet est actif
 			const activeTab = wrapper.find('.sy-tabs__button--active')
-			expect(activeTab.text()).toBe(testItems[1]?.label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[1]?.label)
 		})
 	})
 
