@@ -8,6 +8,7 @@ import { paFontsTokens } from '@/designTokens/tokens/pa/paFonts'
 const meta: Meta = {
 	title: 'Design Tokens/Styles typographiques',
 	component: TypographyDisplay,
+	tags: ['!manifest'],
 }
 
 export default meta
@@ -33,7 +34,7 @@ export const Introduction: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const HeadingStyles: StoryObj = {
@@ -155,7 +156,7 @@ export const HeadingStyles: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const DisplayHeadingStyles: StoryObj = {
@@ -213,7 +214,7 @@ export const DisplayHeadingStyles: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const BodyTextStyles: StoryObj = {
@@ -303,7 +304,7 @@ export const BodyTextStyles: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const LinksAndLabels: StoryObj = {
@@ -393,5 +394,5 @@ export const LinksAndLabels: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

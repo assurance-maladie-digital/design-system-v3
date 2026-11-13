@@ -13,6 +13,7 @@ import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 export default {
 	components: { SyTable },
 	title: 'Guide Du Dev/Équivalence des composants/Amelipro',
+	tags: ['!manifest'],
 }
 
 export const AmeliproComponents: StoryObj = {
@@ -1193,5 +1194,5 @@ export const AmeliproComponents: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

@@ -26,7 +26,7 @@ export const Century: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const ValidationModes: StoryObj = {
@@ -89,5 +89,5 @@ export const ValidationModes: StoryObj = {
 			].join(''),
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

@@ -104,5 +104,5 @@ export const Legende: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

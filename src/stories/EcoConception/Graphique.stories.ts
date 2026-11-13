@@ -9,6 +9,7 @@ const meta = {
 		docsOnly: true,
 
 	},
+	tags: ['!manifest'],
 }
 
 export default meta
@@ -37,6 +38,6 @@ export const Default: Story = {
             </div>
         `,
 	}),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 
 }

@@ -6,6 +6,7 @@ import './Roadmap.css'
 export default {
 	title: 'Démarrer/Roadmap',
 	component: SyAlert,
+	tags: ['!manifest'],
 }
 
 type VersionStatus = 'released' | 'current' | 'in-progress' | 'planned' | 'study'
@@ -96,7 +97,7 @@ export const VersionsTimeline: StoryObj = {
 			</ol>
 		`,
 	}),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 type Axis = 'ds' | 'ux' | 'a11y' | 'eco'
@@ -183,5 +184,5 @@ export const Chantiers: StoryObj = {
 			</div>
 		`,
 	}),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

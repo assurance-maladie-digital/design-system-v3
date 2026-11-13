@@ -4,6 +4,7 @@ import { useTheme } from 'vuetify'
 
 export default {
 	title: 'Composants/Vue d\'ensemble',
+	tags: ['!manifest'],
 }
 
 export const Header: StoryObj = {
@@ -17,7 +18,7 @@ export const Header: StoryObj = {
       `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const ComponentsList: StoryObj = {
@@ -673,5 +674,5 @@ export const ComponentsList: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

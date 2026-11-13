@@ -12,7 +12,7 @@ const meta = {
 			},
 		},
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	argTypes: {
 		items: {
 			control: 'object',

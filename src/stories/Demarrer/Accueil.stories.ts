@@ -7,6 +7,7 @@ import { version } from '../../../package.json'
 
 export default {
 	title: 'Démarrer/Accueil',
+	tags: ['!manifest'],
 }
 
 export const Header: StoryObj = {
@@ -86,7 +87,7 @@ export const Header: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Welcome: StoryObj = {
@@ -114,7 +115,7 @@ export const Welcome: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const DesignSystem: StoryObj = {
@@ -164,7 +165,7 @@ export const DesignSystem: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Guidelines: StoryObj = {
@@ -205,7 +206,7 @@ export const Guidelines: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const List: StoryObj = {
@@ -240,5 +241,5 @@ export const List: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
