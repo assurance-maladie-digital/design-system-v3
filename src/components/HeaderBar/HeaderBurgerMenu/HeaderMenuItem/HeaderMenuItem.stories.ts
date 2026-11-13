@@ -39,9 +39,9 @@ export const Default: Story = {
 				<HeaderBar>
 					<template #menu>
 						<HeaderBurgerMenu>
-							<HeaderMenuSection>
+							<HeaderMenuSection title="Rubrique">
 								<HeaderMenuItem>
-									<a href="">{{ args.default }}</a>
+									<a href="#" @click.prevent>{{ args.default }}</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
@@ -61,11 +61,11 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-				<Template>
+				<template>
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
-								<HeaderMenuSection>
+								<HeaderMenuSection title="Rubrique">
 									<HeaderMenuItem>
 										<a href="">lorem ipsum</a>
 									</HeaderMenuItem>
@@ -73,7 +73,7 @@ export const Default: Story = {
 							</HeaderBurgerMenu>
 						</template>
 					</HeaderBar>
-				</Template>
+				</template>
 				`,
 			},
 			{

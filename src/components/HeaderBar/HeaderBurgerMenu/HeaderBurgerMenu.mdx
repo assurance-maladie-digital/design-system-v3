@@ -38,9 +38,7 @@ Ce menu est prévu pour être utilisé dans le composant `HeaderBar` via le slot
 
 Ce menu s'utilise conjointement avec les composants `HeaderMenuSection` et `HeaderMenuItem` pour structurer le menu.
 
-Un composant `HeaderMenuSection` peut contenir plusieurs `HeaderMenuItem`.
-
-Un Composant `HeaderMenuItem` doit obligatoirement être contenu dans un `HeaderMenuSection`.
+Par défaut, le slot principal de `HeaderBurgerMenu` est enveloppé dans un `ul` (`inner-tag="ul"`). Vous pouvez y placer directement un ou plusieurs `HeaderMenuItem` pour une liste simple, ou un ou plusieurs `HeaderMenuSection` pour regrouper les items. `HeaderMenuSection` rend un `li` par défaut et enveloppe son propre slot principal dans un `ul` (`inner-tag="ul"`) pour ses `HeaderMenuItem` : n'ajoutez donc pas de `ul` supplémentaire autour de ces composants dans les slots par défaut. Si vous remplacez le conteneur avec `inner-tag`, veillez à conserver une structure de liste valide.
 
 <Canvas of={HeaderBurgerMenuStories.Default} />
 
@@ -48,9 +46,9 @@ Un Composant `HeaderMenuItem` doit obligatoirement être contenu dans un `Header
 
 <Controls of={HeaderBurgerMenuStories.Default} />
 
-## Menu à un seul niveau
+## Liste simple
 
-Le menu peut être utilisé avec un seul niveau de profondeur.
+Pour une liste sans sections, placez directement les `HeaderMenuItem` dans le menu.
 
 <Canvas
 	of={HeaderBurgerMenuStories.WithAnItem}
@@ -61,16 +59,16 @@ code:`
 <HeaderBar>
 	<template #menu>
 		<HeaderBurgerMenu>
-			<HeaderMenuSection>
-				<HeaderMenuItem>
-					<a href="/">Item 1</a>
-				</HeaderMenuItem>
-			</HeaderMenuSection>
+			<HeaderMenuItem>
+				<a href="/">Item 1</a>
+			</HeaderMenuItem>
 		</HeaderBurgerMenu>
 	</template>
 </HeaderBar>
 	`}}
 />
+
+Pour regrouper plusieurs items, placez-les dans une `HeaderMenuSection` (qui rend un `li` dans la liste du menu et crée sa propre liste interne).
 
 Il est possible d'utiliser des liens de navigation avec les composants `RouterLink` ou `NuxtLink`.
 
@@ -85,7 +83,7 @@ Il est possible d'utiliser des liens de navigation avec les composants `RouterLi
 		<HeaderBar>
 			<template #menu>
 				<HeaderBurgerMenu>
-					<HeaderMenuSection>
+					<HeaderMenuSection title="Menu principal">
 						<HeaderMenuItem>
 							<a href="/">Home</a>
 						</HeaderMenuItem>
@@ -119,18 +117,18 @@ language: 'html',
 code:`
 <HeaderBar>
 	<template #menu>
-		<HeaderMenu>
-			<HeaderMenuSection >
+		<HeaderBurgerMenu>
+			<HeaderMenuSection>
 				<template #title>
 					Section 1
 				</template>
 				<HeaderMenuItem>
-					<a>Item 1</a>
+					<a href="#">Item 1</a>
 				</HeaderMenuItem>
 				<HeaderMenuItem>
-					<a>Item 2</a>
+					<a href="#">Item 2</a>
 				</HeaderMenuItem>
-				<headerMenuItem>
+				<HeaderMenuItem>
 					<HeaderSubMenu>
 						<template #title>
 							Menu de premier niveau 1
@@ -140,31 +138,31 @@ code:`
 								Section 1
 							</template>
 							<HeaderMenuItem>
-								<a>Item</a>
+								<a href="#">Item</a>
 							</HeaderMenuItem>
 							<HeaderSubMenu>
 								<template #title>
 									Menu de deuxième niveau 1
 								</template>
 								<HeaderMenuItem>
-									<a>Item</a>
+									<a href="#">Item</a>
 								</HeaderMenuItem>
 							</HeaderSubMenu>
 						</HeaderMenuSection>
 					</HeaderSubMenu>
-				</headerMenuItem>
+				</HeaderMenuItem>
 			</HeaderMenuSection>
 			<HeaderMenuSection>
 				<template #title>
 					Section 2
 				</template>
-				<headerMenuItem>
+				<HeaderMenuItem>
 					<HeaderSubMenu>
 						<template #title>
 							Menu de premier niveau 2
 						</template>
 						<HeaderMenuItem>
-							<a>Item 1</a>
+							<a href="#">Item 1</a>
 						</HeaderMenuItem>
 						<HeaderMenuItem>
 							<HeaderSubMenu>
@@ -172,7 +170,7 @@ code:`
 									Menu de deuxième niveau 2
 								</template>
 								<HeaderMenuItem>
-									<a>Item 1</a>
+									<a href="#">Item 1</a>
 								</HeaderMenuItem>
 							</HeaderSubMenu>
 						</HeaderMenuItem>
@@ -186,22 +184,24 @@ code:`
 										Section 1
 									</template>
 									<HeaderMenuItem>
-										<a>Item 1</a>
+										<a href="#">Item 1</a>
 									</HeaderMenuItem>
 								</HeaderMenuSection>
 							</HeaderSubMenu>
 						</HeaderMenuItem>
 					</HeaderSubMenu>
-				</headerMenuItem>
+				</HeaderMenuItem>
 				<HeaderMenuItem>
-					<a>Item 3</a>
+					<a href="#">Item 3</a>
 				</HeaderMenuItem>
 			</HeaderMenuSection>
-			<div class="pa-4">
-				<p class="font-weight-bold">Veillez vous connecter</p>
-				<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
-			</div>
-		</HeaderMenu>
+			<HeaderMenuItem>
+				<div class="pa-4">
+					<p class="font-weight-bold">Veuillez vous connecter</p>
+					<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
+				</div>
+			</HeaderMenuItem>
+		</HeaderBurgerMenu>
 	</template>
 </HeaderBar>
 	`}}
@@ -378,37 +378,36 @@ code:`
 						</a>
 					</HeaderMenuItem>
 				</HeaderMenuSection>
-				<h2
-					class="border-b-sm mb-2"
-					style="font-size: 1.1rem; padding: 40px 16px 8px 20px;"
+				<HeaderMenuSection
+					title="Votre caisse"
+					inner-tag="div"
 				>
-					Votre caisse
-				</h2>
-				<div style="padding: 16px 50px 16px 20px;">
-					<div class="d-flex align-center ga-2 font-weight-bold">
-						<VIcon
-							aria-label="Localisation"
-							role="img"
-							aria-hidden="false"
-							color="primary"
+					<div style="padding: 16px 50px 16px 20px;">
+						<div class="d-flex align-center ga-2 font-weight-bold">
+							<VIcon
+								aria-label="Localisation"
+								role="img"
+								aria-hidden="false"
+								color="primary"
+							>
+								{{ marker }}
+							</VIcon>
+							<p>Vous n'avez pas sélectionné votre caisse</p>
+						</div>
+						<VBtn
+							class="mt-3 mb-4 font-weight-bold text-capitalize"
+							base-color="primary"
+							density="comfortable"
+							flat
+							height="37"
 						>
-							{{ marker }}
-						</VIcon>
-						<p>Vous n'avez pas sélectionné votre caisse</p>
-</div>
-					<VBtn
-						class="mt-3 mb-4 font-weight-bold text-capitalize"
-						base-color="primary"
-						density="comfortable"
-						flat
-						height="37"
-					>
-						Sélectionner
-					</VBtn>
-					<p class="mb-8">
-						Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.)
-					</p>
-</div>
+							Sélectionner
+						</VBtn>
+						<p class="mb-8">
+							Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.)
+						</p>
+					</div>
+				</HeaderMenuSection>
 			</HeaderBurgerMenu>
 		</template>
 	</HeaderBar>

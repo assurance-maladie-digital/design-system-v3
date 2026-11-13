@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { describe, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -26,6 +26,7 @@ const mountComponent = (options = {}) =>
 	mount(HeaderNavigationBar, {
 		global: {
 			stubs: {
+				Teleport: true,
 				RouterLink: true,
 			},
 		},
@@ -141,6 +142,10 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 				burgerMenu: true,
 			},
 		})
+
+		expect(wrapper.find('ul.header-menu__list > li').exists()).toBe(true)
+		// Régression : le menu mobile ne doit plus contenir de titre de section vide.
+		expect(wrapper.findAll('h2').filter(heading => heading.text().trim() === '')).toHaveLength(0)
 
 		await runAxe(
 			wrapper,

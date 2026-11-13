@@ -94,7 +94,7 @@ export const Default: Story = {
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu
-								tag="div"
+								inner-tag="div"
 							>
 								<p>lorem ipsum</p>
 							</HeaderBurgerMenu>
@@ -132,11 +132,9 @@ export const WithAnItem: Story = {
 							v-model="args.modelValue"
 							@update:modelValue="args['onUpdate:modelValue']"
 						>
-							<HeaderMenuSection>
-								<HeaderMenuItem>
-									<a href="">Item 1</a>
-								</HeaderMenuItem>
-							</HeaderMenuSection>
+							<HeaderMenuItem>
+								<a href="#" @click.prevent>Item 1</a>
+							</HeaderMenuItem>
 						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
@@ -152,11 +150,9 @@ export const WithAnItem: Story = {
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu>
-								<HeaderMenuSection>
-									<HeaderMenuItem>
-										<a href="">Item 1</a>
-									</HeaderMenuItem>
-								</HeaderMenuSection>
+								<HeaderMenuItem>
+									<a href="">Item 1</a>
+								</HeaderMenuItem>
 							</HeaderBurgerMenu>
 						</template>
 					</HeaderBar>
@@ -204,10 +200,10 @@ export const Populated: Story = {
 									Section 1
 								</template>
 								<HeaderMenuItem>
-									<a href="">Item 1</a>
+									<a href="#" @click.prevent>Item 1</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a href="">Item 2</a>
+									<a href="#" @click.prevent>Item 2</a>
 								</HeaderMenuItem>
 								<headerMenuItem>
 									<HeaderSubMenu>
@@ -221,7 +217,7 @@ export const Populated: Story = {
 												Section
 											</template>
 											<HeaderMenuItem>
-												<a href="">Item</a>
+												<a href="#" @click.prevent>Item</a>
 											</HeaderMenuItem>
 											<HeaderMenuItem>
 												<HeaderSubMenu>
@@ -229,7 +225,7 @@ export const Populated: Story = {
 														Menu de deuxième niveau 1
 													</template>
 													<HeaderMenuItem>
-														<a href="">Item</a>
+														<a href="#" @click.prevent>Item</a>
 													</HeaderMenuItem>
 												</HeaderSubMenu>
 											</HeaderMenuItem>
@@ -247,7 +243,7 @@ export const Populated: Story = {
 											Menu de premier niveau 2
 										</template>
 										<HeaderMenuItem>
-											<a href="">Item 1</a>
+											<a href="#" @click.prevent>Item 1</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
 											<HeaderSubMenu>
@@ -255,7 +251,7 @@ export const Populated: Story = {
 													Menu de deuxième niveau 2
 												</template>
 												<HeaderMenuItem>
-													<a href="">Item 1</a>
+													<a href="#" @click.prevent>Item 1</a>
 												</HeaderMenuItem>
 											</HeaderSubMenu>
 										</HeaderMenuItem>
@@ -271,7 +267,7 @@ export const Populated: Story = {
 														Section 1
 													</template>
 													<HeaderMenuItem>
-														<a href="">Item 1</a>
+														<a href="#" @click.prevent>Item 1</a>
 													</HeaderMenuItem>
 												</HeaderMenuSection>
 											</HeaderSubMenu>
@@ -279,7 +275,7 @@ export const Populated: Story = {
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a href="">Item 3</a>
+									<a href="#" @click.prevent>Item 3</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 							<HeaderMenuSection
@@ -289,7 +285,7 @@ export const Populated: Story = {
 									Section 3
 								</template>
 								<div class="pl-6 pb-6 pt-4">
-									<p class="font-weight-bold">Veillez vous connecter</p>
+									<p class="font-weight-bold">Veuillez vous connecter</p>
 									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
 								</div>
 							</HeaderMenuSection>
@@ -401,7 +397,7 @@ export const Populated: Story = {
 									Section 3
 								</template>
 								<div class="pl-6 pb-6 pt-4">
-									<p class="font-weight-bold">Veillez vous connecter</p>
+									<p class="font-weight-bold">Veuillez vous connecter</p>
 									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
 								</div>
 							</HeaderMenuSection>
@@ -467,7 +463,7 @@ export const WithScroll: Story = {
 												sous menu
 											</template>
 											<HeaderMenuItem>
-												<a href="">Item 1</a>
+												<a href="#" @click.prevent>Item 1</a>
 											</HeaderMenuItem>
 										</HeaderMenuSection>
 									</HeaderSubMenu>
