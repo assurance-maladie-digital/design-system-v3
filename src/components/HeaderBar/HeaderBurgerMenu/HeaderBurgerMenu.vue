@@ -5,6 +5,7 @@
 	import locals from './locals'
 	import useHandleSubMenus from './useHandleSubMenus'
 	import useMenuPosition from './useMenuPosition'
+	import { usePageScrollLock } from './usePageScrollLock'
 	import vLockFocus from '@/directives/lockFocus'
 
 	const headerMenuWrapper = ref<HTMLElement | null>(null)
@@ -22,16 +23,14 @@
 		default: false,
 	})
 
+	usePageScrollLock(menuOpen)
+
 	onMounted(() => {
-		togglePageScroll()
 		window.addEventListener('click', handleClickOutside, { capture: true })
 	})
 
 	onUnmounted(() => {
 		window.removeEventListener('click', handleClickOutside, { capture: true })
-
-		document.documentElement.style.overflow = 'auto'
-		document.body.style.overflow = 'auto'
 	})
 
 	function handleClickOutside(event: MouseEvent | KeyboardEvent) {
@@ -51,8 +50,6 @@
 	const { menuStyle } = useMenuPosition(menuBtnWrapper, menuOpen)
 
 	watch(menuOpen, async (newVal) => {
-		togglePageScroll()
-
 		if (newVal) {
 			await nextTick()
 			innerBtn.value?.focus()
@@ -61,13 +58,6 @@
 			outerBtn.value?.focus()
 		}
 	}, { immediate: true })
-
-	function togglePageScroll() {
-		if (typeof window !== 'undefined') {
-			document.documentElement.style.overflow = menuOpen.value ? 'hidden' : 'auto'
-			document.body.style.overflow = menuOpen.value ? 'hidden' : 'auto'
-		}
-	}
 
 	const { haveOpenSubMenu } = useHandleSubMenus(readonly(menuOpen))
 
