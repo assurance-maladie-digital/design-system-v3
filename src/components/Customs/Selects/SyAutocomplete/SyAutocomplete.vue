@@ -88,6 +88,7 @@
 
 	const isOpen = ref(false)
 	const search = ref('')
+	const isPristine = ref(true)
 	// Miroir inscriptible de `modelValue` : la validation (et le reset côté formulaire)
 	// peuvent y écrire. L'écriture émet `update:modelValue` vers le parent — c'est le
 	// contrat `v-model` — et le `watch(props.modelValue)` ci-dessous resynchronise
@@ -142,21 +143,58 @@
 		valueKey: props.valueKey,
 	}, getValueKey, getStoredValue, getPlainText, selected, search, emit)
 
+	// Dernier libellé connu de la valeur sélectionnée. Avec une recherche côté serveur,
+	// l'item sélectionné peut être absent des `items` courants : le champ doit tout de
+	// même afficher son libellé plutôt que de se vider.
+	const lastSelectedLabel = ref<{ key: SelectPrimitive, label: string } | null>(null)
+
+	const rememberSelectedLabel = (item: ItemType) => {
+		lastSelectedLabel.value = { key: getValueKey(item), label: getPlainText(item) }
+	}
+
+	const resolveSelectedLabel = (): string => {
+		const selectedKey = props.returnObject
+			? (selected.value as ItemType)[props.valueKey] as SelectPrimitive
+			: selected.value as SelectPrimitive
+
+		const found = formattedItems.value.find(i => i[props.valueKey] === selectedKey)
+		if (found) {
+			rememberSelectedLabel(found)
+			return getPlainText(found)
+		}
+		if (props.returnObject) {
+			const label = getPlainText(selected.value as ItemType)
+			if (label) return label
+		}
+		return lastSelectedLabel.value?.key === selectedKey ? lastSelectedLabel.value.label : ''
+	}
+
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
-		suppressMenuOpen.value = true
+
+		isPristine.value = true
+
 		if (isEmptySelectValue(selected.value)) {
-			search.value = ''
+			if (search.value !== '') {
+				suppressMenuOpen.value = true
+				search.value = ''
+			}
 			return
 		}
-		const found = formattedItems.value.find(i => props.returnObject ? i[props.valueKey] === (selected.value as ItemType)[props.valueKey] : i[props.valueKey] === selected.value)
-		search.value = found ? getPlainText(found) : ''
+
+		const nextSearch = resolveSelectedLabel()
+
+		if (search.value !== nextSearch) {
+			suppressMenuOpen.value = true
+			search.value = nextSearch
+		}
 	}
 
 	const normalizedSearch = computed(() => (search.value || '').toLowerCase())
 
 	const filteredItems = computed(() => {
 		if (!props.filter || props.loading) return formattedItems.value
+		if (!props.multiple && isPristine.value) return formattedItems.value
 		return formattedItems.value.filter((item) => {
 			const text = String(item[props.plainTextKey || props.textKey] ?? item[props.textKey] ?? '').toLowerCase()
 			return text.includes(normalizedSearch.value)
@@ -168,7 +206,18 @@
 		if (item === null || item === undefined) {
 			clearValidation()
 		}
+		if (!props.multiple && item != null) {
+			const selectedText
+				= typeof item === 'object'
+					? getPlainText(item)
+					: String(item)
+			if (search.value !== selectedText) {
+				suppressMenuOpen.value = true
+			}
+			if (typeof item === 'object') rememberSelectedLabel(item)
+		}
 		updateValue(item ?? null)
+		if (!props.multiple) isPristine.value = true
 		if (props.multiple) {
 			suppressNextInput.value = true
 			search.value = ''
@@ -182,6 +231,20 @@
 			: val as SelectValue | SelectArray
 		syncSearchFromValue()
 	}, { immediate: true })
+
+	// L'appel immédiat ci-dessus a pu armer `suppressMenuOpen` avant la déclaration de
+	// `watch(search)` : ce changement de `search` ne sera jamais observé. Sans remise à
+	// zéro, le drapeau avalerait la première frappe et son événement `search`.
+	suppressMenuOpen.value = false
+
+	// Les `items` peuvent arriver après la valeur (formulaire pré-rempli, recherche côté
+	// serveur) : le libellé est alors résolu à leur arrivée. Une recherche en cours de
+	// saisie (`isPristine` à false) n'est jamais écrasée.
+	watch(formattedItems, () => {
+		if (!props.multiple && isPristine.value && !isEmptySelectValue(selected.value)) {
+			syncSearchFromValue()
+		}
+	})
 
 	let debounceHandle: ReturnType<typeof setTimeout> | null = null
 
@@ -296,6 +359,43 @@
 		validateOnBlur()
 	}
 
+	// La recherche abandonnée est remplacée par une recherche vide, comme `update:search`
+	// dans VAutocomplete : un consommateur qui filtre côté serveur recharge la liste
+	// complète. Le debounce en cours est annulé pour qu'une recherche abandonnée ne soit
+	// pas émise après la recherche vide.
+	const emitEmptySearch = () => {
+		if (debounceHandle) {
+			clearTimeout(debounceHandle)
+			debounceHandle = null
+		}
+		emit('search', '')
+	}
+
+	// Comme VAutocomplete : une recherche non validée par une sélection est abandonnée
+	// au blur. Le champ réaffiche le libellé de la valeur sélectionnée (ou se vide) et
+	// la liste complète sera proposée à la prochaine ouverture. Cette logique reste
+	// hors de `checkErrorOnBlur`, méthode exposée qu'un consommateur peut appeler
+	// pour forcer la validation sans perdre la saisie en cours.
+	const abandonSearch = () => {
+		const isSearchAbandoned = !props.multiple && !isPristine.value && search.value !== ''
+		syncSearchFromValue()
+		if (isSearchAbandoned) emitEmptySearch()
+	}
+
+	const handleBlur = (event: FocusEvent) => {
+		const relatedTarget = event.relatedTarget as HTMLElement | null
+		const focusStaysInComponent = relatedTarget?.closest(
+			`#${uniqueMenuId.value}, .sy-autocomplete__chip, .sy-autocomplete__clear-button`,
+		)
+		if (!focusStaysInComponent) {
+			abandonSearch()
+			// Comme VAutocomplete : le menu se ferme quand le focus quitte le composant,
+			// y compris quand il est déplacé par script ou par une aide technique.
+			isOpen.value = false
+		}
+		checkErrorOnBlur(event)
+	}
+
 	const getInputValue = (value: string | Event): string | null => {
 		if (typeof value === 'string') return value
 		if (value instanceof Event && value.target instanceof HTMLInputElement) {
@@ -317,6 +417,7 @@
 		// the current value after a programmatic update): no actual user input occurred.
 		if (inputValue === search.value) return
 
+		isPristine.value = false
 		search.value = inputValue
 
 		if (!inputValue && !props.multiple && selected.value != null) {
@@ -338,6 +439,9 @@
 
 	const resultsLiveText = computed(() => {
 		if (!hasInteracted.value) return
+		// Menu fermé : rien à annoncer. Sans cela, le retour à la liste complète après une
+		// sélection ou un blur ferait annoncer « N options disponibles » hors contexte.
+		if (!isOpen.value) return ''
 		if (props.loading) return locales.value.loading
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
@@ -355,9 +459,15 @@
 		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label, props.required, displayHasError.value)
 	}, { flush: 'post' })
 
+	// En sélection multiple, la recherche est effacée à la fermeture du menu. Sans
+	// `suppressMenuOpen`, ce changement relançait `watch(search)`, qui rouvrait le menu et
+	// reprenait le focus : Échap ne fermait pas le menu et le focus revenait dans le champ
+	// quand il en sortait. La recherche vide est émise explicitement.
 	watch(isOpen, (open) => {
-		if (!open && props.multiple) {
+		if (!open && props.multiple && search.value !== '') {
+			suppressMenuOpen.value = true
 			search.value = ''
+			emitEmptySearch()
 		}
 	})
 
@@ -432,7 +542,7 @@
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"
-					@blur="checkErrorOnBlur"
+					@blur="handleBlur"
 					@keydown.tab="handleTabKey"
 				>
 					<template #append-inner>

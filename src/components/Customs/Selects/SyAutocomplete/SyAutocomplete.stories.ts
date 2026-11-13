@@ -157,7 +157,7 @@ const meta: Meta<typeof SyAutocomplete> = {
 		},
 		'onSearch': {
 			action: 'search',
-			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. Utile pour déclencher des recherches asynchrones.',
+			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. Utile pour déclencher des recherches asynchrones. En sélection simple, émis aussi avec une chaîne vide quand une recherche saisie est abandonnée au blur (sans sélection) : la liste complète peut alors être rechargée.',
 			table: { category: 'events' },
 		},
 		'onUpdate:modelValue': {
