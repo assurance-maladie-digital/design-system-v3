@@ -51,7 +51,7 @@ export const Default: Story = {
 									{{ args.title }}
 								</template>
 								<HeaderMenuItem>
-									<a href="#">lorem ipsum</a>
+									<a href="#" @click.prevent>lorem ipsum</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 
@@ -61,7 +61,7 @@ export const Default: Story = {
 								</template>
 
 								<HeaderMenuItem>
-									<a href="#">lorem ipsum</a>
+									<a href="#" @click.prevent>lorem ipsum</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>

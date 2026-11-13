@@ -54,10 +54,10 @@ export const Default: Story = {
 									Section 1
 								</template>
 								<HeaderMenuItem>
-									<a href="#">Item</a>
+									<a href="#" @click.prevent>Item</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a href="#">Item</a>
+									<a href="#" @click.prevent>Item</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
 									<HeaderSubMenu v-bind="args">
@@ -71,13 +71,13 @@ export const Default: Story = {
 												{{ args.title }}
 											</template>
 											<HeaderMenuItem>
-												<a href="#">Item</a>
+												<a href="#" @click.prevent>Item</a>
 											</HeaderMenuItem>
 										</HeaderMenuSection>
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a href="#">Item</a>
+									<a href="#" @click.prevent>Item</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
@@ -167,10 +167,10 @@ export const Deep: Story = {
 									Section 1
 								</template>
 								<HeaderMenuItem>
-									<a href="#">Item 1</a>
+									<a href="#" @click.prevent>Item 1</a>
 								</HeaderMenuItem>
 								<HeaderMenuItem>
-									<a href="#">Item 2</a>
+									<a href="#" @click.prevent>Item 2</a>
 								</HeaderMenuItem>
 								<headerMenuItem>
 									<HeaderSubMenu>
@@ -178,10 +178,10 @@ export const Deep: Story = {
 											Menu de premier niveau
 										</template>
 										<HeaderMenuItem>
-											<a href="#">Item 2.1</a>
+											<a href="#" @click.prevent>Item 2.1</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
-											<a href="#">Item 2.2</a>
+											<a href="#" @click.prevent>Item 2.2</a>
 										</HeaderMenuItem>
 										<HeaderMenuItem>
 											<HeaderSubMenu v-bind="args">
@@ -189,17 +189,17 @@ export const Deep: Story = {
 													{{ args.title }}
 												</template>
 												<HeaderMenuItem>
-													<a href="#">Item 3.1</a>
+													<a href="#" @click.prevent>Item 3.1</a>
 												</HeaderMenuItem>
 												<HeaderMenuItem>
-													<a href="#">Item 3.2</a>
+													<a href="#" @click.prevent>Item 3.2</a>
 												</HeaderMenuItem>
 											</HeaderSubMenu>
 										</HeaderMenuItem>
 									</HeaderSubMenu>
 								</headerMenuItem>
 								<HeaderMenuItem>
-									<a href="#">Item 3</a>
+									<a href="#" @click.prevent>Item 3</a>
 								</HeaderMenuItem>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
