@@ -336,8 +336,8 @@ const items = [
 	{ text: 'SMS', value: 'sms' },
 ]
 
-const valueNoHandling = ref(null)
-const valueDefault = ref(null)
+const valueNoHandling = ref<string | null>(null)
+const valueDefault = ref<string | null>(null)
 const fieldRefNoHandling = ref<InstanceType<typeof SelectBtnField>>()
 const fieldRefDefault = ref<InstanceType<typeof SelectBtnField>>()
 
@@ -540,7 +540,12 @@ import { ref } from 'vue'
 import { SelectBtnField, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref(null)
+const value = ref<string | null>(null)
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
 
 function handleSubmit(e: { isValid: boolean }) {
 	alert(e.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
@@ -608,8 +613,13 @@ import { ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
-const value = ref(null)
+const value = ref<string | null>(null)
 const fieldRef = ref<InstanceType<typeof SelectBtnField>>()
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
 
 const customRules = [
 	{
@@ -700,7 +710,12 @@ import { ref } from 'vue'
 import { SelectBtnField, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref(null)
+const value = ref<string | null>(null)
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
 
 const rules = [
 	(v: unknown) => !!v || 'Le moyen de contact est requis.',
@@ -777,7 +792,7 @@ import { SelectBtnField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 import type { SubmitEventPromise } from 'vuetify'
 
-const value = ref(null)
+const value = ref<string | null>(null)
 const items = [
 	{ text: 'Email', value: 'email' },
 	{ text: 'Courrier', value: 'courrier' },

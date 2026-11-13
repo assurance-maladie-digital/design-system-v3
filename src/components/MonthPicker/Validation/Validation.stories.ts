@@ -759,6 +759,9 @@ function reset() {
 }
 
 export const SyFormValidation: Story = {
+	args: {
+		required: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -846,7 +849,6 @@ function handleSubmit(e) {
 						v-model="selectedMonth"
 						:custom-rules="customRules"
 						width="400px"
-						required
 					/>
 					<div class="mt-4">
 						<VBtn type="submit" color="primary">Valider</VBtn>
@@ -858,6 +860,9 @@ function handleSubmit(e) {
 }
 
 export const VFormValidation: Story = {
+	args: {
+		required: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -947,9 +952,7 @@ async function handleSubmit() {
 						v-bind="args"
 						ref="fieldRef"
 						v-model="selectedMonth"
-						label="Mois de début"
 						:custom-rules="customRules"
-						required
 						width="400px"
 					/>
 					<div class="mt-4">
@@ -962,6 +965,9 @@ async function handleSubmit() {
 }
 
 export const SyFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -1025,7 +1031,6 @@ function handleSubmit(e) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						:use-vuetify-validation="true"
 						:rules="vuetifyRules"
 						width="400px"
 					/>
@@ -1039,6 +1044,9 @@ function handleSubmit(e) {
 }
 
 export const VFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -1121,10 +1129,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						label="Mois de début"
-						:use-vuetify-validation="true"
 						:rules="rules"
-						:is-validate-on-blur="true"
 						width="400px"
 					/>
 					<div class="mt-4">

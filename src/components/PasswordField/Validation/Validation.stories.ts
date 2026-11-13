@@ -82,7 +82,6 @@ const meta = {
 		},
 	},
 	args: {
-		'modelValue': '',
 		'variantStyle': 'outlined',
 		'color': 'primary',
 		'label': 'Mot de passe',
@@ -495,15 +494,23 @@ ne sont pas nécessaires dans certains contextes.
   />
 </template>`,
 			},
-			{ name: 'Script', code: `<script setup lang="ts">
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { PasswordField } from '@cnamts/synapse'
 
 const value1 = ref('P@ssw0rd123')
 const value2 = ref('P@ssw0rd123')
-const customSuccessRules = [{ type: 'custom', options: { validate: (value: string) => value.length >= 8, successMessage: 'Mot de passe valide' } }]
-
-</script>` },
+const customSuccessRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: string) => value.length >= 8,
+    successMessage: 'Mot de passe valide',
+  },
+}]
+</script>`,
+			},
 		],
 	},
 	argTypes: {
@@ -603,21 +610,31 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
   />
 </template>`,
 			},
-			{ name: 'Script', code: `<script setup lang="ts">
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { PasswordField } from '@cnamts/synapse'
 
 const value1 = ref('')
 const value2 = ref('')
-const customRules = [{
-  type: 'custom',
-  options: {
-    validate: (value: string) => value.length >= 8,
-    message: 'Le mot de passe doit contenir au moins 8 caractères',
-    fieldIdentifier: 'password',
+
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        if (!value || value.length < 8) {
+          return 'Le mot de passe doit contenir au moins 8 caractères'
+        }
+        return true
+      },
+      fieldIdentifier: 'password',
+    },
   },
-}]
-</script>` },
+]
+</script>`,
+			},
 		],
 	},
 	argTypes: {

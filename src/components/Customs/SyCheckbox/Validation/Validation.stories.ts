@@ -240,14 +240,19 @@ import { SyCheckbox } from '@cnamts/synapse'
 const prerequisite = ref(false)
 const accepted = ref(false)
 
-const customRules = computed(() => [{
-	type: 'custom',
-	options: {
-		// Valide tant que la case n'est pas cochée, ou que le prérequis est rempli
-		validate: (value: unknown) => value !== true || prerequisite.value,
-		message: 'Vous devez d\\'abord valider le prérequis avant de cocher cette case.',
-	},
-}])
+const customRules = computed(() => {
+	// Read in the computed body so the rules array is recreated (and the
+	// validation re-run) whenever the prerequisite changes.
+	const prerequisiteChecked = prerequisite.value
+	return [{
+		type: 'custom',
+		options: {
+			// Valide tant que la case n'est pas cochée, ou que le prérequis est rempli
+			validate: (value: unknown) => value !== true || prerequisiteChecked,
+			message: 'Vous devez d\\'abord valider le prérequis avant de cocher cette case.',
+		},
+	}]
+})
 </script>`,
 			},
 		],
@@ -258,13 +263,18 @@ const customRules = computed(() => [{
 			const prerequisite = ref(false)
 			const accepted = ref(false)
 
-			const customRules = computed(() => [{
-				type: 'custom',
-				options: {
-					validate: (value: unknown) => value !== true || prerequisite.value,
-					message: 'Vous devez d\'abord valider le prérequis avant de cocher cette case.',
-				},
-			}])
+			const customRules = computed(() => {
+				// Read in the computed body so the rules array is recreated (and the
+				// validation re-run) whenever the prerequisite changes.
+				const prerequisiteChecked = prerequisite.value
+				return [{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => value !== true || prerequisiteChecked,
+						message: 'Vous devez d\'abord valider le prérequis avant de cocher cette case.',
+					},
+				}]
+			})
 
 			return { prerequisite, accepted, customRules }
 		},

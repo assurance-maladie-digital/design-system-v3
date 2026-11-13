@@ -1,12 +1,12 @@
 ## Stories de validation : reste à faire
 
-Suite de l'audit des stories de validation (PR #<pr>). Points relevés mais non corrigés dans la PR.
+Suite de l'audit des stories de validation. Points relevés lors de la revue, non corrigés dans la PR (sauf mention contraire).
 
 ### Transverse (tous fichiers)
 
-- [ ] **medium** — Code affiché incomplet : imports manquants (`VBtn`, `VForm`, `SyForm`, `LunarCalendar`), onglets Script absents, variables non déclarées.
+- [x] **medium** — Code affiché incomplet : imports manquants (`VBtn`, `VForm`, `SyForm`, `LunarCalendar`), onglets Script absents, variables non déclarées.
 - [x] **medium** — MonthPicker `WithWarning` / `WithSuccess` : personne ne déclenche la validation au montage (rendu et code affiché).
-- [ ] **medium** — `args` retournés mais non liés au template (Controls / Actions inopérants) : SelectBtnField (toutes), SyCheckbox `WithCustomRules`, SyCheckBoxGroup `CustomRules`, `ValidateOnInput` / `ExternalMessages` (SyTextField, MonthPicker, PasswordField), SyTextArea `SyForm*`.
+- [x] **medium** — `args` retournés mais non liés au template (Controls / Actions inopérants) : SelectBtnField (toutes), SyCheckbox `WithCustomRules`, SyCheckBoxGroup `CustomRules`, `ValidateOnInput` / `ExternalMessages` (SyTextField, MonthPicker, PasswordField), SyTextArea `SyForm*`.
 - [ ] **low** — Code affiché : `ref(null)` non typé (`Ref<null>` casse `?.validateOnSubmit()` en TS strict), `handleSubmit(e)` non typé. Déjà corrigé dans LunarCalendar.
 - [ ] **low** — Code affiché : import de types via l'alias interne `@/composables/...` (inutilisable par un consommateur ; `ValidationRule` n'est pas exporté publiquement).
 - [ ] **low** — Styles en dur : `color: #666`, `style="gap: 16px"`, `padding: 20px`, grilles inline, `color="black"`.
@@ -25,41 +25,41 @@ Suite de l'audit des stories de validation (PR #<pr>). Points relevés mais non 
 
 ### Selects
 
-- [ ] **high** — SySelect `WithWarning` / `WithSuccess` : code affiché avec `ref(null)` et sans `selectRef` / `onMounted`, alors que le template affiché référence `selectRef`.
-- [ ] **medium** — SyAutocomplete `WithError` / `WithWarning` / `WithSuccess` : `filter: false` absent du code affiché.
-- [ ] **medium** — SelectBtnField : scripts affichés sans `fieldRef` / `onMounted`, onglets Template manquants (`WithWarning`, `WithSuccess`), `VFormVuetifyValidation` sans template.
+- [x] **high** — SySelect `WithWarning` / `WithSuccess` : code affiché avec `ref(null)` et sans `selectRef` / `onMounted`, alors que le template affiché référence `selectRef`.
+- [x] **medium** — SyAutocomplete `WithError` / `WithWarning` / `WithSuccess` : `filter: false` absent du code affiché.
+- [x] **medium** — SelectBtnField : scripts affichés sans `fieldRef` / `onMounted`, onglets Template manquants (`WithWarning`, `WithSuccess`), `VFormVuetifyValidation` sans template.
 - [ ] **low** — SySelect / SyAutocomplete `NoValidateOnBlur` : « Réinitialiser » sans `clearValidation()` ; `VFormAndVuetifyValidation` sans branche « invalide ».
 - [ ] **low** — SyAutocomplete `NoValidateOnBlur` : `isValidateOnBlur: false` est déjà la valeur par défaut, la story ne montre aucune différence.
 - [ ] **low** — SelectBtnField `DisableErrorHandling` : aucune comparaison, la démo ne prouve rien.
 
 ### SyRadioGroup / SyCheckBoxGroup / SyCheckbox
 
-- [ ] **medium** — SyCheckbox `WithCustomRules` : le `computed` ne lit aucune dépendance réactive, cocher le prérequis ne retire pas l'erreur.
+- [x] **medium** — SyCheckbox `WithCustomRules` : le `computed` ne lit aucune dépendance réactive, cocher le prérequis ne retire pas l'erreur.
 - [ ] **low** — SyRadioGroup : « Option A (recommandée) » dans le code affiché vs « Option A » au rendu ; paramètre `event` inutilisé.
 - [ ] **low** — SyCheckBoxGroup : `:multiple="true"` après `v-bind="args"` neutralise le contrôle `multiple`.
 
 ### SyTextField / SyTextArea / PasswordField
 
-- [ ] **medium** — SyTextArea `SyFormVuetifyValidation` / `VFormVuetifyValidation` : `validateOn: 'submit'` sans effet (non transmis par `SyTextArea.vue`).
-- [ ] **medium** — SyTextArea `NoValidateOnBlur` : `clearValidation()` appelé à chaque saisie, la démo annule ce qu'elle montre.
-- [ ] **medium** — SyTextArea `WithWarning` / `WithSuccess` : pas d'onglet Script.
-- [ ] **medium** — PasswordField `ExternalMessages` : description tronquée.
-- [ ] **medium** — PasswordField `WithSuccessMessages` : les champs restent neutres au chargement alors que le texte annonce un succès visible.
-- [ ] **low** — SyTextField `DisableErrorHandling` : labels différents (code affiché / rendu), règle « requis » custom jamais affichée.
-- [ ] **low** — SyTextField `EmailValidation` : code affiché sans template ni script.
-- [ ] **low** — PasswordField `SyFormValidation` : `ref="fieldRef"` non déclaré dans le script affiché ; `DisableErrorHandling` : backticks affichés tels quels.
-- [ ] **low** — Coquille « bénéficier de intégration » (SyTextField, SySelect).
+- [x] **medium** — SyTextArea `SyFormVuetifyValidation` / `VFormVuetifyValidation` : `validateOn: 'submit'` sans effet (non transmis par `SyTextArea.vue`).
+- [x] **medium** — SyTextArea `NoValidateOnBlur` : `clearValidation()` appelé à chaque saisie, la démo annule ce qu'elle montre.
+- [x] **medium** — SyTextArea `WithWarning` / `WithSuccess` : pas d'onglet Script.
+- [x] **medium** — PasswordField `ExternalMessages` : description tronquée.
+- [x] **medium** — PasswordField `WithSuccessMessages` : les champs restent neutres au chargement alors que le texte annonce un succès visible.
+- [x] **low** — SyTextField `DisableErrorHandling` : labels différents (code affiché / rendu), règle « requis » custom jamais affichée.
+- [x] **low** — SyTextField `EmailValidation` : code affiché sans template ni script.
+- [x] **low** — PasswordField `SyFormValidation` : `ref="fieldRef"` non déclaré dans le script affiché ; `DisableErrorHandling` : backticks affichés tels quels.
+- [x] **low** — Coquille « bénéficier de intégration » (SyTextField, SySelect).
 
 ### NirField / PhoneField / Captcha
 
-- [ ] **high** — `Captcha/useCaptchaValidation.ts` : `params.required` est un `Ref` (toujours vrai) → le Captcha est toujours obligatoire, même avec `required: false`. Utiliser `params.required.value` + test de régression.
-- [ ] **high** — Captcha `WithError` / `WithWarning` / `WithSuccess` / `ValidateOnInput` : `required` absent du rendu (appliqué uniquement grâce au bug ci-dessus) ; `show-success-messages` absent du code affiché ; `(v as string).length` sans garde.
-- [ ] **medium** — Captcha `ExternalMessages` : pas d'onglet Script ; stories `SyForm*` / `VForm*` : `verifyCaptcha` absent ou vide dans le code affiché, imports manquants.
-- [ ] **low** — Captcha : `width="400px"` n'est pas une prop ; `verifyCaptcha` inutilisé dans `ExternalMessages` ; `Meta` sans paramètre de type ; description citant `validate()` au lieu de `validateOnSubmit()`.
-- [ ] **medium** — NirField `CustomRules` : règle affichée simplifiée par rapport aux args ; `successMessage` sans `showSuccessMessages`.
-- [ ] **medium** — PhoneField `SyFormVuetifyValidation` : description parlant de `VForm` alors que la story n'utilise que `SyForm` ; `VForm` importé inutilement.
-- [ ] **medium** — PhoneField `DisableErrorHandling` : description fausse (« les règles d'erreur sont évaluées »).
-- [ ] **low** — PhoneField `VFormValidation` : paragraphe en dur avec faute (« Preferable »).
+- [x] **high** — `Captcha/useCaptchaValidation.ts` : `params.required` est un `Ref` (toujours vrai) → le Captcha est toujours obligatoire, même avec `required: false`. Utiliser `params.required.value` + test de régression.
+- [x] **high** — Captcha `WithError` / `WithWarning` / `WithSuccess` / `ValidateOnInput` : `required` absent du rendu (appliqué uniquement grâce au bug ci-dessus) ; `show-success-messages` absent du code affiché ; `(v as string).length` sans garde.
+- [x] **medium** — Captcha `ExternalMessages` : pas d'onglet Script ; stories `SyForm*` / `VForm*` : `verifyCaptcha` absent ou vide dans le code affiché, imports manquants.
+- [x] **low** — Captcha : `width="400px"` n'est pas une prop ; `verifyCaptcha` inutilisé dans `ExternalMessages` ; `Meta` sans paramètre de type ; description citant `validate()` au lieu de `validateOnSubmit()`.
+- [x] **medium** — NirField `CustomRules` : règle affichée simplifiée par rapport aux args ; `successMessage` sans `showSuccessMessages`.
+- [x] **medium** — PhoneField `SyFormVuetifyValidation` : description parlant de `VForm` alors que la story n'utilise que `SyForm` ; `VForm` importé inutilement.
+- [x] **medium** — PhoneField `DisableErrorHandling` : description fausse (« les règles d'erreur sont évaluées »).
+- [x] **low** — PhoneField `VFormValidation` : paragraphe en dur avec faute (« Preferable »).
 
 ### MonthPicker / LunarCalendar
 

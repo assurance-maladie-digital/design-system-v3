@@ -135,6 +135,8 @@ export const Basic: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
+import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const name = ref('')
 const email = ref('')
@@ -206,21 +208,22 @@ export const CustomValidation: Story = {
 		},
 		template: `
       <div>
-        <SyForm ref="form" v-bind="args" @submit="onSubmit" :validate-on-submit="args.validateOnSubmit">
+        <SyForm ref="form" v-model="isFormValid" v-bind="args" @submit="onSubmit">
           <div class="d-flex flex-column ga-4">
             <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
             <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
-            <SyTextField 
-              v-model="confirmPassword" 
-              label="Confirmer le mot de passe" 
-              type="password" 
-              required 
+            <SyTextField
+              v-model="confirmPassword"
+              label="Confirmer le mot de passe"
+              type="password"
+              required
               :custom-rules="confirmPasswordRules"
               class="mb-2"
             />
+            <p role="status">Validité du formulaire : {{ validityLabel }}</p>
             <div class="d-flex ga-3">
               <VBtn type="submit" color="primary">S'inscrire</VBtn>
-              <VBtn @click="validateManually" color="secondary">Valider sans soumettre</VBtn>
+              <VBtn variant="outlined" @click="validateManually">Valider manuellement</VBtn>
             </div>
           </div>
         </SyForm>
@@ -274,13 +277,14 @@ correspondance des deux mots de passe (validation **inter-champs**).
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 // v-model tri-état : true (toutes les règles passent) | false (invalide) | null (aucun statut disponible)
 const isFormValid = ref<boolean | null>(null)
-const form = ref(null)
+const form = ref<InstanceType<typeof SyForm> | null>(null)
 
 const passwordRules = computed(() => [
   { type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
@@ -393,6 +397,8 @@ export const MixedFields: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
+import { SyForm, SySelect, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const formData = ref({
 	name: '',
@@ -575,6 +581,7 @@ import {
   SyRadioGroup,
   SySelect,
 } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const values = ref({
   careType: null,
@@ -721,6 +728,7 @@ le mode du \`DatePicker\` (calendrier ou saisie seule avec \`no-calendar\`). Les
 <script setup lang="ts">
 import { ref } from 'vue'
 import { DatePicker, MonthPicker, PeriodField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const values = ref({
   appointment: null,
@@ -838,6 +846,7 @@ ajoutez une règle dans \`rules\` pour bloquer la soumission.
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn, VTextField } from 'vuetify/components'
 
 const values = ref({ synapse: '', vuetify: '', native: '' })
 const isFormValid = ref<boolean | null>(null)
@@ -953,6 +962,7 @@ le résultat obsolète est ignoré : seul le résultat de la dernière saisie es
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const username = ref('')
 const isFormValid = ref<boolean | null>(null)
@@ -1081,6 +1091,7 @@ export const WarningAndSuccessRules: Story = {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const days = ref('')
 const isFormValid = ref<boolean | null>(null)
@@ -1121,6 +1132,7 @@ const onSubmit = ({ isValid }: { isValid: boolean }) => {
 
 export const WithoutAutoValidation: Story = {
 	args: {
+		validateOnSubmit: false,
 		onReset: fn(),
 		onSubmit: fn(),
 	},
@@ -1147,7 +1159,7 @@ export const WithoutAutoValidation: Story = {
 			return { name, email, submitMessage, form, emailRules, onSubmit, args }
 		},
 		template: `
-      <SyForm ref="form" v-bind="args" :validate-on-submit="false" @submit="onSubmit">
+      <SyForm ref="form" v-bind="args" @submit="onSubmit">
         <div class="d-flex flex-column ga-4">
           <SyTextField v-model="name" label="Nom" required />
           <SyTextField v-model="email" label="Email" :custom-rules="emailRules" />
@@ -1190,6 +1202,7 @@ la méthode exposée \`validate()\`, au moment qui lui convient.
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const name = ref('')
 const email = ref('')
@@ -1301,6 +1314,7 @@ alors les erreurs de chaque champ.
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const name = ref('')
 const email = ref('')
@@ -1414,6 +1428,7 @@ Tous les champs sont obligatoires et vides. Seul le champ conditionnel bloque la
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn, VSwitch } from 'vuetify/components'
 
 const values = ref({ conditional: '', disabled: '', readonly: '', ignored: '' })
 const showConditionalField = ref(true)
@@ -1511,6 +1526,7 @@ sinon le formulaire reste bloqué. \`clearValidation()\` n'efface pas une erreur
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const email = ref('')
 const serverErrors = ref<string[]>([])
@@ -1620,6 +1636,7 @@ Remplissez un champ de façon invalide, puis comparez les trois méthodes :
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const name = ref('')
 const email = ref('')

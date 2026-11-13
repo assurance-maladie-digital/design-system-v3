@@ -6,7 +6,7 @@ import { VBtn, VCard, VForm } from 'vuetify/components'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
-const meta: Meta = {
+const meta: Meta<typeof Captcha> = {
 	title: 'Composants/Formulaires/Captcha/Validation',
 	component: Captcha,
 	argTypes: {
@@ -70,29 +70,34 @@ export const WithError: Story = {
 			{
 				name: 'Template',
 				code: `
-<Captcha
-	v-model="modelValue"
-	required
-	:custom-rules="[
-		{
-			type: 'custom',
-			options: {
-				validate: (v) => (v as string).length >= 6,
-				message: 'Le captcha doit contenir au moins 6 caractères.',
-				successMessage: 'Le captcha contient au moins 6 caractères.'
+<template>
+	<Captcha
+		v-model="modelValue"
+		required
+		show-success-messages
+		:custom-rules="[
+			{
+				type: 'custom',
+				options: {
+					validate: (v) => (String(v || '')).length >= 6,
+					message: 'Le captcha doit contenir au moins 6 caractères.',
+					successMessage: 'Le captcha contient au moins 6 caractères.'
+				}
 			}
-		}
-	]"
-/>
+		]"
+	/>
+</template>
 				`,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
 
 const modelValue = ref('ytq')
+</script>
 				`,
 			},
 		],
@@ -120,6 +125,7 @@ const modelValue = ref('ytq')
 	},
 	args: {
 		modelValue: 'ytq',
+		required: true,
 		// Validation à la saisie pour que l'état (erreur/succès) se mette à jour
 		// immédiatement quand on modifie le champ, sans attendre le blur.
 		isValidateOnBlur: false,
@@ -156,28 +162,32 @@ export const WithWarning: Story = {
 			{
 				name: 'Template',
 				code: `
-<Captcha
-	v-model="modelValue"
-	required
-	:custom-warning-rules="[
-		{
-			type: 'custom',
-			options: {
-				validate: (v) => (String(v || '')).length >= 6,
-				warningMessage: 'Le captcha devrait idéalement contenir au moins 6 caractères.'
+<template>
+	<Captcha
+		v-model="modelValue"
+		required
+		:custom-warning-rules="[
+			{
+				type: 'custom',
+				options: {
+					validate: (v) => (String(v || '')).length >= 6,
+					warningMessage: 'Le captcha devrait idéalement contenir au moins 6 caractères.'
+				}
 			}
-		}
-]"
-/>
+		]"
+	/>
+</template>
 				`,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
 
 const modelValue = ref('ytq')
+</script>
 				`,
 			},
 		],
@@ -211,37 +221,42 @@ export const WithSuccess: Story = {
 			{
 				name: 'Template',
 				code: `
-<Captcha
-	v-model="modelValue"
-	required
-	:custom-rules="[
-		{
-			type: 'custom',
-			options: {
-				validate: (v) => (String(v || '')).length >= 6,
-				message: 'Le captcha doit contenir au moins 6 caractères.'
+<template>
+	<Captcha
+		v-model="modelValue"
+		required
+		show-success-messages
+		:custom-rules="[
+			{
+				type: 'custom',
+				options: {
+					validate: (v) => (String(v || '')).length >= 6,
+					message: 'Le captcha doit contenir au moins 6 caractères.'
+				}
 			}
-		}
-	]"
-	:custom-success-rules="[
-		{
-			type: 'custom',
-			options: {
-				validate: (v) => (String(v || '')).length >= 6,
-				successMessage: 'Le captcha est correctement renseigné.'
+		]"
+		:custom-success-rules="[
+			{
+				type: 'custom',
+				options: {
+					validate: (v) => (String(v || '')).length >= 6,
+					successMessage: 'Le captcha est correctement renseigné.'
+				}
 			}
-		}
-]"
-/>
+		]"
+	/>
+</template>
 				`,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
 
 const modelValue = ref('ytqZNq')
+</script>
 				`,
 			},
 		],
@@ -286,52 +301,64 @@ export const ValidateOnInput: Story = {
 			{
 				name: 'Template',
 				code: `
-<Captcha
-	v-model="value"
-	required
-	:is-validate-on-blur="false"
-	:custom-rules="[
-		{
-			type: 'custom',
-			options: {
-				validate: (value) => String(value || '').length >= 6,
-				message: 'Le captcha doit contenir au moins 6 caractères.'
+<template>
+	<Captcha
+		v-model="value"
+		required
+		show-success-messages
+		:is-validate-on-blur="false"
+		:custom-rules="[
+			{
+				type: 'custom',
+				options: {
+					validate: (value) => String(value || '').length >= 6,
+					message: 'Le captcha doit contenir au moins 6 caractères.'
+				}
+			},
+			{
+				type: 'custom',
+				options: {
+					validate: async (value) => {
+						try {
+							const r = await verifyCaptcha()
+							return r.response.data.message === 'Success'
+						}
+						catch {
+							return false
+						}
+					},
+					message: 'Le captcha est incorrect',
+					successMessage: 'Le captcha est correct'
+				}
 			}
-		},
-		{
-			type: 'custom',
-			options: {
-				validate: async (value) => {
-					try {
-						const r = await verifyCaptcha()
-						return r.response.data.message === 'Success'
-					}
-					catch {
-						return false
-					}
-				},
-				message: 'Le captcha est incorrect',
-				successMessage: 'Le captcha est correct'
-			}
-		}
-]"
-/>
+		]"
+	/>
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
 
 const value = ref('abc')
 
+// À remplacer par l'appel à votre API de vérification du captcha
 const verifyCaptcha = () => {
-	// call the API to verify the captcha and return the response
+	if (value.value === 'ytqZNq' || value.value === '941335') {
+		return Promise.resolve({ response: { data: { message: 'Success' } } })
+	}
+	return Promise.reject(new Error('Le captcha est incorrect'))
 }
+</script>
 `,
 			},
 		],
+	},
+	args: {
+		required: true,
 	},
 	render: (args) => {
 		return {
@@ -407,20 +434,61 @@ export const ExternalMessages: Story = {
 			{
 				name: 'Template',
 				code: `
-<VCard class="pa-8" max-width="400">
-<Captcha
-	v-model="value"
-	:error-messages="errorMessages"
-	:warning-messages="warningMessages"
-	:success-messages="successMessages"
-/>
-<div class="mt-4 d-flex flex-wrap ga-2">
-	<VBtn @click="setError">Simuler une erreur</VBtn>
-	<VBtn @click="setWarning">Simuler un avertissement</VBtn>
-	<VBtn @click="setSuccess">Simuler un succès</VBtn>
-	<VBtn @click="reset">Réinitialiser</VBtn>
-</div>
-</VCard>
+<template>
+	<VCard class="pa-8" max-width="400">
+		<Captcha
+			v-model="value"
+			:error-messages="errorMessages"
+			:warning-messages="warningMessages"
+			:success-messages="successMessages"
+		/>
+		<div class="mt-4 d-flex flex-wrap ga-2">
+			<VBtn @click="setError">Simuler une erreur</VBtn>
+			<VBtn @click="setWarning">Simuler un avertissement</VBtn>
+			<VBtn @click="setSuccess">Simuler un succès</VBtn>
+			<VBtn @click="reset">Réinitialiser</VBtn>
+		</div>
+	</VCard>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Captcha } from '@cnamts/synapse'
+import { VBtn, VCard } from 'vuetify/components'
+
+const value = ref('')
+const errorMessages = ref<string[] | null>(null)
+const warningMessages = ref<string[] | null>(null)
+const successMessages = ref<string[] | null>(null)
+
+function setError() {
+	errorMessages.value = ['Ce captcha est déjà utilisé']
+	warningMessages.value = null
+	successMessages.value = null
+}
+
+function setWarning() {
+	errorMessages.value = null
+	warningMessages.value = ['Ce captcha pourrait être plus lisible']
+	successMessages.value = null
+}
+
+function setSuccess() {
+	errorMessages.value = null
+	warningMessages.value = null
+	successMessages.value = ['Captcha accepté']
+}
+
+function reset() {
+	errorMessages.value = null
+	warningMessages.value = null
+	successMessages.value = null
+}
+</script>
 `,
 			},
 		],
@@ -435,13 +503,6 @@ export const ExternalMessages: Story = {
 			const errorMessages = ref<string[] | null>(null)
 			const warningMessages = ref<string[] | null>(null)
 			const successMessages = ref<string[] | null>(null)
-
-			const verifyCaptcha = () => {
-				if (captchaValue.value === 'ytqZNq' || captchaValue.value === '941335') {
-					return Promise.resolve({ response: { data: { message: 'Success' } } })
-				}
-				return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
-			}
 
 			function setError() {
 				errorMessages.value = ['Ce captcha est déjà utilisé']
@@ -467,7 +528,7 @@ export const ExternalMessages: Story = {
 				successMessages.value = null
 			}
 
-			return { args, captchaValue, errorMessages, warningMessages, successMessages, verifyCaptcha, setError, setWarning, setSuccess, reset }
+			return { args, captchaValue, errorMessages, warningMessages, successMessages, setError, setWarning, setSuccess, reset }
 		},
 		template: `
 			<VCard class="pa-8" max-width="400" min-width="400">
@@ -523,8 +584,12 @@ import { Captcha } from '@cnamts/synapse'
 const value1 = ref('')
 const value2 = ref('')
 
+// À remplacer par l'appel à votre API de vérification du captcha
 const verifyCaptcha = (captchaValue: string | null) => {
-	// Simulate API call to verify captcha
+	if (captchaValue === 'ytqZNq' || captchaValue === '941335') {
+		return Promise.resolve({ response: { data: { message: 'Success' } } })
+	}
+	return Promise.reject(new Error('Le captcha est incorrect'))
 }
 
 const customRules = [
@@ -679,11 +744,16 @@ export const SyFormValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { Captcha, SyForm } from '@cnamts/synapse'
+import { VBtn, VCard } from 'vuetify/components'
 
 const value = ref('')
 
+// À remplacer par l'appel à votre API de vérification du captcha
 const verifyCaptcha = () => {
-	// Simulate API call to verify captcha
+	if (value.value === 'ytqZNq' || value.value === '941335') {
+		return Promise.resolve({ response: { data: { message: 'Success' } } })
+	}
+	return Promise.reject(new Error('Le captcha est incorrect'))
 }
 
 const customRules = [
@@ -779,7 +849,6 @@ function handleSubmit(e: { isValid: boolean }) {
 							v-bind="args"
 							v-model="captchaValue"
 							:custom-rules="customRules"
-							width="400px"
 							required
 						/>
 						<div class="mt-4">
@@ -796,7 +865,7 @@ export const VFormValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Validation déclenchée à la soumission du formulaire via l\'API exposée `validate()` du Captcha.',
+				story: 'Validation déclenchée à la soumission du formulaire via l\'API exposée `validateOnSubmit()` du Captcha.',
 			},
 		},
 		sourceCode: [
@@ -821,10 +890,18 @@ export const VFormValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
-import { VBtn, VForm } from 'vuetify/components'
+import { VBtn, VCard, VForm } from 'vuetify/components'
 
 const value = ref('')
 const captchaRef = ref()
+
+// À remplacer par l'appel à votre API de vérification du captcha
+const verifyCaptcha = () => {
+	if (value.value === 'ytqZNq' || value.value === '941335') {
+		return Promise.resolve({ response: { data: { message: 'Success' } } })
+	}
+	return Promise.reject(new Error('Le captcha est incorrect'))
+}
 
 const customRules = [
 	{
@@ -927,7 +1004,6 @@ async function handleSubmit() {
 							v-model="value"
 							:custom-rules="customRules"
 							required
-							width="400px"
 						/>
 						<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 					</VCard>
@@ -968,8 +1044,17 @@ export const SyFormVuetifyValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { Captcha, SyForm } from '@cnamts/synapse'
+import { VBtn, VCard } from 'vuetify/components'
 
 const value = ref('')
+
+// À remplacer par l'appel à votre API de vérification du captcha
+const verifyCaptcha = () => {
+	if (value.value === 'ytqZNq' || value.value === '941335') {
+		return Promise.resolve({ response: { data: { message: 'Success' } } })
+	}
+	return Promise.reject(new Error('Le captcha est incorrect'))
+}
 
 const rules = [
 	(value: string) => !!value || 'Ce champ est requis',
@@ -1037,7 +1122,6 @@ function handleSubmit(e: { isValid: boolean }) {
 							v-model="captchaValue"
 							:use-vuetify-validation="true"
 							:rules="rules"
-							width="400px"
 							required
 						/>
 						<div class="mt-4">
@@ -1081,8 +1165,17 @@ export const VFormVuetifyValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
+import { VBtn, VCard, VForm } from 'vuetify/components'
 
 const value = ref('')
+
+// À remplacer par l'appel à votre API de vérification du captcha
+const verifyCaptcha = () => {
+	if (value.value === 'ytqZNq' || value.value === '941335') {
+		return Promise.resolve({ response: { data: { message: 'Success' } } })
+	}
+	return Promise.reject(new Error('Le captcha est incorrect'))
+}
 
 const rules = [
 	(value: string) => !!value || 'Ce champ est requis',
@@ -1151,7 +1244,6 @@ async function handleSubmit(e) {
 							v-model="captchaValue"
 							:use-vuetify-validation="true"
 							:rules="rules"
-							width="400px"
 						/>
 						<div class="mt-4">
 							<VBtn type="submit" color="primary">Valider</VBtn>

@@ -571,9 +571,7 @@ function onSubmit(event: { isValid: boolean }) {
 				<SyForm @submit="onSubmit">
 					<SyTextArea
 						v-model="value"
-						label="Description obligatoire"
-						:required="true"
-						:display-asterisk="true"
+						v-bind="args"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary">Soumettre</VBtn>
@@ -661,9 +659,7 @@ async function onSubmit() {
 					<SyTextArea
 						ref="textAreaRef"
 						v-model="value"
-						label="Description obligatoire"
-						:required="true"
-						:display-asterisk="true"
+						v-bind="args"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary">Soumettre</VBtn>
