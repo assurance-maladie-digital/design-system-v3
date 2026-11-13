@@ -78,6 +78,7 @@
 				:id="submenuId"
 				ref="headerInnerSubMenu"
 				class="sub-menu-content-wrapper"
+				role="group"
 				:aria-labelledby="btnId"
 				@keyup.esc.stop="handleEsc"
 			>
