@@ -171,7 +171,7 @@
 	}
 
 	const handleFocus = () => {
-		if (!props.multiple && !focused.value) isPristine.value = true
+		if (!props.multiple && !focused.value && !search.value) isPristine.value = true
 	}
 
 	const normalizedSearch = computed(() => (search.value || '').toLowerCase())

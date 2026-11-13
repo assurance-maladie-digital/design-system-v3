@@ -1480,7 +1480,7 @@ describe('SyAutocomplete', () => {
 			expect(wrapper.emitted('search')?.at(-1)).toEqual(['O'])
 		})
 
-		it('shows all items again when the field receives focus after a search', async () => {
+		it('keeps search results when the field receives focus after a search', async () => {
 			const input = wrapper.find('input')
 			await input.trigger('click')
 			await flushPromises()
@@ -1492,7 +1492,7 @@ describe('SyAutocomplete', () => {
 			await input.trigger('focus')
 			await flushPromises()
 
-			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(3)
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
 		})
 
 		it('shows all items after selecting an option and reopening the menu', async () => {
@@ -1608,11 +1608,6 @@ describe('SyAutocomplete', () => {
 				},
 				attachTo: document.body,
 			})
-			// syncSearchFromValue() sets suppressMenuOpen=true on mount; first input clears the flag
-			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'clear-suppress')
-			await wrapper.vm.$nextTick()
-			await flushPromises()
-			// Second input actually triggers the search event
 			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'test')
 			await wrapper.vm.$nextTick()
 			await flushPromises()
@@ -1635,10 +1630,6 @@ describe('SyAutocomplete', () => {
 				},
 				attachTo: document.body,
 			})
-			// First input clears the suppressMenuOpen flag set during initialization
-			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'clear-suppress')
-			await wrapper.vm.$nextTick()
-			// Second input triggers debounced search
 			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'query')
 			await wrapper.vm.$nextTick()
 			// Before debounce expires: pas encore émis
