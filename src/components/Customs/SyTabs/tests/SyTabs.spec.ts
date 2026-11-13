@@ -61,6 +61,18 @@ describe('SyTabs', () => {
 			})
 		})
 
+		it('conserve le libellé d’origine lorsque text-transform vaut none', () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					vuetifyOptions: {
+						tab: { 'text-transform': 'none' },
+					},
+				},
+			})
+			expect(wrapper.get('.sy-tabs__button').text()).toBe(testItems[0]?.label)
+		})
+
 		it('doit afficher le contenu de l\'onglet actif', () => {
 			const wrapper = createWrapper()
 

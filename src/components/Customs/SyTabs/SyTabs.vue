@@ -33,6 +33,7 @@
 				'base-color'?: string
 				'active-color'?: string
 				'slider-color'?: string
+				'text-transform'?: 'none' | 'capitalize' | 'uppercase' | 'lowercase'
 				'ripple'?: boolean
 			}
 		}
@@ -398,7 +399,7 @@
 									:index="index"
 									:is-active="activeItemIndex === index"
 								/>
-								{{ item.label.toUpperCase() }}
+								{{ item.label }}
 								<slot
 									name="tab-append"
 									:item="item"
@@ -443,7 +444,7 @@
 									:index="index"
 									:is-active="activeItemIndex === index"
 								/>
-								{{ item.label.toUpperCase() }}
+								{{ item.label }}
 								<slot
 									name="tab-append"
 									:item="item"
@@ -475,7 +476,7 @@
 									:index="index"
 									:is-active="activeItemIndex === index"
 								/>
-								{{ item.label.toUpperCase() }}
+								{{ item.label }}
 								<slot
 									name="tab-append"
 									:item="item"
@@ -506,7 +507,7 @@
 									:index="index"
 									:is-active="activeItemIndex === index"
 								/>
-								{{ item.label.toUpperCase() }}
+								{{ item.label }}
 								<slot
 									name="tab-append"
 									:item="item"
@@ -544,7 +545,7 @@
 									:index="index"
 									:is-active="activeItemIndex === index"
 								/>
-								{{ item.label.toUpperCase() }}
+								{{ item.label }}
 								<slot
 									name="tab-append"
 									:item="item"
@@ -622,6 +623,7 @@
 	min-height: v-bind("options.tabs.height + 'px'");
 	font-size: 0.875rem;
 	font-weight: 700;
+	text-transform: v-bind("options.tab['text-transform']");
 	background: none;
 	border: none;
 	color: v-bind("options.tab['base-color']");

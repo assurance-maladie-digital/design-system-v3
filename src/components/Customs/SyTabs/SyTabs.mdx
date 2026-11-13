@@ -56,12 +56,15 @@ Le composant peut être personnalisé via l'objet `vuetifyOptions` qui permet de
     'base-color': '#545859',      // Couleur de base des onglets (non sélectionnés)
     'active-color': '#0C419A',    // Couleur de l'onglet actif
     'slider-color': '#0C419A',    // Couleur de l'indicateur actif
+    'text-transform': 'uppercase', // Casse visuelle : uppercase, lowercase, capitalize ou none
     'ripple': false               // Effet de ripple
   }
 }
 ```
 
-<Canvas of={SyTabsStories.CustomTheme} />
+<Canvas of={SyTabsStories.CustomTabStyles} />
+
+Pour afficher les libellés tels qu'ils sont fournis (par exemple avec uniquement la première lettre en majuscule), utilisez `text-transform: 'none'`. Les couleurs des onglets inactifs, actifs et de l'indicateur se règlent avec `base-color`, `active-color` et `slider-color`.
 
 ## Bonnes pratiques
 

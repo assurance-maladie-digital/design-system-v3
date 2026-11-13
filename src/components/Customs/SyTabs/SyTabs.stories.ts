@@ -533,6 +533,53 @@ const items = [
 	},
 }
 
+/** Exemple de personnalisation de la casse et des couleurs des onglets. */
+export const CustomTabStyles: Story = {
+	args: {
+		items: [
+			{ label: 'Onglet 1', value: 'tab1' },
+			{ label: 'Onglet 2', value: 'tab2' },
+		],
+		vuetifyOptions: {
+			tab: {
+				'base-color': '#545859',
+				'active-color': '#006386',
+				'slider-color': '#006386',
+				'text-transform': 'none',
+			},
+		},
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<SyTabs
+	:items="items"
+	:vuetify-options="{
+		tab: {
+			'base-color': '#545859',
+			'active-color': '#006386',
+			'slider-color': '#006386',
+			'text-transform': 'none',
+		},
+	}"
+/>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+const items = [
+	{ label: 'Onglet 1', value: 'tab1' },
+	{ label: 'Onglet 2', value: 'tab2' },
+]
+`,
+			},
+		],
+	},
+}
+
 /**
  * Exemple de SyTabs utilisé comme menu de navigation (Routing).
  * La sémantique d'accessibilité s'adapte automatiquement (utilisation d'une balise <nav> et retrait des rôles ARIA d'onglets).
