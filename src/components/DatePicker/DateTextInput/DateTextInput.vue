@@ -250,10 +250,15 @@
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
+	const calendarHintId = `${formatDescriptionId}-calendar`
+	const hasRangeHelpText = computed(() => isRange.value && Boolean(props.helpText?.trim()))
+	const hasSeparateCalendarHint = computed(() => hasRangeHelpText.value && props.calendarActivator)
+	const describedBy = computed(() => hasSeparateCalendarHint.value
+		? `${formatDescriptionId} ${calendarHintId}`
+		: formatDescriptionId)
 	const formatDescription = computed(() => {
 		const formatHint = isRange.value ? locales.rangeFormatHint : locales.formatHint
 		const description = `${formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
-		// Quand le champ sert d'activateur de calendrier, on avertit qu'un élément va s'afficher
 		return props.calendarActivator ? `${description}. ${locales.activationOpensCalendar}` : description
 	})
 
@@ -1382,7 +1387,7 @@
 		<SyTextField
 			ref="inputRef"
 			v-model="inputValue"
-			:aria-describedby="formatDescriptionId"
+			:aria-describedby="describedBy"
 			:class="{
 				'error-field': isOnError,
 				'warning-field': isOnWarning,
@@ -1398,9 +1403,23 @@
 			@prepend-icon-click="emit('prepend-icon-click', $event)"
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>
+		<p
+			v-if="hasRangeHelpText"
+			:id="formatDescriptionId"
+			class="date-format-description"
+		>
+			{{ props.helpText }}
+		</p>
 		<DatePickerLiveRegion
+			v-else
 			:id="formatDescriptionId"
 			:text="formatDescription"
+			live="off"
+		/>
+		<DatePickerLiveRegion
+			v-if="hasSeparateCalendarHint"
+			:id="calendarHintId"
+			:text="locales.activationOpensCalendar"
 			live="off"
 		/>
 	</div>
@@ -1408,6 +1427,13 @@
 
 <style lang="scss" scoped>
 :deep(.v-icon__svg) { cursor: default; }
+
+.date-format-description {
+	margin: 4px 16px 0;
+	color: rgb(var(--v-theme-on-surface));
+	font-size: var(--v-fontSize-liensEtLibelles);
+	line-height: 1.2;
+}
 
 .warning-field {
 	:deep(.v-input__details > .v-icon),

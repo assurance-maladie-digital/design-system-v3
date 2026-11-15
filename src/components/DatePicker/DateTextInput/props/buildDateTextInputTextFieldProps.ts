@@ -35,7 +35,7 @@ export const buildDateTextInputTextFieldProps = (
 	'is-validate-on-blur': props.isValidateOnBlur,
 	'density': props.density,
 	'title': props.title,
-	'help-text': props.helpText,
+	'help-text': props.displayRange ? undefined : props.helpText,
 	'hint': props.hint,
 	'display-persistent-hint': props.persistentHint,
 	// En mode Vuetify, les `rules` sont portées par le champ texte, comme l'activateur du

@@ -91,6 +91,10 @@ const meta = {
 			description: 'Libellé du champ',
 			defaultValue: 'Période',
 		},
+		helpText: {
+			control: 'text',
+			description: 'Consigne facultative, recommandée pour indiquer l’ordre et le format de saisie. Le texte reste visible et associé au champ en cas d’erreur.',
+		},
 		required: {
 			control: 'boolean',
 			description: 'Champ obligatoire',
@@ -182,6 +186,8 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+const rangeHelpText = 'Saisissez la date de début puis la date de fin, chacune au format JJ/MM/AAAA. Les deux dates sont séparées par un tiret. Exemple : 12/03/2026 - 18/04/2026.'
+
 export const Default: Story = {
 	parameters: {
 		sourceCode: [
@@ -193,7 +199,7 @@ export const Default: Story = {
 						v-model="dateRange"
 						format="DD/MM/YYYY"
 						label="Période d'hospitalisation"
-						help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret"
+						help-text="${rangeHelpText}"
 						display-range
 						no-calendar
 					/>
@@ -205,7 +211,7 @@ export const Default: Story = {
 	args: {
 		'format': 'DD/MM/YYYY',
 		'label': 'Période d\'hospitalisation',
-		'helpText': 'Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret',
+		'helpText': rangeHelpText,
 		'displayRange': true,
 		'displayIcon': true,
 		'isOutlined': true,
