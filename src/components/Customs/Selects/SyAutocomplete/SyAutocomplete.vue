@@ -201,12 +201,21 @@
 		})
 	})
 
+	let debounceHandle: ReturnType<typeof setTimeout> | null = null
+
+	function cancelPendingSearch() {
+		if (debounceHandle === null) return
+		clearTimeout(debounceHandle)
+		debounceHandle = null
+	}
+
 	const selectItem = (item: ItemType | SelectPrimitive | null | undefined) => {
 		markInteracted()
 		if (item === null || item === undefined) {
 			clearValidation()
 		}
 		if (!props.multiple && item != null) {
+			cancelPendingSearch()
 			const selectedText
 				= typeof item === 'object'
 					? getPlainText(item)
@@ -246,8 +255,6 @@
 		}
 	})
 
-	let debounceHandle: ReturnType<typeof setTimeout> | null = null
-
 	watch(search, () => {
 		if (suppressMenuOpen.value) {
 			suppressMenuOpen.value = false
@@ -260,11 +267,9 @@
 
 		focusInput(textFieldRef)
 
-		if (debounceHandle) {
-			clearTimeout(debounceHandle)
-		}
-
+		cancelPendingSearch()
 		debounceHandle = setTimeout(() => {
+			debounceHandle = null
 			emit('search', search.value)
 		}, props.debounce)
 	})
@@ -364,10 +369,7 @@
 	// complète. Le debounce en cours est annulé pour qu'une recherche abandonnée ne soit
 	// pas émise après la recherche vide.
 	const emitEmptySearch = () => {
-		if (debounceHandle) {
-			clearTimeout(debounceHandle)
-			debounceHandle = null
-		}
+		cancelPendingSearch()
 		emit('search', '')
 	}
 
