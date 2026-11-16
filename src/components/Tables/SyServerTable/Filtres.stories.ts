@@ -116,6 +116,8 @@ export const ServerFilterByText: Story = {
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par texte"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -280,7 +282,8 @@ export const ServerFilterByText: Story = {
 				filterType: 'text',
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs filtrés par texte',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -319,6 +322,8 @@ export const ServerFilterByNumber: Story = {
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par nombre"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -491,7 +496,8 @@ export const ServerFilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs filtrés par nombre',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -531,6 +537,8 @@ export const ServerFilterBySelect: Story = {
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par liste de choix"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -733,7 +741,8 @@ export const ServerFilterBySelect: Story = {
 				],
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs filtrés par liste de choix',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -773,6 +782,8 @@ export const ServerFilterBySelectMultiple: Story = {
 				code: `
 		<template>
 			<SyServerTable
+				caption="Utilisateurs filtrés par choix multiples"
+				hide-caption
 				v-model:options="options"
 				:items="filteredUsers"
 				:headers="headers"
@@ -983,7 +994,8 @@ export const ServerFilterBySelectMultiple: Story = {
 				],
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs filtrés par choix multiples',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -1023,6 +1035,8 @@ export const ServerFilterByAutocomplete: Story = {
 				code: `
 		<template>
 			<SyServerTable
+				caption="Utilisateurs filtrés par saisie assistée"
+				hide-caption
 				v-model:options="options"
 				:items="filteredUsers"
 				:headers="headers"
@@ -1136,6 +1150,8 @@ export const ServerFilterByAutocomplete: Story = {
 		],
 	},
 	args: {
+		caption: 'Utilisateurs filtrés par saisie assistée',
+		hideCaption: true,
 		headers: [
 			{
 				title: 'Nom',
@@ -1201,6 +1217,8 @@ export const ServerFilterByExacteDate: Story = {
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par date exacte"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -1353,7 +1371,8 @@ export const ServerFilterByExacteDate: Story = {
 			page: 1,
 			filters: [],
 		},
-		caption: '',
+		caption: 'Utilisateurs filtrés par date exacte',
+		hideCaption: true,
 		suffix: 'server-filter-date',
 		density: 'default',
 		striped: false,
@@ -1386,6 +1405,8 @@ export const ServerFilterByPeriod: Story = {
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par période"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -1555,7 +1576,8 @@ export const ServerFilterByPeriod: Story = {
 			page: 1,
 			filters: [],
 		},
-		caption: '',
+		caption: 'Utilisateurs filtrés par période',
+		hideCaption: true,
 		suffix: 'server-filter-date',
 		density: 'default',
 		striped: false,
@@ -1588,6 +1610,8 @@ export const CustomFilterSlot: Story = {
 				code: `
 				<template>
 					<SyServerTable
+						caption="Utilisateurs avec filtre personnalisé"
+						hide-caption
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
@@ -1814,7 +1838,8 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs avec filtre personnalisé',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 4,
 			page: 1,
@@ -1898,6 +1923,8 @@ export const CustomFilterInputs: Story = {
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs avec champs de filtre personnalisés"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -2087,7 +2114,8 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs avec champs de filtre personnalisés',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,

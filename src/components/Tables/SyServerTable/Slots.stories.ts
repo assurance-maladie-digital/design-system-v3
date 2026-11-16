@@ -101,6 +101,8 @@ export const SlotItem: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec cellules personnalisées"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -131,7 +133,8 @@ export const SlotItem: Story = {
 	args: {
 		options: { ...defaultSortOptions },
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec cellules personnalisées',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'server-slot-item',
 		density: 'default',
@@ -178,6 +181,8 @@ export const SlotHeaders: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec en-têtes personnalisés"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -206,7 +211,8 @@ export const SlotHeaders: Story = {
 	args: {
 		options: { ...defaultSortOptions },
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec en-têtes personnalisés',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'server-slot-headers',
 		density: 'default',
@@ -251,6 +257,8 @@ export const SlotHeader: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec en-tête de colonne personnalisé"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -275,7 +283,8 @@ export const SlotHeader: Story = {
 	args: {
 		options: { ...defaultSortOptions },
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec en-tête de colonne personnalisé',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'server-slot-header',
 		density: 'default',
@@ -317,6 +326,8 @@ export const ComplexItemsDisplay: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec données complexes"
+		hide-caption
 		v-model:options="options"
 		:items="items"
 		:headers="headers"
@@ -378,7 +389,8 @@ export const ComplexItemsDisplay: Story = {
 			page: 1,
 		},
 		headers: projectHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec données complexes',
+		hideCaption: true,
 		serverItemsLength: 6,
 		suffix: 'server-complex-item',
 		density: 'default',

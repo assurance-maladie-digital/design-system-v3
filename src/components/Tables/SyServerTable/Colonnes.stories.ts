@@ -59,6 +59,8 @@ export const DataAlignment: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec alignement des colonnes"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -117,7 +119,8 @@ export const DataAlignment: Story = {
 			page: 1,
 		},
 		headers: alignmentHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec alignement des colonnes',
+		hideCaption: true,
 		serverItemsLength: 3,
 		suffix: 'server-data-alignment',
 		density: 'default',
@@ -155,6 +158,8 @@ export const ResizableColumns: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec colonnes redimensionnables"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -213,7 +218,8 @@ export const ResizableColumns: Story = {
 			page: 1,
 		},
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec colonnes redimensionnables',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'server-resizable-columns',
 		density: 'default',
@@ -254,6 +260,8 @@ export const PinnedColumns: Story = {
 <template>
 	<div style="max-width: 900px; overflow: auto;">
 		<SyServerTable
+			caption="Utilisateurs avec colonnes figées"
+			hide-caption
 			v-model:options="options"
 			:headers="headers"
 			:items="items"
@@ -315,6 +323,8 @@ export const PinnedColumns: Story = {
 		],
 	},
 	args: {
+		caption: 'Utilisateurs avec colonnes figées',
+		hideCaption: true,
 		options: { itemsPerPage: 5, page: 1 },
 		headers: wideHeaders,
 		serverItemsLength: 30,
@@ -359,6 +369,8 @@ export const ColumnControls: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec colonnes configurables"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -417,7 +429,8 @@ export const ColumnControls: Story = {
 			page: 1,
 		},
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec colonnes configurables',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'server-control-columns',
 		density: 'default',

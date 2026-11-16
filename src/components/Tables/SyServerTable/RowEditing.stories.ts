@@ -50,6 +50,8 @@ const baseItems = [
  */
 export const Default: Story = {
 	args: {
+		caption: 'Utilisateurs modifiables ligne par ligne',
+		hideCaption: true,
 		suffix: 'server-row-editing',
 		serverItemsLength: baseItems.length,
 		editable: true,
@@ -105,6 +107,8 @@ export const Default: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs modifiables ligne par ligne"
+		hide-caption
 		suffix="server-row-editing"
 		editable
 		selection-key="id"
@@ -187,6 +191,8 @@ export const Default: Story = {
  */
 export const CustomEditor: Story = {
 	args: {
+		caption: 'Utilisateurs modifiables avec éditeur personnalisé',
+		hideCaption: true,
 		suffix: 'server-row-editing-custom',
 		serverItemsLength: baseItems.length,
 		editable: true,
@@ -244,6 +250,8 @@ export const CustomEditor: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs modifiables avec éditeur personnalisé"
+		hide-caption
 		suffix="server-row-editing-custom"
 		editable
 		selection-key="id"
@@ -334,6 +342,8 @@ export const CustomEditor: Story = {
  */
 export const NonPrimitiveEditor: Story = {
 	args: {
+		caption: 'Utilisateurs modifiables avec valeurs non primitives',
+		hideCaption: true,
 		suffix: 'server-row-editing-nonprimitive',
 		serverItemsLength: 2,
 		editable: true,
@@ -410,6 +420,8 @@ export const NonPrimitiveEditor: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs modifiables avec valeurs non primitives"
+		hide-caption
 		suffix="server-row-editing-nonprimitive"
 		editable
 		selection-key="id"

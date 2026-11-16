@@ -46,6 +46,8 @@ export const RowSelection: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec sélection multiple"
+		hide-caption
 		v-model:options="options"
 		v-model="selection"
 		:headers="headers"
@@ -107,7 +109,8 @@ export const RowSelection: Story = {
 	args: {
 		options: { itemsPerPage: 5, page: 1 },
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec sélection multiple',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'selection-server-table',
 		density: 'default',
@@ -159,6 +162,8 @@ export const SingleRowSelection: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec sélection unique"
+		hide-caption
 		v-model:options="options"
 		v-model="selection"
 		:headers="headers"
@@ -219,7 +224,8 @@ export const SingleRowSelection: Story = {
 	args: {
 		options: { itemsPerPage: 5, page: 1 },
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec sélection unique',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'selection-server-table',
 		density: 'default',

@@ -57,6 +57,8 @@ export const ServerSortBy: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs triés côté serveur"
+		hide-caption
 		v-model:options="options"
 		:headers="headers"
 		:items="users"
@@ -115,7 +117,8 @@ export const ServerSortBy: Story = {
 			page: 1,
 		},
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs triés côté serveur',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'server-sort',
 		density: 'default',
@@ -153,6 +156,8 @@ export const ServerMultiSort: Story = {
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs triés sur plusieurs colonnes"
+		hide-caption
 		v-model:options="options"
 		:headers="headers"
 		:items="users"
@@ -214,7 +219,8 @@ export const ServerMultiSort: Story = {
 			page: 1,
 		},
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs triés sur plusieurs colonnes',
+		hideCaption: true,
 		serverItemsLength: 7,
 		suffix: 'server-multi-sort',
 		density: 'default',

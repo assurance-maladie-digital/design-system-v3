@@ -57,6 +57,8 @@ export const ClickableRow: Story = {
 <template>
 	<div>
 		<SyServerTable
+			caption="Utilisateurs avec lignes cliquables"
+			hide-caption
 			v-model:options="options"
 			:headers="headers"
 			:items="users"
@@ -127,6 +129,8 @@ export const ClickableRow: Story = {
 		],
 	},
 	args: {
+		caption: 'Utilisateurs avec lignes cliquables',
+		hideCaption: true,
 		headers: serverHeaders,
 		items: clickableUsers,
 		serverItemsLength: 4,
@@ -198,6 +202,8 @@ export const ClickableRow: Story = {
 				},
 				template: `
 					<SyServerTable
+						caption="Utilisateurs avec lignes cliquables"
+						hide-caption
 						v-model:options="options"
 						v-bind="boundArgs"
 						:items="users"

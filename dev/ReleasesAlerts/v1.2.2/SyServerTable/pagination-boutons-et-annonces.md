@@ -12,6 +12,7 @@ Nouvelle prop, alignée sur `SyTable` :
 
 ## Conduite à tenir
 
+- La case « Sélectionner toutes les lignes » n’a plus d’`aria-label` : son nom vient de son `<label>`. L’`aria-label` doublait le nom de l’en-tête de colonne pour les lecteurs d’écran (« Sélectionner toutes les lignes Sélectionner toutes les lignes »). Les tests qui la ciblent par `[aria-label="Sélectionner toutes les lignes"]` doivent passer par son nom accessible (par exemple `getByRole('checkbox', { name: 'Sélectionner toutes les lignes' })`).
 - Adapter les tests E2E ciblant les liens de pagination pour cibler les boutons (par exemple le bouton « Page 2 »).
 - Adapter les surcharges CSS ciblant `.sy-pagination a` pour inclure `.sy-pagination button`.
 - Donner une `caption` descriptive et distincte à chaque tableau présent sur une même page, y compris lorsqu’elle ne doit pas être affichée : utiliser alors `hideCaption`.

@@ -464,7 +464,6 @@
 										density="compact"
 										hide-details
 										:is-header="true"
-										:aria-label="locales.selectAllRows"
 										:title="locales.selectAllRows"
 										@click="toggleAllRows"
 									>
