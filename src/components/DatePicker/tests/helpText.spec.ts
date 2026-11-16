@@ -48,6 +48,18 @@ describe.each(modes)('helpText – $name', ({ component, props }) => {
 		wrapper.unmount()
 	})
 
+	it('masque le texte d\'aide avec hideDetails', async () => {
+		const wrapper = mount(component, {
+			props: { label: 'Date de naissance', helpText, hideDetails: true, ...props },
+		})
+		await flushPromises()
+
+		expect(wrapper.find('.v-input__details').exists()).toBe(false)
+		expect(wrapper.text()).not.toContain(helpText)
+
+		wrapper.unmount()
+	})
+
 	it('n\'affiche aucun texte d\'aide par défaut', () => {
 		const wrapper = mount(component, {
 			props: { label: 'Date de naissance', ...props },

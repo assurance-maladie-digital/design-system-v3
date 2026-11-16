@@ -1034,6 +1034,26 @@ describe('DateTextInput.clean', () => {
 		expect(describedTexts).toEqual([helpText])
 	})
 
+	it('replaces the hidden format description with the helpText of a single date', async () => {
+		const helpText = 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres'
+		const wrapper = mountComponent({ label: 'Date de naissance', format: 'DD/MM/YYYY', helpText })
+		await flushPromises()
+
+		// Une seule annonce du format : celle du helpText
+		const describedTexts = (wrapper.get('input').attributes('aria-describedby') ?? '')
+			.split(/\s+/)
+			.filter(Boolean)
+			.map(id => wrapper.get(`[id="${id}"]`).text())
+		expect(describedTexts).toEqual([helpText])
+	})
+
+	it('forwards hideDetails to the text field', () => {
+		const wrapper = mountComponent({ label: 'Date', format: 'DD/MM/YYYY', helpText: 'Consigne', hideDetails: true })
+
+		expect(wrapper.find('.v-input__details').exists()).toBe(false)
+		expect(wrapper.text()).not.toContain('Consigne')
+	})
+
 	it('preserves the business label as accessible name and does not announce the description redundantly', async () => {
 		const wrapper = mountComponent({
 			label: 'Date de naissance',
