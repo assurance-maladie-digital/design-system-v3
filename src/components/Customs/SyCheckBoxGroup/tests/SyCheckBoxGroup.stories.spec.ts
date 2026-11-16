@@ -23,13 +23,15 @@ describe('SyCheckBoxGroup stories', () => {
 		const wrapper = mount(MultipleRequired())
 		const checkboxes = wrapper.findAll('input[type="checkbox"]')
 
-		await checkboxes[0]?.setValue(true)
+		// Échec explicite si les cases attendues sont absentes
+		expect(checkboxes).toHaveLength(3)
+		await checkboxes[0]!.setValue(true)
 		await wrapper.get('form').trigger('submit')
 		await flushPromises()
 
 		expect(wrapper.text()).toContain('Veuillez sélectionner au moins 2 options.')
 
-		await checkboxes[1]?.setValue(true)
+		await checkboxes[1]!.setValue(true)
 		await flushPromises()
 
 		expect(wrapper.text()).not.toContain('Veuillez sélectionner au moins 2 options.')
@@ -40,7 +42,7 @@ describe('SyCheckBoxGroup stories', () => {
 		const checkboxes = wrapper.findAll('input[type="checkbox"]')
 
 		expect(checkboxes).toHaveLength(3)
-		await checkboxes[1]?.setValue(true)
+		await checkboxes[1]!.setValue(true)
 		await flushPromises()
 
 		expect(wrapper.text()).toContain('Sélection : a')
@@ -62,22 +64,28 @@ describe('SyCheckBoxGroup stories', () => {
 		const wrapper = mount(CustomRules({ 'onUpdate:modelValue': onUpdate }))
 		const checkboxes = wrapper.findAll('input[type="checkbox"]')
 
-		await checkboxes[1]?.setValue(true)
+		expect(checkboxes).toHaveLength(2)
+		await checkboxes[1]!.setValue(true)
 		await flushPromises()
 
 		expect(wrapper.text()).toContain('Vous devez sélectionner l\'option A')
 		expect(onUpdate).toHaveBeenNthCalledWith(1, 'B')
 
-		await checkboxes[0]?.setValue(true)
+		await checkboxes[0]!.setValue(true)
 		await flushPromises()
 
 		expect(wrapper.text()).toContain('Option A sélectionnée')
 		expect(onUpdate).toHaveBeenNthCalledWith(2, 'A')
 	})
+
+	it('CustomRules verrouille le control multiple (les règles attendent une valeur unique)', () => {
+		expect(validationStories.CustomRules.argTypes?.multiple).toMatchObject({ control: false })
+	})
 })
 
 async function checkedAfterClickingBAndC(wrapper: ReturnType<typeof mount>): Promise<boolean[]> {
 	const inputs = wrapper.findAll('input[type="checkbox"]')
+	expect(inputs.length).toBeGreaterThanOrEqual(3)
 	await inputs[1]!.trigger('click')
 	await inputs[2]!.trigger('click')
 	await flushPromises()

@@ -972,6 +972,12 @@ export const CustomRules: Story = {
 		'isValidateOnBlur': false,
 		'onUpdate:modelValue': fn(),
 	},
+	argTypes: {
+		multiple: {
+			control: false,
+			description: 'Verrouillé à false : les règles comparent une valeur unique, pas un tableau de sélections.',
+		},
+	},
 	parameters: {
 		docs: {
 			description: {
