@@ -205,7 +205,7 @@ const meta = {
 		'navigation-menu-content': {
 			control: { type: 'text' },
 			description:
-        'Remplace le contenu du menu de navigation (mobile). Utiliser les composants `HeaderMenuSection` et `HeaderMenuItem`.',
+				'Remplace le contenu du menu de navigation (mobile), rendu dans un `div`. Fournir un `ul` autour des `HeaderMenuItem` pour une liste simple ou autour des `HeaderMenuSection` pour regrouper les items ; chaque section fournit son propre `ul` interne.',
 			table: {
 				type: {
 					summary: '{ menu-open: boolean }',

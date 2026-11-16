@@ -2,7 +2,6 @@
 	import HeaderBar from '@/components/HeaderBar/HeaderBar.vue'
 	import HeaderBurgerMenu from '@/components/HeaderBar/HeaderBurgerMenu/HeaderBurgerMenu.vue'
 	import HeaderMenuItem from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuItem/HeaderMenuItem.vue'
-	import HeaderMenuSection from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { computed, ref } from 'vue'
@@ -147,6 +146,7 @@
 			<HeaderBurgerMenu
 				v-if="verticalMenu"
 				v-model="menuOpen"
+				inner-tag="div"
 			>
 				<div class="inner-vertical-menu">
 					<slot
@@ -158,7 +158,7 @@
 							name="navigation-menu-content"
 							:menu-open="menuOpen"
 						>
-							<HeaderMenuSection>
+							<ul class="header-menu__list">
 								<HeaderMenuItem
 									v-for="item in items"
 									:key="item.label"
@@ -187,7 +187,7 @@
 										{{ item.label }}
 									</span>
 								</HeaderMenuItem>
-							</HeaderMenuSection>
+							</ul>
 						</slot>
 					</div>
 					<slot
@@ -260,5 +260,11 @@
 	opacity: 0.38;
 	color: rgba(var(--v-theme-on-surface), 0.38);
 	cursor: not-allowed;
+}
+
+.header-menu__list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 </style>
