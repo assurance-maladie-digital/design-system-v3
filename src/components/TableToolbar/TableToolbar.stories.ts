@@ -4,6 +4,7 @@ import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { ref, computed } from 'vue'
 import { fn } from 'storybook/test'
 import SyTable from '@/components/Tables/SyTable/SyTable.vue'
+import { VBtn } from 'vuetify/components'
 
 const meta = {
 	title: 'Composants/Tableaux/TableToolbar',
@@ -570,7 +571,6 @@ export const Loading: Story = {
 						v-model:search="search"
 						:nb-total="items.length"
 						:nb-filtered="filteredItems.length"
-						loading
 					/>
 				</template>
 			</SyTable>
@@ -929,7 +929,7 @@ export const OtherSlots: Story = {
 		'vuetifyOptions': defaultVuetifyOptions,
 	},
 	render: args => ({
-		components: { TableToolbar, SyTable },
+		components: { TableToolbar, SyTable, VBtn },
 		setup() {
 			const search = ref('')
 			const filteredItems = createFilteredItems(search)
@@ -1012,6 +1012,7 @@ export const OtherSlots: Story = {
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
 	import { SyTable, TableToolbar } from '@cnamts/synapse'
+	import { VBtn } from 'vuetify/components'
 
 	const headers = [
 		{ title: 'Nom', sortable: true, key: 'lastname' },
