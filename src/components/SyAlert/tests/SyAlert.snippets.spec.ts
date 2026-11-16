@@ -3,7 +3,7 @@ import { composeStories } from '@storybook/vue3-vite'
 import * as vue from 'vue'
 import * as vuetifyComponents from 'vuetify/components'
 import * as mdi from '@mdi/js'
-import { analyzeSnippet, getMissingSnippetImports } from '@tests/helpers/storySnippets'
+import { analyzeSnippet, findUnknownSnippetImports } from '@tests/helpers/storySnippets'
 import * as synapse from '@/main'
 import * as stories from '../SyAlert.stories'
 
@@ -29,6 +29,6 @@ describe('SyAlert snippets', () => {
 	})
 
 	it.each(allStories)('l\'extrait de $name n\'importe que des exports réellement disponibles', ({ story }) => {
-		expect(getMissingSnippetImports(story, modules)).toEqual([])
+		expect(findUnknownSnippetImports(story, modules)).toEqual([])
 	})
 })

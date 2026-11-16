@@ -161,7 +161,7 @@ export function evaluateSnippetBinding(
  * Un module absent de `modules` est signalé pour chacun de ses imports.
  * Les imports de type (`import type`, `import { type X }`) sont ignorés : ils n'existent pas à l'exécution.
  */
-export function getMissingSnippetImports(
+export function findUnknownSnippetImports(
 	story: StoryWithSourceCode,
 	modules: Record<string, Record<string, unknown>>,
 ): string[] {
