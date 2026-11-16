@@ -251,11 +251,14 @@
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
 	const calendarHintId = `${formatDescriptionId}-calendar`
+	// En plage, le helpText (affiché et associé au champ par SyTextField) remplace la
+	// description de format masquée : seul l'avertissement du calendrier reste à part.
 	const hasRangeHelpText = computed(() => isRange.value && Boolean(props.helpText?.trim()))
 	const hasSeparateCalendarHint = computed(() => hasRangeHelpText.value && props.calendarActivator)
-	const describedBy = computed(() => hasSeparateCalendarHint.value
-		? `${formatDescriptionId} ${calendarHintId}`
-		: formatDescriptionId)
+	const describedBy = computed(() => {
+		if (!hasRangeHelpText.value) return formatDescriptionId
+		return hasSeparateCalendarHint.value ? calendarHintId : undefined
+	})
 	const formatDescription = computed(() => {
 		const formatHint = isRange.value ? locales.rangeFormatHint : locales.formatHint
 		const description = `${formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
@@ -1403,15 +1406,8 @@
 			@prepend-icon-click="emit('prepend-icon-click', $event)"
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>
-		<p
-			v-if="hasRangeHelpText"
-			:id="formatDescriptionId"
-			class="date-format-description"
-		>
-			{{ props.helpText }}
-		</p>
 		<DatePickerLiveRegion
-			v-else
+			v-if="!hasRangeHelpText"
 			:id="formatDescriptionId"
 			:text="formatDescription"
 			live="off"
@@ -1427,13 +1423,6 @@
 
 <style lang="scss" scoped>
 :deep(.v-icon__svg) { cursor: default; }
-
-.date-format-description {
-	margin: 4px 16px 0;
-	color: rgb(var(--v-theme-on-surface));
-	font-size: var(--v-fontSize-liensEtLibelles);
-	line-height: 1.2;
-}
 
 .warning-field {
 	:deep(.v-input__details > .v-icon),

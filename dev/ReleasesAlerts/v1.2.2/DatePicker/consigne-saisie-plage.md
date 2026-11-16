@@ -1,6 +1,6 @@
 # DatePicker — description accessible des plages de dates
 
-En saisie de plage (`displayRange` avec `noCalendar` ou `useCombinedMode`), le texte fourni via `helpText` est visible sous le champ et lui reste associé via `aria-describedby` lorsque la saisie est invalide. Ce texte remplace la description de format masquée. En l’absence de `helpText`, la description masquée indique le format et l’ordre des dates.
+En saisie de plage (`displayRange` avec `noCalendar` ou `useCombinedMode`), le texte fourni via `helpText` est affiché et associé au champ (`aria-describedby`) comme pour une date simple : sous le champ, et toujours associé lorsque la saisie est invalide. Il remplace alors la description de format masquée, qui ne double plus la consigne. En l’absence de `helpText`, la description masquée indique l’ordre des dates (« Date de début, puis date de fin ») et le format de chacune.
 
 ## Conduite à tenir
 

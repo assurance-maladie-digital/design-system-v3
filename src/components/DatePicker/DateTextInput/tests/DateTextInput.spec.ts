@@ -1017,6 +1017,23 @@ describe('DateTextInput.clean', () => {
 		expect(description.text()).toBe('Date de début, puis date de fin. Pour chaque date : année sur 4 chiffres, mois sur 2 chiffres, jour sur 2 chiffres')
 	})
 
+	it('renders the range helpText like a single date, through SyTextField', async () => {
+		const helpText = 'Saisissez la date de début puis la date de fin.'
+		const range = mountComponent({ label: 'Période', displayRange: true, format: 'DD/MM/YYYY', helpText })
+		const single = mountComponent({ label: 'Date', format: 'DD/MM/YYYY', helpText })
+		await flushPromises()
+
+		// Même emplacement qu'en date simple : la zone de messages du champ
+		expect(range.find('.v-messages').text()).toBe(helpText)
+		expect(single.find('.v-messages').text()).toBe(helpText)
+		// Le helpText remplace la description de format masquée, sans doublon
+		const describedTexts = (range.get('input').attributes('aria-describedby') ?? '')
+			.split(/\s+/)
+			.filter(Boolean)
+			.map(id => range.get(`[id="${id}"]`).text())
+		expect(describedTexts).toEqual([helpText])
+	})
+
 	it('preserves the business label as accessible name and does not announce the description redundantly', async () => {
 		const wrapper = mountComponent({
 			label: 'Date de naissance',

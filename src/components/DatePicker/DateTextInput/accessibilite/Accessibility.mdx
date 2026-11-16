@@ -53,7 +53,7 @@ import {
 
 	<BestPracticesSection>
 		- Fournir un <code>label</code> explicite; utiliser <code>aria-label</code> ou <code>aria-labelledby</code> uniquement lorsque le label visible n’est pas disponible.
-		- Garder un <code>label</code> court et distinct, par exemple « Date de naissance » pour une date simple.
+		- Garder un <code>label</code> court et distinct, par exemple « Date de naissance » pour une date simple, et indiquer le format attendu une seule fois, dans <code>helpText</code> (ex. « Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres ») : il reste visible même en cas d’erreur. Ne pas répéter le format dans le <code>label</code>, sinon les technologies d’assistance l’annoncent en double.
 		- Si le champ sert d’activateur d’un calendrier, activer la prop <code>calendarActivator</code> pour que l’utilisateur soit averti de l’affichage du calendrier (« Activation ouvre un calendrier » ajouté à la description <code>aria-describedby</code>).
 		- Si un <code>placeholder</code> est fourni, l’aligner sur <code>format</code>.
 		- Laisser <code>isValidateOnBlur</code> à <code>true</code> si la validation doit attendre la sortie du champ; déclencher <code>validateOnSubmit()</code> au submit.

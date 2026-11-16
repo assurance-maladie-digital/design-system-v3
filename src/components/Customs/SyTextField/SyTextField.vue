@@ -13,7 +13,7 @@
 		mdiChevronUp,
 		mdiChevronDown,
 	} from '@mdi/js'
-	import { computed, onMounted, readonly as readonlyState, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
+	import { computed, onMounted, readonly as readonlyState, ref, watch, nextTick, useAttrs, useId, type ComponentPublicInstance, toRef } from 'vue'
 	import type { IconType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
@@ -372,6 +372,29 @@
 
 	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
 
+	// Le helpText affiché sous le champ (quand des messages occupent la zone de messages)
+	// reste associé au champ via aria-describedby, comme lorsqu'il est affiché en hint.
+	const helpTextId = `sy-text-field-help-${useId()}`
+
+	const syncHelpTextDescribedby = () => {
+		const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+		if (!inputElement) return
+		const ids = (inputElement.getAttribute('aria-describedby') ?? '')
+			.split(' ')
+			.filter((id: string) => id.trim() && id !== helpTextId)
+		if (showHelpTextBelow.value) {
+			ids.push(helpTextId)
+		}
+		if (ids.length > 0) {
+			inputElement.setAttribute('aria-describedby', ids.join(' '))
+		}
+		else {
+			inputElement.removeAttribute('aria-describedby')
+		}
+	}
+
+	watch(showHelpTextBelow, syncHelpTextDescribedby, { flush: 'post' })
+
 	onMounted(() => {
 		nextTick(() => {
 			const removeSvgRole = () => {
@@ -484,6 +507,7 @@
 			}
 
 			setupAriaDescribedby()
+			syncHelpTextDescribedby()
 		})
 
 		// Watch for error state changes to update aria-describedby dynamically
@@ -849,6 +873,7 @@
 
 		<div
 			v-if="showHelpTextBelow"
+			:id="helpTextId"
 			class="help-text-below px-4 mt-1"
 			:class="{ 'text-disabled': props.disabled }"
 		>

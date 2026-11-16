@@ -111,4 +111,33 @@ describe('SyTextField – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('keeps the helpText associated with the input when an error message is shown', async () => {
+		const helpText = 'Format attendu : 10 chiffres'
+		const wrapper = mount(SyTextField, {
+			props: { label: 'Téléphone', helpText, required: true },
+			attachTo: document.body,
+		})
+		await flushPromises()
+		const input = wrapper.get('input')
+		const describedTexts = () => (input.attributes('aria-describedby') ?? '')
+			.split(/\s+/)
+			.filter(Boolean)
+			.map(id => wrapper.get(`[id="${id}"]`).text())
+
+		// Sans erreur : le helpText occupe la zone de messages, associée au champ
+		expect(describedTexts()).toEqual([helpText])
+
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await flushPromises()
+
+		// Avec erreur : le helpText passe sous le champ et reste associé, après le message d'erreur
+		expect(describedTexts()).toEqual(['Le champ Téléphone est requis.', helpText])
+		assertNoA11yViolations(await axe(wrapper.element as HTMLElement), 'SyTextField – helpText with error', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })

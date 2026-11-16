@@ -87,10 +87,12 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 				helpText,
 			},
 		})
+		// SyTextField associe sa zone de messages (qui affiche le helpText) après le rendu
+		await flushPromises()
 		const input = wrapper.get('input')
 		const descriptions = input.attributes('aria-describedby')?.split(/\s+/)
 			.map(id => wrapper.get(`[id="${id}"]`).text())
-		expect(descriptions).toEqual([helpText, locales.activationOpensCalendar])
+		expect(descriptions).toEqual([locales.activationOpensCalendar, helpText])
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'DatePicker – combined mode with range', {
@@ -111,6 +113,8 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 				required: true,
 			},
 		})
+		// SyTextField associe sa zone de messages (qui affiche le helpText) après le rendu
+		await flushPromises()
 		const input = wrapper.get('input')
 		const getDescriptions = () => (input.attributes('aria-describedby') ?? '')
 			.split(/\s+/)
