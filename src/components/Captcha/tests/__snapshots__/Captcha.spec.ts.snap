@@ -117,8 +117,8 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                     v-field-label
                     v-label
                   "
-                  for="input-v-4"
-                  id="input-v-4-label"
+                  for="input-v-5"
+                  id="input-v-5-label"
                 >
                   <!---->
                   Caractères de l’image
@@ -126,11 +126,11 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                 <!---->
                 <input
                   aria-label="Caractères de l’image"
-                  aria-labelledby="input-v-4-label"
+                  aria-labelledby="input-v-5-label"
                   aria-required="true"
                   autocomplete="off"
                   class="v-field__input"
-                  id="input-v-4"
+                  id="input-v-5"
                   title="Caractères de l’image"
                   type="text"
                 />
@@ -447,8 +447,8 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                     v-field-label
                     v-label
                   "
-                  for="input-v-3"
-                  id="input-v-3-label"
+                  for="input-v-4"
+                  id="input-v-4-label"
                 >
                   <!---->
                   Caractères de l’image
@@ -456,11 +456,11 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                 <!---->
                 <input
                   aria-label="Caractères de l’image"
-                  aria-labelledby="input-v-3-label"
+                  aria-labelledby="input-v-4-label"
                   aria-required="true"
                   autocomplete="off"
                   class="v-field__input"
-                  id="input-v-3"
+                  id="input-v-4"
                   title="Caractères de l’image"
                   type="text"
                 />

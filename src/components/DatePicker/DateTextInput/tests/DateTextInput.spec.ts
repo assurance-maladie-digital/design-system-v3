@@ -998,6 +998,62 @@ describe('DateTextInput.clean', () => {
 		expect(descriptionEl?.textContent).toContain('année sur 4 chiffres, mois sur 2 chiffres, jour sur 2 chiffres')
 	})
 
+	it('describes the start and end dates and their format in range mode', () => {
+		const wrapper = mountComponent({
+			label: 'Période',
+			displayRange: true,
+			format: 'YYYY-MM-DD',
+		})
+
+		const input = wrapper.get('input')
+		expect(input.attributes('aria-label')).toBe('Période')
+
+		const descriptionId = input.attributes('aria-describedby')
+			?.split(' ')
+			.find(id => id.startsWith('date-format-desc-'))
+
+		const description = wrapper.get(`[id="${descriptionId}"]`)
+		expect(description.attributes('aria-live')).toBe('off')
+		expect(description.text()).toBe('Date de début, puis date de fin. Pour chaque date : année sur 4 chiffres, mois sur 2 chiffres, jour sur 2 chiffres')
+	})
+
+	it('renders the range helpText like a single date, through SyTextField', async () => {
+		const helpText = 'Saisissez la date de début puis la date de fin.'
+		const range = mountComponent({ label: 'Période', displayRange: true, format: 'DD/MM/YYYY', helpText })
+		const single = mountComponent({ label: 'Date', format: 'DD/MM/YYYY', helpText })
+		await flushPromises()
+
+		// Même emplacement qu'en date simple : la zone de messages du champ
+		expect(range.find('.v-messages').text()).toBe(helpText)
+		expect(single.find('.v-messages').text()).toBe(helpText)
+		// Le helpText remplace la description de format masquée, sans doublon
+		const describedTexts = (range.get('input').attributes('aria-describedby') ?? '')
+			.split(/\s+/)
+			.filter(Boolean)
+			.map(id => range.get(`[id="${id}"]`).text())
+		expect(describedTexts).toEqual([helpText])
+	})
+
+	it('replaces the hidden format description with the helpText of a single date', async () => {
+		const helpText = 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres'
+		const wrapper = mountComponent({ label: 'Date de naissance', format: 'DD/MM/YYYY', helpText })
+		await flushPromises()
+
+		// Une seule annonce du format : celle du helpText
+		const describedTexts = (wrapper.get('input').attributes('aria-describedby') ?? '')
+			.split(/\s+/)
+			.filter(Boolean)
+			.map(id => wrapper.get(`[id="${id}"]`).text())
+		expect(describedTexts).toEqual([helpText])
+	})
+
+	it('forwards hideDetails to the text field', () => {
+		const wrapper = mountComponent({ label: 'Date', format: 'DD/MM/YYYY', helpText: 'Consigne', hideDetails: true })
+
+		expect(wrapper.find('.v-input__details').exists()).toBe(false)
+		expect(wrapper.text()).not.toContain('Consigne')
+	})
+
 	it('preserves the business label as accessible name and does not announce the description redundantly', async () => {
 		const wrapper = mountComponent({
 			label: 'Date de naissance',

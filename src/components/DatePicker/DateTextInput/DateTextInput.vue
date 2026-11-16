@@ -99,6 +99,7 @@
 		format: locales.formatDefault,
 		hint: undefined,
 		isOutlined: true,
+		hideDetails: false,
 		isValidateOnBlur: true,
 		maxErrors: 1,
 		modelValue: undefined,
@@ -250,9 +251,18 @@
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
+	const calendarHintId = `${formatDescriptionId}-calendar`
+	// Le helpText (affiché et associé au champ par SyTextField) remplace la description de
+	// format masquée, qui l'annoncerait en double : seul l'avertissement du calendrier reste à part.
+	const hasHelpText = computed(() => Boolean(props.helpText?.trim()))
+	const hasSeparateCalendarHint = computed(() => hasHelpText.value && props.calendarActivator)
+	const describedBy = computed(() => {
+		if (!hasHelpText.value) return formatDescriptionId
+		return hasSeparateCalendarHint.value ? calendarHintId : undefined
+	})
 	const formatDescription = computed(() => {
-		const description = `${locales.formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
-		// Quand le champ sert d'activateur de calendrier, on avertit qu'un élément va s'afficher
+		const formatHint = isRange.value ? locales.rangeFormatHint : locales.formatHint
+		const description = `${formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
 		return props.calendarActivator ? `${description}. ${locales.activationOpensCalendar}` : description
 	})
 
@@ -1381,7 +1391,7 @@
 		<SyTextField
 			ref="inputRef"
 			v-model="inputValue"
-			:aria-describedby="formatDescriptionId"
+			:aria-describedby="describedBy"
 			:class="{
 				'error-field': isOnError,
 				'warning-field': isOnWarning,
@@ -1398,8 +1408,15 @@
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>
 		<DatePickerLiveRegion
+			v-if="!hasHelpText"
 			:id="formatDescriptionId"
 			:text="formatDescription"
+			live="off"
+		/>
+		<DatePickerLiveRegion
+			v-if="hasSeparateCalendarHint"
+			:id="calendarHintId"
+			:text="locales.activationOpensCalendar"
 			live="off"
 		/>
 	</div>

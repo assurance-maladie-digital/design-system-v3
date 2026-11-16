@@ -83,8 +83,8 @@ export interface DatePickerCommonProps {
 	format?: string
 	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	/**
-	 * Texte d'aide affiché sous le champ, y compris en cas d'erreur (comme `SyTextField`).
-	 * Préférer `helpText` à `hint` pour indiquer le format attendu ou une contrainte.
+	 * Texte d'aide facultatif affiché sous le champ, y compris en cas d'erreur.
+	 * En saisie de plage, recommandé pour présenter la consigne du formulaire quand le format est imposé.
 	 */
 	helpText?: string
 	hideDetails?: boolean | 'auto'
@@ -127,7 +127,7 @@ export interface DatePickerCommonProps {
 /**
  * Props spécifiques à DateTextInput
  */
-export interface DateTextInputProps extends Omit<DatePickerCommonProps, 'displayAsterisk' | 'displayHolidayDays' | 'displayTodayButton' | 'displayWeekendDays' | 'headingLevel' | 'hideDetails' | 'noCalendar' | 'period' | 'showWeekNumber' | 'textFieldActivator' | 'width'> {
+export interface DateTextInputProps extends Omit<DatePickerCommonProps, 'displayAsterisk' | 'displayHolidayDays' | 'displayTodayButton' | 'displayWeekendDays' | 'headingLevel' | 'noCalendar' | 'period' | 'showWeekNumber' | 'textFieldActivator' | 'width'> {
 	/** Annonce aux technologies d'assistance que l'activation du champ ouvre un calendrier. */
 	calendarActivator?: boolean
 	disableClickButton?: boolean

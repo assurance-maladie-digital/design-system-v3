@@ -36,6 +36,7 @@ export const buildDateTextInputTextFieldProps = (
 	'density': props.density,
 	'title': props.title,
 	'help-text': props.helpText,
+	'hide-details': props.hideDetails,
 	'hint': props.hint,
 	'display-persistent-hint': props.persistentHint,
 	// En mode Vuetify, les `rules` sont portées par le champ texte, comme l'activateur du
