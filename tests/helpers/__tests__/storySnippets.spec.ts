@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analyzeSnippet, evaluateSnippetBinding } from '../storySnippets'
+import { analyzeSnippet, evaluateSnippetBinding, findUnknownSnippetImports } from '../storySnippets'
 
 function story(template: string, script?: string) {
 	const sourceCode = [{ name: 'Template', code: template }]
@@ -162,5 +162,40 @@ const rules = [{ validate: (text: string) => text.length > 2 }]
 	it('signale un extrait sans script setup', () => {
 		expect(() => evaluateSnippetBinding(story('<template><SyTextArea /></template>'), 'rules'))
 			.toThrow('L\'extrait ne contient pas de <script setup>.')
+	})
+})
+
+describe('findUnknownSnippetImports', () => {
+	const modules = {
+		'vue': { ref: () => undefined },
+		'@cnamts/synapse': { SyTextArea: {} },
+	}
+
+	it('ne signale rien quand chaque import existe dans son module', () => {
+		expect(findUnknownSnippetImports(story('<template><SyTextArea /></template>', validScript), modules)).toEqual([])
+	})
+
+	it('signale les exports introuvables et les modules inconnus', () => {
+		const script = `<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { SyTextAreaX } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+</script>`
+
+		expect(findUnknownSnippetImports(story('<template><div /></template>', script), modules)).toEqual([
+			'vue:computed',
+			'@cnamts/synapse:SyTextAreaX',
+			'vuetify/components:VBtn',
+		])
+	})
+
+	it('vérifie le nom exporté d\'un import renommé et ignore les imports de type', () => {
+		const script = `<script setup lang="ts">
+import { ref as createRef, type Ref } from 'vue'
+import type { SyTextAreaProps } from '@cnamts/synapse'
+import { SyTextArea as Field } from '@cnamts/synapse'
+</script>`
+
+		expect(findUnknownSnippetImports(story('<template><Field /></template>', script), modules)).toEqual([])
 	})
 })
