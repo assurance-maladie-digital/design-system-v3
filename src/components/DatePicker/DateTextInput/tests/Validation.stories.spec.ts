@@ -45,4 +45,9 @@ describe('DatePicker DateTextInput validation stories', () => {
 		expect(withoutErrors!.attributes('aria-invalid')).not.toBe('true')
 		expect(withErrors!.attributes('aria-invalid')).toBe('true')
 	})
+
+	it('WithErrorDisabled retire des Controls les props imposées par chaque champ', () => {
+		// Les deux champs fixent leur libellé : le Control « label » serait sans effet
+		expect(stories.WithErrorDisabled.parameters?.controls?.exclude).toEqual(expect.arrayContaining(['modelValue', 'label']))
+	})
 })

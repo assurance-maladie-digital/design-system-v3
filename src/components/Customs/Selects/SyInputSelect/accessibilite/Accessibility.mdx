@@ -49,7 +49,13 @@ import {
                     <kbd>Entrée</kbd> et <kbd>Espace</kbd>.
                 </li>
                 <li>
-                    La touche <kbd>Échap</kbd> referme la liste lorsqu'elle est ouverte.
+                    La touche <kbd>Échap</kbd> referme la liste lorsqu'elle est ouverte,
+                    depuis le déclencheur comme depuis une option.
+                </li>
+                <li>
+                    À la fermeture de la liste par <kbd>Échap</kbd>, après le choix d'une
+                    option ou après l'effacement de la valeur, le focus revient sur le
+                    déclencheur.
                 </li>
                 <li>
                     Chaque option est focusable afin de permettre la navigation au clavier.
@@ -65,7 +71,9 @@ import {
             <ul>
                 <li>
                     Le déclencheur porte <code>role="button"</code> et
-                    <code>aria-haspopup="listbox"</code> ; son état ouvert ou fermé est
+                    <code>aria-haspopup="listbox"</code>. Son nom accessible reprend le
+                    libellé du champ suivi de la valeur sélectionnée (par exemple
+                    « Régime : Régime général ») ; son état ouvert ou fermé est
                     restitué par <code>aria-expanded</code>, et
                     <code>aria-controls</code> le relie à la liste ouverte.
                 </li>
@@ -86,8 +94,11 @@ import {
                     <code>clearable</code> est activée.
                 </li>
                 <li>
-                    Le bouton de suppression possède un nom accessible
-                    (<code>aria-label="Supprimer"</code>).
+                    Le bouton de suppression est un véritable élément
+                    <code>&lt;button&gt;</code>, placé à côté du déclencheur (et non à
+                    l'intérieur), avec un nom accessible
+                    (<code>aria-label="Supprimer"</code>). Il n'est affiché que lorsqu'une
+                    valeur est sélectionnée.
                 </li>
             </ul>
         </CriteriaCard>
@@ -135,18 +146,6 @@ import {
                     <kbd>Flèche haut</kbd> et
                     <kbd>Flèche bas</kbd>
                     n'est actuellement pas implémentée.
-                </li>
-                <li>
-                    Le bouton de suppression est rendu avec une icône portant
-                    <code>role="button"</code>. L'utilisation d'un véritable élément
-                    <code>&lt;button&gt;</code> serait préférable pour garantir un
-                    comportement clavier natif.
-                </li>
-                <li>
-                    Le composant ne gère pas aujourd'hui les attributs
-                    <code>aria-expanded</code>,
-                    <code>aria-controls</code> ou
-                    <code>aria-haspopup</code>.
                 </li>
             </ul>
         </CriteriaCard>

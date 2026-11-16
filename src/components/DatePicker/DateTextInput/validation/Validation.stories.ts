@@ -423,6 +423,8 @@ const customWarningRules = [
 
 export const WithErrorDisabled: Story = {
 	parameters: {
+		// Chaque champ impose son propre libellé et sa propre valeur
+		controls: { exclude: ['modelValue', 'label'] },
 		docs: {
 			description: {
 				story: 'Comparaison entre un champ avec `disableErrorHandling` (validation interne désactivée) et un champ avec la gestion des erreurs par défaut. Laissez les deux champs vides puis quittez-les : seul le second affiche l\'erreur.',

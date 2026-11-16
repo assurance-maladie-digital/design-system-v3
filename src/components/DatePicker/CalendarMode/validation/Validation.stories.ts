@@ -12,6 +12,8 @@ const meta: Meta<typeof DatePicker> = {
 	component: DatePicker,
 	parameters: {
 		layout: 'fullscreen',
+		// La valeur est portée par le v-model local de chaque story
+		controls: { exclude: ['modelValue'] },
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
@@ -187,8 +189,8 @@ onMounted(() => {
 			<div class="pa-4">
 				<DatePicker
 					ref="datePickerRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -277,8 +279,8 @@ onMounted(() => {
 			<div class="pa-4">
 				<DatePicker
 					ref="datePickerRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -355,8 +357,8 @@ onMounted(() => {
 			<div class="pa-4">
 				<DatePicker
 					ref="datePickerRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -519,8 +521,8 @@ const value = ref('')
 		template: `
 			<div class="pa-4">
 				<DatePicker
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -608,8 +610,8 @@ const customRules = [
 		template: `
 			<div class="pa-4">
 				<DatePicker
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -938,8 +940,8 @@ const onSubmit = (event: { isValid: boolean }) => {
 			<div class="pa-4">
 				<SyForm @submit="onSubmit">
 					<DatePicker
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						class="mb-4"
 					/>
 					<VBtn
@@ -1040,8 +1042,8 @@ async function onSubmit() {
         <VForm @submit.prevent="onSubmit">
           <DatePicker
             ref="datePickerRef"
-            v-model="value"
             v-bind="args"
+            v-model="value"
             class="mb-4"
           />
           <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
@@ -1152,8 +1154,8 @@ const onSubmit = (event: { isValid: boolean }) => {
       <div class="pa-4">
         <SyForm @submit="onSubmit">
           <DatePicker
-            v-model="value"
             v-bind="args"
+            v-model="value"
             class="mb-4"
           />
           <VBtn
@@ -1259,8 +1261,8 @@ async function onSubmit() {
 				<VForm @submit.prevent="onSubmit">
 					<DatePicker
 						ref="datePickerRef"
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>

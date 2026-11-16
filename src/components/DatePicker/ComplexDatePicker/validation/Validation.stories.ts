@@ -328,45 +328,43 @@ export const WithValidation: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						label="Date de la consultation"
-						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
-						placeholder="JJ/MM/AAAA"
-						format="DD/MM/YYYY"
-						required
-						:customRules="customRules"
-						show-success-messages
-						useCombinedMode
-					/>
-				</template>
-				`,
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    required
+    show-success-messages
+    use-combined-mode
+    :custom-rules="customRules"
+  />
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('')
-					const customRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: unknown) => {
-									if (value instanceof Date) return value.getFullYear() !== 2024
-									return typeof value !== 'string' || !value.endsWith('/2024')
-								},
-								message: 'Les dates en 2024 ne sont pas autorisées',
-								successMessage: 'Les dates hors 2024 sont autorisées',
-								fieldIdentifier: 'date',
-							},
-						},
-					]
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref('')
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: unknown) => {
+        if (value instanceof Date) return value.getFullYear() !== 2024
+        return typeof value !== 'string' || !value.endsWith('/2024')
+      },
+      message: 'Les dates en 2024 ne sont pas autorisées',
+      successMessage: 'Les dates hors 2024 sont autorisées',
+      fieldIdentifier: 'date',
+    },
+  },
+]
+</script>`,
 			},
 		],
 	},
@@ -421,45 +419,43 @@ export const WithFormSubmission: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<form @submit.prevent="submitForm">
-						<DatePicker
-							ref="datePicker"
-							v-model="date"
-							label="Date de la consultation"
-							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
-							placeholder="JJ/MM/AAAA"
-							format="DD/MM/YYYY"
-							required
-							class="mb-4"
-							useCombinedMode
-						/>
-						<VBtn type="submit" color="primary">Soumettre</VBtn>
-					</form>
-					<div v-if="submitted" class="mt-4">
-						Formulaire soumis avec la date: {{ date }}
-					</div>
-				</template>
-				`,
+<template>
+  <form @submit.prevent="submitForm">
+    <DatePicker
+      ref="datePicker"
+      v-model="date"
+      label="Date de la consultation"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+      placeholder="JJ/MM/AAAA"
+      format="DD/MM/YYYY"
+      required
+      use-combined-mode
+      class="mb-4"
+    />
+    <VBtn type="submit" color="primary">Soumettre</VBtn>
+  </form>
+  <div v-if="submitted" class="mt-4 text-success">
+    Formulaire soumis avec la date : {{ date }}
+  </div>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					import { VBtn } from 'vuetify/components'
-					
-					const date = ref('')
-					const datePicker = ref<InstanceType<typeof DatePicker> | null>(null)
-					const submitted = ref(false)
-					
-					const submitForm = async () => {
-						const isValid = await datePicker.value?.validateOnSubmit()
-						submitted.value = isValid === true
-					}
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const date = ref('')
+const datePicker = ref<InstanceType<typeof DatePicker> | null>(null)
+const submitted = ref(false)
+
+const submitForm = async () => {
+  const isValid = await datePicker.value?.validateOnSubmit()
+  submitted.value = isValid === true
+}
+</script>`,
 			},
 		],
 	},
@@ -504,7 +500,7 @@ export const WithFormSubmission: Story = {
                   <VBtn type="submit" color="primary">Soumettre</VBtn>
                 </form>
                 <div v-if="submitted" class="mt-4 text-success">
-                  Formulaire soumis avec la date: {{ date }}
+                  Formulaire soumis avec la date : {{ date }}
                 </div>
                 <div class="mt-4 text-body-2">Valeur actuelle : {{ date }}</div>
               </div>
@@ -525,40 +521,37 @@ export const CustomRules: Story = {
 			{
 				name: 'Template',
 				code: `
-					<template>
-						<DatePicker
-							v-model="date"
-							label="Date de rendez-vous"
-							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
-							placeholder="JJ/MM/AAAA"
-							format="DD/MM/YYYY"
-							required
-							class="mb-4"
-							useCombinedMode
-							:customRules="customRules"
-						/>
-					</template>
-				`,
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de rendez-vous"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    required
+    use-combined-mode
+    :custom-rules="customRules"
+  />
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-					<script setup lang="ts">
-						import { DatePicker } from '@cnamts/synapse'
-						import { ref } from 'vue'
-						
-						const date = ref('')
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
 
-						const customRules = [
-						{
-							type: 'notBeforeToday',
-							options: {
-								message: "La date ne peut pas être antérieure à aujourd'hui",
-							},
-					},
-				]
-					</script>
-				`,
+const date = ref('')
+
+const customRules = [
+  {
+    type: 'notBeforeToday',
+    options: {
+      message: 'La date ne peut pas être antérieure à aujourd\\'hui',
+    },
+  },
+]
+</script>`,
 			},
 		],
 	},
@@ -613,21 +606,19 @@ export const CustomWarningRules: Story = {
 			{
 				name: 'Template',
 				code: `
-					<template>
-						<DatePicker
-							v-model="date"
-							label="Date de la consultation"
-							help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
-							placeholder="JJ/MM/AAAA"
-							format="DD/MM/YYYY"
-							required
-							class="mb-4"
-							useCombinedMode
-							show-success-messages
-							:customWarningRules="customWarningRules"
-						/>
-					</template>
-				`,
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    required
+    show-success-messages
+    use-combined-mode
+    :custom-warning-rules="customWarningRules"
+  />
+</template>`,
 			},
 			{
 				name: 'Script',
@@ -654,8 +645,7 @@ const customWarningRules = [
     },
   },
 ]
-</script>
-				`,
+</script>`,
 			},
 		],
 	},
