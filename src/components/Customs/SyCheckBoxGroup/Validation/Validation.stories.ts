@@ -45,6 +45,7 @@ type Story = StoryObj<typeof SyCheckBoxGroup>
 export const WithError: Story = {
 	args: {
 		label: 'Sélectionnez au moins 2 options',
+		multiple: true,
 	},
 	parameters: {
 		docs: {
@@ -85,10 +86,9 @@ Utilise les **customRules** pour définir des règles de validation personnalis�
 import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string[]>(['a'])
-const checkboxGroupRef = ref(null)
+const checkboxGroupRef = ref<InstanceType<typeof SyCheckBoxGroup> | null>(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
@@ -96,7 +96,7 @@ const options = [
 	{ label: 'Option C', value: 'c' },
 ]
 
-const customRules: ValidationRule[] = [
+const customRules = [
 	{
 		type: 'custom',
 		options: {
@@ -156,7 +156,6 @@ onMounted(() => {
 					v-model="selected"
 					v-bind="args"
 					:custom-rules="customRules"
-					:multiple="true"
 				/>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
 			</SyForm>
@@ -206,18 +205,17 @@ Utilise les **customWarningRules** pour afficher un avertissement non bloquant.
 import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('b')
-const checkboxGroupRef = ref(null)
+const checkboxGroupRef = ref<InstanceType<typeof SyCheckBoxGroup> | null>(null)
 
 const options = [
-	{ label: 'Option A (recommandée)', value: 'a' },
+	{ label: 'Option A', value: 'a' },
 	{ label: 'Option B', value: 'b' },
 	{ label: 'Option C', value: 'c' },
 ]
 
-const customWarningRules: ValidationRule[] = [
+const customWarningRules = [
 	{
 		type: 'custom',
 		options: {
@@ -228,7 +226,7 @@ const customWarningRules: ValidationRule[] = [
 	},
 ]
 
-const onSubmit = (event: { isValid: boolean }) => {
+const onSubmit = () => {
 	alert('Formulaire soumis (les warnings ne bloquent pas la soumission)')
 }
 
@@ -317,10 +315,9 @@ export const WithSuccess: Story = {
 import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('a')
-const checkboxGroupRef = ref(null)
+const checkboxGroupRef = ref<InstanceType<typeof SyCheckBoxGroup> | null>(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
@@ -328,7 +325,7 @@ const options = [
 	{ label: 'Option C', value: 'c' },
 ]
 
-const customSuccessRules: ValidationRule[] = [
+const customSuccessRules = [
 	{
 		type: 'custom',
 		options: {
@@ -596,7 +593,7 @@ import { SyCheckBoxGroup } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const selected = ref<string | null>(null)
-const checkboxRef = ref(null)
+const checkboxRef = ref<InstanceType<typeof SyCheckBoxGroup> | null>(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
@@ -822,6 +819,7 @@ async function onSubmit(e: Promise<{ valid: boolean }>) {
 export const MultipleSelectionValidation: Story = {
 	args: {
 		label: 'Sélectionnez au moins 2 options',
+		multiple: true,
 	},
 	parameters: {
 		docs: {
@@ -861,7 +859,6 @@ Valide que l'utilisateur a sélectionné au moins 2 options.
 import { ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string[]>([])
 
@@ -872,7 +869,7 @@ const options = [
 	{ label: 'Option D', value: 'd' },
 ]
 
-const minSelectionRules: ValidationRule[] = [
+const minSelectionRules = [
 	{
 		type: 'custom',
 		options: {
@@ -920,7 +917,6 @@ const onSubmit = (event: { isValid: boolean }) => {
 				<SyCheckBoxGroup
 					v-model="selected"
 					v-bind="args"
-					:multiple="true"
 					:custom-rules="minSelectionRules"
 				/>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>

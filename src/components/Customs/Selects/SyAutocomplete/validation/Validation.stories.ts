@@ -14,7 +14,7 @@ const meta: Meta<typeof SyAutocomplete> = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof SyAutocomplete>
+}
 
 export default meta
 
@@ -558,7 +558,7 @@ const value2 = ref<string | null>(null)
 				return { args, value1, value2 }
 			},
 			template: `
-				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
+				<div class="pa-4 d-flex flex-column ga-4">
 					<SyAutocomplete
 						v-model="value1"
 						v-bind="args"
@@ -616,7 +616,7 @@ const items = [
   { text: 'Option 3', value: '3' }
 ]
 
-const onSubmit = (event) => {
+const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide : ' + JSON.stringify(value.value))
   } else {

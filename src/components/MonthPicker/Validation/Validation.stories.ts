@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { VBtn, VForm } from 'vuetify/components'
+import { VBtn, VCol, VForm, VRow } from 'vuetify/components'
 import MonthPicker from '../MonthPicker.vue'
 import { fn } from 'storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
@@ -8,12 +8,12 @@ import type { MonthPickerProps } from '../types'
 import { default as MonthPickerMeta } from '../MonthPicker.stories'
 import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
 
-const meta = {
+const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker/Validation',
 	component: MonthPicker,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div class="pa-5"><story/></div>',
 		}),
 	],
 	parameters: {
@@ -46,7 +46,7 @@ const meta = {
 		'isValidateOnBlur': true,
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof MonthPicker>
+}
 
 export default meta
 
@@ -487,7 +487,7 @@ const customRules = [
 		],
 	},
 	render: () => ({
-		components: { MonthPicker },
+		components: { MonthPicker, VCol, VRow },
 		setup() {
 			const value1 = ref('')
 			const value2 = ref('')
@@ -513,8 +513,8 @@ const customRules = [
 			<div>
 				<p class="mb-4">Cette démonstration compare un MonthPicker standard et un avec <code>disableErrorHandling=true</code>.</p>
 
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-					<div>
+				<VRow class="mb-4">
+					<VCol cols="12" md="6">
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<MonthPicker
 							v-model="value1"
@@ -522,9 +522,9 @@ const customRules = [
 							required
 							:custom-rules="customRules"
 						/>
-					</div>
+					</VCol>
 
-					<div>
+					<VCol cols="12" md="6">
 						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
 						<MonthPicker
 							v-model="value2"
@@ -533,8 +533,8 @@ const customRules = [
 							disable-error-handling
 							:custom-rules="customRules"
 						/>
-					</div>
-				</div>
+					</VCol>
+				</VRow>
 
 				<div class="mt-4 text-body-2">
 					<p>Instructions :</p>
@@ -759,6 +759,9 @@ function reset() {
 }
 
 export const SyFormValidation: Story = {
+	args: {
+		required: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -802,7 +805,7 @@ const customRules = [
     },
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
     const isValid = e.isValid
     alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -846,7 +849,6 @@ function handleSubmit(e) {
 						v-model="selectedMonth"
 						:custom-rules="customRules"
 						width="400px"
-						required
 					/>
 					<div class="mt-4">
 						<VBtn type="submit" color="primary">Valider</VBtn>
@@ -858,6 +860,9 @@ function handleSubmit(e) {
 }
 
 export const VFormValidation: Story = {
+	args: {
+		required: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -947,9 +952,7 @@ async function handleSubmit() {
 						v-bind="args"
 						ref="fieldRef"
 						v-model="selectedMonth"
-						label="Mois de début"
 						:custom-rules="customRules"
-						required
 						width="400px"
 					/>
 					<div class="mt-4">
@@ -962,6 +965,9 @@ async function handleSubmit() {
 }
 
 export const SyFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -994,7 +1000,7 @@ const vuetifyRules = [
     (value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
     const isValid = e.isValid
     alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -1025,7 +1031,6 @@ function handleSubmit(e) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						:use-vuetify-validation="true"
 						:rules="vuetifyRules"
 						width="400px"
 					/>
@@ -1039,6 +1044,10 @@ function handleSubmit(e) {
 }
 
 export const VFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+		required: true,
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -1063,7 +1072,6 @@ native de Vuetify.
 			:use-vuetify-validation="true"
 			:rules="rules"
 			required
-			:is-validate-on-blur="true"
 		/>
 		<div class="mt-4">
 			<VBtn type="submit" color="primary">Valider</VBtn>
@@ -1097,7 +1105,6 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 		components: { MonthPicker, VBtn, VForm },
 		setup() {
 			const selectedMonth = ref('')
-			const fieldRef = ref()
 
 			const rules = [
 				(value: string) => !!value || 'Le mois est requis',
@@ -1109,7 +1116,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 				alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selectedMonth, fieldRef, rules, handleSubmit }
+			return { args, selectedMonth, rules, handleSubmit }
 		},
 		template: `
 			<div>
@@ -1121,10 +1128,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						label="Mois de début"
-						:use-vuetify-validation="true"
 						:rules="rules"
-						:is-validate-on-blur="true"
 						width="400px"
 					/>
 					<div class="mt-4">

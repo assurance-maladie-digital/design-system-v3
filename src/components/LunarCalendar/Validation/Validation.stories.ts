@@ -7,12 +7,12 @@ import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
 
-const meta = {
+const meta: Meta<typeof LunarCalendar> = {
 	title: 'Composants/Formulaires/LunarCalendar/Validation',
 	component: LunarCalendar,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div class="pa-5"><story/></div>',
 		}),
 	],
 	parameters: {
@@ -49,7 +49,7 @@ const meta = {
 		'isValidateOnBlur': true,
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof LunarCalendar>
+}
 
 export default meta
 
@@ -261,7 +261,7 @@ export const ExternalMessages: Story = {
 		<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
 		<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
 		<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
-		<VBtn color="black" @click="reset">Réinitialiser</VBtn>
+		<VBtn @click="reset">Réinitialiser</VBtn>
 	</div>
 </template>`,
 			},
@@ -353,7 +353,7 @@ function reset() {
 					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
 					<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
 					<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
-					<VBtn color="black" @click="reset">Réinitialiser</VBtn>
+					<VBtn @click="reset">Réinitialiser</VBtn>
 				</div>
 			</div>
 		`,
@@ -629,7 +629,7 @@ import { LunarCalendar } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('')
-const lunarRef = ref()
+const lunarRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
 async function handleSubmit() {
 	if (lunarRef.value) {
@@ -652,7 +652,7 @@ async function handleSubmit() {
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			const lunarRef = ref()
+			const lunarRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
 			async function handleSubmit() {
 				if (lunarRef.value) {

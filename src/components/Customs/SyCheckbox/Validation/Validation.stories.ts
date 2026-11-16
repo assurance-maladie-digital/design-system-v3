@@ -9,7 +9,7 @@ const meta: Meta<typeof SyCheckbox> = {
 	title: 'Composants/Formulaires/SyCheckbox/Validation',
 	component: SyCheckbox,
 	decorators: [
-		() => ({ template: '<div style="padding: 20px;"><story/></div>' }),
+		() => ({ template: '<div class="pa-5"><story/></div>' }),
 	],
 	parameters: {
 		layout: 'fullscreen',
@@ -57,7 +57,7 @@ import { onMounted, ref } from 'vue'
 import { SyCheckbox } from '@cnamts/synapse'
 
 const accepted = ref(false)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 // Affiche l'état dès le chargement
 onMounted(() => checkboxRef.value?.validateOnSubmit())
@@ -112,7 +112,7 @@ import { onMounted, ref } from 'vue'
 import { SyCheckbox } from '@cnamts/synapse'
 
 const accepted = ref(false)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 const warningRules = [{
 	type: 'custom',
@@ -177,7 +177,7 @@ import { onMounted, ref } from 'vue'
 import { SyCheckbox } from '@cnamts/synapse'
 
 const accepted = ref(true)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 const successRules = [{
 	type: 'custom',
@@ -240,14 +240,19 @@ import { SyCheckbox } from '@cnamts/synapse'
 const prerequisite = ref(false)
 const accepted = ref(false)
 
-const customRules = computed(() => [{
-	type: 'custom',
-	options: {
-		// Valide tant que la case n'est pas cochée, ou que le prérequis est rempli
-		validate: (value: unknown) => value !== true || prerequisite.value,
-		message: 'Vous devez d\\'abord valider le prérequis avant de cocher cette case.',
-	},
-}])
+const customRules = computed(() => {
+	// Lu dans le corps du computed : les règles sont recréées (et la validation
+	// relancée) à chaque changement du prérequis.
+	const prerequisiteChecked = prerequisite.value
+	return [{
+		type: 'custom',
+		options: {
+			// Valide tant que la case n'est pas cochée, ou que le prérequis est rempli
+			validate: (value: unknown) => value !== true || prerequisiteChecked,
+			message: 'Vous devez d\\'abord valider le prérequis avant de cocher cette case.',
+		},
+	}]
+})
 </script>`,
 			},
 		],
@@ -258,13 +263,18 @@ const customRules = computed(() => [{
 			const prerequisite = ref(false)
 			const accepted = ref(false)
 
-			const customRules = computed(() => [{
-				type: 'custom',
-				options: {
-					validate: (value: unknown) => value !== true || prerequisite.value,
-					message: 'Vous devez d\'abord valider le prérequis avant de cocher cette case.',
-				},
-			}])
+			const customRules = computed(() => {
+				// Lu dans le corps du computed : les règles sont recréées (et la validation
+				// relancée) à chaque changement du prérequis.
+				const prerequisiteChecked = prerequisite.value
+				return [{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => value !== true || prerequisiteChecked,
+						message: 'Vous devez d\'abord valider le prérequis avant de cocher cette case.',
+					},
+				}]
+			})
 
 			return { prerequisite, accepted, customRules }
 		},
@@ -358,7 +368,7 @@ import { onMounted, ref } from 'vue'
 import { SyCheckbox } from '@cnamts/synapse'
 
 const accepted = ref(false)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 // Même en déclenchant la validation, aucune erreur ne s'affiche
 onMounted(() => checkboxRef.value?.validateOnSubmit())
@@ -470,7 +480,7 @@ import { SyCheckbox } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const accepted = ref(false)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 async function handleSubmit() {
 	const isValid = await checkboxRef.value?.validateOnSubmit()

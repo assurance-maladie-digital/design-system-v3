@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref, watch } from 'vue'
-import { VBtn } from 'vuetify/components'
+import { VBtn, VCol, VRow } from 'vuetify/components'
 import PasswordField from '../PasswordField.vue'
 import type { PasswordFieldProps } from '../types'
 import { fn, userEvent, within } from 'storybook/test'
@@ -18,7 +18,7 @@ const meta = {
 	component: PasswordField,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div class="pa-5"><story/></div>',
 		}),
 	],
 	parameters: {
@@ -82,7 +82,6 @@ const meta = {
 		},
 	},
 	args: {
-		'modelValue': '',
 		'variantStyle': 'outlined',
 		'color': 'primary',
 		'label': 'Mot de passe',
@@ -369,7 +368,7 @@ export const WithCustomRules: Story = {
 						{
 							type: 'custom',
 							options: {
-								validate: (value) => {
+								validate: (value: string) => {
 									if (!value || !/[A-Z]/.test(value)) {
 										return 'Le mot de passe doit contenir au moins une lettre majuscule'
 									}
@@ -381,7 +380,7 @@ export const WithCustomRules: Story = {
 						{
 							type: 'custom',
 							options: {
-								validate: (value) => {
+								validate: (value: string) => {
 									if (!value || !/[0-9]/.test(value)) {
 										return 'Le mot de passe doit contenir au moins un chiffre'
 									}
@@ -495,15 +494,23 @@ ne sont pas nécessaires dans certains contextes.
   />
 </template>`,
 			},
-			{ name: 'Script', code: `<script setup lang="ts">
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { PasswordField } from '@cnamts/synapse'
 
 const value1 = ref('P@ssw0rd123')
 const value2 = ref('P@ssw0rd123')
-const customSuccessRules = [{ type: 'custom', options: { validate: (value: string) => value.length >= 8, successMessage: 'Mot de passe valide' } }]
-
-</script>` },
+const customSuccessRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: string) => value.length >= 8,
+    successMessage: 'Mot de passe valide',
+  },
+}]
+</script>`,
+			},
 		],
 	},
 	argTypes: {
@@ -514,7 +521,7 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
 		customSuccessRules: { control: false },
 	},
 	render: args => ({
-		components: { PasswordField },
+		components: { PasswordField, VCol, VRow },
 		setup() {
 			const value1 = ref('P@ssw0rd123')
 			const value2 = ref('P@ssw0rd123')
@@ -526,8 +533,8 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
       <div>
         <p class="mb-4">Cette démonstration compare un PasswordField avec <code>showSuccessMessages=true</code> et un avec <code>showSuccessMessages=false</code> (valeur par défaut).</p>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-          <div>
+        <VRow class="mb-4">
+          <VCol cols="12" md="6">
             <p class="text-subtitle-2 mb-2">Avec messages de succès</p>
             <PasswordField
               v-bind="args"
@@ -537,9 +544,9 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
               :custom-success-rules="customSuccessRules"
               showSuccessMessages
             />
-          </div>
+          </VCol>
 
-          <div>
+          <VCol cols="12" md="6">
             <p class="text-subtitle-2 mb-2">Sans messages de succès</p>
             <PasswordField
               v-bind="args"
@@ -549,8 +556,8 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
               :custom-success-rules="customSuccessRules"
               :showSuccessMessages="false"
             />
-          </div>
-        </div>
+          </VCol>
+        </VRow>
 
         <div class="mt-4 text-body-2">
           <p>Observations :</p>
@@ -603,21 +610,31 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
   />
 </template>`,
 			},
-			{ name: 'Script', code: `<script setup lang="ts">
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { PasswordField } from '@cnamts/synapse'
 
 const value1 = ref('')
 const value2 = ref('')
-const customRules = [{
-  type: 'custom',
-  options: {
-    validate: (value: string) => value.length >= 8,
-    message: 'Le mot de passe doit contenir au moins 8 caractères',
-    fieldIdentifier: 'password',
+
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        if (!value || value.length < 8) {
+          return 'Le mot de passe doit contenir au moins 8 caractères'
+        }
+        return true
+      },
+      fieldIdentifier: 'password',
+    },
   },
-}]
-</script>` },
+]
+</script>`,
+			},
 		],
 	},
 	argTypes: {
@@ -628,7 +645,7 @@ const customRules = [{
 		customRules: { control: false },
 	},
 	render: args => ({
-		components: { PasswordField },
+		components: { PasswordField, VCol, VRow },
 		setup() {
 			const value1 = ref('')
 			const value2 = ref('')
@@ -654,8 +671,8 @@ const customRules = [{
 			<div>
 				<p class="mb-4">Cette démonstration compare un PasswordField standard et un avec <code>disableErrorHandling=true</code>.</p>
 
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-					<div>
+				<VRow class="mb-4">
+					<VCol cols="12" md="6">
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<PasswordField
 							v-bind="args"
@@ -664,9 +681,9 @@ const customRules = [{
 							required
 							:custom-rules="customRules"
 						/>
-					</div>
+					</VCol>
 
-					<div>
+					<VCol cols="12" md="6">
 						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
 						<PasswordField
 							v-bind="args"
@@ -676,8 +693,8 @@ const customRules = [{
 							disableErrorHandling
 							:custom-rules="customRules"
 						/>
-					</div>
-				</div>
+					</VCol>
+				</VRow>
 
 				<div class="mt-4 text-body-2">
 					<p>Instructions :</p>

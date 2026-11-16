@@ -9,7 +9,7 @@ import { default as phoneFieldMeta } from '../PhoneField.stories'
 const meta: Meta<typeof PhoneField> = {
 	...phoneFieldMeta,
 	title: 'Composants/Formulaires/PhoneField/Validation',
-} as Meta<typeof PhoneField>
+}
 
 export default meta
 
@@ -50,7 +50,7 @@ import { onMounted, ref } from 'vue'
 import { PhoneField } from '@cnamts/synapse'
 
 const phone = ref('123')
-const phoneRef = ref(null)
+const phoneRef = ref<InstanceType<typeof PhoneField> | null>(null)
 
 onMounted(() => {
   phoneRef.value?.validateOnSubmit()
@@ -127,7 +127,7 @@ import { onMounted, ref } from 'vue'
 import { PhoneField } from '@cnamts/synapse'
 
 const phone = ref('0812345678')
-const phoneRef = ref(null)
+const phoneRef = ref<InstanceType<typeof PhoneField> | null>(null)
 
 onMounted(() => {
   phoneRef.value?.validateOnSubmit()
@@ -205,7 +205,7 @@ import { onMounted, ref } from 'vue'
 import { PhoneField } from '@cnamts/synapse'
 
 const phone = ref('0612345678')
-const phoneRef = ref(null)
+const phoneRef = ref<InstanceType<typeof PhoneField> | null>(null)
 
 onMounted(() => {
   phoneRef.value?.validateOnSubmit()
@@ -445,7 +445,7 @@ import { VBtn } from 'vuetify/components'
 
 const phone = ref('')
 
-const onSubmit = (e) => {
+const onSubmit = (e: { isValid: boolean }) => {
   alert('Le formulaire est : ' + (e.isValid ? 'valide' : 'invalide'))
 }
 </script>`,
@@ -459,7 +459,7 @@ const onSubmit = (e) => {
 		components: { SyForm, PhoneField, VBtn },
 		setup() {
 			const phone = ref('')
-			const onSubmit = (e) => {
+			const onSubmit = (e: { isValid: boolean }) => {
 				alert('Le formulaire est : ' + (e.isValid ? 'valide' : 'invalide'))
 			}
 			return { args, phone, onSubmit }
@@ -522,10 +522,10 @@ import { ref } from 'vue'
 import { PhoneField } from '@cnamts/synapse'
 import { VForm, VBtn } from 'vuetify/components'
 
-const phoneFieldRef = ref(null)
+const phoneFieldRef = ref<InstanceType<typeof PhoneField> | null>(null)
 const phone = ref('')
 async function onSubmit() {
-  const result = await phoneFieldRef.value.validateOnSubmit()
+  const result = await phoneFieldRef.value?.validateOnSubmit()
   alert('Le formulaire est : ' + (result ? 'valide' : 'invalide'))
 }
 </script>`,
@@ -608,8 +608,8 @@ const phone = ref('')
 // En mode Vuetify, \`required\` n'ajoute que l'astérisque et l'attribut ARIA :
 // la règle requise doit figurer dans \`rules\`.
 const rules = [
-  (value) => !!value || 'Le numéro de téléphone est requis.',
-  (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.'
+  (value: string) => !!value || 'Le numéro de téléphone est requis.',
+  (value: string) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.'
 ]
 
 function onSyFormSubmit(event: { isValid: boolean }) {
@@ -646,8 +646,8 @@ function onSyFormSubmit(event: { isValid: boolean }) {
 			// En mode Vuetify, `required` n'ajoute que l'astérisque et l'attribut ARIA :
 			// la règle requise doit figurer dans `rules`.
 			const rules = [
-				value => !!value || 'Le numéro de téléphone est requis.',
-				value => /^0[1-9][0-9]{8}$/.test(value.replace(/\s/g, '')) || 'Le numéro de téléphone n\'est pas valide.',
+				(value: string) => !!value || 'Le numéro de téléphone est requis.',
+				(value: string) => /^0[1-9][0-9]{8}$/.test(value.replace(/\s/g, '')) || 'Le numéro de téléphone n\'est pas valide.',
 			]
 
 			return { args, phone, rules, onSyFormSubmit }
@@ -703,11 +703,11 @@ const phone = ref('')
 // En mode Vuetify, \`required\` n'ajoute que l'astérisque et l'attribut ARIA :
 // la règle requise doit figurer dans \`rules\`.
 const rules = [
-  (value) => !!value || 'Le numéro de téléphone est requis.',
-  (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.'
+  (value: string) => !!value || 'Le numéro de téléphone est requis.',
+  (value: string) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.'
 ]
 
-async function onSubmit(e) {
+async function onSubmit(e: Promise<{ valid: boolean }>) {
   const result = await e
   alert('Le formulaire est : ' + (result.valid ? 'valide' : 'invalide'))
 }

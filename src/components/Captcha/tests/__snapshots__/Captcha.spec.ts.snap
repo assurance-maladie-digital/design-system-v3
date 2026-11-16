@@ -127,7 +127,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                 <input
                   aria-label="Caractères de l’image"
                   aria-labelledby="input-v-4-label"
-                  aria-required="false"
+                  aria-required="true"
                   autocomplete="off"
                   class="v-field__input"
                   id="input-v-4"
@@ -457,7 +457,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                 <input
                   aria-label="Caractères de l’image"
                   aria-labelledby="input-v-3-label"
-                  aria-required="false"
+                  aria-required="true"
                   autocomplete="off"
                   class="v-field__input"
                   id="input-v-3"

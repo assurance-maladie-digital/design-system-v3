@@ -1,16 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
 import { fn } from 'storybook/test'
 import DatePickerSyFormValidity from '../../docExamples/DatePickerSyFormValidity.vue'
 
-const meta = {
+const meta: Meta<typeof DatePicker> = {
 	title: 'Composants/Formulaires/DatePicker/DateInput/Validation',
 	component: DatePicker,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div class="pa-5"><story/></div>',
 		}),
 	],
 	parameters: {
@@ -21,7 +20,7 @@ const meta = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof DatePicker>
+}
 
 export default meta
 
@@ -36,6 +35,76 @@ export const SyFormLiveValidity: Story = {
 				story: 'Une saisie invalide fait passer le formulaire à `false`. Après correction et sortie du champ, la validité passe à `true` avant la soumission.',
 			},
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm
+    v-model="valid"
+    class="pa-4"
+    @submit="onSubmit"
+  >
+    <div class="d-flex flex-column align-start ga-4">
+      <p>
+        Saisissez 32/11/2026 et quittez le champ pour voir l’erreur. Corrigez en 30/11/2026, puis quittez à nouveau le champ.
+      </p>
+      <DatePicker
+        v-model="date"
+        label="Date"
+        hint="Format attendu : JJ/MM/AAAA"
+        persistent-hint
+        placeholder="JJ/MM/AAAA"
+        format="DD/MM/YYYY"
+        required
+        no-calendar
+      />
+      <p role="status">
+        Validité du SyForm (<code>v-model</code>) <code>{{ String(valid) }}</code>
+      </p>
+      <div class="d-flex flex-wrap ga-3">
+        <VBtn
+          type="button"
+          variant="outlined"
+        >
+          Sortir du champ
+        </VBtn>
+        <VBtn
+          type="submit"
+          color="primary"
+          :disabled="valid !== true"
+        >
+          Soumettre
+        </VBtn>
+      </div>
+      <p
+        v-if="submitted !== null"
+        role="status"
+      >
+        Dernière soumission <code>isValid = {{ submitted }}</code>
+      </p>
+    </div>
+  </SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const date = ref<string | null>('')
+const valid = ref<boolean | null>(null)
+const submitted = ref<boolean | null>(null)
+
+function onSubmit({ isValid }: { isValid: boolean }) {
+  submitted.value = isValid
+}
+</script>`,
+			},
+		],
 	},
 	render: () => ({
 		components: { DatePickerSyFormValidity },
@@ -66,6 +135,24 @@ const baseArgs = {
 	'onBlur': fn(),
 } satisfies Record<string, unknown>
 
+/** Rendu commun : le v-model local est initialisé depuis `args.modelValue`. */
+const renderWithLocalModel: Story['render'] = args => ({
+	components: { DatePicker },
+	setup() {
+		const date = ref(args.modelValue ?? null)
+		return { args, date }
+	},
+	template: `
+		<div>
+			<DatePicker
+				v-bind="args"
+				v-model="date"
+			/>
+			<div class="mt-4 text-body-2">Valeur actuelle : {{ date }}</div>
+		</div>
+	`,
+})
+
 export const WithError: Story = {
 	args: {
 		...baseArgs,
@@ -79,24 +166,35 @@ export const WithError: Story = {
 				story: 'Expose le cas standard d\'un message d\'erreur injecté par le parent, comme sur les autres composants migrés.',
 			},
 		},
-	},
-	render(args) {
-		const date = ref<string | null>('20/08/2026')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    no-calendar
+    :error-messages="['Date invalide côté métier']"
+  />
+</template>`,
 			},
-			template: `
-				<div>
-					<DatePicker
-						v-bind="args"
-						v-model="date"
-					/>
-				</div>
-			`,
-		}
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref<string | null>('20/08/2026')
+</script>`,
+			},
+		],
 	},
+	render: renderWithLocalModel,
 }
 
 export const WithWarning: Story = {
@@ -112,24 +210,35 @@ export const WithWarning: Story = {
 				story: 'Expose le cas standard d\'un message d\'avertissement injecté par le parent.',
 			},
 		},
-	},
-	render(args) {
-		const date = ref<string | null>('20/08/2026')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    no-calendar
+    :warning-messages="['Date inhabituelle, à vérifier']"
+  />
+</template>`,
 			},
-			template: `
-				<div>
-					<DatePicker
-						v-bind="args"
-						v-model="date"
-					/>
-				</div>
-			`,
-		}
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref<string | null>('20/08/2026')
+</script>`,
+			},
+		],
 	},
+	render: renderWithLocalModel,
 }
 
 export const WithSuccess: Story = {
@@ -146,204 +255,223 @@ export const WithSuccess: Story = {
 				story: 'Expose le cas standard d\'un message de succès injecté par le parent.',
 			},
 		},
-	},
-	render(args) {
-		const date = ref<string | null>('20/08/2026')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    no-calendar
+    show-success-messages
+    :success-messages="['Date validée']"
+  />
+</template>`,
 			},
-			template: `
-				<div>
-					<DatePicker
-						v-bind="args"
-						v-model="date"
-					/>
-				</div>
-			`,
-		}
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref<string | null>('20/08/2026')
+</script>`,
+			},
+		],
 	},
+	render: renderWithLocalModel,
 }
 
 export const CustomRules: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Règle personnalisée (`customRules`) : les dates en 2024 ne sont pas autorisées. Avec `showSuccessMessages`, le `successMessage` de la règle s\'affiche lorsque la date est valide.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						date-format-return="DD/MM/YYYY"
-						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA"
-						label="Date de la consultation"
-						help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2024 ne sont pas autorisées"
-						required
-						no-calendar
-						:custom-rules="[{
-							type: 'custom',
-							options: {
-								validate: value => !value || !value.includes('2024'),
-								message: 'Les dates en 2024 ne sont pas autorisées',
-								successMessage: 'Les dates hors 2024 sont autorisées',
-								fieldIdentifier: 'date'
-							}
-						}]"
-					/>
-				</template>
-				`,
+<template>
+  <DatePicker
+    v-model="date"
+    date-format-return="DD/MM/YYYY"
+    format="DD/MM/YYYY"
+    placeholder="JJ/MM/AAAA"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2024 ne sont pas autorisées"
+    required
+    no-calendar
+    show-success-messages
+    :custom-rules="customRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref<string | null>('21/12/2024')
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: unknown) => typeof value !== 'string' || !value.includes('2024'),
+      message: 'Les dates en 2024 ne sont pas autorisées',
+      successMessage: 'Les dates hors 2024 sont autorisées',
+      fieldIdentifier: 'date',
+    },
+  },
+]
+</script>`,
 			},
 		],
 	},
 	args: {
 		...baseArgs,
+		modelValue: '21/12/2024',
 		dateFormatReturn: 'DD/MM/YYYY',
 		label: 'Date de la consultation',
 		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2024 ne sont pas autorisées',
 		required: true,
+		showSuccessMessages: true,
 		customRules: [{
 			type: 'custom',
 			options: {
-				validate: (value: unknown) => !value || !(value as string).includes('2024'),
+				validate: (value: unknown) => typeof value !== 'string' || !value.includes('2024'),
 				message: 'Les dates en 2024 ne sont pas autorisées',
 				successMessage: 'Les dates hors 2024 sont autorisées',
 				fieldIdentifier: 'date',
 			},
-		}] as DatePickerRule[],
+		}],
 	},
-	render(args) {
-		const date = ref<string | null>('21/12/2024')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
-			},
-			template: `
-				<div style="padding: 20px;">
-					<h4 class="mb-0">Format avec règles personnalisées :</h4>
-					<p class="mb-4">Les dates en 2024 ne sont pas autorisées</p>
-					<DatePicker
-						v-bind="args"
-						v-model="date"
-					/>
-					<div style="margin-top: 10px; font-family: monospace; color: #666;">
-						Valeur : {{ date }}
-					</div>
-				</div>
-			`,
-		}
-	},
+	render: renderWithLocalModel,
 }
 
 export const WarningRules: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Règle d\'avertissement (`customWarningRules`) : une date en 2025 affiche un avertissement non bloquant, le champ reste valide.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
-        <template>
-          <DatePicker
-            v-model="date"
-            format="DD/MM/YYYY"
-            placeholder="JJ/MM/AAAA"
-            label="Date de la consultation"
-            help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2025 déclenchent un avertissement"
-            no-calendar
-            :custom-warning-rules="[{
-              type: 'custom',
-              options: {
-                validate: value => !value || !value.includes('2025'),
-                warningMessage: 'Les dates en 2025 ne sont pas autorisées',
-                successMessage: 'Date hors 2025',
-                fieldIdentifier: 'date',
-                isWarning: true
-              }
-            }]"
-          />
-        </template>
-        `,
+<template>
+  <DatePicker
+    v-model="date"
+    format="DD/MM/YYYY"
+    placeholder="JJ/MM/AAAA"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2025 déclenchent un avertissement"
+    no-calendar
+    :custom-warning-rules="customWarningRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref<string | null>('20/12/2025')
+const customWarningRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: unknown) => typeof value !== 'string' || !value.includes('2025'),
+      warningMessage: 'Attention : la date est en 2025, vérifiez-la',
+      fieldIdentifier: 'date',
+      isWarning: true,
+    },
+  },
+]
+</script>`,
 			},
 		],
 	},
 	args: {
 		...baseArgs,
+		modelValue: '20/12/2025',
 		label: 'Date de la consultation',
 		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres. Les dates en 2025 déclenchent un avertissement',
 		customWarningRules: [{
 			type: 'custom',
 			options: {
-				validate: (value: unknown) => !value || !(value as string).includes('2025'),
-				warningMessage: 'Les dates en 2025 ne sont pas autorisées',
-				successMessage: 'Date hors 2025',
+				validate: (value: unknown) => typeof value !== 'string' || !value.includes('2025'),
+				warningMessage: 'Attention : la date est en 2025, vérifiez-la',
 				fieldIdentifier: 'date',
 				isWarning: true,
 			},
-		}] as DatePickerRule[],
+		}],
 	},
-	render(args) {
-		const date = ref<string | null>('20/12/2025')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
-			},
-			template: `
-        <div style="padding: 20px;">
-          <h4 class="mb-0">Format avec règles d'avertissement :</h4>
-          <p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
-          <DatePicker
-            v-bind="args"
-            v-model="date"
-          />
-          <div style="margin-top: 10px; font-family: monospace; color: #666;">
-            Valeur : {{ date }}
-          </div>
-        </div>
-      `,
-		}
-	},
+	render: renderWithLocalModel,
 }
 
 export const WithErrorDisabled: Story = {
 	parameters: {
+		// Chaque champ impose son propre libellé et sa propre valeur
+		controls: { exclude: ['modelValue', 'label'] },
+		docs: {
+			description: {
+				story: 'Comparaison entre un champ avec `disableErrorHandling` (validation interne désactivée) et un champ avec la gestion des erreurs par défaut. Laissez les deux champs vides puis quittez-les : seul le second affiche l\'erreur.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
-        <template>
-          <div class="d-flex">
-            <div class="mr-4" style="width: 300px;">
-              <p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
-              <DatePicker
-                v-model="date1"
-                format="DD/MM/YYYY"
-                placeholder="JJ/MM/AAAA"
-                label="Date de la consultation"
-                help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
-                required
-                no-icon
-                no-calendar
-                :disableErrorHandling="true"
-              />
-            </div>
-            <div style="width: 300px;">
-              <p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
-              <DatePicker
-                v-model="date2"
-                format="DD/MM/YYYY"
-                placeholder="JJ/MM/AAAA"
-                label="Date de la consultation"
-                help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
-                required
-                no-icon
-                no-calendar
-              />
-            </div>
-          </div>
-        </template>
-        `,
+<template>
+  <div class="d-flex flex-wrap ga-4">
+    <DatePicker
+      v-model="date1"
+      format="DD/MM/YYYY"
+      date-format-return="YYYY/MM/DD"
+      placeholder="JJ/MM/AAAA"
+      label="Date sans gestion des erreurs"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+      required
+      no-icon
+      no-calendar
+      disable-error-handling
+    />
+    <DatePicker
+      v-model="date2"
+      format="DD/MM/YYYY"
+      date-format-return="YYYY/MM/DD"
+      placeholder="JJ/MM/AAAA"
+      label="Date avec gestion des erreurs"
+      help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+      required
+      no-icon
+      no-calendar
+    />
+  </div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date1 = ref<string | null>(null)
+const date2 = ref<string | null>(null)
+</script>`,
 			},
 		],
 	},
@@ -354,48 +482,33 @@ export const WithErrorDisabled: Story = {
 		noIcon: true,
 		disableErrorHandling: true,
 	},
-	render(args) {
-		const date1 = ref<string | null>(null)
-		const date2 = ref<string | null>(null)
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date1, date2 }
-			},
-			template: `
-        <div style="padding: 20px;">
-          <h4 class="mb-4">DateTextInput avec désactivation des erreurs</h4>
-          <div class="d-flex mb-4">
-            <div class="mr-4" style="width: 300px;">
-              <p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
-              <DatePicker
-                v-model="date1"
-                v-bind="args"
-              />
-              <div style="margin-top: 10px; font-family: monospace; color: #666;">
-                Valeur : {{ date1 }}
-              </div>
-            </div>
-            
-            <div style="width: 300px;">
-              <p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
-              <DatePicker
-                v-model="date2"
-                format="DD/MM/YYYY"
-                placeholder="JJ/MM/AAAA"
-                label="Date de la consultation"
-                help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
-                required
-                no-icon
-                no-calendar
-              />
-              <div style="margin-top: 10px; font-family: monospace; color: #666;">
-                Valeur : {{ date2 }}
-              </div>
-            </div>
-          </div>
-        </div>
-      `,
-		}
-	},
+	render: args => ({
+		components: { DatePicker },
+		setup() {
+			const date1 = ref<string | null>(null)
+			const date2 = ref<string | null>(null)
+			return { args, date1, date2 }
+		},
+		template: `
+			<div class="d-flex flex-wrap ga-4">
+				<div>
+					<DatePicker
+						v-bind="args"
+						v-model="date1"
+						label="Date sans gestion des erreurs"
+					/>
+					<div class="mt-4 text-body-2">Valeur : {{ date1 }}</div>
+				</div>
+				<div>
+					<DatePicker
+						v-bind="args"
+						v-model="date2"
+						label="Date avec gestion des erreurs"
+						:disable-error-handling="false"
+					/>
+					<div class="mt-4 text-body-2">Valeur : {{ date2 }}</div>
+				</div>
+			</div>
+		`,
+	}),
 }
