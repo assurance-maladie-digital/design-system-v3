@@ -7,20 +7,32 @@ const isDev = process.env.NODE_ENV === 'development'
 // Netlify lance `build-storybook` pour tous ses environnements.
 const showConformitePanel = isDev
 
-const stories = [
-	// Tous les dossiers de src/ sauf components/
-	'../src/!(components)/**/*.mdx',
-	'../src/!(components)/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+// Outils et composants réservés au Storybook local : la rubrique Labs
+// (composants en cours de validation) n'est pas publiée tant qu'elle n'est pas prête.
+const devOnlyComponents = ['ComponentStatusTable', 'SyNavList']
 
-	// components/ sauf ComponentStatusTable/
-	'../src/components/!(ComponentStatusTable)/**/*.mdx',
-	'../src/components/!(ComponentStatusTable)/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+const stories = [
+	// Tous les dossiers de src/ sauf components/ et stories/
+	'../src/!(components|stories)/**/*.mdx',
+	'../src/!(components|stories)/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+
+	// stories/ sauf Labs/
+	'../src/stories/!(Labs)/**/*.mdx',
+	'../src/stories/!(Labs)/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+
+	// components/ sauf les composants réservés au dev
+	`../src/components/!(${devOnlyComponents.join('|')})/**/*.mdx`,
+	`../src/components/!(${devOnlyComponents.join('|')})/**/*.stories.@(js|jsx|mjs|ts|tsx)`,
 ]
 
 if (isDev) {
 	stories.push(
-		'../src/components/ComponentStatusTable/**/*.mdx',
-		'../src/components/ComponentStatusTable/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+		'../src/stories/Labs/**/*.mdx',
+		'../src/stories/Labs/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+		...devOnlyComponents.flatMap(name => [
+			`../src/components/${name}/**/*.mdx`,
+			`../src/components/${name}/**/*.stories.@(js|jsx|mjs|ts|tsx)`,
+		]),
 	)
 }
 

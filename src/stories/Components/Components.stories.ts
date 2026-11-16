@@ -616,6 +616,11 @@ export const ComponentsList: StoryObj = {
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
+					// La rubrique Labs n'est affichée que dans le Storybook local
+					if (component.category === 'Labs' && !import.meta.env.DEV) {
+						return false
+					}
+
 					if (isPa && paExcludedComponents.includes(component.title)) {
 						return false
 					}
