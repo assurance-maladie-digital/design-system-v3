@@ -32,6 +32,16 @@ import '@/stories/styles/shared.css';
 
 ## Fonctionnalités
 
+### Légende masquée visuellement
+
+Pour donner un titre accessible au tableau sans l’afficher à l’écran, renseignez `caption` et activez `hideCaption` (désactivé par défaut) :
+
+```vue
+<SyServerTable caption="Liste des utilisateurs" hide-caption ... />
+```
+
+La légende reste disponible pour les lecteurs d’écran et sert à nommer la pagination. Avec plusieurs tableaux, donnez une légende différente à chacun.
+
 ### Chargement côté serveur
 
 Le composant `SyServerTable` est spécialement conçu pour gérer les données chargées depuis un serveur. Il permet de:
@@ -236,6 +246,9 @@ Le composant améliore l'accessibilité en ajoutant automatiquement:
 - Une légende (caption) pour le tableau
 - Des attributs ARIA appropriés
 - Des attributs scope pour les en-têtes de colonnes
+- Un attribut `aria-busy` sur la balise `<table>`, actif pendant le chargement (`loading`)
+
+Pour les lignes dépliables personnalisées, relier le bouton au panneau avec `aria-controls` et refléter son état avec `aria-expanded`, comme dans la story « Lignes dépliables ».
 
 ## Exemples d'utilisation
 

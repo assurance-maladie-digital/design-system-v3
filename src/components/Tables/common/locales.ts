@@ -1,6 +1,7 @@
 export const locales = {
 	// Table locales
 	resetFilters: 'Réinitialiser les filtres',
+	filterLabel: 'Filtre',
 	noData: 'Aucune donnée disponible',
 	columnOrder: (columnTitle: string) => `Ordonner par ${columnTitle}`,
 	ResizableColumn: 'Redimensionner la colonne',
@@ -45,7 +46,6 @@ export const locales = {
 	activeFilters: (count: number) => `${count} filtre${count > 1 ? 's' : ''} actif${count > 1 ? 's' : ''}.`,
 	// Accessibility locales
 	loading: 'Chargement des données en cours',
-	rowCountStatus: (count: number) => count <= 1 ? `${count} ligne trouvée` : `${count} lignes trouvées`,
 	sortAscending: 'Tri croissant',
 	sortDescending: 'Tri décroissant',
 	sortNone: 'Aucun tri',

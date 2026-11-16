@@ -2,6 +2,12 @@ import { computed, nextTick, shallowRef, toValue, watch, type MaybeRefOrGetter, 
 import { locales } from './locales'
 import type { DataOptions, DataTableHeaders } from './types'
 
+// Chaque segment de l'annonce est une phrase : sans point final, la synthèse vocale
+// enchaîne les segments (« Aucune donnée disponible 1 filtre actif »).
+function asSentence(text: string): string {
+	return /[.!?]$/.test(text) ? text : `${text}.`
+}
+
 /** Announces only changes to the table state. */
 export function useTableStatus(input: {
 	page: MaybeRefOrGetter<number>
@@ -41,7 +47,7 @@ export function useTableStatus(input: {
 		if (current.filters !== previous.filters) changes.push(current.filterCount)
 		if (current.sort !== previous.sort) changes.push(current.sort)
 		if (!changes.length) return
-		const announcement = changes.join(' ')
+		const announcement = changes.map(asSentence).join(' ')
 		if (announcement === message.value) {
 			// An updated filter can keep the same count; trigger a fresh DOM change.
 			let cancelled = false

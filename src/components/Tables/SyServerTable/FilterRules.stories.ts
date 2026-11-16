@@ -67,6 +67,8 @@ type Story = StoryObj<typeof meta>
 
 export const TextFilterRules: Story = {
 	args: {
+		caption: 'Utilisateurs filtrés par texte avec règles de validation',
+		hideCaption: true,
 		serverItemsLength: 9,
 		suffix: 'text-filter-rules',
 		showFilters: true,
@@ -157,11 +159,12 @@ export const TextFilterRules: Story = {
         
         <div class="mb-4">
           <table class="mb-4" style="width: auto; border-collapse: collapse;">
+            <caption class="d-sr-only">Caractères spéciaux du filtre textuel</caption>
             <thead>
               <tr>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Caractère</th>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Description</th>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Exemple</th>
+                <th scope="col" style="border: 1px solid #ddd; padding: 8px; text-align: left;">Caractère</th>
+                <th scope="col" style="border: 1px solid #ddd; padding: 8px; text-align: left;">Description</th>
+                <th scope="col" style="border: 1px solid #ddd; padding: 8px; text-align: left;">Exemple</th>
               </tr>
             </thead>
             <tbody>
@@ -206,6 +209,8 @@ export const TextFilterRules: Story = {
         </div>
 		  
         <SyServerTable
+          caption="Utilisateurs filtrés par texte avec règles de validation"
+          hide-caption
           v-model:options="options"
           :headers="headers"
           :items="items"
@@ -222,6 +227,8 @@ export const TextFilterRules: Story = {
 
 export const NumberFilterRules: Story = {
 	args: {
+		caption: 'Utilisateurs filtrés par nombre avec règles de validation',
+		hideCaption: true,
 		serverItemsLength: 8,
 		suffix: 'number-filter-rules',
 		showFilters: true,
@@ -311,11 +318,12 @@ export const NumberFilterRules: Story = {
         
         <div class="mb-4">
           <table class="mb-4" style="width: auto; border-collapse: collapse;">
+            <caption class="d-sr-only">Opérateurs du filtre numérique</caption>
             <thead>
               <tr>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Opérateur</th>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Description</th>
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Exemple</th>
+                <th scope="col" style="border: 1px solid #ddd; padding: 8px; text-align: left;">Opérateur</th>
+                <th scope="col" style="border: 1px solid #ddd; padding: 8px; text-align: left;">Description</th>
+                <th scope="col" style="border: 1px solid #ddd; padding: 8px; text-align: left;">Exemple</th>
               </tr>
             </thead>
             <tbody>
@@ -355,6 +363,8 @@ export const NumberFilterRules: Story = {
         </div>
 		  
         <SyServerTable
+          caption="Utilisateurs filtrés par nombre avec règles de validation"
+          hide-caption
           v-model:options="options"
           :headers="headers"
           :items="items"
@@ -371,6 +381,8 @@ export const NumberFilterRules: Story = {
 
 export const SelectFilterRules: Story = {
 	args: {
+		caption: 'Utilisateurs filtrés par liste avec règles de validation',
+		hideCaption: true,
 		serverItemsLength: 5,
 		suffix: 'select-filter-rules',
 		showFilters: true,
@@ -477,6 +489,8 @@ export const SelectFilterRules: Story = {
         </div>
 		  
         <SyServerTable
+          caption="Utilisateurs filtrés par liste avec règles de validation"
+          hide-caption
           v-model:options="options"
           :headers="headers"
           :items="items"
@@ -492,6 +506,8 @@ export const SelectFilterRules: Story = {
 }
 export const DateFilterRules = {
 	args: {
+		caption: 'Utilisateurs filtrés par date seule',
+		hideCaption: true,
 		serverItemsLength: 10,
 		suffix: 'date-filter-rules',
 		showFilters: true,
@@ -681,6 +697,8 @@ export const DateFilterRules = {
 
         <h3 class="mb-3">Exemple 1: Filtrage par date seule</h3>
         <SyServerTable
+          caption="Utilisateurs filtrés par date seule"
+          hide-caption
           v-model:options="optionsSingleDate"
           :headers="headersSingleDate"
           :items="itemsSingleDate"
@@ -693,6 +711,8 @@ export const DateFilterRules = {
 
         <h3 class="mt-6 mb-3">Exemple 2: Filtrage par période</h3>
         <SyServerTable
+          caption="Utilisateurs filtrés par période avec règles de validation"
+          hide-caption
           v-model:options="optionsPeriod"
           :headers="headersPeriod"
           :items="itemsPeriod"

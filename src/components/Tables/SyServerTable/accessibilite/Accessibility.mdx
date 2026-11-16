@@ -114,4 +114,26 @@ import {
             <li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/" target="_blank" rel="noopener noreferrer">RGAA – critères 5 (tableaux), 7 (ARIA), 10 (présentation)</a></li>
         </ul>
     </ResourcesSection>
+    <div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+        <h2 style={{ color: '#e65100', marginTop: 0 }}>Résultat à vérifier manuellement : aria-controls</h2>
+        <ul>
+            <li>L’addon d'accessibilité de Storybook peut signaler <code>aria-valid-attr-value</code> sur le bouton « Gestion des colonnes » de <code>SyServerTable</code>, lorsque le panneau est ouvert.</li>
+            <li>L’attribut <code>aria-controls</code> relie le bouton au panneau qu’il ouvre.</li>
+            <li>Constat reproduit avec axe-core 4.13.0 : le moteur ne confirme pas automatiquement la référence de <code>aria-controls</code> lorsque le bouton utilise aussi <code>aria-haspopup="dialog"</code>. Il classe ce résultat dans <code>incomplete</code>, même si le panneau existe. Cela nécessite une vérification manuelle et ne constitue pas une preuve de conformité.</li>
+            <li>Vérification manuelle : ouvrir le panneau, sélectionner son bouton dans l’inspecteur, puis saisir dans la console <code>document.getElementById($0.getAttribute('aria-controls'))</code>. Le résultat doit être l’élément correspondant au panneau ouvert, avec <code>role="dialog"</code>.</li>
+            <li>Si la référence pointe bien vers le panneau, ce point est vérifié : l’alerte ne prouve pas une erreur du composant. Il faut conserver <code>aria-controls</code>.</li>
+        </ul>
+
+```json
+{
+  "violations": [],
+  "incomplete": [{
+    "id": "aria-valid-attr-value",
+    "summary": "Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"columns\""
+  }]
+}
+```
+
+        <p>Le test <code>SyServerTableAudit.a11y.spec.ts</code> vérifie l’existence du panneau ouvert, son rôle, son nom et la référence du bouton, puis contrôle que les résultats à examiner concernent cette seule association.</p>
+    </div>
 </AccessibilityGuideLayout>

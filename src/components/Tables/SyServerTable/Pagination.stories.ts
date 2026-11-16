@@ -43,15 +43,14 @@ const elevenUsers = serverUsers.slice(0, 11)
  */
 export const ItemsPerPageOptions: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec choix du nombre de lignes par page"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -111,7 +110,8 @@ export const ItemsPerPageOptions: Story = {
 		},
 		itemsPerPageOptions: [5, 10, 15],
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs avec choix du nombre de lignes par page',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'server-default',
 		density: 'default',
@@ -144,15 +144,14 @@ export const ItemsPerPageOptions: Story = {
  */
 export const HideDefaultFooter: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs sans pagination"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -200,6 +199,8 @@ export const HideDefaultFooter: Story = {
 		],
 	},
 	args: {
+		caption: 'Utilisateurs sans pagination',
+		hideCaption: true,
 		options: { itemsPerPage: -1, page: 1 },
 		headers: serverHeaders,
 		serverItemsLength: 6,
@@ -234,15 +235,14 @@ export const HideDefaultFooter: Story = {
  */
 export const PageInput: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs avec saisie du numéro de page"
+		hide-caption
 		v-model:options="options"
 		:items="users"
 		:headers="headers"
@@ -290,6 +290,8 @@ export const PageInput: Story = {
 		],
 	},
 	args: {
+		caption: 'Utilisateurs avec saisie du numéro de page',
+		hideCaption: true,
 		options: { itemsPerPage: 5, page: 1 },
 		headers: serverHeaders,
 		serverItemsLength: 11,

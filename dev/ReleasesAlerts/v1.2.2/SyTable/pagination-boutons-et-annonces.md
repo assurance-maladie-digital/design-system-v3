@@ -33,6 +33,7 @@ La zone de statut de `SyTable` annonce uniquement les changements : compteur de 
 
 ## Conduite à tenir
 
+- La case « Sélectionner toutes les lignes » n’a plus d’`aria-label` : son nom vient de son `<label>`. L’`aria-label` doublait le nom de l’en-tête de colonne pour les lecteurs d’écran (« Sélectionner toutes les lignes Sélectionner toutes les lignes »). Les tests qui la ciblent par `[aria-label="Sélectionner toutes les lignes"]` doivent passer par son nom accessible (par exemple `getByRole('checkbox', { name: 'Sélectionner toutes les lignes' })`).
 - Adapter les tests E2E qui ciblent les liens de pagination de `SyTable` (`a[href]`, `getByRole('link')`) pour cibler les boutons et leurs noms accessibles, par exemple `getByRole('button', { name: 'Page 2', exact: true })`.
 - Adapter les surcharges CSS `.sy-pagination a` si elles doivent aussi s’appliquer aux boutons : utiliser `.sy-pagination button` ou cibler les deux éléments lorsque le style est partagé avec une pagination en liens.
 - Garder une `caption` descriptive, même avec `hideCaption`, et des légendes distinctes lorsque plusieurs tableaux sont présents.

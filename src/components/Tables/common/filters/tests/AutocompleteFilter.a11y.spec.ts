@@ -94,7 +94,7 @@ describe('AutocompleteFilter – accessibilité (axe)', () => {
 		assertNoA11yViolations(results, 'AutocompleteFilter – multiple, empty', { ignoreRules: ['region'] })
 	})
 
-	it('has no axe violations when header has no title (falls back to aria-label "Filtre")', async () => {
+	it('has no axe violations when header has no title (falls back to label "Filtre")', async () => {
 		const wrapper = mount(AutocompleteFilter, {
 			attachTo: document.body,
 			global: { stubs: { SyAutocomplete: accessibleSyAutocompleteStub } },

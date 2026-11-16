@@ -142,6 +142,8 @@ export type SyServerTableProps = {
 	suffix: string
 	saveState?: boolean
 	caption?: string
+	/** Masque visuellement la légende tout en la conservant pour les lecteurs d’écran. */
+	hideCaption?: boolean
 	showFilters?: boolean
 	resizableColumns?: boolean
 	filterInputConfig?: Record<string, TableFilterInputConfig>

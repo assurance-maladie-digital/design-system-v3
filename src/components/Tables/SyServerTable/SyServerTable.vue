@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import { computed, onMounted, provide, ref, toRef, useAttrs, useId, useSlots, watch } from 'vue'
+	import { computed, onMounted, onUpdated, provide, ref, toRef, useAttrs, useId, useSlots, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components/VDataTable'
 	import { VRadio } from 'vuetify/components/VRadio'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -10,7 +10,6 @@
 	import TableHeader, { type HeaderPropsRaw } from '../common/TableHeader.vue'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
-	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import { useTableProps } from '../common/tableProps'
 	import type { DataOptions, Item, Items, SyServerTableProps } from '../common/types'
 	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
@@ -18,6 +17,7 @@
 	import { usePagination } from '../common/usePagination'
 	import { usePinnedColumns } from '../common/usePinnedColumns'
 	import useStoredOptions from '../common/useStoredOptions'
+	import { useTableStatus } from '../common/useTableStatus'
 	import { useTableAria } from '../common/useTableAria'
 	import { useTableBulkActions } from '../common/useTableBulkActions'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
@@ -29,6 +29,7 @@
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
+		hideCaption: false,
 		saveState: true,
 		showFilters: false,
 		// Do not default items to [] so we can detect undefined during refetch
@@ -107,10 +108,6 @@
 		clickableRow: toRef(props, 'clickableRow'),
 		rowProps: forwardedRowProps,
 		onRowClick: item => emit('row-click', item),
-	})
-
-	const { setupAccessibility } = useTableAccessibility({
-		tableId: uniqueTableId.value,
 	})
 
 	// Use the table headers composable
@@ -244,7 +241,6 @@
 	// Use the ARIA accessibility composable
 	const {
 		statusRegionId,
-		statusMessage,
 		setupAria,
 	} = useTableAria({
 		table,
@@ -254,9 +250,21 @@
 		uniqueTableId: uniqueTableId.value,
 	})
 
-	defineExpose({ filterItems })
+	const statusMessage = useTableStatus({
+		page,
+		itemsPerPage: itemsPerPageValue,
+		total: displayedItemsLength,
+		selected: () => model.value.length,
+		options,
+		headers: () => props.headers,
+	})
+	const resultsId = `${uniqueTableId.value}-results`
+	const paginationLabel = computed(() => props.caption
+		? locales.tablePagination(props.caption)
+		: locales.pagination.paginationNavAriaLabel,
+	)
 
-	setupAccessibility()
+	defineExpose({ filterItems })
 
 	const { accessibilityRowCheckboxes } = useTableRowCheckboxAccessibility({
 		uniqueTableId: uniqueTableId.value,
@@ -268,9 +276,17 @@
 	watch(() => page.value, accessibilityRowCheckboxes)
 	watch(() => itemsPerPageValue.value, accessibilityRowCheckboxes)
 
+	// Vuetify forwards attributes to its wrapper, so set busy on the native table.
+	const updateLoadingAria = () => {
+		const loading = componentAttributes.loading
+		table.value?.$el?.querySelector('table')?.setAttribute('aria-busy', String(loading === '' || Boolean(loading)))
+	}
+
 	onMounted(() => {
 		setupAria()
+		updateLoadingAria()
 	})
+	onUpdated(updateLoadingAria)
 
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(storedOptions.columnWidths || {})
@@ -339,11 +355,11 @@
 		]"
 		:style="[pinnedEdgeVars, scrollAreaVars]"
 	>
-		<!-- ARIA status region for row count announcements -->
+		<!-- ARIA status region for changes to table results -->
 		<div
 			:id="statusRegionId"
 			role="status"
-			aria-live="polite"
+			aria-atomic="true"
 			class="d-sr-only"
 		>
 			{{ statusMessage }}
@@ -365,8 +381,9 @@
 		</TableBulkActions>
 
 		<VDataTableServer
-			ref="table"
 			v-bind="propsFacade"
+			:id="resultsId"
+			ref="table"
 			v-model="model"
 			:headers="displayHeadersWithPinned"
 			:row-props="clickableRowProps"
@@ -393,6 +410,7 @@
 				<caption
 					v-if="props.caption.trim()"
 					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.hideCaption }"
 				>
 					{{ props.caption }}
 				</caption>
@@ -416,6 +434,7 @@
 							:key="column.key!"
 						>
 							<th
+								scope="col"
 								:class="[
 									{ 'checkbox-column': column.key === 'data-table-select' },
 									{
@@ -445,7 +464,6 @@
 										density="compact"
 										hide-details
 										:is-header="true"
-										:aria-label="locales.selectAllRows"
 										:title="locales.selectAllRows"
 										@click="toggleAllRows"
 									>
@@ -454,8 +472,13 @@
 										</template>
 									</SyCheckbox>
 								</template>
+								<template v-else-if="column.key === 'data-table-select' || column.key === 'data-table-expand'">
+									<span class="d-sr-only">{{ column.key === 'data-table-select' ? locales.selectionColumn : locales.expandRows }}</span>
+								</template>
 								<template v-else>
 									<TableHeader
+										:data-column-key="column.key"
+										:announce-width="props.resizableColumns"
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
@@ -481,12 +504,12 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-						<th v-if="props.showSelect || props.showSelectSingle" />
+						<td v-if="props.showSelect || props.showSelectSingle" />
 						<template
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key!"
 						>
-							<th
+							<td
 								:style="{
 									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
@@ -495,7 +518,7 @@
 							>
 								<!-- Check if the column is filterable based on the headers prop -->
 								<SyTableFilter
-									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
+									v-if="column.key !== 'data-table-expand' && !props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
@@ -510,7 +533,7 @@
 										/>
 									</template>
 								</SyTableFilter>
-							</th>
+							</td>
 						</template>
 					</tr>
 					<tr
@@ -538,6 +561,7 @@
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
+							scope="col"
 						>
 							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
@@ -546,7 +570,7 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-						<th
+						<td
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
 						>
@@ -565,7 +589,7 @@
 									/>
 								</template>
 							</SyTableFilter>
-						</th>
+						</td>
 					</tr>
 				</template>
 			</template>
@@ -673,6 +697,8 @@
 					<SyTablePagination
 						v-if="showPagination"
 						:page="page"
+						:controls-id="resultsId"
+						:pagination-label="paginationLabel"
 						:heading-level="props.headingLevel"
 						:items-per-page="itemsPerPageValue"
 						:page-count="pageCount"

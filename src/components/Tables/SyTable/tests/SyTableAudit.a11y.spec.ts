@@ -19,6 +19,19 @@ function render(extra = {}) {
 }
 
 describe('SyTable – audit accessibility', () => {
+	it('names the select-all checkbox once, through its label only', async () => {
+		const wrapper = render({ showSelect: true })
+		await flushPromises()
+		const checkbox = wrapper.get('thead tr.headers input[type="checkbox"]')
+		// Un aria-label en plus du <label> doublait le nom de l'en-tête de colonne
+		// (« Sélectionner toutes les lignes Sélectionner toutes les lignes »).
+		expect(checkbox.attributes('aria-label')).toBeUndefined()
+		const label = document.querySelector(`label[for="${checkbox.attributes('id')}"]`)
+		expect(label?.textContent?.trim()).toBe('Sélectionner toutes les lignes')
+		const result = await axe(wrapper.element as HTMLElement)
+		expect(result.violations).toEqual([])
+	})
+
 	it('keeps the caption first and names all technical headers without treating filters as headers', async () => {
 		const wrapper = render({ showSelectSingle: true, showExpand: true, showFilters: true })
 		await flushPromises()
@@ -70,10 +83,10 @@ describe('SyTable – audit accessibility', () => {
 		await wrapper.get('input[type="radio"]').setValue(true)
 		await flushPromises()
 		expect(wrapper.get('[role="status"]').text()).toContain('1 élément sélectionné')
-		expect(wrapper.get('[role="status"]').text()).toBe('1 élément sélectionné')
+		expect(wrapper.get('[role="status"]').text()).toBe('1 élément sélectionné.')
 		await wrapper.findAll('input[type="radio"]')[1].setValue(true)
 		await flushPromises()
-		expect(wrapper.get('[role="status"]').text()).toBe('1 élément sélectionné')
+		expect(wrapper.get('[role="status"]').text()).toBe('1 élément sélectionné.')
 		await wrapper.setProps({ modelValue: [], options: { page: 1, itemsPerPage: 5, filters: [{ key: 'name', type: 'text', value: 'Agent 12' }] } })
 		await flushPromises()
 		expect(wrapper.get('[role="status"]').text()).toContain('0 élément sélectionné')
@@ -88,7 +101,7 @@ describe('SyTable – audit accessibility', () => {
 		await flushPromises()
 		await wrapper.setProps({ options: { page: 1, itemsPerPage: 5, filters: [{ key: 'name', type: 'text', value: 'Introuvable' }] } })
 		await flushPromises()
-		expect(wrapper.get('[role="status"]').text()).toBe('Aucune donnée disponible 1 filtre actif.')
+		expect(wrapper.get('[role="status"]').text()).toBe('Aucune donnée disponible. 1 filtre actif.')
 		await wrapper.setProps({ options: { page: 1, itemsPerPage: 5, filters: [] } })
 		await flushPromises()
 		expect(wrapper.get('[role="status"]').text()).toContain('Page 1. Lignes 1 à 5 sur 12.')
