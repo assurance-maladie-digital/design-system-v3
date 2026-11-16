@@ -183,13 +183,18 @@ export const CustomValidation: Story = {
 			])
 
 			// Règle « custom » : compare la confirmation au mot de passe saisi (inter-champs).
-			const confirmPasswordRules = computed(() => [
-				{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
-				{ type: 'custom', options: {
-					validate: (value: string) => value === password.value,
-					message: 'Les mots de passe ne correspondent pas',
-				} },
-			])
+			// Le mot de passe est lu dans le corps du computed : les règles sont recréées
+			// (et la confirmation revalidée) à chaque changement du mot de passe.
+			const confirmPasswordRules = computed(() => {
+				const expectedPassword = password.value
+				return [
+					{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
+					{ type: 'custom', options: {
+						validate: (value: string) => value === expectedPassword,
+						message: 'Les mots de passe ne correspondent pas',
+					} },
+				]
+			})
 
 			const onSubmit = (event: { isValid: boolean }) => {
 				alert(event.isValid ? 'Inscription réussie !' : 'Formulaire invalide, veuillez corriger les erreurs.')
@@ -257,10 +262,10 @@ correspondance des deux mots de passe (validation **inter-champs**).
     <div class="d-flex flex-column ga-4">
       <SyTextField v-model="username" label="Nom d'utilisateur" required />
       <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
-      <SyTextField v-model="confirmPassword" label="Confirmer le mot de passe" type="password" :custom-rules="confirmPasswordRules" />
+      <SyTextField v-model="confirmPassword" label="Confirmer le mot de passe" type="password" required :custom-rules="confirmPasswordRules" />
 
-	<!-- Validité globale exposée par le v-model -->
-	<p>Validité du formulaire : {{ isFormValid === null ? 'statut indisponible' : (isFormValid ? 'valide' : 'invalide') }}</p>
+      <!-- Validité globale exposée par le v-model -->
+      <p role="status">Validité du formulaire : {{ isFormValid === null ? 'statut indisponible' : (isFormValid ? 'valide' : 'invalide') }}</p>
 
       <div class="d-flex ga-3">
         <v-btn type="submit" color="primary">S'inscrire</v-btn>
@@ -291,16 +296,21 @@ const passwordRules = computed(() => [
   { type: 'minLength', options: { length: 8, message: 'Minimum 8 caractères' } },
 ])
 
-// Règle « custom » : compare la confirmation au mot de passe (validation inter-champs)
-const confirmPasswordRules = computed(() => [
-  { type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
-  { type: 'custom', options: {
-    validate: (value) => value === password.value,
-    message: 'Les mots de passe ne correspondent pas',
-  } },
-])
+// Règle « custom » : compare la confirmation au mot de passe (validation inter-champs).
+// Le mot de passe est lu dans le corps du computed : les règles sont recréées
+// (et la confirmation revalidée) à chaque changement du mot de passe.
+const confirmPasswordRules = computed(() => {
+  const expectedPassword = password.value
+  return [
+    { type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
+    { type: 'custom', options: {
+      validate: (value: string) => value === expectedPassword,
+      message: 'Les mots de passe ne correspondent pas',
+    } },
+  ]
+})
 
-const onSubmit = (event) => {
+const onSubmit = (event: { isValid: boolean }) => {
   alert(event.isValid ? 'Inscription réussie !' : 'Formulaire invalide, veuillez corriger les erreurs.')
 }
 

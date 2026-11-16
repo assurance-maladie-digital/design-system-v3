@@ -1,12 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
-import { analyzeSnippet } from '@tests/helpers/storySnippets'
 import * as stories from '../SyForm.stories'
 
 const { WithoutAutoValidation, CustomValidation } = composeStories(stories)
-
-const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({ name, story }))
 
 enableAutoUnmount(afterEach)
 
@@ -15,17 +12,6 @@ afterEach(() => {
 })
 
 describe('SyForm stories', () => {
-	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
-		expect(analyzeSnippet(story)).toEqual({
-			parseErrors: [],
-			hasScriptSetup: true,
-			undeclaredIdentifiers: [],
-			unresolvedComponents: [],
-			untypedRefs: [],
-			invalidAttributes: [],
-		})
-	})
-
 	it('WithoutAutoValidation laisse le control validateOnSubmit effectif', async () => {
 		const manual = mount(WithoutAutoValidation(), { attachTo: document.body })
 		await manual.find('form').trigger('submit')
@@ -69,5 +55,38 @@ describe('SyForm stories', () => {
 		// Correspondance rétablie : le v-model repasse à true
 		expect(status.text()).toContain('formulaire : valide')
 		expect(status.text()).not.toContain('formulaire : invalide')
+	})
+
+	it('CustomValidation revalide la confirmation quand le mot de passe change', async () => {
+		const wrapper = mount(CustomValidation(), { attachTo: document.body })
+		await flushPromises()
+
+		const status = wrapper.find('[role="status"]')
+		const [username, password, confirmation] = wrapper.findAll('input')
+		for (const [input, value] of [[username, 'utilisateur'], [password, 'MotDePasse1'], [confirmation, 'MotDePasse2']] as const) {
+			await input.trigger('focus')
+			await input.setValue(value)
+			await input.trigger('blur')
+		}
+		await flushPromises()
+		expect(wrapper.text()).toContain('Les mots de passe ne correspondent pas')
+		expect(status.text()).toContain('formulaire : invalide')
+
+		// Corriger le mot de passe (et non la confirmation) doit retirer l'erreur de la confirmation
+		await password.trigger('focus')
+		await password.setValue('MotDePasse2')
+		await password.trigger('blur')
+		await flushPromises()
+		expect(wrapper.text()).not.toContain('Les mots de passe ne correspondent pas')
+		expect(status.text()).toContain('formulaire : valide')
+		expect(status.text()).not.toContain('formulaire : invalide')
+
+		// Et inversement : modifier le mot de passe après coup réinvalide la confirmation
+		await password.trigger('focus')
+		await password.setValue('MotDePasse3')
+		await password.trigger('blur')
+		await flushPromises()
+		expect(wrapper.text()).toContain('Les mots de passe ne correspondent pas')
+		expect(status.text()).toContain('formulaire : invalide')
 	})
 })

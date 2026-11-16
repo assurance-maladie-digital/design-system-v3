@@ -1191,7 +1191,7 @@ const rules = [
 	},
 ]
 
-async function handleSubmit(e) {
+async function handleSubmit(e: Promise<{ valid: boolean }>) {
 	alert((await e).valid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,

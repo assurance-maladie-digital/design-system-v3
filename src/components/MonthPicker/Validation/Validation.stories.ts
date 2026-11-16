@@ -805,7 +805,7 @@ const customRules = [
     },
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
     const isValid = e.isValid
     alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -1000,7 +1000,7 @@ const vuetifyRules = [
     (value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
     const isValid = e.isValid
     alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -1046,6 +1046,7 @@ function handleSubmit(e) {
 export const VFormVuetifyValidation: Story = {
 	args: {
 		useVuetifyValidation: true,
+		required: true,
 	},
 	parameters: {
 		docs: {
@@ -1071,7 +1072,6 @@ native de Vuetify.
 			:use-vuetify-validation="true"
 			:rules="rules"
 			required
-			:is-validate-on-blur="true"
 		/>
 		<div class="mt-4">
 			<VBtn type="submit" color="primary">Valider</VBtn>
@@ -1105,7 +1105,6 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 		components: { MonthPicker, VBtn, VForm },
 		setup() {
 			const selectedMonth = ref('')
-			const fieldRef = ref()
 
 			const rules = [
 				(value: string) => !!value || 'Le mois est requis',
@@ -1117,7 +1116,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 				alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selectedMonth, fieldRef, rules, handleSubmit }
+			return { args, selectedMonth, rules, handleSubmit }
 		},
 		template: `
 			<div>

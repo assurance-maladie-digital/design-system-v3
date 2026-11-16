@@ -189,6 +189,15 @@ export default {
 			},
 		},
 		...getValidationDocumentation(),
+		'required': {
+			...getValidationDocumentation().required,
+			description: 'Indique que le captcha est requis : un captcha vide bloque la soumission. Actif par défaut, passer `:required="false"` pour le désactiver.',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'true' },
+				category: 'props',
+			},
+		},
 	},
 }
 

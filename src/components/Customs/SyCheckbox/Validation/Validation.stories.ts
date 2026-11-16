@@ -241,8 +241,8 @@ const prerequisite = ref(false)
 const accepted = ref(false)
 
 const customRules = computed(() => {
-	// Read in the computed body so the rules array is recreated (and the
-	// validation re-run) whenever the prerequisite changes.
+	// Lu dans le corps du computed : les règles sont recréées (et la validation
+	// relancée) à chaque changement du prérequis.
 	const prerequisiteChecked = prerequisite.value
 	return [{
 		type: 'custom',
@@ -264,8 +264,8 @@ const customRules = computed(() => {
 			const accepted = ref(false)
 
 			const customRules = computed(() => {
-				// Read in the computed body so the rules array is recreated (and the
-				// validation re-run) whenever the prerequisite changes.
+				// Lu dans le corps du computed : les règles sont recréées (et la validation
+				// relancée) à chaque changement du prérequis.
 				const prerequisiteChecked = prerequisite.value
 				return [{
 					type: 'custom',

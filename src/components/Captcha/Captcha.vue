@@ -25,6 +25,7 @@
 		locale: navigator.language,
 		locales: () => ({}),
 		...validationPropsDefaults,
+		required: true,
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
