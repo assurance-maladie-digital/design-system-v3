@@ -97,6 +97,7 @@
 	})
 
 	const inputId = `sy-input-select-${useId()}`
+	const listId = `${inputId}-list`
 
 	const selectItem = async (item: unknown) => {
 		if (props.readonly || props.disabled) return
@@ -286,7 +287,6 @@
 		:error-messages="localErrorMessages"
 		:label="labelWithAsterisk"
 		:title="labelWithAsterisk"
-		role="menu"
 		:readonly="props.readonly"
 		:disabled="props.disabled"
 		@click="checkForErrors"
@@ -301,7 +301,10 @@
 				hasError ? 'error--text' : '',
 				bgColor ? 'bg-color' : '',
 			]"
-			role="menu"
+			role="button"
+			aria-haspopup="listbox"
+			:aria-expanded="isOpen ? 'true' : 'false'"
+			:aria-controls="isOpen ? listId : undefined"
 			tabindex="0"
 			@click="toggleMenu"
 			@keydown.enter.prevent="toggleMenu"
@@ -330,6 +333,8 @@
 		</div>
 		<VList
 			v-if="isOpen"
+			:id="listId"
+			role="listbox"
 			:aria-label="props.label"
 			:is-header-toolbar="props.isHeaderToolbar"
 			:style="`min-width:${menuWidth}px; ${props.outlined ? 'top: 36px;' : 'top: 30px;'}`"
@@ -344,7 +349,7 @@
 				:ref="'options-' + index"
 				:aria-selected="selectedItem === item"
 				:base-color="options.option.color"
-				:tabindex="index + 1"
+				tabindex="0"
 				class="v-list-item"
 				role="option"
 				v-bind="options.option"

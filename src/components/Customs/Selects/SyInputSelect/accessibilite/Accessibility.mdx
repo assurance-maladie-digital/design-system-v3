@@ -64,6 +64,16 @@ import {
         <CriteriaCard title="Sélection et restitution">
             <ul>
                 <li>
+                    Le déclencheur porte <code>role="button"</code> et
+                    <code>aria-haspopup="listbox"</code> ; son état ouvert ou fermé est
+                    restitué par <code>aria-expanded</code>, et
+                    <code>aria-controls</code> le relie à la liste ouverte.
+                </li>
+                <li>
+                    La liste porte <code>role="listbox"</code> et ses éléments
+                    <code>role="option"</code>.
+                </li>
+                <li>
                     La valeur sélectionnée est affichée directement dans le bouton du
                     composant.
                 </li>
@@ -120,12 +130,6 @@ import {
 
         <CriteriaCard title="Limites connues">
             <ul>
-                <li>
-                    Le composant utilise actuellement le rôle
-                    <code>menu</code> alors qu'il correspond davantage à un
-                    <strong>listbox</strong>. Une évolution vers le pattern
-                    WAI-ARIA Listbox améliorerait la conformité.
-                </li>
                 <li>
                     La navigation avec les touches
                     <kbd>Flèche haut</kbd> et
