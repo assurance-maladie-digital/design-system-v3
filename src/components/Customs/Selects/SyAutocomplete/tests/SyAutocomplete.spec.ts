@@ -1735,7 +1735,27 @@ describe('SyAutocomplete', () => {
 			}
 			const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-			it('cancels the pending search when a single option is selected', async () => {
+			const selectFirstOptionWithMouse = async () => {
+				const option = getOption(0)
+				expect(option?.textContent).toContain('Option 1')
+				option?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 }))
+				await flushPromises()
+			}
+			const selectFirstOptionWithKeyboard = async () => {
+				const input = wrapper.get('input').element
+				input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }))
+				await flushPromises()
+				const option = getOption(0)
+				expect(option?.textContent).toContain('Option 1')
+				expect(input.getAttribute('aria-activedescendant')).toBe(option?.id)
+				input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
+				await flushPromises()
+			}
+
+			it.each([
+				{ via: 'mouse', selectFirstOption: selectFirstOptionWithMouse },
+				{ via: 'keyboard', selectFirstOption: selectFirstOptionWithKeyboard },
+			])('cancels the pending search when a single option is selected with the $via', async ({ selectFirstOption }) => {
 				mountWithDebounce(150)
 				await wrapper.setProps({ filter: false })
 				const input = wrapper.get('input')
@@ -1745,10 +1765,7 @@ describe('SyAutocomplete', () => {
 				vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] })
 				try {
 					await input.setValue('Opt')
-					const option = getOption(0)
-					expect(option?.textContent).toContain('Option 1')
-					option?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 }))
-					await flushPromises()
+					await selectFirstOption()
 
 					expect(wrapper.emitted('update:modelValue')).toEqual([['1']])
 					expect(input.element.value).toBe('Option 1')
