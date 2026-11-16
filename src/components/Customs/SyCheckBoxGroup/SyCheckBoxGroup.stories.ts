@@ -276,7 +276,7 @@ export const Required: Story = {
 		},
 		template: `
 			<SyForm ref="form" @submit="onSubmit">
-				<SyCheckBoxGroup v-model="value" required v-bind="args" />
+				<SyCheckBoxGroup v-model="value" v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
 				<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
 			</SyForm>
@@ -404,7 +404,18 @@ export const Multiple: Story = {
 }
 
 export const MultipleRequired: Story = {
+	argTypes: {
+		multiple: {
+			control: false,
+			description: 'Verrouillé à true : la règle personnalisée valide le nombre de valeurs sélectionnées en mode multiple.',
+		},
+	},
 	parameters: {
+		docs: {
+			description: {
+				story: 'Le mode multiple est imposé par la règle de validation, qui exige au moins deux valeurs sélectionnées.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -412,7 +423,7 @@ export const MultipleRequired: Story = {
 					<SyForm ref="form" @submit="onSubmit">
 						<SyCheckBoxGroup
 							v-model="values"
-							label="Choisissez au moins une option"
+							label="Choisissez au moins 2 options (multiple requis)"
 							:options="options"
 							multiple
 							required
@@ -461,7 +472,7 @@ export const MultipleRequired: Story = {
 		],
 	},
 	args: {
-		label: 'Choisissez au moins une option (multiple requis)',
+		label: 'Choisissez au moins 2 options (multiple requis)',
 		options: baseOptions,
 		multiple: true,
 		required: true,
@@ -490,7 +501,7 @@ export const MultipleRequired: Story = {
 		},
 		template: `
 			<SyForm ref="form" @submit="onSubmit">
-				<SyCheckBoxGroup v-model="value" required v-bind="args" />
+				<SyCheckBoxGroup v-model="value" v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
 			</SyForm>
@@ -623,11 +634,13 @@ const options = [
 				story: `
 ### Couleurs personnalisées
 Le composant SyCheckBoxGroup peut être personnalisé avec différentes couleurs pour s'adapter à votre thème.
+Les cinq couleurs sont affichées simultanément ; les Controls sont désactivés pour cette comparaison.
 				`,
 			},
 		},
+		controls: { disable: true },
 	},
-	render: args => ({
+	render: () => ({
 		components: { SyCheckBoxGroup },
 		setup() {
 			const options = [
@@ -639,7 +652,7 @@ Le composant SyCheckBoxGroup peut être personnalisé avec différentes couleurs
 			const value3 = ref<string | null>('a')
 			const value4 = ref<string | null>('a')
 			const value5 = ref<string | null>('a')
-			return { args, options, value1, value2, value3, value4, value5 }
+			return { options, value1, value2, value3, value4, value5 }
 		},
 		template: `
 			<div>
@@ -717,9 +730,11 @@ const options = [
 				story: `
 ### Différentes densités
 Le composant SyCheckBoxGroup prend en charge différentes densités pour s'adapter à différents contextes d'interface utilisateur.
+Les trois densités sont affichées simultanément ; les Controls sont désactivés pour cette comparaison.
 				`,
 			},
 		},
+		controls: { disable: true },
 	},
 	render: () => ({
 		components: { SyCheckBoxGroup },
@@ -745,6 +760,7 @@ Le composant SyCheckBoxGroup prend en charge différentes densités pour s'adapt
 
 export const Readonly: Story = {
 	args: {
+		label: 'CheckBoxGroup en lecture seule',
 		readonly: true,
 		options: [
 			{ label: 'Option A', value: 'a' },
@@ -760,7 +776,7 @@ export const Readonly: Story = {
 		},
 		template: `
 			<div>
-				<SyCheckBoxGroup v-model="value" v-bind="args" label="CheckBoxGroup en lecture seule" />
+				<SyCheckBoxGroup v-model="value" v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
 			</div>
 		`,
@@ -800,6 +816,12 @@ export const Readonly: Story = {
 }
 
 export const EventShowcase: Story = {
+	args: {
+		label: 'Sélectionnez une ou plusieurs options',
+		options: baseOptions,
+		multiple: true,
+		required: false,
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -836,7 +858,7 @@ Ce story démontre les événements émis par le composant :
 import { ref } from 'vue'
 import { SyCheckBoxGroup } from '@cnamts/synapse'
 
-const selected = ref<string | null>(null)
+const selected = ref<string | string[] | null>(null)
 const lastEvent = ref('')
 const multiple = ref(true)
 
@@ -846,7 +868,7 @@ const options = [
 	{ label: 'Option C', value: 'c' },
 ]
 
-const onUpdate = (value: string | null) => {
+const onUpdate = (value: string | string[] | null) => {
 	lastEvent.value = \`update:modelValue: \${value}\`
 }
 </script>`,
@@ -859,27 +881,18 @@ const onUpdate = (value: string | null) => {
 		setup() {
 			const selected = ref<(string | number) | (string | number)[] | null>(null)
 			const lastEvent = ref('Aucun événement')
-			const multiple = ref(true)
-
-			const options = [
-				{ label: 'Option A', value: 'a' },
-				{ label: 'Option B', value: 'b' },
-				{ label: 'Option C', value: 'c' },
-			]
 
 			const onUpdate = (value: (string | number) | (string | number)[] | null) => {
 				lastEvent.value = `update:modelValue: ${JSON.stringify(value)}`
 			}
 
-			return { args, selected, options, multiple, lastEvent, onUpdate }
+			return { args, selected, lastEvent, onUpdate }
 		},
 		template: `
 			<div>
 				<SyCheckBoxGroup
 					v-model="selected"
-					label="Sélectionnez une ou plusieurs options"
-					:options="options"
-					:multiple="multiple"
+					v-bind="args"
 					@update:model-value="onUpdate"
 				/>
 				<div class="mt-4 pa-4 bg-grey-lighten-4 rounded">
@@ -962,11 +975,13 @@ const options = [
 
 export const HideDetails: Story = {
 	parameters: {
+		controls: { disable: true },
 		docs: {
 			description: {
 				story: `
 ### hideDetails
 Contrôle l'affichage de la zone de messages sous le champ.
+Les trois modes sont affichés simultanément ; les Controls sont désactivés pour cette comparaison.
 
 | Valeur | Comportement |
 |--------|-------------|
