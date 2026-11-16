@@ -68,4 +68,35 @@ describe('usePageScrollLock', () => {
 
 		expect(overflow()).toEqual({ html: 'scroll', body: 'clip' })
 	})
+
+	it('restores an inline overflow-y declared alone', async () => {
+		document.documentElement.style.overflow = ''
+		document.body.style.overflow = ''
+		document.body.style.overflowY = 'scroll'
+		const locked = ref(true)
+		const scope = effectScope()
+		scope.run(() => usePageScrollLock(locked))
+		expect(overflow()).toEqual({ html: 'hidden', body: 'hidden' })
+
+		locked.value = false
+		await nextTick()
+
+		expect(document.body.getAttribute('style')).toBe('overflow-y: scroll;')
+		expect(document.documentElement.getAttribute('style') ?? '').not.toContain('overflow')
+		scope.stop()
+	})
+
+	it('restores the !important priority of an inline overflow', async () => {
+		document.body.style.setProperty('overflow', 'clip', 'important')
+		const locked = ref(true)
+		const scope = effectScope()
+		scope.run(() => usePageScrollLock(locked))
+
+		locked.value = false
+		await nextTick()
+
+		expect(document.body.style.getPropertyValue('overflow')).toBe('clip')
+		expect(document.body.style.getPropertyPriority('overflow')).toBe('important')
+		scope.stop()
+	})
 })
