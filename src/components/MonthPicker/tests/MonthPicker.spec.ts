@@ -1182,7 +1182,9 @@ describe('mounthpicker', () => {
 			await input.trigger('blur')
 
 			expect(wrapper.find('.v-field--error').exists()).toBe(true)
-			expect(wrapper.find('.v-input__details').text()).toBe('Invalid month/year format. Use MM/YYYY.')
+			expect(wrapper.find('.v-messages').text()).toBe('Invalid month/year format. Use MM/YYYY.')
+			// Le texte d'aide passe sous le message, dans la zone de détails du champ
+			expect(wrapper.find('.v-input__details .help-text-below').text()).toBe('Format MM/AAAA')
 
 			wrapper.unmount()
 		})
@@ -1250,7 +1252,8 @@ describe('mounthpicker', () => {
 			await flushPromises()
 
 			expect(wrapper.find('.v-field--error').exists()).toBe(true)
-			expect(wrapper.find('.v-input__details').text()).toBe('The year must be 2026 or later.')
+			expect(wrapper.find('.v-messages').text()).toBe('The year must be 2026 or later.')
+			expect(wrapper.find('.v-input__details .help-text-below').text()).toBe('Format MM/AAAA')
 
 			wrapper.unmount()
 		})

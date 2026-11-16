@@ -659,6 +659,7 @@
 				'success-field': hasSuccess,
 				'basic-field': !hasError && !hasWarning && !hasSuccess,
 				'help-text-as-hint': showHelpTextAsMessage,
+				'has-help-text-below': showHelpTextBelow,
 			}"
 			@focus="handleFocusEvent"
 			@blur="handleBlurEvent"
@@ -858,6 +859,15 @@
 
 			<template #details>
 				<slot name="details" />
+				<!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages -->
+				<div
+					v-if="showHelpTextBelow"
+					:id="helpTextId"
+					class="help-text-below mt-1"
+					:class="{ 'text-disabled': props.disabled }"
+				>
+					{{ props.helpText }}
+				</div>
 			</template>
 
 			<template #loader="{ color: loaderColor, isActive: loaderActive }">
@@ -870,15 +880,6 @@
 				/>
 			</template>
 		</VTextField>
-
-		<div
-			v-if="showHelpTextBelow"
-			:id="helpTextId"
-			class="help-text-below px-4 mt-1"
-			:class="{ 'text-disabled': props.disabled }"
-		>
-			{{ props.helpText }}
-		</div>
 	</div>
 </template>
 
@@ -1080,9 +1081,16 @@
 }
 
 .help-text-below {
+	// Passe à la ligne sous le message (et l'éventuel compteur), dans la colonne du champ
+	flex-basis: 100%;
+	order: 1;
 	color: rgb(var(--v-theme-on-surface));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
+}
+
+.has-help-text-below :deep(.v-input__details) {
+	flex-wrap: wrap;
 }
 
 .help-text-below.text-disabled {

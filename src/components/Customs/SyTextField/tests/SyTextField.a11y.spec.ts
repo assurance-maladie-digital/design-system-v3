@@ -134,6 +134,9 @@ describe('SyTextField – accessibility (axe)', () => {
 
 		// Avec erreur : le helpText passe sous le champ et reste associé, après le message d'erreur
 		expect(describedTexts()).toEqual(['Le champ Téléphone est requis.', helpText])
+		// Il est rendu dans la zone de détails du champ, sous le message : il s'aligne sur le
+		// champ, y compris lorsqu'une icône est placée à sa gauche
+		expect(wrapper.find('.v-input__details .help-text-below').text()).toBe(helpText)
 		assertNoA11yViolations(await axe(wrapper.element as HTMLElement), 'SyTextField – helpText with error', {
 			ignoreRules: ['region'],
 		})
