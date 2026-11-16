@@ -6,12 +6,12 @@ import { VBtn } from 'vuetify/components'
 import type { CalendarModeProps } from '../../types'
 import DatePickerSyFormValidity from '../../docExamples/DatePickerSyFormValidity.vue'
 
-const meta = {
+const meta: Meta<typeof DatePicker> = {
 	title: 'Composants/Formulaires/DatePicker/CombinedMode/Validation',
 	component: DatePicker,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div class="pa-5"><story/></div>',
 		}),
 	],
 	parameters: {
@@ -22,7 +22,7 @@ const meta = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof DatePicker>
+}
 
 export default meta
 
@@ -37,6 +37,76 @@ export const SyFormLiveValidity: Story = {
 				story: 'Corrigez une date invalide au clavier ou sélectionnez une date dans le calendrier. À la sortie du champ, le formulaire passe à `true` et le bouton Soumettre devient disponible.',
 			},
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm
+    v-model="valid"
+    class="pa-4"
+    @submit="onSubmit"
+  >
+    <div class="d-flex flex-column align-start ga-4">
+      <p>
+        Saisissez 32/11/2026 et quittez le champ pour voir l’erreur. Corrigez en 30/11/2026, puis quittez à nouveau le champ.
+      </p>
+      <DatePicker
+        v-model="date"
+        label="Date"
+        hint="Format attendu : JJ/MM/AAAA"
+        persistent-hint
+        placeholder="JJ/MM/AAAA"
+        format="DD/MM/YYYY"
+        required
+        use-combined-mode
+      />
+      <p role="status">
+        Validité du SyForm (<code>v-model</code>) <code>{{ String(valid) }}</code>
+      </p>
+      <div class="d-flex flex-wrap ga-3">
+        <VBtn
+          type="button"
+          variant="outlined"
+        >
+          Sortir du champ
+        </VBtn>
+        <VBtn
+          type="submit"
+          color="primary"
+          :disabled="valid !== true"
+        >
+          Soumettre
+        </VBtn>
+      </div>
+      <p
+        v-if="submitted !== null"
+        role="status"
+      >
+        Dernière soumission <code>isValid = {{ submitted }}</code>
+      </p>
+    </div>
+  </SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const date = ref<string | null>('')
+const valid = ref<boolean | null>(null)
+const submitted = ref<boolean | null>(null)
+
+function onSubmit({ isValid }: { isValid: boolean }) {
+  submitted.value = isValid
+}
+</script>`,
+			},
+		],
 	},
 	render: () => ({
 		components: { DatePickerSyFormValidity },
@@ -84,12 +154,39 @@ export const WithError: Story = {
 				story: 'Expose le cas standard d\'un message d\'erreur injecté par le parent en mode combiné.',
 			},
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="value"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    use-combined-mode
+    :error-messages="['Date invalide côté métier']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const value = ref<string | null>('20/08/2026')
+</script>`,
+			},
+		],
 	},
 	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref('20/08/2026')
+				const value = ref(args.modelValue ?? null)
 				return { args, value }
 			},
 			template: `
@@ -115,12 +212,39 @@ export const WithWarning: Story = {
 				story: 'Expose le cas standard d\'un message d\'avertissement injecté par le parent en mode combiné.',
 			},
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="value"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    use-combined-mode
+    :warning-messages="['Date inhabituelle, à vérifier']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const value = ref<string | null>('20/08/2026')
+</script>`,
+			},
+		],
 	},
 	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref('20/08/2026')
+				const value = ref(args.modelValue ?? null)
 				return { args, value }
 			},
 			template: `
@@ -147,12 +271,40 @@ export const WithSuccess: Story = {
 				story: 'Expose le cas standard d\'un message de succès injecté par le parent en mode combiné.',
 			},
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="value"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    use-combined-mode
+    show-success-messages
+    :success-messages="['Date validée']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const value = ref<string | null>('20/08/2026')
+</script>`,
+			},
+		],
 	},
 	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref('20/08/2026')
+				const value = ref(args.modelValue ?? null)
 				return { args, value }
 			},
 			template: `
@@ -431,7 +583,7 @@ export const CustomRules: Story = {
 					},
 				]
 
-				const date = ref(null)
+				const date = ref('')
 
 				return { args, date, customRules }
 			},
@@ -480,31 +632,29 @@ export const CustomWarningRules: Story = {
 			{
 				name: 'Script',
 				code: `
-					<script setup lang="ts">
-						import { DatePicker } from '@cnamts/synapse'
-						import { ref } from 'vue'
-						
-						const date = ref('')
-						const customWarningRules = [
-							{
-								type: 'custom',
-								options: {
-									validate: (value: string | Date) => {
-										// check if manual entry
-										if (typeof value === 'string') {
-											return !value.includes('2025')
-										} else {
-											// check if DatePicker selection
-											return !value.getFullYear().toString().includes('2025')
-										}
-									},
-									warningMessage: 'Les dates en 2025 ne sont pas autorisées',
-									successMessage: 'Date hors 2025',
-									fieldIdentifier: 'date',
-								},
-							},
-						]
-					</script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref('')
+const customWarningRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: unknown) => {
+        // Sélection dans le calendrier : objet Date
+        if (value instanceof Date) return value.getFullYear() !== 2025
+        // Saisie clavier : chaîne au format JJ/MM/AAAA
+        return typeof value !== 'string' || !value.includes('2025')
+      },
+      warningMessage: 'Attention : la date est en 2025, vérifiez-la',
+      successMessage: 'Date hors 2025',
+      fieldIdentifier: 'date',
+      isWarning: true,
+    },
+  },
+]
+</script>
 				`,
 			},
 		],
@@ -526,15 +676,13 @@ export const CustomWarningRules: Story = {
 					{
 						type: 'custom',
 						options: {
-							validate: (value: string | Date) => {
-								if (typeof value === 'string') {
-									return !value.includes('2025')
-								}
-								else {
-									return !value.getFullYear().toString().includes('2025')
-								}
+							validate: (value: unknown) => {
+								// Sélection dans le calendrier : objet Date
+								if (value instanceof Date) return value.getFullYear() !== 2025
+								// Saisie clavier : chaîne au format JJ/MM/AAAA
+								return typeof value !== 'string' || !value.includes('2025')
 							},
-							warningMessage: 'Les dates en 2025 ne sont pas autorisées',
+							warningMessage: 'Attention : la date est en 2025, vérifiez-la',
 							successMessage: 'Date hors 2025',
 							fieldIdentifier: 'date',
 							isWarning: true,

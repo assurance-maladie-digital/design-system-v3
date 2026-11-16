@@ -20,7 +20,7 @@ const meta: Meta<typeof SelectBtnField> = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof SelectBtnField>
+}
 
 export default meta
 
@@ -107,7 +107,7 @@ onMounted(() => {
 			return { args, value, items, customRules, fieldRef }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4">
 				<SelectBtnField
 					ref="fieldRef"
 					v-bind="args"
@@ -194,7 +194,7 @@ onMounted(() => {
 			return { args, value, items, customWarningRules, fieldRef }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4">
 				<SelectBtnField
 					ref="fieldRef"
 					v-bind="args"
@@ -283,7 +283,7 @@ onMounted(() => {
 			return { args, value, items, customSuccessRules, fieldRef }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4">
 				<SelectBtnField
 					ref="fieldRef"
 					v-bind="args"
@@ -299,7 +299,7 @@ export const DisableErrorHandling: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Comparaison à déclenchement identique : `disableErrorHandling` masque les messages de validation tandis que le champ témoin affiche l’erreur `required`.',
+				story: 'Comparaison côte à côte, à déclenchement identique (validation au montage) de deux champs requis vides : le champ standard affiche l’erreur `required`, tandis que le champ avec `disableErrorHandling` n’affiche aucun message.',
 			},
 		},
 		controls: { exclude: ['label'] },
@@ -307,21 +307,23 @@ export const DisableErrorHandling: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<SelectBtnField
-		ref="fieldRefNoHandling"
-		v-model="valueNoHandling"
-		:items="items"
-		label="Avec disableErrorHandling"
-		required
-		disable-error-handling
-	/>
-	<SelectBtnField
-		ref="fieldRefDefault"
-		v-model="valueDefault"
-		:items="items"
-		label="Sans disableErrorHandling"
-		required
-	/>
+	<div class="d-flex flex-wrap ga-4">
+		<SelectBtnField
+			ref="fieldRefDefault"
+			v-model="valueDefault"
+			:items="items"
+			label="Validation standard"
+			required
+		/>
+		<SelectBtnField
+			ref="fieldRefNoHandling"
+			v-model="valueNoHandling"
+			:items="items"
+			label="Avec disableErrorHandling"
+			required
+			disable-error-handling
+		/>
+	</div>
 </template>`,
 			},
 			{
@@ -338,12 +340,12 @@ const items = [
 
 const valueNoHandling = ref<string | null>(null)
 const valueDefault = ref<string | null>(null)
-const fieldRefNoHandling = ref<InstanceType<typeof SelectBtnField>>()
 const fieldRefDefault = ref<InstanceType<typeof SelectBtnField>>()
+const fieldRefNoHandling = ref<InstanceType<typeof SelectBtnField>>()
 
 onMounted(() => {
-	fieldRefNoHandling.value?.validateOnSubmit()
 	fieldRefDefault.value?.validateOnSubmit()
+	fieldRefNoHandling.value?.validateOnSubmit()
 })
 </script>`,
 			},
@@ -367,20 +369,19 @@ onMounted(() => {
 			return { args, valueNoHandling, valueDefault, fieldRefNoHandling, fieldRefDefault }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4 d-flex flex-wrap ga-4">
+				<SelectBtnField
+					ref="fieldRefDefault"
+					v-bind="args"
+					v-model="valueDefault"
+					label="Validation standard"
+				/>
 				<SelectBtnField
 					ref="fieldRefNoHandling"
 					v-bind="args"
 					v-model="valueNoHandling"
 					label="Avec disableErrorHandling"
 					disable-error-handling
-				/>
-				<SelectBtnField
-					ref="fieldRefDefault"
-					v-bind="args"
-					v-model="valueDefault"
-					label="Sans disableErrorHandling"
-					class="mt-4"
 				/>
 			</div>
 		`,
@@ -492,7 +493,7 @@ function reset() {
 			return { args, value, items, errorMessages, warningMessages, successMessages, setError, setWarning, setSuccess, reset }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4">
 				<SelectBtnField
 					v-bind="args"
 					v-model="value"
@@ -569,7 +570,7 @@ function handleSubmit(e: { isValid: boolean }) {
 			return { args, value, items, handleSubmit }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4">
 				<SyForm @submit="handleSubmit">
 					<SelectBtnField
 						v-bind="args"
@@ -665,7 +666,7 @@ async function handleSubmit() {
 			return { args, value, items, customRules, fieldRef, handleSubmit }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4">
 				<VForm @submit.prevent="handleSubmit">
 					<SelectBtnField
 						ref="fieldRef"
@@ -746,7 +747,7 @@ function handleSubmit(e: { isValid: boolean }) {
 			return { args, value, items, rules, handleSubmit }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4">
 				<SyForm @submit="handleSubmit">
 					<SelectBtnField
 						v-bind="args"
@@ -831,7 +832,7 @@ async function handleSubmit(e: SubmitEventPromise) {
 			return { args, value, items, rules, handleSubmit }
 		},
 		template: `
-			<div class="pa-4" style="max-width: 400px">
+			<div class="pa-4">
 				<VForm @submit.prevent="handleSubmit">
 					<SelectBtnField
 						v-bind="args"

@@ -34,7 +34,7 @@ const meta: Meta<typeof SyTextArea> = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof SyTextArea>
+}
 
 export default meta
 

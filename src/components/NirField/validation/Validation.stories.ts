@@ -15,7 +15,7 @@ const meta: Meta<typeof NirField> = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof NirField>
+}
 
 export default meta
 
@@ -118,7 +118,7 @@ import { onMounted, ref } from 'vue'
 import { NirField } from '@cnamts/synapse'
 
 const value = ref('199012345678')
-const nirRef = ref(null)
+const nirRef = ref<InstanceType<typeof NirField> | null>(null)
 
 onMounted(() => {
   nirRef.value?.validateOnSubmit()
@@ -192,7 +192,7 @@ import { onMounted, ref } from 'vue'
 import { NirField } from '@cnamts/synapse'
 
 const value = ref('184027512345674')
-const nirRef = ref(null)
+const nirRef = ref<InstanceType<typeof NirField> | null>(null)
 
 onMounted(() => {
   nirRef.value?.validateOnSubmit()
@@ -261,7 +261,7 @@ import { onMounted, ref } from 'vue'
 import { NirField } from '@cnamts/synapse'
 
 const value = ref('184027512345674')
-const nirRef = ref(null)
+const nirRef = ref<InstanceType<typeof NirField> | null>(null)
 
 onMounted(() => {
   nirRef.value?.validateOnSubmit()
@@ -349,7 +349,7 @@ const value2 = ref('')
 			return { args, value1, value2 }
 		},
 		template: `
-			<div class="pa-4 d-flex flex-column" style="gap: 16px;">
+			<div class="pa-4 d-flex flex-column ga-4">
 				<NirField
 					v-model="value1"
 					label="Avec validation interne (défaut)"
@@ -527,7 +527,7 @@ import { NirField } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
 const value = ref<string | null>(null)
-const nirRef = ref(null)
+const nirRef = ref<InstanceType<typeof NirField> | null>(null)
 
 const handleChange = (newValue: string | null) => {
   value.value = newValue
@@ -629,7 +629,7 @@ import { VBtn } from 'vuetify/components'
 
 const value = ref('184027512345674')
 
-const onSubmit = (event) => {
+const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide : ' + value.value)
   } else {
@@ -718,7 +718,7 @@ import { NirField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('184027512345674')
-const nirRef = ref(null)
+const nirRef = ref<InstanceType<typeof NirField> | null>(null)
 
 async function onSubmit() {
   const isValid = await nirRef.value?.validateOnSubmit()
@@ -807,7 +807,7 @@ import { VBtn } from 'vuetify/components'
 
 const value = ref('184027512345674')
 
-const onSubmit = (event) => {
+const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide : ' + value.value)
   } else {
@@ -893,7 +893,7 @@ import { NirField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('184027512345674')
-const formRef = ref(null)
+const formRef = ref<InstanceType<typeof VForm> | null>(null)
 
 async function onSubmit() {
   const result = await formRef.value?.validate()

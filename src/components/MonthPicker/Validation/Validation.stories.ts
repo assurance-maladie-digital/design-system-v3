@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { VBtn, VForm } from 'vuetify/components'
+import { VBtn, VCol, VForm, VRow } from 'vuetify/components'
 import MonthPicker from '../MonthPicker.vue'
 import { fn } from 'storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
@@ -8,12 +8,12 @@ import type { MonthPickerProps } from '../types'
 import { default as MonthPickerMeta } from '../MonthPicker.stories'
 import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
 
-const meta = {
+const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker/Validation',
 	component: MonthPicker,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div class="pa-5"><story/></div>',
 		}),
 	],
 	parameters: {
@@ -46,7 +46,7 @@ const meta = {
 		'isValidateOnBlur': true,
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof MonthPicker>
+}
 
 export default meta
 
@@ -487,7 +487,7 @@ const customRules = [
 		],
 	},
 	render: () => ({
-		components: { MonthPicker },
+		components: { MonthPicker, VCol, VRow },
 		setup() {
 			const value1 = ref('')
 			const value2 = ref('')
@@ -513,8 +513,8 @@ const customRules = [
 			<div>
 				<p class="mb-4">Cette démonstration compare un MonthPicker standard et un avec <code>disableErrorHandling=true</code>.</p>
 
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-					<div>
+				<VRow class="mb-4">
+					<VCol cols="12" md="6">
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<MonthPicker
 							v-model="value1"
@@ -522,9 +522,9 @@ const customRules = [
 							required
 							:custom-rules="customRules"
 						/>
-					</div>
+					</VCol>
 
-					<div>
+					<VCol cols="12" md="6">
 						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
 						<MonthPicker
 							v-model="value2"
@@ -533,8 +533,8 @@ const customRules = [
 							disable-error-handling
 							:custom-rules="customRules"
 						/>
-					</div>
-				</div>
+					</VCol>
+				</VRow>
 
 				<div class="mt-4 text-body-2">
 					<p>Instructions :</p>

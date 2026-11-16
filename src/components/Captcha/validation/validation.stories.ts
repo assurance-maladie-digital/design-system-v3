@@ -545,7 +545,7 @@ function reset() {
 				<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
 				<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
 				<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
-				<VBtn color="black" @click="reset">Réinitialiser</VBtn>
+				<VBtn @click="reset">Réinitialiser</VBtn>
 			</div>
 		`,
 	}),
@@ -675,7 +675,7 @@ const customRules = [
 			<div>
 				<p class="mb-4">Cette démonstration compare un Captcha standard et un avec <code>disableErrorHandling=true</code>.</p>
 
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 16px;">
+				<div class="d-flex flex-wrap ga-16 mb-4">
 					<div>
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<VCard class="pa-8" max-width="400" min-width="400">
@@ -893,7 +893,7 @@ import { Captcha } from '@cnamts/synapse'
 import { VBtn, VCard, VForm } from 'vuetify/components'
 
 const value = ref('')
-const captchaRef = ref()
+const captchaRef = ref<InstanceType<typeof Captcha> | null>(null)
 
 // À remplacer par l'appel à votre API de vérification du captcha
 const verifyCaptcha = () => {
@@ -947,7 +947,7 @@ async function handleSubmit() {
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			const captchaRef = ref()
+			const captchaRef = ref<InstanceType<typeof Captcha> | null>(null)
 
 			const verifyCaptcha = () => {
 				if (value.value === 'ytqZNq' || value.value === '941335') {

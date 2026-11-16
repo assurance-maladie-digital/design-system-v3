@@ -6,37 +6,37 @@ Suite de l'audit des stories de validation. Points relevés lors de la revue, no
 
 - [x] **medium** — Code affiché incomplet : imports manquants (`VBtn`, `VForm`, `SyForm`, `LunarCalendar`), onglets Script absents, variables non déclarées.
 - [x] **medium** — MonthPicker `WithWarning` / `WithSuccess` : personne ne déclenche la validation au montage (rendu et code affiché).
-- [x] **medium** — `args` retournés mais non liés au template (Controls / Actions inopérants) : SelectBtnField (toutes), SyCheckbox `WithCustomRules`, SyCheckBoxGroup `CustomRules`, `ValidateOnInput` / `ExternalMessages` (SyTextField, MonthPicker, PasswordField), SyTextArea `SyForm*`.
-- [ ] **low** — Code affiché : `ref(null)` non typé (`Ref<null>` casse `?.validateOnSubmit()` en TS strict), `handleSubmit(e)` non typé. Déjà corrigé dans LunarCalendar.
-- [ ] **low** — Code affiché : import de types via l'alias interne `@/composables/...` (inutilisable par un consommateur ; `ValidationRule` n'est pas exporté publiquement).
-- [ ] **low** — Styles en dur : `color: #666`, `style="gap: 16px"`, `padding: 20px`, grilles inline, `color="black"`.
-- [ ] **low** — `as Meta<typeof X>` redondant avec l'annotation de type.
+- [x] **medium** — `args` retournés mais non liés au template (Controls / Actions inopérants) : SelectBtnField (toutes), SyCheckbox `WithCustomRules`, SyCheckBoxGroup `CustomRules` (correction dans #2773, non mergée), `ValidateOnInput` / `ExternalMessages` (SyTextField, MonthPicker, PasswordField), SyTextArea `SyForm*`.
+- [x] **low** — Code affiché : `ref(null)` non typé (`Ref<null>` casse `?.validateOnSubmit()` en TS strict), `handleSubmit(e)` non typé. Déjà corrigé dans LunarCalendar.
+- [x] **low** — Code affiché : import de types via l'alias interne `@/composables/...` (inutilisable par un consommateur ; `ValidationRule` n'est pas exporté publiquement). Reste SyCheckBoxGroup `CustomRules`, laissé à #2773.
+- [x] **low** — Styles en dur : `color: #666`, `style="gap: 16px"`, `padding: 20px`, grilles inline, `color="black"`.
+- [x] **low** — `as Meta<typeof X>` redondant avec l'annotation de type. Conservé dans PasswordField : l'annotation rejette l'argType `'update:modelValue'` (TS2353).
 
 ### DatePicker
 
-- [ ] **medium** — CalendarMode `NoValidateOnBlur` : la description ne dit pas que la validation devient temps réel.
-- [ ] **low** — CalendarMode `NoValidateOnBlur` : `applyValue` appelle `validateOnSubmit()` avant propagation de la prop (`await nextTick()` manquant).
-- [ ] **low** — CalendarMode `BidirectionalValidation` : `required` en double (prop + règle), revalidation en double (`@update` + `watch`/`setTimeout`), `<h1>`/`<h2>` dans la story, classes non stylées.
-- [ ] **medium** — DateTextInput : `ref()` créées dans `render(args)` hors `setup()` ; code affiché sans Script (`CustomRules`, `WarningRules`, `WithErrorDisabled`).
-- [ ] **medium** — DateTextInput `WithErrorDisabled` : `dateFormatReturn: 'YYYY/MM/DD'` absent du code affiché ; 2ᵉ champ codé en dur ; deux champs au même label.
-- [ ] **low** — DateTextInput `CustomRules` : `successMessage` sans `showSuccessMessages`.
-- [ ] **low** — ComplexDatePicker / DateTextInput : `args.modelValue` ignoré (le `v-model` local l'écrase) ; message « ne sont pas autorisées » pour un avertissement non bloquant ; `CustomRules` `ref(null)` vs `ref('')`.
-- [ ] **low** — DateTextInput : `<h4>` isolés, `(value as string)` sans garde.
+- [x] **medium** — CalendarMode `NoValidateOnBlur` : la description ne dit pas que la validation devient temps réel.
+- [x] **low** — CalendarMode `NoValidateOnBlur` : `applyValue` appelle `validateOnSubmit()` avant propagation de la prop (`await nextTick()` manquant). Ajouté par précaution : `validateOnSubmit()` attend déjà en interne, aucun bug observable.
+- [x] **low** — CalendarMode `BidirectionalValidation` : `required` en double (prop + règle), revalidation en double (`@update` + `watch`/`setTimeout`), `<h1>`/`<h2>` dans la story, classes non stylées.
+- [x] **medium** — DateTextInput : `ref()` créées dans `render(args)` hors `setup()` ; code affiché sans Script (`CustomRules`, `WarningRules`, `WithErrorDisabled`).
+- [x] **medium** — DateTextInput `WithErrorDisabled` : `dateFormatReturn: 'YYYY/MM/DD'` absent du code affiché ; 2ᵉ champ codé en dur ; deux champs au même label.
+- [x] **low** — DateTextInput `CustomRules` : `successMessage` sans `showSuccessMessages`.
+- [x] **low** — ComplexDatePicker / DateTextInput : `args.modelValue` ignoré (le `v-model` local l'écrase) ; message « ne sont pas autorisées » pour un avertissement non bloquant ; `CustomRules` `ref(null)` vs `ref('')`.
+- [x] **low** — DateTextInput : `<h4>` isolés, `(value as string)` sans garde.
 
 ### Selects
 
 - [x] **high** — SySelect `WithWarning` / `WithSuccess` : code affiché avec `ref(null)` et sans `selectRef` / `onMounted`, alors que le template affiché référence `selectRef`.
 - [x] **medium** — SyAutocomplete `WithError` / `WithWarning` / `WithSuccess` : `filter: false` absent du code affiché.
 - [x] **medium** — SelectBtnField : scripts affichés sans `fieldRef` / `onMounted`, onglets Template manquants (`WithWarning`, `WithSuccess`), `VFormVuetifyValidation` sans template.
-- [ ] **low** — SySelect / SyAutocomplete `NoValidateOnBlur` : « Réinitialiser » sans `clearValidation()` ; `VFormAndVuetifyValidation` sans branche « invalide ».
-- [ ] **low** — SyAutocomplete `NoValidateOnBlur` : `isValidateOnBlur: false` est déjà la valeur par défaut, la story ne montre aucune différence.
-- [ ] **low** — SelectBtnField `DisableErrorHandling` : aucune comparaison, la démo ne prouve rien.
+- [x] **low** — SySelect / SyAutocomplete `NoValidateOnBlur` : « Réinitialiser » sans `clearValidation()` ; `VFormAndVuetifyValidation` sans branche « invalide ». Déjà corrigé avant cette PR.
+- [x] **low** — SyAutocomplete `NoValidateOnBlur` : `isValidateOnBlur: false` est déjà la valeur par défaut, la story ne montre aucune différence. Non applicable : la valeur par défaut de SyAutocomplete est `false` (`SyAutocomplete.vue`) et la story compare déjà `false` et `true`.
+- [x] **low** — SelectBtnField `DisableErrorHandling` : aucune comparaison, la démo ne prouve rien.
 
 ### SyRadioGroup / SyCheckBoxGroup / SyCheckbox
 
 - [x] **medium** — SyCheckbox `WithCustomRules` : le `computed` ne lit aucune dépendance réactive, cocher le prérequis ne retire pas l'erreur.
-- [ ] **low** — SyRadioGroup : « Option A (recommandée) » dans le code affiché vs « Option A » au rendu ; paramètre `event` inutilisé.
-- [ ] **low** — SyCheckBoxGroup : `:multiple="true"` après `v-bind="args"` neutralise le contrôle `multiple`.
+- [x] **low** — SyRadioGroup : « Option A (recommandée) » dans le code affiché vs « Option A » au rendu ; paramètre `event` inutilisé.
+- [x] **low** — SyCheckBoxGroup : `:multiple="true"` après `v-bind="args"` neutralise le contrôle `multiple`.
 
 ### SyTextField / SyTextArea / PasswordField
 

@@ -14,7 +14,7 @@ const meta: Meta<typeof SySelect> = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof SySelect>
+}
 
 export default meta
 
@@ -25,6 +25,7 @@ const items = [
 	{ text: 'Option 2', value: '2' },
 	{ text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 export const WithError: Story = {
 	parameters: {
@@ -552,7 +553,7 @@ const value2 = ref<string | null>(null)
 				return { args, value1, value2 }
 			},
 			template: `
-				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
+				<div class="pa-4 d-flex flex-column ga-4">
 					<SySelect
 						v-model="value1"
 						v-bind="args"
@@ -622,7 +623,7 @@ const options = [
   { text: 'Option 3', value: '3' },
 ]
 
-const onSubmit = (event) => {
+const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide : ' + JSON.stringify(formData.value))
   } else {
@@ -798,7 +799,7 @@ export const SyFormVuetifyValidation: Story = {
       label="Option"
       use-vuetify-validation
       :show-success-messages="false"
-      :rules="[v => !!v || 'Ce champ est requis']"
+      :rules="[requiredRule]"
     />
     <VBtn type="submit" color="primary" class="mt-4">
       Soumettre
@@ -820,6 +821,7 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 function onSubmit(event: { isValid: boolean }) {
   if (event.isValid) {
@@ -853,7 +855,7 @@ function onSubmit(event: { isValid: boolean }) {
 				}
 			}
 
-			return { args, value, onSubmit }
+			return { args, value, requiredRule, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
@@ -861,7 +863,7 @@ function onSubmit(event: { isValid: boolean }) {
 					<SySelect
 						v-model="value"
 						v-bind="args"
-						:rules="[v => !!v || 'Ce champ est requis']"
+						:rules="[requiredRule]"
 					/>
 					<VBtn
 						type="submit"
@@ -894,7 +896,7 @@ export const VFormAndVuetifyValidation: Story = {
       :items="items"
       label="Option"
       use-vuetify-validation
-      :rules="[v => !!v || 'Ce champ est requis']"
+      :rules="[requiredRule]"
     />
     <VBtn type="submit" color="primary" class="mt-4">
       Soumettre
@@ -917,6 +919,7 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 async function onSubmit() {
   const result = await formRef.value?.validate()
@@ -952,7 +955,7 @@ async function onSubmit() {
 				}
 			}
 
-			return { args, value, formRef, onSubmit }
+			return { args, value, formRef, requiredRule, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
@@ -960,7 +963,7 @@ async function onSubmit() {
 					<SySelect
 						v-model="value"
 						v-bind="args"
-						:rules="[v => !!v || 'Ce champ est requis']"
+						:rules="[requiredRule]"
 					/>
 					<VBtn
 						type="submit"

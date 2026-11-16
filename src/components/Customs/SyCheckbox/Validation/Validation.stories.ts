@@ -9,7 +9,7 @@ const meta: Meta<typeof SyCheckbox> = {
 	title: 'Composants/Formulaires/SyCheckbox/Validation',
 	component: SyCheckbox,
 	decorators: [
-		() => ({ template: '<div style="padding: 20px;"><story/></div>' }),
+		() => ({ template: '<div class="pa-5"><story/></div>' }),
 	],
 	parameters: {
 		layout: 'fullscreen',
@@ -57,7 +57,7 @@ import { onMounted, ref } from 'vue'
 import { SyCheckbox } from '@cnamts/synapse'
 
 const accepted = ref(false)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 // Affiche l'état dès le chargement
 onMounted(() => checkboxRef.value?.validateOnSubmit())
@@ -112,7 +112,7 @@ import { onMounted, ref } from 'vue'
 import { SyCheckbox } from '@cnamts/synapse'
 
 const accepted = ref(false)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 const warningRules = [{
 	type: 'custom',
@@ -177,7 +177,7 @@ import { onMounted, ref } from 'vue'
 import { SyCheckbox } from '@cnamts/synapse'
 
 const accepted = ref(true)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 const successRules = [{
 	type: 'custom',
@@ -368,7 +368,7 @@ import { onMounted, ref } from 'vue'
 import { SyCheckbox } from '@cnamts/synapse'
 
 const accepted = ref(false)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 // Même en déclenchant la validation, aucune erreur ne s'affiche
 onMounted(() => checkboxRef.value?.validateOnSubmit())
@@ -480,7 +480,7 @@ import { SyCheckbox } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const accepted = ref(false)
-const checkboxRef = ref()
+const checkboxRef = ref<InstanceType<typeof SyCheckbox> | null>(null)
 
 async function handleSubmit() {
 	const isValid = await checkboxRef.value?.validateOnSubmit()
