@@ -35,7 +35,7 @@ const SNIPPET_ID = 'story-snippet'
 // `NodeTypes.ATTRIBUTE` de `@vue/compiler-core`, non exposé par `vue/compiler-sfc`.
 const ATTRIBUTE_NODE = 6
 
-function isSourceCodeTab(tab: unknown): tab is SourceCodeTab {
+export function isSourceCodeTab(tab: unknown): tab is SourceCodeTab {
 	return typeof tab === 'object' && tab !== null && 'code' in tab && typeof tab.code === 'string'
 }
 
