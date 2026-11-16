@@ -29,6 +29,7 @@
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
+		hideCaption: false,
 		saveState: true,
 		showFilters: false,
 		// Do not default items to [] so we can detect undefined during refetch
@@ -409,6 +410,7 @@
 				<caption
 					v-if="props.caption.trim()"
 					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.hideCaption }"
 				>
 					{{ props.caption }}
 				</caption>

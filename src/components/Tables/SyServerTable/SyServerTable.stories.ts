@@ -33,6 +33,11 @@ const meta = {
 	argTypes: {
 		...commonTableArgTypes,
 		...syServerTableItemsArgTypes,
+		hideCaption: {
+			description: 'Masque la légende à l’écran en la conservant pour les lecteurs d’écran.',
+			control: 'boolean',
+			table: { defaultValue: { summary: 'false' } },
+		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 

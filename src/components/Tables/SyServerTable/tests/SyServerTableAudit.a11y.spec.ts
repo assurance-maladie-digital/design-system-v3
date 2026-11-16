@@ -111,6 +111,22 @@ describe('SyServerTable – audit accessibility', () => {
 		expect(result.violations).toEqual([])
 	})
 
+	it('keeps a visually hidden caption for assistive technologies and the pagination name', async () => {
+		const wrapper = render({ caption: 'Agents actifs', hideCaption: true })
+		await flushPromises()
+		const caption = wrapper.get('table > caption')
+		expect(caption.text()).toBe('Agents actifs')
+		expect(caption.classes()).toContain('d-sr-only')
+		expect(caption.attributes('aria-hidden')).toBeUndefined()
+		const nav = wrapper.get('nav').element
+		expect(document.getElementById(nav.getAttribute('aria-labelledby')!)?.textContent).toContain('Agents actifs')
+		const result = await axe(wrapper.element as HTMLElement)
+		expect(result.violations).toEqual([])
+
+		await wrapper.setProps({ hideCaption: false })
+		expect(caption.classes()).not.toContain('d-sr-only')
+	})
+
 	it('exposes a numeric width before and after keyboard resizing', async () => {
 		const wrapper = render({ resizableColumns: true, headers: [{ title: 'Nom', key: 'name', width: 200 }, headers[1]] })
 		await flushPromises()
