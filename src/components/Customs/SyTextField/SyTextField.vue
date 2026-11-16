@@ -23,6 +23,7 @@
 	import { useLocales } from '@/composables/useLocales'
 	import type { SyTextFieldProps } from './types'
 	import FieldState from './FieldState.vue'
+	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 
 	const props = withDefaults(
 		defineProps<SyTextFieldProps>(),
@@ -192,6 +193,10 @@
 		focused,
 		locales,
 	})
+
+	// Réglage `fields.density` de la configuration de thème, appliqué si density n'est pas passée
+	const { resolveDensity } = useFieldsThemeConfig()
+	const density = resolveDensity('density', () => props.density)
 
 	const forwardedAttrs = computed(() => {
 		const filteredAttrs = Object.fromEntries(
@@ -593,7 +598,7 @@
 			:color="props.color"
 			:counter="props.counter"
 			:counter-value="props.counterValue"
-			:density="props.density"
+			:density="density"
 			:dirty="props.isDirty"
 			:disabled="props.disabled"
 			:error="hasError"

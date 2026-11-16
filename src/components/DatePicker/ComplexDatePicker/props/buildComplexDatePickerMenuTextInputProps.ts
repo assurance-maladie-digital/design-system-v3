@@ -1,6 +1,7 @@
 import type { Ref } from 'vue'
 import type { DatePickerCommonProps } from '../../types'
 import { buildSharedDateTextInputProps } from '../../props/buildSharedDateTextInputProps'
+import type { DatePickerFieldAppearance } from '../../composables/useDatePickerFieldAppearance'
 
 export const buildComplexDatePickerMenuTextInputProps = (
 	props: DatePickerCommonProps,
@@ -8,10 +9,11 @@ export const buildComplexDatePickerMenuTextInputProps = (
 	errorMessages: Ref<string[]>,
 	warningMessages: Ref<string[]>,
 	successMessages: Ref<string[]>,
+	appearance: DatePickerFieldAppearance,
 ) => ({
-	...buildSharedDateTextInputProps(props, labelWithAsterisk, errorMessages, warningMessages, successMessages),
+	...buildSharedDateTextInputProps(props, labelWithAsterisk, errorMessages, warningMessages, successMessages, appearance),
 	'display-range': props.displayRange,
-	'density': props.density,
+	'density': appearance.density,
 	// Le champ sert d'activateur du calendrier : on avertit via aria-describedby
 	// (sauf quand le champ est désactivé ou en lecture seule, car rien ne s'ouvre alors).
 	'calendar-activator': !(props.disabled || props.readonly),

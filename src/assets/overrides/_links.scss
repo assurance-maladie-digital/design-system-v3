@@ -4,7 +4,8 @@
 // Offset réduit (2px) car les liens sont souvent inline : un offset 3px déborderait
 // sur les lignes voisines.
 a:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-primary));
+	// Épaisseur et couleur réglables (cf. themeConfig) ; l'offset reste fixe pour les liens inline.
+	outline: var(--v-focus-width, 2px) solid rgb(var(--v-focus-color, var(--v-theme-primary)));
 	outline-offset: 2px;
 	border-radius: 2px;
 }

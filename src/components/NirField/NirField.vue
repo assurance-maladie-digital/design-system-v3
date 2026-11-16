@@ -6,6 +6,7 @@
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
 	import { useNirValidation, type NirValidationProps } from './useNirValidation'
 	import { devWarn } from '@/utils/devWarn'
+	import { useFieldsThemeConfig } from '@/composables/useFieldsThemeConfig'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -87,6 +88,10 @@
 		maxErrors: 1,
 		validateOn: undefined,
 	})
+
+	// Réglage `fields.density` de la configuration de thème, appliqué si density n'est pas passée
+	const { resolveDensity } = useFieldsThemeConfig()
+	const fieldDensity = resolveDensity('density', () => props.density)
 
 	const emit = defineEmits(['update:modelValue'])
 	const modelValueRef = toRef(props, 'modelValue')
@@ -465,7 +470,7 @@
 				:disabled="disabled"
 				:disable-error-handling="true"
 				:bg-color="bgColor"
-				:density="props.density"
+				:density="fieldDensity"
 				:hide-details="props.hideDetails"
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
@@ -504,7 +509,7 @@
 				:error="keyValidation.errors.value.length > 0"
 				:disabled="disabled"
 				:bg-color="bgColor"
-				:density="props.density"
+				:density="fieldDensity"
 				:disable-error-handling="true"
 				:hide-details="props.hideDetails"
 				:hide-spin-buttons="props.hideSpinButtons"

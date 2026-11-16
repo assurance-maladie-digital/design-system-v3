@@ -63,6 +63,7 @@
 	import { buildCalendarModeComplexDatePickerProps } from './props/buildCalendarModeComplexDatePickerProps'
 	import { buildCalendarModeDateTextInputProps } from './props/buildCalendarModeDateTextInputProps'
 	import { buildCalendarModeActivatorTextFieldProps } from './props/buildCalendarModeActivatorTextFieldProps'
+	import { useDatePickerFieldAppearance } from '../composables/useDatePickerFieldAppearance'
 	import DatePickerControls from '../datePickerSlots/components/DatePickerControls.vue'
 	import DatePickerDay from '../datePickerSlots/components/DatePickerDay.vue'
 	import DatePickerMonthOption from '../datePickerSlots/components/DatePickerMonthOption.vue'
@@ -118,6 +119,9 @@
 			: label
 	})
 
+	// Densité des champs internes, avec le réglage `fields.density` de la configuration de thème
+	const fieldAppearance = useDatePickerFieldAppearance(props)
+
 	// Props du champ texte utilisé dans le flux noCalendar
 	const noCalendarTextInputProps = computed(() => buildCalendarModeDateTextInputProps(
 		props,
@@ -125,12 +129,14 @@
 		errorMessages,
 		warningMessages,
 		successMessages,
+		fieldAppearance.value,
 	))
 
 	// Props du ComplexDatePicker utilisé dans le flux combinedMode
 	// On passe formRegistration pour que ComplexDatePicker s'enregistre correctement dans SyForm
 	const combinedModeDatePickerProps = computed(() => buildCalendarModeComplexDatePickerProps(
 		props,
+		fieldAppearance.value,
 		{
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,
@@ -148,6 +154,7 @@
 		hasError,
 		hasWarning,
 		isOnSuccess,
+		fieldAppearance.value,
 	))
 
 	// ─── État central : dates sélectionnées ───────────────────────────

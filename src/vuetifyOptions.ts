@@ -22,6 +22,10 @@ import {
 } from './designTokens'
 import { createFlattenTheme, createFontVariables, toKebabCase } from './designTokens/utils'
 import { fr } from 'vuetify/locale'
+import { applyThemeConfig, getThemeColors } from './themeConfig/applyThemeConfig'
+import { defaultThemeConfig, SYNAPSE_BRANDS } from './themeConfig/constants'
+import type { SynapseThemeConfigInput, ThemeConfigValidationResult } from './themeConfig/types'
+import { validateThemeConfig } from './themeConfig/validateThemeConfig'
 
 const createKebabThemeColors = (colors: Record<string, string>) => Object.fromEntries(
 	Object.entries(colors).map(([name, value]) => [toKebabCase(name), value]),
@@ -30,7 +34,7 @@ const createKebabThemeColors = (colors: Record<string, string>) => Object.fromEn
 // Configuration Synapse (thèmes, defaults, locale, icônes), sans `vuetify/components` ni `vuetify/directives` :
 // un projet qui importe les composants Vuetify à la demande (vite-plugin-vuetify) garde son tree-shaking.
 // Ce module ne doit importer ni l'un ni l'autre : `pnpm pack:check` le vérifie sur le build.
-export const createVuetifyOptions = (): VuetifyOptions => ({
+const createBaseVuetifyOptions = (): VuetifyOptions => ({
 	defaults: {
 		VTooltip: {
 			interactive: true,
@@ -126,3 +130,27 @@ export const createVuetifyOptions = (): VuetifyOptions => ({
 		},
 	},
 })
+
+/**
+ * Options Vuetify de Synapse.
+ *
+ * @param themeConfig Configuration de thème du projet (marque, focus, champs). Sans argument, le rendu Synapse par défaut est conservé.
+ */
+export const createVuetifyOptions = (themeConfig?: SynapseThemeConfigInput): VuetifyOptions => {
+	const options = createBaseVuetifyOptions()
+	return themeConfig ? applyThemeConfig(options, themeConfig) : options
+}
+
+/**
+ * Valide une configuration de thème avec les couleurs réelles de la marque choisie.
+ * À utiliser en CI ou dans un outil de configuration, avant `createVuetifyOptions`.
+ */
+export const checkThemeConfig = (themeConfig: SynapseThemeConfigInput | unknown): ThemeConfigValidationResult => {
+	const requestedBrand = typeof themeConfig === 'object' && themeConfig !== null && 'brand' in themeConfig
+		? themeConfig.brand
+		: undefined
+	const brand = SYNAPSE_BRANDS.find(name => name === requestedBrand) ?? defaultThemeConfig.brand
+	return validateThemeConfig(themeConfig, getThemeColors(createBaseVuetifyOptions(), brand))
+}
+
+export type { SynapseThemeConfigInput, ThemeConfigValidationResult } from './themeConfig/types'
