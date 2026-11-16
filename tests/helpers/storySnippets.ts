@@ -154,3 +154,33 @@ export function evaluateSnippetBinding(
 	const noop = () => undefined
 	return new Function(...names, outputText)(...names.map(imported => (imported in imports ? imports[imported] : noop)))
 }
+
+/**
+ * Imports nommés du `<script setup>` de l'extrait d'une story absents de leur module,
+ * au format `module:export`. `modules` associe chaque module importable à ses exports réels.
+ * Un module absent de `modules` est signalé pour chacun de ses imports.
+ * Les imports de type (`import type`, `import { type X }`) sont ignorés : ils n'existent pas à l'exécution.
+ */
+export function getMissingSnippetImports(
+	story: StoryWithSourceCode,
+	modules: Record<string, Record<string, unknown>>,
+): string[] {
+	const content = parseSnippet(story).descriptor.scriptSetup?.content ?? ''
+	const source = ts.createSourceFile(`${SNIPPET_ID}.ts`, content, ts.ScriptTarget.ES2022)
+
+	return source.statements.filter(ts.isImportDeclaration).flatMap((declaration) => {
+		const clause = declaration.importClause
+		const bindings = clause?.namedBindings
+		if (!clause || clause.isTypeOnly || !bindings || !ts.isNamedImports(bindings) || !ts.isStringLiteral(declaration.moduleSpecifier)) {
+			return []
+		}
+		const moduleName = declaration.moduleSpecifier.text
+		const exports = modules[moduleName]
+		return bindings.elements
+			.filter(element => !element.isTypeOnly)
+			// `import { A as B }` : c'est `A` qui doit être exporté par le module
+			.map(element => (element.propertyName ?? element.name).text)
+			.filter(name => exports === undefined || !(name in exports))
+			.map(name => `${moduleName}:${name}`)
+	})
+}
