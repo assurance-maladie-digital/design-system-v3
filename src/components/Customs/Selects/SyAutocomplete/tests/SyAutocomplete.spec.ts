@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { defineComponent, ref, nextTick, type InstanceType } from 'vue'
 import { VCheckbox, VDivider, VListItem, VListItemTitle, VMenu } from 'vuetify/components'
@@ -1717,7 +1717,7 @@ describe('SyAutocomplete', () => {
 			expect(wrapper.emitted('search')).toEqual([['Option 2']])
 		})
 
-		describe('search event on blur', () => {
+		describe('search events around blur and selection', () => {
 			const mountWithDebounce = (debounce: number) => {
 				wrapper.unmount()
 				wrapper = mount(SyAutocomplete, {
@@ -1734,6 +1734,48 @@ describe('SyAutocomplete', () => {
 				})
 			}
 			const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+			const selectFirstOptionWithMouse = async () => {
+				const option = getOption(0)
+				expect(option?.textContent).toContain('Option 1')
+				option?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 }))
+				await flushPromises()
+			}
+			const selectFirstOptionWithKeyboard = async () => {
+				const input = wrapper.get('input').element
+				input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }))
+				await flushPromises()
+				const option = getOption(0)
+				expect(option?.textContent).toContain('Option 1')
+				expect(input.getAttribute('aria-activedescendant')).toBe(option?.id)
+				input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
+				await flushPromises()
+			}
+
+			it.each([
+				{ via: 'mouse', selectFirstOption: selectFirstOptionWithMouse },
+				{ via: 'keyboard', selectFirstOption: selectFirstOptionWithKeyboard },
+			])('cancels the pending search when a single option is selected with the $via', async ({ selectFirstOption }) => {
+				mountWithDebounce(150)
+				await wrapper.setProps({ filter: false })
+				const input = wrapper.get('input')
+				await input.trigger('click')
+				await flushPromises()
+
+				vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] })
+				try {
+					await input.setValue('Opt')
+					await selectFirstOption()
+
+					expect(wrapper.emitted('update:modelValue')).toEqual([['1']])
+					expect(input.element.value).toBe('Option 1')
+					vi.advanceTimersByTime(150)
+					expect(wrapper.emitted('search')).toBeUndefined()
+				}
+				finally {
+					vi.useRealTimers()
+				}
+			})
 
 			it('emits an empty search when a typed search is abandoned on blur', async () => {
 				mountWithDebounce(0)
