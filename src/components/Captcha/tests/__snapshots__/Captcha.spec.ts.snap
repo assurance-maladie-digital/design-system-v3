@@ -168,7 +168,6 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
           <!---->
           <!---->
         </div>
-        <!-- v-if -->
       </div>
     </div>
     <div class="
@@ -498,7 +497,6 @@ exports[`Captcha > renders correctly in image mode 1`] = `
           <!---->
           <!---->
         </div>
-        <!-- v-if -->
       </div>
     </div>
     <div class="

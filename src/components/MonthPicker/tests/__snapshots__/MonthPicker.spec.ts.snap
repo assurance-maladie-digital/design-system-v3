@@ -2539,10 +2539,11 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
             Format MM/AAAA
           </div>
         </transition-group-stub>
+        <!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages -->
+        <!-- v-if -->
         <!---->
       </div>
     </div>
-    <!-- v-if -->
   </div>
   <!---->
   <!---->
