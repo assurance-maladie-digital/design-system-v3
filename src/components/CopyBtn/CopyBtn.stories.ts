@@ -16,28 +16,22 @@ const meta = {
 	argTypes: {
 		ariaLabel: {
 			control: { type: 'text' },
-			table: { defaultValue: { summary: '\'bouton de copie\'' } },
 		},
 		ariaOwns: {
 			description: 'Préfixe de l’identifiant du conteneur et valeur du data-test-id du bouton. Ne définit pas de relation ARIA.',
 			control: { type: 'text' },
-			table: { defaultValue: { summary: '\'copy-btn\'' } },
 		},
 		textToCopy: {
 			control: { type: 'text' },
-			table: { defaultValue: { summary: '\'\'' } },
 		},
 		hideTooltip: {
 			control: { type: 'boolean' },
-			table: { defaultValue: { summary: 'false' } },
 		},
 		tooltipDuration: {
 			control: { type: 'number' },
-			table: { defaultValue: { summary: '5000' } },
 		},
 		separatorsToRemove: {
 			control: { type: 'text' },
-			table: { defaultValue: { summary: 'undefined' } },
 		},
 		vuetifyOptions: {
 			control: { type: 'object' },

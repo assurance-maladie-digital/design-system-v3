@@ -8,12 +8,6 @@ import meta from '../CopyBtn.stories'
 
 const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({ name, story }))
 
-function getPropDefault(name: string): unknown {
-	const definition: unknown = Object.entries(CopyBtn.props ?? {}).find(([key]) => key === name)?.[1]
-
-	return typeof definition === 'object' && definition !== null && 'default' in definition ? definition.default : undefined
-}
-
 const modifiedArgs = {
 	ariaLabel: 'Libellé modifié',
 	ariaOwns: 'copy-btn-modifie',
@@ -63,15 +57,11 @@ describe('CopyBtn stories', () => {
 		expect(wrapper.findComponent(CopyBtn).props('separatorsToRemove')).toBe('#')
 	})
 
-	it.each(Object.entries(meta.argTypes))('l\'argType $0 renseigne sa valeur par défaut dans la table des Controls', (name, argType) => {
+	it.each(Object.entries(meta.argTypes))('l\'argType $0 n\'utilise pas la clé default ignorée par Storybook', (_name, argType) => {
 		expect(argType).not.toHaveProperty('default')
+	})
 
-		if (name === 'vuetifyOptions') {
-			expect(argType).toHaveProperty('table.defaultValue', { summary: 'object', detail: JSON.stringify(config, null, 2) })
-			return
-		}
-
-		const defaultValue = getPropDefault(name)
-		expect(argType).toHaveProperty('table.defaultValue.summary', typeof defaultValue === 'string' ? `'${defaultValue}'` : String(defaultValue))
+	it('l\'argType vuetifyOptions détaille la configuration par défaut du composant', () => {
+		expect(meta.argTypes.vuetifyOptions).toHaveProperty('table.defaultValue', { summary: 'object', detail: JSON.stringify(config, null, 2) })
 	})
 })

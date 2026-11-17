@@ -19,7 +19,7 @@ Aucun changement du composant de production n'est nécessaire.
 | P4 — Tests unitaires passant l'ancienne prop `label` | Basse | **Corrigé** (#2743) |
 | P5 — Le test de régression de P1 ne détecte pas P2 | Basse | **Corrigé** (`fix/copy-btn-story-args`) |
 | P6 — Args `ariaOwns` et `vuetifyOptions` absents des extraits affichés | Basse | **Corrigé** (`fix/copy-btn-story-args`) |
-| P7 — Clé `default` des argTypes ignorée par Storybook | Basse | **Corrigé** (`fix/copy-btn-story-args`) |
+| P7 — Clé `default` des argTypes inutilisée, détail de `vuetifyOptions` absent | Basse | **Corrigé** (`fix/copy-btn-story-args`) |
 | Coquille « personalisé » (`SlotTooltip`) | Basse | **Corrigé** (#2725) |
 
 ### P1 — `label` n'est pas une prop de `CopyBtn` (corrigé)
@@ -90,11 +90,11 @@ Aucun changement du composant de production n'est nécessaire.
 
 ### P7 — Clé `default` des argTypes (corrigé)
 
-**Constat :** les argTypes utilisaient une clé `default`, ignorée par Storybook : la colonne « Default » de la table des Controls restait vide. Plusieurs valeurs étaient en outre fausses (`ariaLabel: 'copy-btn'`, `textToCopy: 'test'`, `vuetifyOptions` sans `color` ni `rounded`).
+**Constat :** les argTypes utilisaient une clé `default`, ignorée par Storybook, avec des valeurs souvent fausses (`ariaLabel: 'copy-btn'`, `textToCopy: 'test'`, `vuetifyOptions` sans `color` ni `rounded`). La colonne « Default » n'était pas vide pour autant : `vue-component-meta` (`.storybook/main.ts:64`) en extrait les valeurs depuis `withDefaults`. Seul `vuetifyOptions`, sans défaut déclaré, n'avait aucune valeur affichée.
 
-**Correctif appliqué :** remplacement par `table.defaultValue.summary`, aligné sur les défauts de `CopyBtn.vue` ; pour `vuetifyOptions`, `summary: 'object'` et `detail` généré depuis `config.ts`.
+**Correctif appliqué :** clés `default` supprimées ; les valeurs par défaut des props restent fournies par `vue-component-meta`. Pour `vuetifyOptions`, `table.defaultValue` avec `summary: 'object'` et `detail` généré depuis `config.ts`.
 
-**Test :** `CopyBtn.stories.spec.ts` compare chaque `table.defaultValue` aux défauts déclarés par le composant (7 tests en échec avant correctif).
+**Test :** `CopyBtn.stories.spec.ts` vérifie qu'aucun argType n'utilise la clé `default` et que le détail de `vuetifyOptions` correspond à `config.ts`.
 
 ## Cause racine
 
@@ -131,12 +131,13 @@ Les exemples sont donc un reliquat de l'API d'origine. Les templates de `render`
 
 ### P6 et P7 (`fix/copy-btn-story-args`)
 
-- [x] 11 tests de régression en échec avant correctif, tous passés après.
-- [x] `pnpm vitest run src/components/CopyBtn` : 64 tests passés.
+- [x] Tests de régression P6 : 4 tests en échec avant correctif, tous passés après.
+- [x] `pnpm vitest run src/components/CopyBtn` : 65 tests passés.
 - [x] `pnpm vitest run CopyBtn.snippets.spec.ts CopyBtn.a11y.spec.ts` : 24 tests passés.
 - [x] `pnpm exec eslint src/components/CopyBtn`
 - [x] `pnpm vue-tsc -p tsconfig.app.json --noEmit` : aucune erreur sur `CopyBtn`.
-- [ ] Storybook : colonne « Default » renseignée dans la table des Controls.
+- [x] `vue-component-meta` sur `CopyBtn.vue` : défauts extraits pour toutes les props sauf `vuetifyOptions`.
+- [ ] Storybook : colonne « Default » renseignée dans la table des Controls, détail de `vuetifyOptions` affiché.
 
 ## Impact
 
