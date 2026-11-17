@@ -18,6 +18,8 @@ Aucun changement du composant de production n'est nécessaire.
 | P3 — Extrait `SlotIcon` : `VIcon` plutôt que `SyIcon` | Basse, facultatif | **Corrigé** (`fix/copy-btn-story-args`) |
 | P4 — Tests unitaires passant l'ancienne prop `label` | Basse | **Corrigé** (#2743) |
 | P5 — Le test de régression de P1 ne détecte pas P2 | Basse | **Corrigé** (`fix/copy-btn-story-args`) |
+| P6 — Args `ariaOwns` et `vuetifyOptions` absents des extraits affichés | Basse | **Corrigé** (`fix/copy-btn-story-args`) |
+| P7 — Clé `default` des argTypes ignorée par Storybook | Basse | **Corrigé** (`fix/copy-btn-story-args`) |
 | Coquille « personalisé » (`SlotTooltip`) | Basse | **Corrigé** (#2725) |
 
 ### P1 — `label` n'est pas une prop de `CopyBtn` (corrigé)
@@ -78,6 +80,22 @@ Aucun changement du composant de production n'est nécessaire.
 - un clic copie le `textToCopy` modifié (`navigator.clipboard.writeText` simulé) ;
 - `CopyBtn` reçoit le `separatorsToRemove` modifié.
 
+### P6 — Args absents des extraits affichés (corrigé)
+
+**Constat :** `Default` définissait `ariaOwns: 'copy-btn-1'` et un `vuetifyOptions` (avec `btn.color: 'primary'`) absents de l'extrait ; `RemoveSeparators`, `MultiSeparators` et `RemoveSpaces` définissaient aussi un `ariaOwns` non affiché. Le rendu ne correspondait donc pas au code proposé à la copie.
+
+**Correctif appliqué :** ces args sont retirés. `ariaOwns` ne sert qu'au `data-test-id` (l'identifiant du conteneur reste unique grâce à `useId`), et le `vuetifyOptions` de `Default` reproduisait `config.ts` : le rendu est inchangé. Les Controls restent disponibles.
+
+**Test :** `CopyBtn.snippets.spec.ts` vérifie que chaque prop de `CopyBtn` définie dans les args avec une valeur différente du défaut apparaît dans l'extrait (4 tests en échec avant correctif).
+
+### P7 — Clé `default` des argTypes (corrigé)
+
+**Constat :** les argTypes utilisaient une clé `default`, ignorée par Storybook : la colonne « Default » de la table des Controls restait vide. Plusieurs valeurs étaient en outre fausses (`ariaLabel: 'copy-btn'`, `textToCopy: 'test'`, `vuetifyOptions` sans `color` ni `rounded`).
+
+**Correctif appliqué :** remplacement par `table.defaultValue.summary`, aligné sur les défauts de `CopyBtn.vue` ; pour `vuetifyOptions`, `summary: 'object'` et `detail` généré depuis `config.ts`.
+
+**Test :** `CopyBtn.stories.spec.ts` compare chaque `table.defaultValue` aux défauts déclarés par le composant (7 tests en échec avant correctif).
+
 ## Cause racine
 
 Vérifiée dans l'historique Git :
@@ -111,13 +129,19 @@ Les exemples sont donc un reliquat de l'API d'origine. Les templates de `render`
 - [ ] Storybook : les Controls `ariaLabel`, `textToCopy`, `tooltipDuration`, `ariaOwns` et `separatorsToRemove` modifient le rendu ; `SyIcon` affiché dans `SlotIcon` ; aucune erreur de console.
 - [ ] Tests visuels Cypress : aucune baseline modifiée attendue (`CopyBtn.visual.cy.ts` n'utilise pas les stories).
 
+### P6 et P7 (`fix/copy-btn-story-args`)
+
+- [x] 11 tests de régression en échec avant correctif, tous passés après.
+- [x] `pnpm vitest run src/components/CopyBtn` : 64 tests passés.
+- [x] `pnpm vitest run CopyBtn.snippets.spec.ts CopyBtn.a11y.spec.ts` : 24 tests passés.
+- [x] `pnpm exec eslint src/components/CopyBtn`
+- [x] `pnpm vue-tsc -p tsconfig.app.json --noEmit` : aucune erreur sur `CopyBtn`.
+- [ ] Storybook : colonne « Default » renseignée dans la table des Controls.
+
 ## Impact
 
 Documentation et stories uniquement : aucun changement de contrat du composant, donc pas de note dans `releasesAlerts/`. Les consommateurs ayant recopié l'exemple avec `label` ont un bouton nommé « bouton de copie » ; une mention dans la note de version invitant à passer à `aria-label` peut être envisagée.
 
 ## Suite
 
-Points résiduels, hors périmètre :
-
-- `Default` : `ariaOwns: 'copy-btn-1'` et `vuetifyOptions.btn.color: 'primary'` sont dans les `args` mais absents de l'extrait affiché (même écart pour `ariaOwns` dans `RemoveSeparators`, `MultiSeparators`, `RemoveSpaces`).
-- Les argTypes utilisent une clé `default`, non reconnue par Storybook (`table.defaultValue` attendu) : la colonne « Default » de la table des Controls reste vide.
+Aucun point résiduel.

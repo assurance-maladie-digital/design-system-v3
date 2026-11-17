@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import CopyBtn from './CopyBtn.vue'
+import { config } from './config'
 import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 import { mdiContentDuplicate } from '@mdi/js'
 
@@ -15,47 +16,32 @@ const meta = {
 	argTypes: {
 		ariaLabel: {
 			control: { type: 'text' },
-			default: 'copy-btn',
+			table: { defaultValue: { summary: '\'bouton de copie\'' } },
 		},
 		ariaOwns: {
 			description: 'Préfixe de l’identifiant du conteneur et valeur du data-test-id du bouton. Ne définit pas de relation ARIA.',
 			control: { type: 'text' },
-			default: 'copy-btn',
+			table: { defaultValue: { summary: '\'copy-btn\'' } },
 		},
 		textToCopy: {
 			control: { type: 'text' },
-			default: 'test',
+			table: { defaultValue: { summary: '\'\'' } },
 		},
 		hideTooltip: {
 			control: { type: 'boolean' },
-			default: false,
+			table: { defaultValue: { summary: 'false' } },
 		},
 		tooltipDuration: {
 			control: { type: 'number' },
-			default: 5000,
+			table: { defaultValue: { summary: '5000' } },
 		},
 		separatorsToRemove: {
 			control: { type: 'text' },
-			default: '',
+			table: { defaultValue: { summary: 'undefined' } },
 		},
 		vuetifyOptions: {
 			control: { type: 'object' },
-			default: () => ({
-				menu: {
-					location: 'end center',
-					offset: 16,
-					zIndex: 8,
-					contentClass: 'sy-copy-tooltip-menu text-white text-body-2 ml-2',
-				},
-				btn: {
-					icon: true,
-					variant: 'text',
-					density: 'comfortable',
-				},
-				icon: {
-					color: 'grey-darken-20',
-				},
-			}),
+			table: { defaultValue: { summary: 'object', detail: JSON.stringify(config, null, 2) } },
 		},
 	},
 } satisfies Meta<typeof CopyBtn>
@@ -94,26 +80,8 @@ export const Default: Story = {
 	},
 	args: {
 		ariaLabel: 'Copier le numéro de patient',
-		ariaOwns: 'copy-btn-1',
 		textToCopy: '1970756541',
 		hideTooltip: false,
-		vuetifyOptions: {
-			menu: {
-				location: 'end center',
-				offset: 16,
-				zIndex: 8,
-				contentClass: 'sy-copy-tooltip-menu text-white text-body-2 ml-2',
-			},
-			btn: {
-				icon: true,
-				variant: 'text',
-				color: 'primary',
-				density: 'comfortable',
-			},
-			icon: {
-				color: 'grey-darken-20',
-			},
-		},
 	},
 	render: (args) => {
 		return {
@@ -310,7 +278,6 @@ export const RemoveSeparators: Story = {
 	},
 	args: {
 		ariaLabel: 'Copier l\'IBAN sans tirets',
-		ariaOwns: 'copy-btn-remove-separators',
 		textToCopy: 'FR76-3000-4000-0300-0000-0000-000',
 		hideTooltip: false,
 		separatorsToRemove: '-',
@@ -372,7 +339,6 @@ export const MultiSeparators: Story = {
 	},
 	args: {
 		ariaLabel: 'Copier le numéro sans séparateurs',
-		ariaOwns: 'copy-btn-multi-separators',
 		textToCopy: '+33 (0)6.12.34.56.78',
 		hideTooltip: false,
 		separatorsToRemove: ['+', '(', ')', '.'],
@@ -434,7 +400,6 @@ export const RemoveSpaces: Story = {
 	},
 	args: {
 		ariaLabel: 'Copier le numéro de sécurité sociale sans espaces',
-		ariaOwns: 'copy-btn-remove-spaces',
 		textToCopy: '1 97 07 56 541 123 45',
 		hideTooltip: false,
 		separatorsToRemove: ' ',

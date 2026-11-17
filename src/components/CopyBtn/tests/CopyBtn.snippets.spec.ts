@@ -10,6 +10,12 @@ const allStories = Object.entries(composeStories(stories)).map(([name, story]) =
 
 const copyBtnProps = Object.keys(CopyBtn.props ?? {})
 
+function getPropDefault(name: string): unknown {
+	const definition: unknown = Object.entries(CopyBtn.props ?? {}).find(([key]) => key === name)?.[1]
+
+	return typeof definition === 'object' && definition !== null && 'default' in definition ? definition.default : undefined
+}
+
 // Noms des attributs posés sur `<CopyBtn>` dans l'extrait affiché (`foo`, `:foo` et `v-bind:foo`).
 function getSnippetCopyBtnAttributes(story: { parameters: Record<string, unknown> }): string[] {
 	const tabs = Array.isArray(story.parameters.sourceCode) ? story.parameters.sourceCode : []
@@ -54,5 +60,14 @@ describe('CopyBtn snippets', () => {
 
 		expect(attributes).toContain('aria-label')
 		expect(attributes.filter(name => !copyBtnProps.includes(camelize(name)))).toEqual([])
+	})
+
+	it.each(allStories)('l\'extrait de $name affiche les props de CopyBtn définies dans ses args', ({ story }) => {
+		const attributes = getSnippetCopyBtnAttributes(story).map(name => camelize(name))
+		const propsFromArgs = Object.entries(story.args)
+			.filter(([name, value]) => copyBtnProps.includes(name) && value !== undefined && value !== getPropDefault(name))
+			.map(([name]) => name)
+
+		expect(propsFromArgs.filter(name => !attributes.includes(name))).toEqual([])
 	})
 })

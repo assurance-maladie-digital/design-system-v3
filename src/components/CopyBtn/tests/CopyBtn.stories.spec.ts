@@ -2,9 +2,17 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
 import CopyBtn from '../CopyBtn.vue'
+import { config } from '../config'
 import * as stories from '../CopyBtn.stories'
+import meta from '../CopyBtn.stories'
 
 const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({ name, story }))
+
+function getPropDefault(name: string): unknown {
+	const definition: unknown = Object.entries(CopyBtn.props ?? {}).find(([key]) => key === name)?.[1]
+
+	return typeof definition === 'object' && definition !== null && 'default' in definition ? definition.default : undefined
+}
 
 const modifiedArgs = {
 	ariaLabel: 'Libellé modifié',
@@ -53,5 +61,17 @@ describe('CopyBtn stories', () => {
 		const wrapper = mount(story, { props: { separatorsToRemove: '#' } })
 
 		expect(wrapper.findComponent(CopyBtn).props('separatorsToRemove')).toBe('#')
+	})
+
+	it.each(Object.entries(meta.argTypes))('l\'argType $0 renseigne sa valeur par défaut dans la table des Controls', (name, argType) => {
+		expect(argType).not.toHaveProperty('default')
+
+		if (name === 'vuetifyOptions') {
+			expect(argType).toHaveProperty('table.defaultValue', { summary: 'object', detail: JSON.stringify(config, null, 2) })
+			return
+		}
+
+		const defaultValue = getPropDefault(name)
+		expect(argType).toHaveProperty('table.defaultValue.summary', typeof defaultValue === 'string' ? `'${defaultValue}'` : String(defaultValue))
 	})
 })
