@@ -363,7 +363,7 @@ export const Customization: Story = {
 			<FileUpload
 				v-model="args.modelValue"
 				v-bind="args"
-				class="bg-accent elevation-3 px-4 py-3 border-0 rounded-0"
+				class="bg-primary elevation-3 px-4 py-3 border-0 rounded-0"
 			>
 				<span class="d-flex align-center text-white">
 					<VIcon
@@ -394,7 +394,7 @@ export const Customization: Story = {
 			width="50%"
 			min-width="300px"
 			max-width="600px"
-			class="bg-accent elevation-3 px-4 py-3 border-0 rounded-0"
+			class="bg-primary elevation-3 px-4 py-3 border-0 rounded-0"
 		>
 			<span class="d-flex align-center text-white">
 				<v-icon size="25" color="white" class="mr-4">

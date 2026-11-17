@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analyzeSnippet, evaluateSnippetBinding, findUnknownSnippetImports } from '../storySnippets'
+import { analyzeSnippet, evaluateSnippetBinding, findUnknownSnippetImports, getSnippetTab } from '../storySnippets'
 
 function story(template: string, script?: string) {
 	const sourceCode = [{ name: 'Template', code: template }]
@@ -197,5 +197,16 @@ import { SyTextArea as Field } from '@cnamts/synapse'
 </script>`
 
 		expect(findUnknownSnippetImports(story('<template><Field /></template>', script), modules)).toEqual([])
+	})
+})
+
+describe('getSnippetTab', () => {
+	it('renvoie le code de l\'onglet demandé', () => {
+		expect(getSnippetTab(story('<template><div /></template>', validScript), 'Script')).toBe(validScript)
+	})
+
+	it('renvoie une chaîne vide si l\'onglet ou le paramètre sourceCode est absent', () => {
+		expect(getSnippetTab(story('<template><div /></template>'), 'Script')).toBe('')
+		expect(getSnippetTab({ parameters: {} }, 'Template')).toBe('')
 	})
 })

@@ -3,8 +3,9 @@ import { composeStories } from '@storybook/vue3-vite'
 import * as vue from 'vue'
 import * as vuetifyComponents from 'vuetify/components'
 import * as mdi from '@mdi/js'
-import { analyzeSnippet, findUnknownSnippetImports, isSourceCodeTab, type StoryWithSourceCode } from '@tests/helpers/storySnippets'
+import { analyzeSnippet, findUnknownSnippetImports, getSnippetTab } from '@tests/helpers/storySnippets'
 import * as synapse from '@/main'
+import { createVuetifyOptions } from '@/vuetifyOptions'
 import * as stories from '../FileUpload.stories'
 
 const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({ name, story }))
@@ -16,11 +17,9 @@ const modules = {
 	'@mdi/js': mdi,
 }
 
-function getSnippetTab(story: StoryWithSourceCode, name: string): string {
-	const { sourceCode } = story.parameters
-	const tabs = Array.isArray(sourceCode) ? sourceCode.filter(isSourceCodeTab) : []
-	return tabs.find(tab => tab.name === name)?.code ?? ''
-}
+// Vuetify ne génère une classe `bg-<couleur>` que pour les couleurs déclarées dans le thème actif
+const themeColors = Object.values(createVuetifyOptions().theme?.themes ?? {}).map(theme => Object.keys(theme.colors ?? {}))
+const colorsDefinedInEveryTheme = themeColors[0]?.filter(color => themeColors.every(colors => colors.includes(color))) ?? []
 
 describe('FileUpload snippets', () => {
 	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
@@ -54,5 +53,11 @@ describe('FileUpload snippets', () => {
 		const spanClasses = getSnippetTab(stories.Customization, 'Template').match(/<span class="([^"]*)">/)?.[1].split(/\s+/) ?? []
 
 		expect(spanClasses).toEqual(expect.arrayContaining(['d-flex', 'align-center', 'text-white']))
+	})
+
+	it.each(allStories)('l\'extrait de $name n\'utilise que des couleurs de fond définies dans tous les thèmes', ({ story }) => {
+		const backgroundColors = [...getSnippetTab(story, 'Template').matchAll(/\bbg-([a-z][\w-]*)/g)].map(([, color]) => color!)
+
+		expect(backgroundColors.filter(color => !colorsDefinedInEveryTheme.includes(color))).toEqual([])
 	})
 })
