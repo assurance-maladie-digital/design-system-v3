@@ -70,6 +70,8 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+
 const items = [
 	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
@@ -103,6 +105,8 @@ export const Disabled: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+				
 const items = [
 	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2", disabled: true },
@@ -163,8 +167,8 @@ export const WithVModel: Story = {
 			{
 				name: 'Script',
 				code: `
-<script setup>
 import { ref } from 'vue'
+import { SyTabs } from '@cnamts/synapse'
 
 const activeTab = ref('tab2')
 const items = [
@@ -172,7 +176,7 @@ const items = [
   { label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
   { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" }
 ]
-</script>`,
+`,
 			},
 		],
 	},
@@ -214,6 +218,8 @@ export const WithTabsPrependSlot: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+
 const items = [
 	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
@@ -261,6 +267,8 @@ export const WithTabsAppendSlot: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+				
 const items = [
 	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
@@ -314,6 +322,8 @@ export const WithTabPrependSlot: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+import { VIcon } from 'vuetify/components'
 import { mdiHome } from '@mdi/js'
 
 const items = [
@@ -369,6 +379,8 @@ export const WithTabAppendSlot: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'				
+import { VIcon } from 'vuetify/components'
 import { mdiHome } from '@mdi/js'
 
 const items = [
@@ -439,6 +451,8 @@ export const WithCustomContent: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+				
 const items = [
 	{ label: 'Onglet 1', value: 'tab1' },
 	{ label: 'Onglet 2', value: 'tab2' },
@@ -470,6 +484,8 @@ export const ManyTabs: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+				
 // Création d'un grand nombre d'onglets pour tester le comportement de défilement
 const items = Array.from({ length: 10 }, (_, i) => ({
   label: \`Onglet \${i + 1}\`,
@@ -520,13 +536,14 @@ export const CustomTheme: Story = {
 			{
 				name: 'Script',
 				code: `
-<script setup>
+import { SyTabs } from '@cnamts/synapse'
+
 const items = [
   { label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
   { label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
   { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
-</script>
+
 `,
 			},
 		],
@@ -570,6 +587,8 @@ export const CustomTabStyles: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+				
 const items = [
 	{ label: 'Onglet 1', value: 'tab1' },
 	{ label: 'Onglet 2', value: 'tab2' },
@@ -601,6 +620,8 @@ export const NavigationMode: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+				
 const items = [
 	{ label: 'Accueil', value: 'home', href: '#' },
 	{ label: 'Profil', value: 'profile', href: '#profile' },
@@ -665,6 +686,8 @@ export const WithTabConfirmation: Story = {
 			{
 				name: 'Script',
 				code: `
+import { SyTabs } from '@cnamts/synapse'
+				
 const items = [
 	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
