@@ -75,11 +75,15 @@ const releaseAlerts: ReleaseAlert[] = [
 						text: 'Il s\'applique aussi en mode saisie et en mode combiné : la zone de messages est masquée, comme en mode calendrier.',
 					},
 					{
+						label: 'Validité du `SyForm` (non cassant)',
+						text: 'En mode combiné et en saisie seule, le formulaire devient valide dès que la date saisie est validée, au lieu de rester à `null` jusqu\'à la soumission.',
+					},
+					{
 						label: 'Nouvelles props `helpText` et `clearable` (non cassant)',
 						text: '`helpText` affiche une consigne sous le champ ; `clearable` (activé par défaut) affiche un bouton d\'effacement quand le champ contient une valeur.',
 					},
 				],
-				components: ['DatePicker', 'ComplexDatePicker', 'DateTextInput'],
+				components: ['DatePicker'],
 				link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-datepicker-calendarmode--docs', text: 'DatePicker' },
 			},
 			{
@@ -194,7 +198,7 @@ const releaseAlerts: ReleaseAlert[] = [
 				text: 'Avec cette prop, le `validate` des règles personnalisées reçoit la date au format `dateFormatReturn`, comme le `v-model`. Sans elle, le comportement est inchangé.',
 			},
 		],
-		components: ['DatePicker', 'ComplexDatePicker', 'DateTextInput'],
+		components: ['DatePicker'],
 		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-datepicker-calendarmode--docs', text: 'DatePicker' },
 	},
 	{

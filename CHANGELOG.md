@@ -7,10 +7,11 @@
 > **SyTextField** ([#2718](https://github.com/assurance-maladie-digital/design-system-v3/pull/2718))
 > - **La prop `direction` est supprimée** : elle produisait un attribut HTML invalide sur l'`<input>`. Retirez-la de vos usages ; en TypeScript strict ou avec `strictTemplates`, elle est désormais signalée comme inconnue.
 >
-> **DatePicker / DateTextInput** ([#2748](https://github.com/assurance-maladie-digital/design-system-v3/pull/2748), [#2750](https://github.com/assurance-maladie-digital/design-system-v3/pull/2750), [#2751](https://github.com/assurance-maladie-digital/design-system-v3/pull/2751), [#2787](https://github.com/assurance-maladie-digital/design-system-v3/pull/2787))
+> **DatePicker** ([#2748](https://github.com/assurance-maladie-digital/design-system-v3/pull/2748), [#2750](https://github.com/assurance-maladie-digital/design-system-v3/pull/2750), [#2751](https://github.com/assurance-maladie-digital/design-system-v3/pull/2751), [#2787](https://github.com/assurance-maladie-digital/design-system-v3/pull/2787), [#2786](https://github.com/assurance-maladie-digital/design-system-v3/pull/2786))
 > - **Plus d'infobulle `title` par défaut** sur le champ : passez `title` explicitement si vous en aviez besoin.
 > - **Les règles `custom` reçoivent une `Date` ou une chaîne** selon le mode de saisie : adaptez-les pour gérer les deux types (par exemple avec `parseDate`). Un avertissement `[DatePicker]` en développement signale les règles concernées.
 > - **La description du format est en langage naturel** (« jour en 2 chiffres… » au lieu de `DD/MM/YYYY`), et **`hideDetails` s'applique aussi en mode saisie** : mettez à jour les tests qui vérifiaient ces textes ou cette zone.
+> - **Validité du `SyForm`** (non cassant) : en mode combiné et en saisie seule, le formulaire devient valide dès que la date saisie est validée, au lieu de rester à `null` jusqu'à la soumission.
 >
 > **PeriodField** ([#2730](https://github.com/assurance-maladie-digital/design-system-v3/pull/2730))
 > - **Les règles par borne passent par des props dédiées** (`customFromRules`, `customToRules`, et leurs variantes `Warning`) : `fieldIdentifier` dans `customRules` s'appliquait en réalité aux deux bornes.
@@ -310,7 +311,7 @@
   </thead>
   <tbody>
     <tr style="vertical-align: top;">
-      <td>- Stories: make code snippets standalone and copyable
+      <td>- Docs: fix copyable code examples in stories (missing imports, typed refs)
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2789">#2789</a>
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2776">#2776</a>
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2793">#2793</a>
@@ -378,16 +379,6 @@
       </td>
     </tr>
     <tr style="vertical-align: top;">
-      <td>- Doc: add component banners
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2791">#2791</a>
-      </td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- Doc: hide HeaderBar and FooterBar from the PA component list
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2767">#2767</a>
-      </td>
-    </tr>
-    <tr style="vertical-align: top;">
       <td>- Doc: improve the release page
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2721">#2721</a>
       </td>
@@ -401,7 +392,7 @@
 >
 > Ces changements sont des corrections, mais un projet existant peut les percevoir comme des régressions.
 >
-> **DatePicker / ComplexDatePicker / DateTextInput** ([#2665](https://github.com/assurance-maladie-digital/design-system-v3/pull/2665), [#2685](https://github.com/assurance-maladie-digital/design-system-v3/pull/2685))
+> **DatePicker** ([#2665](https://github.com/assurance-maladie-digital/design-system-v3/pull/2665), [#2685](https://github.com/assurance-maladie-digital/design-system-v3/pull/2685))
 > - **`update:modelValue` émet `null` dès que la saisie est invalide ou incomplète** (format invalide, date non parsable, plage incomplète, saisie partiellement effacée). Avant, le modèle gardait la dernière valeur valide et se désynchronisait du texte affiché.
 > - **`date-selected` n'est émis que pour une sélection complète** : il ne l'est plus quand seule la première borne d'une plage est saisie au clavier.
 >
