@@ -1,3 +1,400 @@
+## v1.2.2 (17-11-2026)
+
+> **⚠️ Changements de comportement**
+>
+> Ces changements sont des corrections ou des améliorations, mais un projet existant peut devoir adapter son code, ses tests ou ses baselines visuelles.
+>
+> **SyTextField** ([#2718](https://github.com/assurance-maladie-digital/design-system-v3/pull/2718))
+> - **La prop `direction` est supprimée** : elle produisait un attribut HTML invalide sur l'`<input>`. Retirez-la de vos usages ; en TypeScript strict ou avec `strictTemplates`, elle est désormais signalée comme inconnue.
+>
+> **DatePicker / DateTextInput** ([#2748](https://github.com/assurance-maladie-digital/design-system-v3/pull/2748), [#2750](https://github.com/assurance-maladie-digital/design-system-v3/pull/2750), [#2751](https://github.com/assurance-maladie-digital/design-system-v3/pull/2751), [#2787](https://github.com/assurance-maladie-digital/design-system-v3/pull/2787))
+> - **Plus d'infobulle `title` par défaut** sur le champ : passez `title` explicitement si vous en aviez besoin.
+> - **Les règles `custom` reçoivent une `Date` ou une chaîne** selon le mode de saisie : adaptez-les pour gérer les deux types (par exemple avec `parseDate`). Un avertissement `[DatePicker]` en développement signale les règles concernées.
+> - **La description du format est en langage naturel** (« jour en 2 chiffres… » au lieu de `DD/MM/YYYY`), et **`hideDetails` s'applique aussi en mode saisie** : mettez à jour les tests qui vérifiaient ces textes ou cette zone.
+>
+> **PeriodField** ([#2730](https://github.com/assurance-maladie-digital/design-system-v3/pull/2730))
+> - **Les règles par borne passent par des props dédiées** (`customFromRules`, `customToRules`, et leurs variantes `Warning`) : `fieldIdentifier` dans `customRules` s'appliquait en réalité aux deux bornes.
+>
+> **Captcha** ([#2790](https://github.com/assurance-maladie-digital/design-system-v3/pull/2790))
+> - **La prop `required` est respectée, à `true` par défaut** : retirez `:required="false"` si vous comptiez sur un captcha toujours bloquant.
+>
+> **Validation Vuetify** ([#2723](https://github.com/assurance-maladie-digital/design-system-v3/pull/2723))
+> - **Nouvelle prop `validateOn`**, qui remplace `isValidateOnBlur` si les deux sont fournies. Sur `SyTextArea`, les valeurs de `validate-on` déjà présentes sont désormais appliquées.
+>
+> **SyTable / SyServerTable** ([#2622](https://github.com/assurance-maladie-digital/design-system-v3/pull/2622), [#2739](https://github.com/assurance-maladie-digital/design-system-v3/pull/2739), [#2794](https://github.com/assurance-maladie-digital/design-system-v3/pull/2794))
+> - **La pagination utilise des boutons** à la place des liens `<a href="#">` : adaptez les tests E2E et les surcharges CSS qui ciblent `.sy-pagination a`.
+> - **La case « Sélectionner toutes les lignes » n'a plus d'`aria-label`** : ciblez-la par son nom accessible (`getByRole('checkbox', { name: 'Sélectionner toutes les lignes' })`).
+> - **Le pied de tableau vide est retiré du DOM** avec `hideDefaultFooter`.
+>
+> **HeaderNavigationBar / HeaderBurgerMenu** ([#2740](https://github.com/assurance-maladie-digital/design-system-v3/pull/2740), [#2795](https://github.com/assurance-maladie-digital/design-system-v3/pull/2795))
+> - **Le slot `navigation-menu-content` est rendu dans un `div`** et non plus dans un `ul` : fournissez vous-même la liste autour des `HeaderMenuItem`.
+> - **`role="menu"` est retiré du menu burger**, et le menu ne force plus `overflow: auto` sur la page à sa fermeture.
+>
+> **SyTabs, SyInputSelect, NotificationBar** ([#2792](https://github.com/assurance-maladie-digital/design-system-v3/pull/2792), [#2790](https://github.com/assurance-maladie-digital/design-system-v3/pull/2790), [#2776](https://github.com/assurance-maladie-digital/design-system-v3/pull/2776))
+> - **Les libellés de `SyTabs` gardent leur casse dans le DOM** (majuscules appliquées en CSS) : `getByText('TOUS LES VIREMENTS')` devient `getByText('Tous les virements')`.
+> - **`SyInputSelect` expose les rôles `button` et `listbox`** au lieu de `menu` / `list`, et son bouton d'effacement est un vrai `<button>`.
+> - **Le bouton de fermeture de `NotificationBar` a un nom accessible complet** : avec un `closeBtnText` personnalisé, adaptez les tests qui le ciblent par son nom.
+>
+> **Ajustements visuels, sans impact sur le code** ([#2729](https://github.com/assurance-maladie-digital/design-system-v3/pull/2729), [#2762](https://github.com/assurance-maladie-digital/design-system-v3/pull/2762), [#2798](https://github.com/assurance-maladie-digital/design-system-v3/pull/2798))
+> - Contraste du texte d'aide de `SyTextField`, espacements des champs sur petit écran, alignement du texte d'aide sous un message (`SyTextField`, `SySelect`). Seuls les tests de captures d'écran concernés sont à mettre à jour.
+
+### 🚀 Features
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: add the helpText and clearable props
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2783">#2783</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2779">#2779</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: allow disabling the title attribute with title false, and no title by default
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2750">#2750</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Form fields: add the validateOn prop for Vuetify validation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2723">#2723</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PeriodField: add per-bound validation rules (customFromRules, customToRules)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2730">#2730</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: add the hideCaption prop
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2622">#2622</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2794">#2794</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyPagination: add the buttonMode prop
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2622">#2622</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTabs: keep the label case and customize tab colors
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2792">#2792</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Core: add the @cnamts/synapse/vuetifyOptions entry point for tree shaking
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2719">#2719</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Types: export the SyValidationRule type
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2773">#2773</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- AmeliproUpload: export the component
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2737">#2737</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 🔧 Bug Fixes
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: reset filtering after selection
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2766">#2766</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: cancel the pending search after selection
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2796">#2796</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: keep the SyForm validity in sync after typing a date
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2786">#2786</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fall back to a formatted string for custom rules and add dev warnings
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2751">#2751</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PeriodField: apply custom rules to the targeted bound only
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2730">#2730</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Captcha: respect the required prop
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2790">#2790</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: remove the invalid direction attribute
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2718">#2718</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField/SySelect: align the help text under the field when a message is shown
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2798">#2798</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: remove the empty footer with hideDefaultFooter
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2739">#2739</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderBurgerMenu: preserve the page overflow
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2795">#2795</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- RatingPicker: align the emotion picker focus style with the design
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2731">#2731</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### ♿ Accessibility
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SyTable: accessibility (headers, pagination buttons, status announcements, column resizing)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2622">#2622</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyServerTable: align accessibility with SyTable
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2794">#2794</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: improve the contrast of the help text, prefix, suffix and floating label
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2729">#2729</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderNavigationBar: remove the empty heading from the mobile menu
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2740">#2740</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: announce that activating the field opens a calendar
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2774">#2774</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: make keyboard focus reliable when changing months
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2784">#2784</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: add an accessible name to the years list region
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2775">#2775</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DateTextInput: describe the date format in natural language
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2748">#2748</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DateTextInput: clarify the accessible description of date range formats
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2787">#2787</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyInputSelect: ARIA roles, accessible name, clear button and keyboard support
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2790">#2790</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NotificationBar: give the close button a complete accessible name
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2776">#2776</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Form fields: reduce spacing on small screens to avoid truncated labels
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2762">#2762</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 🔒 Security
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Security: update minimatch
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2732">#2732</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 🧹 Chore
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Chore: integrate knip and remove dead code
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2624">#2624</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: upgrade @stylistic/eslint-plugin from 2.9.0 to 5.10.0
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2687">#2687</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: update cypress-image-snapshot to v11
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2741">#2741</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: run story snippet tests on demand, outside the CI
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2771">#2771</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: one release alert file per change
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2753">#2753</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- CopyBtn: use ariaLabel instead of label in tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2743">#2743</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 📝 Documentation
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Stories: make code snippets standalone and copyable
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2789">#2789</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2776">#2776</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2793">#2793</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2756">#2756</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2725">#2725</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2718">#2718</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Form fields: fix the form field documentation and validation stories
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2790">#2790</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckBoxGroup: improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2773">#2773</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2769">#2769</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix documentation and type the value in the MobileAccessibilityGuideline story
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2758">#2758</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2788">#2788</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyInputSelect: update imports and types in stories
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2761">#2761</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PasswordField: fix story inconsistencies
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2749">#2749</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: align controls, snippets and messages, and add valid NIR examples
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2765">#2765</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2746">#2746</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: add an accessibility notice on calendar use and fix NoCalendar descriptions encoding
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2764">#2764</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2781">#2781</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- MonthPicker/LunarCalendar: improve validation stories
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2763">#2763</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ErrorPage: fix story inconsistencies
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2684">#2684</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Accessibility: recommend avoiding disabled form fields
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2780">#2780</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Doc: add component banners
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2791">#2791</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Doc: hide HeaderBar and FooterBar from the PA component list
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2767">#2767</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Doc: improve the release page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2721">#2721</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.2.1 (27-10-2026)
 
 > **⚠️ Changements de comportement**
