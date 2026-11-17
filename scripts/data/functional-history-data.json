@@ -546,52 +546,52 @@
     "message": "Ajout des interactions sur le composant `BackToTopBtn` (#2467)"
   },
   "Captcha": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "CaptchaAlert": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "CaptchaBase": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "CaptchaBtn": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "CaptchaForm": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "CaptchaHelpdesk": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "CaptchaImg": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "CaptchaInformation": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "VolumeUp": {
     "version": "1.1.4",
@@ -666,40 +666,40 @@
     "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "SelectBtnField": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 15:21:56 +0200",
-    "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "SyAutocomplete": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 15:21:56 +0200",
-    "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 15:15:12 +0100",
+    "message": "SyAutocomplete : annule la recherche en attente après sélection (#2796)"
   },
   "SyInputSelect": {
-    "version": "1.2.0",
-    "date": "15/10/2026",
-    "dateIso": "2026-10-15 16:34:04 +0200",
-    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 10:47:18 +0100",
+    "message": "[Form] fix de la doc des champs de formulaires (#2790)"
   },
   "SySelect": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 15:21:56 +0200",
-    "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 14:00:46 +0100",
+    "message": "SyTextField, SySelect : texte d'aide aligné sous le champ en cas de message (#2798)"
   },
   "SyCheckBoxGroup": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 15:21:56 +0200",
-    "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "SyCheckbox": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "SyForm": {
     "version": "1.2.0",
@@ -744,28 +744,28 @@
     "message": "Components: fix focus display (#2383)"
   },
   "SyRadioGroup": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 15:21:56 +0200",
-    "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "SyTabs": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 15:56:22 +0200",
-    "message": "SyTabs: change inactive tab base color from primary to grey-base (#2696)"
+    "version": "1.2.2",
+    "date": "13/11/2026",
+    "dateIso": "2026-11-13 15:06:13 +0100",
+    "message": " SyTabs : casse des libellés et    couleurs des onglets personnalisables (#2792)"
   },
   "FieldState": {
-    "version": "1.2.1",
-    "date": "26/10/2026",
-    "dateIso": "2026-10-26 11:48:55 +0100",
-    "message": "Security: update plugins (#2705)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 14:00:46 +0100",
+    "message": "SyTextField, SySelect : texte d'aide aligné sous le champ en cas de message (#2798)"
   },
   "SyTextField": {
-    "version": "1.2.1",
-    "date": "26/10/2026",
-    "dateIso": "2026-10-26 11:48:55 +0100",
-    "message": "Security: update plugins (#2705)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 14:00:46 +0100",
+    "message": "SyTextField, SySelect : texte d'aide aligné sous le champ en cas de message (#2798)"
   },
   "DataList": {
     "version": "1.1.3",
@@ -792,70 +792,76 @@
     "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "DatePicker": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 13:57:52 +0200",
-    "message": "DatePicker: fix returns (#2685)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 15:17:29 +0100",
+    "message": "Fix/syform datepicker validity (#2786)"
   },
   "ComplexDatePicker": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 13:57:52 +0200",
-    "message": "DatePicker: fix returns (#2685)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 12:04:14 +0100",
+    "message": "DatePicker : fiabilise le focus lors de la navigation clavier entre les mois (#2784)"
   },
   "DatePickerLiveRegion": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 13:57:52 +0200",
-    "message": "DatePicker: fix returns (#2685)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 15:17:29 +0100",
+    "message": "Fix/syform datepicker validity (#2786)"
   },
   "DateTextInput": {
-    "version": "1.2.1",
-    "date": "23/10/2026",
-    "dateIso": "2026-10-23 13:57:52 +0200",
-    "message": "DatePicker: fix returns (#2685)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 12:07:17 +0100",
+    "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)"
   },
   "DatePickerControls": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 11:46:26 +0100",
+    "message": "Feat/datepicker add helptext (#2783)"
   },
   "DatePickerDay": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 11:46:26 +0100",
+    "message": "Feat/datepicker add helptext (#2783)"
   },
   "DatePickerMonthOption": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 11:46:26 +0100",
+    "message": "Feat/datepicker add helptext (#2783)"
   },
   "DatePickerYearOption": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 11:46:26 +0100",
+    "message": "Feat/datepicker add helptext (#2783)"
   },
   "BidirectionalComplexValidation": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 15:17:29 +0100",
+    "message": "Fix/syform datepicker validity (#2786)"
   },
   "DatePickerBidirectionalValidation": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 15:17:29 +0100",
+    "message": "Fix/syform datepicker validity (#2786)"
+  },
+  "DatePickerSyFormValidity": {
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 15:17:29 +0100",
+    "message": "Fix/syform datepicker validity (#2786)"
   },
   "DatePickerValidationExamples": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.2",
+    "date": "12/11/2026",
+    "dateIso": "2026-11-12 15:17:29 +0100",
+    "message": "Fix/syform datepicker validity (#2786)"
   },
   "DeclarationAccessibilityPage": {
     "version": "1.0.21",
@@ -948,16 +954,16 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "HeaderBar": {
-    "version": "1.1.6",
-    "date": "28/09/2026",
-    "dateIso": "2026-09-28 09:36:28 +0200",
-    "message": "LogoBrandSection: fix router (#2586)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 16:58:00 +0100",
+    "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)"
   },
   "HeaderBurgerMenu": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 16:58:00 +0100",
+    "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)"
   },
   "HeaderMenuItem": {
     "version": "1.0.27",
@@ -966,16 +972,16 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "HeaderMenuSection": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 16:58:00 +0100",
+    "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)"
   },
   "HeaderSubMenu": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 16:58:00 +0100",
+    "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)"
   },
   "HeaderLogo": {
     "version": "1.1.6",
@@ -996,10 +1002,10 @@
     "message": "Feat/improve header loding after audit (#974)"
   },
   "HeaderNavigationBar": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.2.2",
+    "date": "16/11/2026",
+    "dateIso": "2026-11-16 16:58:00 +0100",
+    "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)"
   },
   "HorizontalNavbar": {
     "version": "1.1.4",
@@ -1032,10 +1038,10 @@
     "message": "LogoBrandSection: fix router (#2586)"
   },
   "LunarCalendar": {
-    "version": "1.2.0",
-    "date": "16/10/2026",
-    "dateIso": "2026-10-16 14:43:39 +0200",
-    "message": "LunarCalendar: add Vuetify validation stories and support (#2662)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "MaintenancePage": {
     "version": "1.0.23",
@@ -1044,10 +1050,10 @@
     "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
   },
   "MonthPicker": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "MonthPickerInput": {
     "version": "1.1.3",
@@ -1086,10 +1092,10 @@
     "message": "Components: fix focus display (#2383)"
   },
   "NirField": {
-    "version": "1.2.0",
-    "date": "15/10/2026",
-    "dateIso": "2026-10-15 16:34:04 +0200",
-    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "NotFoundPage": {
     "version": "1.0.22",
@@ -1098,16 +1104,16 @@
     "message": "Hx: replace hx to SyHeading (#1874)"
   },
   "Notification": {
-    "version": "1.2.0",
-    "date": "05/10/2026",
-    "dateIso": "2026-10-05 10:13:12 +0200",
-    "message": "add tokens and interactions on notificationBar (#2602)"
+    "version": "1.2.2",
+    "date": "10/11/2026",
+    "dateIso": "2026-11-10 15:04:45 +0100",
+    "message": "NotificationBar : rend les extraits de code des stories autonomes et … (#2776)"
   },
   "NotificationBar": {
-    "version": "1.2.0",
-    "date": "05/10/2026",
-    "dateIso": "2026-10-05 10:13:12 +0200",
-    "message": "add tokens and interactions on notificationBar (#2602)"
+    "version": "1.2.2",
+    "date": "10/11/2026",
+    "dateIso": "2026-11-10 15:04:45 +0100",
+    "message": "NotificationBar : rend les extraits de code des stories autonomes et … (#2776)"
   },
   "PageContainer": {
     "version": "1.1.1",
@@ -1128,22 +1134,22 @@
     "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "PasswordField": {
-    "version": "1.2.0",
-    "date": "15/10/2026",
-    "dateIso": "2026-10-15 16:34:04 +0200",
-    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "PeriodField": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.2",
+    "date": "03/11/2026",
+    "dateIso": "2026-11-03 14:25:42 +0100",
+    "message": "PeriodField : règles de validation ciblées par borne (#2730)"
   },
   "PhoneField": {
-    "version": "1.2.0",
-    "date": "15/10/2026",
-    "dateIso": "2026-10-15 16:34:04 +0200",
-    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "PhoneField.reset.fixture": {
     "version": "1.2.0",
@@ -1170,28 +1176,28 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "EmotionPicker": {
-    "version": "1.1.4",
-    "date": "04/08/2026",
-    "dateIso": "2026-08-04 09:24:53 +0200",
-    "message": "interaction vbtn (#2435)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 14:58:22 +0100",
+    "message": "EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)"
   },
   "NumberPicker": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 14:58:22 +0100",
+    "message": "EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)"
   },
   "RatingPicker": {
-    "version": "1.1.4",
-    "date": "04/08/2026",
-    "dateIso": "2026-08-04 09:24:53 +0200",
-    "message": "interaction vbtn (#2435)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 14:58:22 +0100",
+    "message": "EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)"
   },
   "StarsPicker": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 14:58:22 +0100",
+    "message": "EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)"
   },
   "SearchListField": {
     "version": "1.1.3",
@@ -1241,11 +1247,23 @@
     "dateIso": "2026-03-25 16:55:31 +0100",
     "message": "Feat/turn heading level optional (#2025)"
   },
+  "SyNavList": {
+    "version": "1.2.2",
+    "date": "05/11/2026",
+    "dateIso": "2026-11-05 15:26:26 +0100",
+    "message": "SyNavList : liste de navigation avec actions et sous-niveaux (#2726)"
+  },
+  "SyNavListPanel": {
+    "version": "1.2.2",
+    "date": "05/11/2026",
+    "dateIso": "2026-11-05 15:26:26 +0100",
+    "message": "SyNavList : liste de navigation avec actions et sous-niveaux (#2726)"
+  },
   "SyTextArea": {
-    "version": "1.2.0",
-    "date": "16/10/2026",
-    "dateIso": "2026-10-16 11:24:23 +0200",
-    "message": "fix sytextarea (#2655)"
+    "version": "1.2.2",
+    "date": "04/11/2026",
+    "dateIso": "2026-11-04 16:12:49 +0100",
+    "message": "Ajout de la prop validate-on (#2723)"
   },
   "TableToolbar": {
     "version": "1.1.3",
@@ -1254,16 +1272,16 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SyServerTable": {
-    "version": "1.2.1",
-    "date": "26/10/2026",
-    "dateIso": "2026-10-26 15:59:04 +0100",
-    "message": "SyTable / SyServerTable : styles non surchargeables et indication du défilement (#2630)"
+    "version": "1.2.2",
+    "date": "05/11/2026",
+    "dateIso": "2026-11-05 09:33:02 +0100",
+    "message": "Tables: fix hideDefaultFooter (#2739)"
   },
   "SyTable": {
-    "version": "1.2.1",
-    "date": "26/10/2026",
-    "dateIso": "2026-10-26 15:59:04 +0100",
-    "message": "SyTable / SyServerTable : styles non surchargeables et indication du défilement (#2630)"
+    "version": "1.2.2",
+    "date": "05/11/2026",
+    "dateIso": "2026-11-05 09:33:02 +0100",
+    "message": "Tables: fix hideDefaultFooter (#2739)"
   },
   "SyTableFilter": {
     "version": "1.2.1",
