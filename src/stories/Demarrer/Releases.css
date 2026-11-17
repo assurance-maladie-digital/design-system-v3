@@ -38,6 +38,34 @@
 	width: fit-content;
 }
 
+.releases .release-alert__groups {
+	margin: 0 0 0.5rem;
+}
+
+/* Un thème par ligne, replié : seul son titre et son nombre de changements sont visibles */
+.releases .release-alert__group {
+	margin: 0;
+	padding: 0.375rem 0;
+	border-top: 1px solid rgb(0 0 0 / 12%);
+}
+
+.releases .release-alert__group:last-child {
+	border-bottom: 1px solid rgb(0 0 0 / 12%);
+}
+
+.releases .release-alert__group[open] {
+	padding-bottom: 0.75rem;
+}
+
+.releases .release-alert__group > .release-alert__list,
+.releases .release-alert__group > .release-alert__text {
+	margin-left: 1.25rem;
+}
+
+.releases .release-alert__group-components {
+	margin-top: 0.5rem;
+}
+
 .releases .release-alert__list {
 	margin: 0.5rem 0 0;
 	padding-left: 1.25rem;

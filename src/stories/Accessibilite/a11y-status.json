@@ -1,8 +1,8 @@
 {
-  "date": "2026-10-27T16:15:41.140Z",
-  "compliantCount": 70,
-  "totalCount": 76,
-  "percentage": "92.11",
+  "date": "2026-11-17T10:44:27.171Z",
+  "compliantCount": 74,
+  "totalCount": 77,
+  "percentage": "96.10",
   "results": [
     {
       "componentName": "Accordion",
@@ -133,8 +133,8 @@
       "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.1.6",
-      "versionDate": "17/09/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "Customs/Selects/SyAutocomplete",
@@ -150,15 +150,15 @@
     },
     {
       "componentName": "Customs/Selects/SyInputSelect",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "hasManualAudit": false,
       "deprecated": true,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "Customs/Selects/SySelect",
@@ -169,8 +169,8 @@
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "hasManualAudit": true,
       "deprecated": false,
-      "version": "1.2.1",
-      "versionDate": "22/10/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "Customs/SyCheckbox",
@@ -181,8 +181,8 @@
       "storybookTitle": "Composants/Formulaires/SyCheckbox",
       "hasManualAudit": true,
       "deprecated": false,
-      "version": "1.1.5",
-      "versionDate": "27/08/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "Customs/SyCheckBoxGroup",
@@ -241,8 +241,8 @@
       "storybookTitle": "Composants/Navigation/SyPagination",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.2.2",
+      "versionDate": "05/11/2026"
     },
     {
       "componentName": "Customs/SyRadioGroup",
@@ -253,8 +253,8 @@
       "storybookTitle": "Composants/Formulaires/SyRadioGroup",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "Customs/SyTabs",
@@ -277,8 +277,8 @@
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "hasManualAudit": true,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "23/07/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "DataList",
@@ -313,8 +313,8 @@
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "30/07/2026"
+      "version": "1.2.2",
+      "versionDate": "12/11/2026"
     },
     {
       "componentName": "DatePicker/ComplexDatePicker",
@@ -325,8 +325,8 @@
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "30/07/2026"
+      "version": "1.2.2",
+      "versionDate": "12/11/2026"
     },
     {
       "componentName": "DatePicker/DateTextInput",
@@ -337,8 +337,8 @@
       "storybookTitle": "Composants/Formulaires/DatePicker/DateInput",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "23/07/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "DeclarationAccessibilityPage",
@@ -445,8 +445,8 @@
       "storybookTitle": "Composants/Formulaires/FileUpload",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "FilterInline",
@@ -500,7 +500,7 @@
       "componentName": "HeaderBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasManualAudit": true,
@@ -589,8 +589,8 @@
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.0.23",
-      "versionDate": "30/03/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "MaintenancePage",
@@ -625,8 +625,8 @@
       "storybookTitle": "Composants/Formulaires/NirField",
       "hasManualAudit": true,
       "deprecated": false,
-      "version": "1.1.2",
-      "versionDate": "23/06/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "NotFoundPage",
@@ -685,8 +685,8 @@
       "storybookTitle": "Composants/Formulaires/PasswordField",
       "hasManualAudit": true,
       "deprecated": false,
-      "version": "1.1.6",
-      "versionDate": "15/09/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "PeriodField",
@@ -697,8 +697,8 @@
       "storybookTitle": "Composants/Formulaires/PeriodField",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.0.24",
-      "versionDate": "01/04/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "PhoneField",
@@ -709,8 +709,8 @@
       "storybookTitle": "Composants/Formulaires/PhoneField",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "RangeField",
@@ -733,8 +733,8 @@
       "storybookTitle": "Composants/Feedback/RatingPicker",
       "hasManualAudit": true,
       "deprecated": false,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.2.2",
+      "versionDate": "04/11/2026"
     },
     {
       "componentName": "SearchListField",
@@ -833,6 +833,18 @@
       "versionDate": null
     },
     {
+      "componentName": "SyNavList",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
+      "storybookTitle": "Labs/SyNavList",
+      "hasManualAudit": false,
+      "deprecated": false,
+      "version": null,
+      "versionDate": null
+    },
+    {
       "componentName": "SyTextArea",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
@@ -841,32 +853,32 @@
       "storybookTitle": "Composants/Formulaires/SyTextArea",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.0.23",
-      "versionDate": "30/03/2026"
+      "version": "1.2.2",
+      "versionDate": "10/11/2026"
     },
     {
       "componentName": "Tables/SyServerTable",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Tableaux/SyServerTable",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.2.1",
-      "versionDate": "22/10/2026"
+      "version": "1.2.2",
+      "versionDate": "16/11/2026"
     },
     {
       "componentName": "Tables/SyTable",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Tableaux/SyTable",
       "hasManualAudit": false,
       "deprecated": false,
-      "version": "1.2.1",
-      "versionDate": "22/10/2026"
+      "version": "1.2.2",
+      "versionDate": "16/11/2026"
     },
     {
       "componentName": "TableToolbar",
