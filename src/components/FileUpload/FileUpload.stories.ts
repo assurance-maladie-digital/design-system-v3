@@ -292,6 +292,7 @@ export const MultipleFiles: Story = {
 			<FileUpload
 				v-model="args.modelValue"
 				v-bind="args"
+				@error="sendError"
 			/>
 			<ul class="ma-2">
 				<li v-for="file in args.modelValue" :key="file.name">{{ file.name }}</li>
@@ -308,6 +309,7 @@ export const MultipleFiles: Story = {
 		<FileUpload
 			v-model="files"
 			:multiple="true"
+			@error="sendError"
 		/>
 		<ul class="ma-2">
 			<li v-for="file in files" :key="file.name">{{ file.name }}</li>
@@ -324,7 +326,7 @@ export const MultipleFiles: Story = {
 	import { FileUpload, NotificationBar, useNotificationService } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
-	const files = ref([])
+	const files = ref<File[]>([])
 
 	const { addNotification } = useNotificationService()
 	const sendError = (e: string[]) => {
@@ -361,9 +363,9 @@ export const Customization: Story = {
 			<FileUpload
 				v-model="args.modelValue"
 				v-bind="args"
-				class="bg-accent elevation-3 px-4 py-3 border-0 rounded-0"
+				class="bg-primary elevation-3 px-4 py-3 border-0 rounded-0"
 			>
-				<span class="d-flex align-center white--text">
+				<span class="d-flex align-center text-white">
 					<VIcon
 						size="25"
 						color="white"
@@ -392,9 +394,9 @@ export const Customization: Story = {
 			width="50%"
 			min-width="300px"
 			max-width="600px"
-			class="bg-accent elevation-3 px-4 py-3 border-0 rounded-0"
+			class="bg-primary elevation-3 px-4 py-3 border-0 rounded-0"
 		>
-			<span>
+			<span class="d-flex align-center text-white">
 				<v-icon size="25" color="white" class="mr-4">
 					{{ uploadIcon }}
 				</v-icon>
@@ -412,11 +414,12 @@ export const Customization: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-	import { FileUpload, VIcon } from '@cnamts/synapse'
+	import { FileUpload } from '@cnamts/synapse'
 	import { mdiCloudUpload } from '@mdi/js'
 	import { ref } from 'vue'
+	import { VIcon } from 'vuetify/components'
 
-	const files = ref([])
+	const files = ref<File[]>([])
 
 	const uploadIcon = mdiCloudUpload
 </script>
@@ -473,7 +476,6 @@ export const WithFileList: Story = {
 			v-model="model"
 			:multiple="true"
 		/>
-		{{ model }}
 		<FileList
 			:uploadList="uploadList"
 			@delete="removeFile"
@@ -489,9 +491,9 @@ export const WithFileList: Story = {
 	import { FileUpload, FileList } from '@cnamts/synapse'
 	import { ref, computed } from 'vue'
 
-	const files = ref<Array<File>>([])
+	const model = ref<Array<File>>([])
 	const uploadList = computed(
-		() => files.value.map(item => ({
+		() => model.value.map(item => ({
 			id: item.name,
 			title: item.name,
 			state: 'success',
@@ -499,7 +501,7 @@ export const WithFileList: Story = {
 	)
 
 	function removeFile(itemToRemove: { id: string }) {
-		files.value = files.value.filter(file => file.name !== itemToRemove.id)
+		model.value = model.value.filter(file => file.name !== itemToRemove.id)
 	}
 </script>
 				`,

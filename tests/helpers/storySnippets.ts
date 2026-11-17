@@ -39,10 +39,18 @@ function isSourceCodeTab(tab: unknown): tab is SourceCodeTab {
 	return typeof tab === 'object' && tab !== null && 'code' in tab && typeof tab.code === 'string'
 }
 
-function parseSnippet(story: StoryWithSourceCode) {
+function getSourceCodeTabs(story: StoryWithSourceCode): SourceCodeTab[] {
 	const { sourceCode } = story.parameters
-	const tabs = Array.isArray(sourceCode) ? sourceCode.filter(isSourceCodeTab) : []
-	return parse(tabs.map(tab => tab.code).join('\n'))
+	return Array.isArray(sourceCode) ? sourceCode.filter(isSourceCodeTab) : []
+}
+
+/** Code de l'onglet `name` du paramètre `sourceCode` d'une story, chaîne vide s'il n'existe pas. */
+export function getSnippetTab(story: StoryWithSourceCode, name: string): string {
+	return getSourceCodeTabs(story).find(tab => tab.name === name)?.code ?? ''
+}
+
+function parseSnippet(story: StoryWithSourceCode) {
+	return parse(getSourceCodeTabs(story).map(tab => tab.code).join('\n'))
 }
 
 function isStaticAttribute(prop: unknown): prop is { name: string } {
