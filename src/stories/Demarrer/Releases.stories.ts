@@ -21,6 +21,14 @@ type ReleaseAlertItem = {
 	text: string
 }
 
+// Thème d'un bandeau : ses changements sont repliés sous son titre
+type ReleaseAlertGroup = {
+	title: string
+	items: ReleaseAlertItem[]
+	components?: string[]
+	link?: { intro: string, href: string, text: string }
+}
+
 type ReleaseAlert = {
 	id: string
 	releaseVersion: string
@@ -30,11 +38,143 @@ type ReleaseAlert = {
 	paragraphs?: string[]
 	// Liste des changements, repliée sous un « Voir les N changements »
 	items?: ReleaseAlertItem[]
+	// Changements regroupés par thème, chaque thème replié séparément
+	groups?: ReleaseAlertGroup[]
 	components?: string[]
 	link?: { intro: string, href: string, text: string }
 }
 
 const releaseAlerts: ReleaseAlert[] = [
+	{
+		id: 'v1-2-2-behavior',
+		releaseVersion: 'v1.2.2',
+		type: 'info',
+		variant: 'tonal',
+		title: 'Changements de comportement',
+		paragraphs: [
+			'Ce sont des corrections ou des améliorations, mais un projet existant peut devoir adapter son code, ses tests ou ses baselines visuelles. Les changements sont regroupés par thème.',
+		],
+		groups: [
+			{
+				title: 'DatePicker',
+				items: [
+					{
+						label: 'Règles `custom`',
+						text: 'Une règle personnalisée reçoit une `Date` ou une chaîne selon le mode de saisie. Adaptez vos règles pour gérer les deux types, par exemple en normalisant la valeur avec `parseDate`. En développement, un avertissement `[DatePicker]` dans la console signale les règles concernées.',
+					},
+					{
+						label: 'Infobulle `title`',
+						text: 'Le champ n\'a plus d\'infobulle `title` par défaut. Si vous en aviez besoin, passez-la explicitement (`title="Saisir la date au format JJ/MM/AAAA"`) ; `:title="false"` la désactive.',
+					},
+					{
+						label: 'Description du format',
+						text: 'Elle est rédigée en langage naturel (« jour en 2 chiffres… ») au lieu de `DD/MM/YYYY`. Mettez à jour les tests qui vérifiaient ce texte ou la description accessible du champ.',
+					},
+					{
+						label: '`hideDetails`',
+						text: 'Il s\'applique aussi en mode saisie et en mode combiné : la zone de messages est masquée, comme en mode calendrier.',
+					},
+					{
+						label: 'Validité du `SyForm` (non cassant)',
+						text: 'En mode combiné et en saisie seule, le formulaire devient valide dès que la date saisie est validée, au lieu de rester à `null` jusqu\'à la soumission.',
+					},
+					{
+						label: 'Nouvelles props `helpText` et `clearable` (non cassant)',
+						text: '`helpText` affiche une consigne sous le champ ; `clearable` (activé par défaut) affiche un bouton d\'effacement quand le champ contient une valeur.',
+					},
+				],
+				components: ['DatePicker'],
+				link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-datepicker-calendarmode--docs', text: 'DatePicker' },
+			},
+			{
+				title: 'Champs de formulaire',
+				items: [
+					{
+						label: 'Prop `direction` de `SyTextField` supprimée',
+						text: 'Elle produisait un attribut HTML invalide sur l\'`<input>`. Retirez-la de vos usages : en TypeScript strict ou avec `strictTemplates`, elle est désormais signalée comme inconnue.',
+					},
+					{
+						label: 'Prop `required` de `Captcha`',
+						text: 'Elle est respectée, à `true` par défaut. Si vous passiez `:required="false"` en comptant sur un captcha toujours bloquant, retirez cette prop.',
+					},
+					{
+						label: 'Règles par borne du `PeriodField`',
+						text: '`fieldIdentifier` dans `customRules` s\'appliquait en réalité aux deux bornes. Utilisez les props dédiées `customFromRules` / `customToRules` (et leurs variantes `Warning`).',
+					},
+					{
+						label: 'Nouvelle prop `validateOn` (mode Vuetify)',
+						text: 'Elle choisit le déclencheur de la validation et remplace `isValidateOnBlur` si les deux sont fournies. Sur `SyTextArea`, les valeurs de `validate-on` déjà présentes sont désormais appliquées.',
+					},
+				],
+				components: ['SyTextField', 'Captcha', 'PeriodField', 'SyTextArea'],
+				link: { intro: 'Pour plus de détails, voir le', href: '/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs', text: 'guide de validation des formulaires' },
+			},
+			{
+				title: 'Tableaux : pagination et sélection',
+				items: [
+					{
+						label: 'Pagination',
+						text: 'Elle utilise des boutons à la place des liens `<a href="#">`, et porte le nom de la `caption` du tableau. Adaptez les tests E2E (par exemple le bouton « Page 2 ») et les surcharges CSS qui ciblent `.sy-pagination a`.',
+					},
+					{
+						label: 'Case « Sélectionner toutes les lignes »',
+						text: 'Elle n\'a plus d\'`aria-label`, son nom vient de son `<label>`. Ciblez-la par son nom accessible : `getByRole(\'checkbox\', { name: \'Sélectionner toutes les lignes\' })`.',
+					},
+					{
+						label: '`hideDefaultFooter`',
+						text: 'Le pied de tableau vide est retiré du DOM.',
+					},
+					{
+						label: 'Nouvelle prop `hideCaption` (non cassant)',
+						text: 'Elle masque visuellement la légende tout en la gardant pour les lecteurs d\'écran. Donnez une `caption` distincte à chaque tableau d\'une même page.',
+					},
+				],
+				components: ['SyTable', 'SyServerTable', 'SyPagination'],
+				link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-tableaux-sytable--docs', text: 'SyTable' },
+			},
+			{
+				title: 'Menu de l\'en-tête',
+				items: [
+					{
+						label: 'Slot `navigation-menu-content`',
+						text: 'Il est rendu dans un `div` et non plus dans un `ul`. Fournissez vous-même la liste : un `ul` autour des `HeaderMenuItem`, ou des `HeaderMenuSection` avec un `title`.',
+					},
+					{
+						label: '`role="menu"`',
+						text: 'Il est retiré du menu burger, qui reste une boîte de dialogue contenant une zone de navigation. Ciblez `[role="dialog"]` ou `.menu-wrapper` dans vos tests.',
+					},
+					{
+						label: '`overflow` de la page',
+						text: 'Le menu ne force plus `overflow: auto` sur la page à sa fermeture. Si votre projet comptait dessus pour rétablir le défilement, définissez `overflow` explicitement.',
+					},
+				],
+				components: ['HeaderNavigationBar', 'HeaderBurgerMenu', 'HeaderMenuSection'],
+				link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-structure-headerbar-headernavigationbar--docs', text: 'HeaderNavigationBar' },
+			},
+			{
+				title: 'Tests et affichage',
+				items: [
+					{
+						label: 'Libellés de `SyTabs`',
+						text: 'Ils gardent leur casse dans le DOM, les majuscules sont appliquées en CSS : `getByText(\'TOUS LES VIREMENTS\')` devient `getByText(\'Tous les virements\')`.',
+					},
+					{
+						label: 'Rôles de `SyInputSelect`',
+						text: 'Le déclencheur a le rôle `button` et la liste le rôle `listbox`, au lieu de `menu` / `list`. Le bouton d\'effacement est un vrai `<button>`.',
+					},
+					{
+						label: 'Bouton de fermeture de `NotificationBar`',
+						text: 'Son nom accessible est complet. Avec un `closeBtnText` personnalisé, adaptez les tests qui ciblent le bouton par son nom.',
+					},
+					{
+						label: 'Ajustements visuels, sans impact sur le code',
+						text: 'Contraste du texte d\'aide de `SyTextField`, espacements des champs sur petit écran, alignement du texte d\'aide sous un message (`SyTextField`, `SySelect`). Seuls les tests de captures d\'écran concernés sont à mettre à jour.',
+					},
+				],
+				components: ['SyTabs', 'SyInputSelect', 'NotificationBar', 'SyTextField', 'SySelect'],
+			},
+		],
+	},
 	{
 		id: 'datepicker-model-behavior',
 		releaseVersion: 'v1.2.1',
@@ -58,7 +198,7 @@ const releaseAlerts: ReleaseAlert[] = [
 				text: 'Avec cette prop, le `validate` des règles personnalisées reçoit la date au format `dateFormatReturn`, comme le `v-model`. Sans elle, le comportement est inchangé.',
 			},
 		],
-		components: ['DatePicker', 'ComplexDatePicker', 'DateTextInput'],
+		components: ['DatePicker'],
 		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-datepicker-calendarmode--docs', text: 'DatePicker' },
 	},
 	{
@@ -476,6 +616,20 @@ export const List = {
 										</li>
 									</ul>
 								</details>
+								<div v-if="alert.groups" class="release-alert__groups">
+									<details v-for="group in alert.groups" :key="group.title" class="release-alert__details release-alert__group">
+										<summary>{{ group.title }} ({{ group.items.length }})</summary>
+										<ul class="release-alert__list">
+											<li v-for="item in group.items" :key="item.label">
+												<strong><AlertText :text="item.label" /></strong> : <AlertText :text="item.text" />
+											</li>
+										</ul>
+										<p v-if="group.components" class="release-alert__text release-alert__group-components">
+											Composants concernés : <template v-for="(component, index) in group.components" :key="component"><code>{{ component }}</code><template v-if="index < group.components.length - 1">, </template></template>
+										</p>
+										<p v-if="group.link" class="release-alert__text">{{ group.link.intro }} <a :href="group.link.href">{{ group.link.text }}</a>.</p>
+									</details>
+								</div>
 								<template v-if="alert.components">
 									<p class="release-alert__text">Composants concernés :</p>
 									<ul class="release-alert__components">
