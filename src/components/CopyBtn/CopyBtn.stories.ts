@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import CopyBtn from './CopyBtn.vue'
-import { VIcon } from 'vuetify/components'
+import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 import { mdiContentDuplicate } from '@mdi/js'
 
 const duplicateIcon = mdiContentDuplicate
@@ -32,7 +32,7 @@ const meta = {
 		},
 		tooltipDuration: {
 			control: { type: 'number' },
-			default: 2000,
+			default: 5000,
 		},
 		separatorsToRemove: {
 			control: { type: 'text' },
@@ -97,7 +97,6 @@ export const Default: Story = {
 		ariaOwns: 'copy-btn-1',
 		textToCopy: '1970756541',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		vuetifyOptions: {
 			menu: {
 				location: 'end center',
@@ -129,9 +128,12 @@ export const Default: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de patient"
-						text-to-copy="1970756541"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 						:vuetify-options="args.vuetifyOptions"
 					/>
               	</div>
@@ -173,7 +175,6 @@ export const NoTooltip: Story = {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: true,
-		tooltipDuration: 2000,
 	},
 	render: (args) => {
 		return {
@@ -188,10 +189,12 @@ export const NoTooltip: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de patient"
-						text-to-copy="1970756541"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
-						
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					/>
               	</div>
 			`,
@@ -215,7 +218,10 @@ export const SlotIcon: Story = {
 			text-to-copy="1970756541"
 		>
 			<template #icon>
-				<VIcon :icon="duplicateIcon" />
+				<SyIcon
+					:icon="duplicateIcon"
+					decorative
+				/>
 			</template>
 		</CopyBtn>
 	</div>
@@ -225,8 +231,7 @@ export const SlotIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import { CopyBtn } from '@cnamts/synapse'
-	import { VIcon } from 'vuetify/components'
+	import { CopyBtn, SyIcon } from '@cnamts/synapse'
 	import { mdiContentDuplicate } from '@mdi/js'
 	
 	const duplicateIcon = mdiContentDuplicate
@@ -239,12 +244,11 @@ export const SlotIcon: Story = {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		icon: duplicateIcon,
 	},
 	render: (args) => {
 		return {
-			components: { CopyBtn, VIcon },
+			components: { CopyBtn, SyIcon },
 			setup() {
 				return { args }
 			},
@@ -255,12 +259,18 @@ export const SlotIcon: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de patient"
-						text-to-copy="1970756541"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					>
 						<template #icon>
-							<VIcon :icon="args.icon" />
+							<SyIcon
+								:icon="args.icon"
+								decorative
+							/>
 						</template>
 					</CopyBtn>
               	</div>
@@ -303,7 +313,6 @@ export const RemoveSeparators: Story = {
 		ariaOwns: 'copy-btn-remove-separators',
 		textToCopy: 'FR76-3000-4000-0300-0000-0000-000',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		separatorsToRemove: '-',
 	},
 	render: (args) => {
@@ -319,11 +328,12 @@ export const RemoveSeparators: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier l'IBAN sans tirets"
-						:text-to-copy="args.textToCopy"
-						:separators-to-remove="args.separatorsToRemove"
-						:hide-tooltip="args.hideTooltip"
+						:aria-label="args.ariaLabel"
 						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
+						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					/>
               	</div>
 			`,
@@ -365,7 +375,6 @@ export const MultiSeparators: Story = {
 		ariaOwns: 'copy-btn-multi-separators',
 		textToCopy: '+33 (0)6.12.34.56.78',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		separatorsToRemove: ['+', '(', ')', '.'],
 	},
 	render: (args) => {
@@ -381,11 +390,12 @@ export const MultiSeparators: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro sans séparateurs"
-						:text-to-copy="args.textToCopy"
-						:separators-to-remove="args.separatorsToRemove"
-						:hide-tooltip="args.hideTooltip"
+						:aria-label="args.ariaLabel"
 						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
+						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					/>
               	</div>
 			`,
@@ -427,7 +437,7 @@ export const RemoveSpaces: Story = {
 		ariaOwns: 'copy-btn-remove-spaces',
 		textToCopy: '1 97 07 56 541 123 45',
 		hideTooltip: false,
-		tooltipDuration: 2000,
+		separatorsToRemove: ' ',
 	},
 	render: (args) => {
 		return {
@@ -442,11 +452,12 @@ export const RemoveSpaces: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de sécurité sociale sans espaces"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
 						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
-						:aria-owns="args.ariaOwns"
-						separators-to-remove=" "
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					/>
               	</div>
 			`,
@@ -492,7 +503,6 @@ export const SlotTooltip: Story = {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		tooltip: 'Texte personnalisé',
 	},
 	render: (args) => {
@@ -508,9 +518,12 @@ export const SlotTooltip: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de patient"
-						text-to-copy="1970756541"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					>
 						<template #tooltip>
 							{{ args.tooltip }}
