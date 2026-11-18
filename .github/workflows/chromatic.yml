@@ -5,13 +5,15 @@ name: 'Chromatic Publish'
 on:
   push:
     branches:
-      - main
+      - prod
 
 # List of jobs
 jobs:
   chromatic:
     # Operating System
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     # Job steps
     steps:
       - uses: actions/checkout@v6
@@ -25,10 +27,5 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      #👇 Adds Chromatic as a step in the workflow
-      - uses: chromaui/action@latest
-        # Options required for Chromatic's GitHub Action
-        with:
-          #👇 Chromatic projectToken,
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to Chromatic
+        run: pnpm exec chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
