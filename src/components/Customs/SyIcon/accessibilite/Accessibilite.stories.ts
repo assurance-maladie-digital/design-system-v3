@@ -23,5 +23,5 @@ export const AccessibilityDemo = {
 		components: { SyIconAccessibility },
 		template: '<SyIconAccessibility />',
 	}),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

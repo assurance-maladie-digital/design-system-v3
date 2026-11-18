@@ -9,7 +9,7 @@ export default {
 }
 
 export const ComboboxKeyboardNavigation: StoryObj = {
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	render: () => {
 		return {
 			setup() {
@@ -71,7 +71,7 @@ export const ComboboxKeyboardNavigation: StoryObj = {
 }
 
 export const LoadingAccessibility: StoryObj = {
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	render: () => {
 		return {
 			setup() {

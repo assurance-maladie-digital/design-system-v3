@@ -6,6 +6,7 @@ import { useHolidayDay } from '@/composables/date/useHolidayDay'
 const meta: Meta<typeof DatePicker> = {
 	title: 'Guide Du Dev/Utilitaires/Règles de validation/isHolidayDay',
 	component: DatePicker,
+	tags: ['!manifest'],
 	argTypes: {
 		modelValue: {
 			control: 'text',

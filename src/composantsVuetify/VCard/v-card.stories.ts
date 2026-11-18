@@ -4,7 +4,7 @@ import { VBtn } from 'vuetify/components'
 
 const meta: Meta<typeof VCard> = {
 	title: 'Composants/Composants Vuetify/VCard',
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	component: VCard,
 	parameters: {
 		docs: {

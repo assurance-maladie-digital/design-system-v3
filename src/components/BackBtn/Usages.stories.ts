@@ -33,5 +33,5 @@ export const UsagePage: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

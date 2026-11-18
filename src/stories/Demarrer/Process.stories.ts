@@ -3,6 +3,7 @@ import '../styles/shared.css'
 
 export default {
 	title: 'Démarrer/Process',
+	tags: ['!manifest'],
 }
 
 export const Schema: StoryObj = {
@@ -17,5 +18,5 @@ export const Schema: StoryObj = {
 			/>
 		`,
 	}),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

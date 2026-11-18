@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 const meta: Meta = {
 	title: 'Composants/Composants Vuetify/VOtpInput',
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	render: args => ({
 		setup() {
 			return { args }

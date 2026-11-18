@@ -109,5 +109,5 @@ export const DeprecationNotice = {
 	...createDeprecationNotice([
 		{ label: 'FooterBar', url: '/?path=/docs/composants-structure-footerbar--docs' },
 	]),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

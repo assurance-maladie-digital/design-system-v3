@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 const meta = {
 	title: 'Composants/Composants Vuetify/VNavigationDrawer',
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	component: VNavigationDrawer,
 	parameters: {
 		docs: {

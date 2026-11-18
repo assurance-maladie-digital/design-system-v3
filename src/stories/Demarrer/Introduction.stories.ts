@@ -7,6 +7,7 @@ import { VIcon, VRow, VCol, VExpansionPanels, VExpansionPanel, VExpansionPanelTi
 
 export default {
 	title: 'Démarrer/Introduction',
+	tags: ['!manifest'],
 }
 
 export const List: StoryObj = {
@@ -41,7 +42,7 @@ export const List: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Intro: StoryObj = {
@@ -68,7 +69,7 @@ export const Intro: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Panels: StoryObj = {
@@ -127,5 +128,5 @@ export const Panels: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

@@ -3,7 +3,7 @@ import { VSkeletonLoader } from 'vuetify/components'
 
 const meta: Meta<typeof VSkeletonLoader> = {
 	title: 'Composants/Composants Vuetify/VSkeletonLoader',
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	component: VSkeletonLoader,
 	parameters: {
 		docs: {

@@ -6,6 +6,7 @@ import { ref } from 'vue'
 export default {
 	title: 'Guide Du Dev/Utilitaires/Règles de validation/isNotAfterDate',
 	component: isNotAfterDateFn,
+	tags: ['!manifest'],
 }
 
 export const Default: StoryObj<unknown> = {

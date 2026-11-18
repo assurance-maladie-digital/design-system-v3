@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 
 export default {
 	title: 'Accessibilité/Kit de pré-audit/Outils/Tanaguru/Faux positifs',
+	tags: ['!manifest'],
 }
 
 export const FauxPositifsCards: StoryObj = {
@@ -221,5 +222,5 @@ export const FauxPositifsCards: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

@@ -5,6 +5,7 @@ import { isRequired, isRequiredFn } from '.'
 export default {
 	title: 'Guide Du Dev/Utilitaires/Règles de validation/isRequired',
 	component: isRequiredFn,
+	tags: ['!manifest'],
 }
 
 export const Default: StoryObj<unknown> = {
