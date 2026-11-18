@@ -70,6 +70,7 @@ export const createVuetifyOptions = (): VuetifyOptions => ({
 					...createFlattenTheme(cnamColorsTokens),
 				}),
 				variables: {
+					'medium-emphasis-opacity': 0.75,
 					'border-color': cnamColorsTokens.grey.base,
 					'font-family': cnamFontsTokens.family.primary,
 					...createFontVariables(cnamFontsTokens),
@@ -84,13 +85,14 @@ export const createVuetifyOptions = (): VuetifyOptions => ({
 					...createFlattenTheme(paColorsTokens),
 				}),
 				variables: {
+					'medium-emphasis-opacity': 0.75,
 					'border-color': paColorsTokens.grey.base,
 					'font-family': paFontsTokens.family.primary,
 					...createFontVariables(paFontsTokens),
 					...createFlattenTheme(paContextualTokens),
 				},
 			},
-			ap2026: {
+			ap2026: { // This theme is deprecated
 				dark: false,
 				colors: createKebabThemeColors({
 					...apLightTheme2026,
@@ -111,6 +113,7 @@ export const createVuetifyOptions = (): VuetifyOptions => ({
 					...createFlattenTheme(apColorsTokens),
 				}),
 				variables: {
+					'medium-emphasis-opacity': 0.75,
 					'border-color': cnamColorsTokens.grey.base,
 					'font-family': '"Arial", sans-serif',
 					...createFlattenTheme(apContextualTokens),

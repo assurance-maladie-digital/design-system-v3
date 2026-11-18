@@ -256,7 +256,20 @@
 .sy-radio-group__help-text {
 	margin-top: 10px;
 	font-size: var(--v-fontSize-liensEtLibelles);
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgb(var(--v-theme-on-surface));
+	opacity: var(--v-medium-emphasis-opacity);
+}
+
+.help-text-below {
+	font-size: var(--v-fontSize-liensEtLibelles);
+	line-height: 1.2;
+	color: rgb(var(--v-theme-on-surface));
+	opacity: var(--v-medium-emphasis-opacity);
+}
+
+.help-text-below.text-disabled {
+	color: rgb(var(--v-theme-on-surface));
+	opacity: var(--v-disabled-opacity);
 }
 
 .sb-show-main.sb-main-centered #storybook-root {
