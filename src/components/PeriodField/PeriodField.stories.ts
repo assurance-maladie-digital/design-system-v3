@@ -724,7 +724,7 @@ export const WithWarning: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const date = ref('20/12/2031')
+					const selectedPeriod = ref({ from: '20/12/2023', to: '21/12/2023' })
 				</script>
 				`,
 			},
@@ -868,7 +868,7 @@ export const WithSuccess: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const selectedPeriod = ref({ from: '22/01/2024', to: '23/01/2024 })
+					const selectedPeriod = ref({ from: '22/01/2024', to: '23/01/2024' })
 				</script>
 				`,
 			},
