@@ -23,21 +23,17 @@ const meta = {
 			},
 		},
 		'nbTotal': {
-			description: 'Le nombre total de résultats',
+			description: 'Le nombre total de résultats, calculé depuis les données du tableau dans ces exemples. Control désactivé.',
 			type: 'number',
-			control: {
-				type: 'number',
-			},
+			control: false,
 			table: {
 				category: 'props',
 			},
 		},
 		'nbFiltered': {
-			description: 'Le nombre de résultats filtrés.',
+			description: 'Le nombre de résultats filtrés, calculé depuis la recherche dans ces exemples, sauf dans NbFiltered où il est fixé à 1 pour la démonstration. Control désactivé.',
 			type: 'number',
-			control: {
-				type: 'number',
-			},
+			control: false,
 		},
 		'search': {
 			description: 'La valeur du champ de recherche',
@@ -204,7 +200,6 @@ const createFilteredItems = (search: { value: string | undefined }) => computed(
 
 export const Default: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'vuetifyOptions': defaultVuetifyOptions,
@@ -313,7 +308,7 @@ export const Default: Story = {
 
 export const AddButton: Story = {
 	args: {
-		'nbTotal': 2,
+		'showAddButton': true,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'vuetifyOptions': defaultVuetifyOptions,
@@ -341,7 +336,6 @@ export const AddButton: Story = {
 						v-model:search="search"
 						:nb-total="items.length"
 						:nb-filtered="filteredItems.length"
-						show-add-button
 					/>
 				</template>
 			</SyTable>
@@ -424,7 +418,6 @@ export const AddButton: Story = {
 
 export const Labels: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'showAddButton': true,
@@ -455,9 +448,6 @@ export const Labels: Story = {
 						v-model:search="search"
 						:nb-total="items.length"
 						:nb-filtered="filteredItems.length"
-						show-add-button
-						add-button-label="Ajouter un patient"
-						search-label="Rechercher un patient"
 					/>
 				</template>
 			</SyTable>
@@ -542,7 +532,6 @@ export const Labels: Story = {
 
 export const Loading: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'loading': true,
@@ -653,8 +642,6 @@ export const Loading: Story = {
 
 export const NbFiltered: Story = {
 	args: {
-		'nbTotal': 2,
-		'nbFiltered': 1,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'vuetifyOptions': defaultVuetifyOptions,
@@ -777,7 +764,6 @@ export const NbFiltered: Story = {
 
 export const SlotFilters: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'vuetifyOptions': defaultVuetifyOptions,
@@ -923,7 +909,6 @@ export const SlotFilters: Story = {
 
 export const OtherSlots: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'vuetifyOptions': defaultVuetifyOptions,
@@ -1047,7 +1032,6 @@ export const OtherSlots: Story = {
 
 export const Customization: Story = {
 	args: {
-		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'showAddButton': true,
