@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-10-27T16:15:40.666Z
+- Généré le: 2026-11-17T10:44:26.710Z
 
 ## Accordion
 
@@ -1106,6 +1106,16 @@ Aucune amélioration d’accessibilité détectée.
 
 ## Captcha
 
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
+
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
@@ -1144,6 +1154,16 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.13` · Hash: `d121c7051da4b06d660b4b8bc52fceb37cfa36eb` | pattern ARIA
 
 ## CaptchaAlert
+
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1184,6 +1204,16 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaBase
 
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
+
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
@@ -1222,6 +1252,16 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.13` · Hash: `d121c7051da4b06d660b4b8bc52fceb37cfa36eb` | pattern ARIA
 
 ## CaptchaBtn
+
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1262,6 +1302,16 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaForm
 
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
+
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
@@ -1300,6 +1350,16 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.13` · Hash: `d121c7051da4b06d660b4b8bc52fceb37cfa36eb` | pattern ARIA
 
 ## CaptchaHelpdesk
+
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1340,6 +1400,16 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaImg
 
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
+
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
@@ -1378,6 +1448,16 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.13` · Hash: `d121c7051da4b06d660b4b8bc52fceb37cfa36eb` | pattern ARIA
 
 ## CaptchaInformation
+
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1633,6 +1713,13 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CopyBtn
 
+- **09/11/2026** — Doc: extract tests snipets on CI (#2771)  
+  Release: `v1.2.2` · Hash: `4a56cc44a3c23ee4ae292d39085642331e2ddba7` | pattern ARIA
+
+- **30/10/2026** — CopyBtn : nom accessible des exemples (aria-label) et import de VIcon dans SlotIcon (#2725)  
+  Release: `v1.2.2` · Hash: `d5e9e1efeaae01680bcf73e50a2aec18f229535d` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
+
 - **05/10/2026** — CopyBtn: correction test accessibility et update documentation (#2607)  
   Release: `v1.2.0` · Hash: `eb0307f7c72cde537c9c3f26980118810f0adc9c` | mot-clé a11y · pattern ARIA · label PR a11y
   Labels PR: `Accessibility`
@@ -1666,6 +1753,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.1-alpha` · Hash: `d4592f02a5e6d34bc56b4028abcceeab394a0120` | pattern ARIA
 
 ## SelectBtnField
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
 
 - **23/10/2026** — SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)  
   Release: `v1.2.1` · Hash: `886b13bece06b7abdd6b7dadd10264080f022557` | pattern ARIA
@@ -1717,6 +1807,18 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyAutocomplete
 
+- **16/11/2026** — SyAutocomplete : annule la recherche en attente après sélection (#2796)  
+  Release: `v1.2.2` · Hash: `c1780f784b6f78041cf7b2937021c5db284f5300` | pattern ARIA
+
+- **13/11/2026** — SyAutocomplete : réinitialiser le filtrage après sélection (#2766)  
+  Release: `v1.2.2` · Hash: `c877bd16e2621a0d82ef6d544685de6a58c1f5c7` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
 - **23/10/2026** — SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)  
   Release: `v1.2.1` · Hash: `886b13bece06b7abdd6b7dadd10264080f022557` | pattern ARIA
 
@@ -1761,6 +1863,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyInputSelect
 
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
 - **15/10/2026** — SyForm: add tests page on sandbox + fixes (#2616)  
   Release: `v1.2.0` · Hash: `312a37bc46ce5d3bda4738d6b28eb2a56421e919` | pattern ARIA
 
@@ -1793,6 +1901,12 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `Accessibility`
 
 ## SySelect
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
 
 - **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
   Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
@@ -1885,6 +1999,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyCheckBoxGroup
 
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
 
@@ -1895,6 +2012,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.21` · Hash: `eaed6607738f2806fd050d39f4e4a0145dbce92f` | pattern ARIA
 
 ## SyCheckbox
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
 
 - **27/08/2026** — fix error on accessibility page (#2514)  
   Release: `v1.1.5` · Hash: `9099bd12f8b762c86fff317a56be129231501fbd` | mot-clé a11y · pattern ARIA
@@ -1955,6 +2075,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyForm
 
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **12/11/2026** — Fix/syform datepicker validity (#2786)  
+  Release: `v1.2.2` · Hash: `e9328b1e7366761231ea1f35445b2f450d0d7028` | pattern ARIA
+
 - **15/10/2026** — SyForm: add tests page on sandbox + fixes (#2616)  
   Release: `v1.2.0` · Hash: `312a37bc46ce5d3bda4738d6b28eb2a56421e919` | pattern ARIA
 
@@ -1967,11 +2093,19 @@ Aucune amélioration d’accessibilité détectée.
 
 ## IntegrationMixedForm
 
-Aucune amélioration d’accessibilité détectée.
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **12/11/2026** — Fix/syform datepicker validity (#2786)  
+  Release: `v1.2.2` · Hash: `e9328b1e7366761231ea1f35445b2f450d0d7028` | pattern ARIA
 
 ## IntegrationTestForm
 
-Aucune amélioration d’accessibilité détectée.
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **12/11/2026** — Fix/syform datepicker validity (#2786)  
+  Release: `v1.2.2` · Hash: `e9328b1e7366761231ea1f35445b2f450d0d7028` | pattern ARIA
 
 ## SyIcon
 
@@ -2112,6 +2246,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyPagination
 
+- **05/11/2026** — SyTable: accessibilité (#2622)  
+  Release: `v1.2.2` · Hash: `6679da2dfe12ab16e9948bf0e891d1d534934667` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -2141,6 +2279,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `f16bb16e024f573b35b5e58de919bda7478b7726` | pattern ARIA
 
 ## SyRadioGroup
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
 
 - **23/10/2026** — SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)  
   Release: `v1.2.1` · Hash: `886b13bece06b7abdd6b7dadd10264080f022557` | pattern ARIA
@@ -2221,6 +2362,26 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `Accessibility`
 
 ## FieldState
+
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
+- **04/11/2026** — SyTextField : contraste du texte d'aide, du préfixe, du suffixe et du libellé flottant (#2729)  
+  Release: `v1.2.2` · Hash: `72ab8cc2f622395911f2a005db59eef29ead97d8` | mot-clé a11y
+  Labels PR: `Synapse`
+
+- **04/11/2026** — Ajout de la prop validate-on (#2723)  
+  Release: `v1.2.2` · Hash: `dd47b205d4ed7d88049aca5be0be4f9e0196cd4d` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
   Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
@@ -2321,6 +2482,26 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.5-alpha` · Hash: `e39bb2110a601c9653031627a00509bd3e7eb3be` | pattern ARIA
 
 ## SyTextField
+
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
+- **04/11/2026** — SyTextField : contraste du texte d'aide, du préfixe, du suffixe et du libellé flottant (#2729)  
+  Release: `v1.2.2` · Hash: `72ab8cc2f622395911f2a005db59eef29ead97d8` | mot-clé a11y
+  Labels PR: `Synapse`
+
+- **04/11/2026** — Ajout de la prop validate-on (#2723)  
+  Release: `v1.2.2` · Hash: `dd47b205d4ed7d88049aca5be0be4f9e0196cd4d` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
   Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
@@ -2483,6 +2664,36 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DatePicker
 
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **12/11/2026** — DatePicker : fiabilise le focus lors de la navigation clavier entre les mois (#2784)  
+  Release: `v1.2.2` · Hash: `f4309d363b06c14e1e9e1e64013ac2998bc039ce` | mot-clé a11y · pattern ARIA
+
+- **12/11/2026** — Feat/datepicker add helptext (#2783)  
+  Release: `v1.2.2` · Hash: `37fa8bd63302c14c17fea1aaed077e2afa958987` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y · pattern ARIA
+
+- **10/11/2026** — DatePicker : ajout d'un label ARIA sur la région de liste des années (#2775)  
+  Release: `v1.2.2` · Hash: `4cf321da54ef73fc4bf0681b216cf88c6deca201` | mot-clé a11y · pattern ARIA
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
+- **09/11/2026** — DatePicker : Amelioration pour lecteur d'ecran (#2774)  
+  Release: `v1.2.2` · Hash: `84c7fb89fdfe6e0e6cadfd46d9855f652857ae6e` | pattern ARIA
+
+- **06/11/2026** — DatePicker : ajout d'une notice d'accessibilité sur l'utilisation du calendrier (#2764)  
+  Release: `v1.2.2` · Hash: `fa5dacdaa720b57ff03fc5ae44081860a2f93db7` | mot-clé a11y
+
+- **05/11/2026** — DatePicker : permettre de désactiver l'attribut title avec title false (#2750)  
+  Release: `v1.2.2` · Hash: `4c7df625ec5e152b85d6917e318c209b3ba21a6a` | pattern ARIA
+
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
@@ -2531,6 +2742,30 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `Accessibility`
 
 ## ComplexDatePicker
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **12/11/2026** — DatePicker : fiabilise le focus lors de la navigation clavier entre les mois (#2784)  
+  Release: `v1.2.2` · Hash: `f4309d363b06c14e1e9e1e64013ac2998bc039ce` | mot-clé a11y · pattern ARIA
+
+- **12/11/2026** — Feat/datepicker add helptext (#2783)  
+  Release: `v1.2.2` · Hash: `37fa8bd63302c14c17fea1aaed077e2afa958987` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **10/11/2026** — DatePicker : ajout d'un label ARIA sur la région de liste des années (#2775)  
+  Release: `v1.2.2` · Hash: `4cf321da54ef73fc4bf0681b216cf88c6deca201` | mot-clé a11y · pattern ARIA
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
+- **09/11/2026** — DatePicker : Amelioration pour lecteur d'ecran (#2774)  
+  Release: `v1.2.2` · Hash: `84c7fb89fdfe6e0e6cadfd46d9855f652857ae6e` | pattern ARIA
+
+- **05/11/2026** — DatePicker : permettre de désactiver l'attribut title avec title false (#2750)  
+  Release: `v1.2.2` · Hash: `4c7df625ec5e152b85d6917e318c209b3ba21a6a` | pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
@@ -2582,6 +2817,45 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `PAG`
 
 ## DatePickerLiveRegion
+
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **12/11/2026** — Fix/syform datepicker validity (#2786)  
+  Release: `v1.2.2` · Hash: `e9328b1e7366761231ea1f35445b2f450d0d7028` | pattern ARIA
+
+- **12/11/2026** — DatePicker : fiabilise le focus lors de la navigation clavier entre les mois (#2784)  
+  Release: `v1.2.2` · Hash: `f4309d363b06c14e1e9e1e64013ac2998bc039ce` | mot-clé a11y · pattern ARIA
+
+- **12/11/2026** — Feat/datepicker add helptext (#2783)  
+  Release: `v1.2.2` · Hash: `37fa8bd63302c14c17fea1aaed077e2afa958987` | pattern ARIA
+
+- **10/11/2026** — DatePicker : ajout de la prop clearable (#2779)  
+  Release: `v1.2.2` · Hash: `715e400e3d0735c1a129293b8fe622eebd6646e4` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y · pattern ARIA
+
+- **10/11/2026** — DatePicker : ajout d'un label ARIA sur la région de liste des années (#2775)  
+  Release: `v1.2.2` · Hash: `4cf321da54ef73fc4bf0681b216cf88c6deca201` | mot-clé a11y · pattern ARIA
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
+- **09/11/2026** — DatePicker : Amelioration pour lecteur d'ecran (#2774)  
+  Release: `v1.2.2` · Hash: `84c7fb89fdfe6e0e6cadfd46d9855f652857ae6e` | pattern ARIA
+
+- **06/11/2026** — DatePicker : ajout d'une notice d'accessibilité sur l'utilisation du calendrier (#2764)  
+  Release: `v1.2.2` · Hash: `fa5dacdaa720b57ff03fc5ae44081860a2f93db7` | mot-clé a11y
+
+- **05/11/2026** — DatePicker : permettre de désactiver l'attribut title avec title false (#2750)  
+  Release: `v1.2.2` · Hash: `4c7df625ec5e152b85d6917e318c209b3ba21a6a` | pattern ARIA
+
+- **05/11/2026** — DateTextInput : description du format de date en langage naturel  (#2748)  
+  Release: `v1.2.2` · Hash: `c2702833ebc2cd1d3fc3e1d3822e217c06bca2d2` | pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
@@ -2682,6 +2956,30 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DateTextInput
 
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **12/11/2026** — Feat/datepicker add helptext (#2783)  
+  Release: `v1.2.2` · Hash: `37fa8bd63302c14c17fea1aaed077e2afa958987` | pattern ARIA
+
+- **10/11/2026** — DatePicker : ajout de la prop clearable (#2779)  
+  Release: `v1.2.2` · Hash: `715e400e3d0735c1a129293b8fe622eebd6646e4` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
+- **09/11/2026** — DatePicker : Amelioration pour lecteur d'ecran (#2774)  
+  Release: `v1.2.2` · Hash: `84c7fb89fdfe6e0e6cadfd46d9855f652857ae6e` | pattern ARIA
+
+- **05/11/2026** — DateTextInput : description du format de date en langage naturel  (#2748)  
+  Release: `v1.2.2` · Hash: `c2702833ebc2cd1d3fc3e1d3822e217c06bca2d2` | pattern ARIA
+
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
@@ -2756,15 +3054,23 @@ Aucune amélioration d’accessibilité détectée.
 
 ## BidirectionalComplexValidation
 
-Aucune amélioration d’accessibilité détectée.
+- **12/11/2026** — Fix/syform datepicker validity (#2786)  
+  Release: `v1.2.2` · Hash: `e9328b1e7366761231ea1f35445b2f450d0d7028` | pattern ARIA
 
 ## DatePickerBidirectionalValidation
 
-Aucune amélioration d’accessibilité détectée.
+- **12/11/2026** — Fix/syform datepicker validity (#2786)  
+  Release: `v1.2.2` · Hash: `e9328b1e7366761231ea1f35445b2f450d0d7028` | pattern ARIA
+
+## DatePickerSyFormValidity
+
+- **12/11/2026** — Fix/syform datepicker validity (#2786)  
+  Release: `v1.2.2` · Hash: `e9328b1e7366761231ea1f35445b2f450d0d7028` | pattern ARIA
 
 ## DatePickerValidationExamples
 
-Aucune amélioration d’accessibilité détectée.
+- **12/11/2026** — Fix/syform datepicker validity (#2786)  
+  Release: `v1.2.2` · Hash: `e9328b1e7366761231ea1f35445b2f450d0d7028` | pattern ARIA
 
 ## DeclarationAccessibilityPage
 
@@ -2880,6 +3186,10 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `Accessibility`
 
 ## ErrorPage
+
+- **30/10/2026** — ErrorPage : incohérences des stories de ErrorPage (#2684)  
+  Release: `v1.2.2` · Hash: `6d9e7d49b94fb6b1738bb3fa4c3aab2b2f131721` | pattern ARIA
+  Labels PR: `Issue`
 
 - **25/03/2026** — ErrorPage: pass headingLevel prop to StatusPage component (#2024)  
   Release: `v1.0.23` · Hash: `a9dea254e921bf06a6b343e07fae495ba0ce0ee2` | pattern ARIA
@@ -3030,6 +3340,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FileUpload
 
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
   Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
@@ -3047,6 +3360,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.17` · Hash: `ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf` | mot-clé a11y
 
 ## FileUploadContent
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
   Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
@@ -3195,6 +3511,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderBar
 
+- **16/11/2026** — HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)  
+  Release: `v1.2.2` · Hash: `6b192879a8f171e0897bd0af94139cd319eadd5a` | pattern ARIA
+
 - **15/10/2026** — Headerbar : Ajout de tests RGAA- #2623 (#2628)  
   Release: `v1.2.0` · Hash: `0d0a38a3c858047c2f33b433dce83932b07d9ee7` | pattern ARIA · label PR a11y
   Labels PR: `Accessibility`
@@ -3272,6 +3591,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderBurgerMenu
 
+- **16/11/2026** — HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)  
+  Release: `v1.2.2` · Hash: `6b192879a8f171e0897bd0af94139cd319eadd5a` | pattern ARIA
+
 - **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
   Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y
   Labels PR: `Documentation`
@@ -3315,6 +3637,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderMenuSection
 
+- **16/11/2026** — HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)  
+  Release: `v1.2.2` · Hash: `6b192879a8f171e0897bd0af94139cd319eadd5a` | pattern ARIA
+
 - **04/08/2025** — HeaderBar/HeaderBurgerMenu correction post audit (#828)  
   Release: `v1.0.6` · Hash: `855a71637fe2452668e6ec16945100fcda300f8f` | pattern ARIA · label PR a11y
   Labels PR: `Accessibility`
@@ -3323,6 +3648,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.5-alpha` · Hash: `c3ebe8705b6cc59a436ff06af2d28c0c68445126` | pattern ARIA
 
 ## HeaderSubMenu
+
+- **16/11/2026** — HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)  
+  Release: `v1.2.2` · Hash: `6b192879a8f171e0897bd0af94139cd319eadd5a` | pattern ARIA
 
 - **04/08/2025** — HeaderBar/HeaderBurgerMenu correction post audit (#828)  
   Release: `v1.0.6` · Hash: `855a71637fe2452668e6ec16945100fcda300f8f` | pattern ARIA · label PR a11y
@@ -3621,6 +3949,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## LunarCalendar
 
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
 - **30/03/2026** — Feat/add a11y tests and pages (#2032)  
   Release: `v1.0.23` · Hash: `a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a` | mot-clé a11y · pattern ARIA
 
@@ -3666,6 +4000,22 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1933ebf2afd156dd76f8d5c4c3021fd9d9603882` | pattern ARIA
 
 ## MonthPicker
+
+- **16/11/2026** — DateTextInput : clarifie la description accessible du format des plages de dates (#2787)  
+  Release: `v1.2.2` · Hash: `de8ca2354b804f08065fa2fb2716cb1210049072` | pattern ARIA
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
+- **29/10/2026** —  SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)  
+  Release: `v1.2.2` · Hash: `6a5b5866fefc280a015a0939d4f179f2a8b458b5` | mot-clé a11y · pattern ARIA
+  Labels PR: `Synapse`
 
 - **05/10/2026** — MonthPicker: correction tests axe accessibilité (#2597)  
   Release: `v1.2.0` · Hash: `12adee1d9c97dae08a6dcf07e71d5762bbb46f44` | mot-clé a11y · pattern ARIA · label PR a11y
@@ -3759,6 +4109,18 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.23` · Hash: `594765e21910b5342aa5793317f0d78743a54f57` | pattern ARIA
 
 ## NirField
+
+- **13/11/2026** — add banner (#2791)  
+  Release: `v1.2.2` · Hash: `9ac64776b13cc6e1a24ba4849da1a1e77f820c6f` | pattern ARIA
+
+- **10/11/2026** — NirField: aligner controls, extraits et messages  (#2765)  
+  Release: `v1.2.2` · Hash: `6e3142372b596716381f4615abe9034f1ceb303e` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
 
 - **05/10/2026** — SyForm v2 (#2434)  
   Release: `v1.2.0` · Hash: `d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae` | pattern ARIA
@@ -3855,6 +4217,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## Notification
 
+- **10/11/2026** — NotificationBar : rend les extraits de code des stories autonomes et … (#2776)  
+  Release: `v1.2.2` · Hash: `02e7cf6c7cdf4cb329fc50aed1feae65f869a4a3` | pattern ARIA
+  Labels PR: `Synapse`
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -3862,6 +4228,10 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.17` · Hash: `f592e6c39d43a258449ff46582666dda7b0953a3` | pattern ARIA
 
 ## NotificationBar
+
+- **10/11/2026** — NotificationBar : rend les extraits de code des stories autonomes et … (#2776)  
+  Release: `v1.2.2` · Hash: `02e7cf6c7cdf4cb329fc50aed1feae65f869a4a3` | pattern ARIA
+  Labels PR: `Synapse`
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4013,6 +4383,16 @@ Aucune amélioration d’accessibilité détectée.
 
 ## PasswordField
 
+- **10/11/2026** — PasswordField : correction incohérences stories (#2749)  
+  Release: `v1.2.2` · Hash: `0745b36f182dccf98051e2e6105d819690efd4c3` | pattern ARIA
+  Labels PR: `Issue`
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
+
 - **15/09/2026** — PasswordField: ajout onglet a11y ainsi que le dossier validation (#2556)  
   Release: `v1.1.6` · Hash: `e945f9bca8bd9b042d2459700cb37aa26da92083` | mot-clé a11y · label PR a11y
   Labels PR: `Accessibility`
@@ -4058,6 +4438,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## PeriodField
 
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y · pattern ARIA
+
+- **03/11/2026** — PeriodField : règles de validation ciblées par borne (#2730)  
+  Release: `v1.2.2` · Hash: `6827fad03bd70c0af8d890534fb928ec98280175` | pattern ARIA
+
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
@@ -4088,6 +4474,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.10-alpha` · Hash: `b4fb5d5b3fa5012bed2850b1a367f570e4611183` | pattern ARIA
 
 ## PhoneField
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
+
+- **09/11/2026** — RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)  
+  Release: `v1.2.2` · Hash: `1a2cca49585943c4e7dab769ffd0816bb000fc51` | pattern ARIA
 
 - **27/10/2026** — fix(PhoneField): make validation story controls effective and fix descriptions (#2707)  
   Release: `v1.2.1` · Hash: `a339f992d96ae62cd9c5a785bf5d9b895e447c00` | pattern ARIA
@@ -4199,6 +4591,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## EmotionPicker
 
+- **04/11/2026** — EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)  
+  Release: `v1.2.2` · Hash: `c7aa49a7a792ecc2901b0515e62db322c09dcfdd` | mot-clé a11y · pattern ARIA
+  Labels PR: `Feature`
+
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
 
@@ -4240,6 +4636,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## NumberPicker
 
+- **04/11/2026** — EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)  
+  Release: `v1.2.2` · Hash: `c7aa49a7a792ecc2901b0515e62db322c09dcfdd` | mot-clé a11y · pattern ARIA
+  Labels PR: `Feature`
+
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
 
@@ -4277,6 +4677,10 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.9-alpha` · Hash: `750c722f16ddd4a2e400de7819f0bb1bc249d3bd` | pattern ARIA
 
 ## RatingPicker
+
+- **04/11/2026** — EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)  
+  Release: `v1.2.2` · Hash: `c7aa49a7a792ecc2901b0515e62db322c09dcfdd` | mot-clé a11y · pattern ARIA
+  Labels PR: `Feature`
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -4325,6 +4729,10 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.9-alpha` · Hash: `750c722f16ddd4a2e400de7819f0bb1bc249d3bd` | pattern ARIA
 
 ## StarsPicker
+
+- **04/11/2026** — EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)  
+  Release: `v1.2.2` · Hash: `c7aa49a7a792ecc2901b0515e62db322c09dcfdd` | mot-clé a11y
+  Labels PR: `Feature`
 
 - **15/07/2026** — [RatingPicker] Iso Maquettes (#2389)  
   Release: `v1.1.2` · Hash: `7ddc61cf5874855db49eb1c6128bdcb8d451b47d` | pattern ARIA
@@ -4445,6 +4853,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.2-alpha` · Hash: `5d6cb74f8ca83e0a32d5ff23853da2c71c34cead` | pattern ARIA
 
 ## StatusPage
+
+- **13/11/2026** — Fix/status page snippet imports (#2793)  
+  Release: `v1.2.2` · Hash: `183e104e7739130612a9a1916ebe988435dfc839` | pattern ARIA
 
 - **17/06/2026** — migration ameliproPageLayout (#2259)  
   Release: `v1.1.1` · Hash: `5ded9eca4a95c2ee3083fee246d6dc7e8e792d44` | pattern ARIA
@@ -4568,7 +4979,25 @@ Aucune amélioration d’accessibilité détectée.
 
 Aucune amélioration d’accessibilité détectée.
 
+## SyNavList
+
+- **05/11/2026** — SyNavList : liste de navigation avec actions et sous-niveaux (#2726)  
+  Release: `v1.2.2` · Hash: `dc1e17905ba0ebe38ec37bd59986e4de5672cba2` | pattern ARIA
+  Labels PR: `Feature`
+
+## SyNavListPanel
+
+- **05/11/2026** — SyNavList : liste de navigation avec actions et sous-niveaux (#2726)  
+  Release: `v1.2.2` · Hash: `dc1e17905ba0ebe38ec37bd59986e4de5672cba2` | pattern ARIA
+  Labels PR: `Feature`
+
 ## SyTextArea
+
+- **16/11/2026** — [Form] fix de la doc des champs de formulaires (#2790)  
+  Release: `v1.2.2` · Hash: `efef22792ed3b5d0ffcb913ec991060dd1d47967` | pattern ARIA
+
+- **10/11/2026** — Accessibilité : recommandation d'éviter les champs désactivés (#2780)  
+  Release: `v1.2.2` · Hash: `91116599d7d0321d97c1700cab15b712f4fdb910` | mot-clé a11y
 
 - **05/10/2026** — SyForm v2 (#2434)  
   Release: `v1.2.0` · Hash: `d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae` | pattern ARIA
@@ -4623,6 +5052,13 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyServerTable
 
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
+- **13/11/2026** — add banner (#2791)  
+  Release: `v1.2.2` · Hash: `9ac64776b13cc6e1a24ba4849da1a1e77f820c6f` | pattern ARIA
+
 - **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
   Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
 
@@ -4671,6 +5107,17 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `PAG`
 
 ## SyTable
+
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
+- **13/11/2026** — add banner (#2791)  
+  Release: `v1.2.2` · Hash: `9ac64776b13cc6e1a24ba4849da1a1e77f820c6f` | pattern ARIA
+
+- **05/11/2026** — SyTable: accessibilité (#2622)  
+  Release: `v1.2.2` · Hash: `6679da2dfe12ab16e9948bf0e891d1d534934667` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
 
 - **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
   Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
@@ -4721,14 +5168,19 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyTableFilter
 
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
+- **05/11/2026** — SyTable: accessibilité (#2622)  
+  Release: `v1.2.2` · Hash: `6679da2dfe12ab16e9948bf0e891d1d534934667` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
 - **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
   Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
-
-- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
-  Release: `v1.1.6` · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
@@ -4769,9 +5221,6 @@ Aucune amélioration d’accessibilité détectée.
 - **30/09/2025** — SyServerTable : fix double emit (#1186)  
   Release: `v1.0.10` · Hash: `f9b57f2e1f4a5a54a28d5f126fe93584f31e086a` | pattern ARIA
 
-- **31/07/2025** — Feat/improve tests (#884)  
-  Release: `v1.0.6` · Hash: `c2fa4e74bf232f907ff73899b53909c75844e14b` | pattern ARIA
-
 - **24/07/2025** — ComplexeTables: rgaa improvments + fix display (#829)  
   Release: `v1.0.4` · Hash: `1ce73af328b4960272770e8c8c5b22d786838649` | pattern ARIA · label PR a11y
   Labels PR: `Accessibility`
@@ -4808,25 +5257,23 @@ Aucune amélioration d’accessibilité détectée.
 
 - **12/06/2025** — gestion de la dimension des colonnes des les tableaux (#666)  
   Release: `v1.0.1` · Hash: `8566e67d97bab55244be6f39956b99283b43a927` | pattern ARIA
-  Labels PR: `PAG`
-
-- **10/06/2025** — Tables improve props and styles (#689)  
-  Release: `v1.0.1` · Hash: `88e3816fc167eb21dbaee3dca9df1a72dfa27547` | pattern ARIA
-
-- **05/06/2025** — Add filter management in tables components v2 (#665)  
-  Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
   Labels PR: `PAG`
 
 ## SyTablePagination
 
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
+- **05/11/2026** — SyTable: accessibilité (#2622)  
+  Release: `v1.2.2` · Hash: `6679da2dfe12ab16e9948bf0e891d1d534934667` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
 - **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
   Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
-
-- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
-  Release: `v1.1.6` · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
@@ -4867,9 +5314,6 @@ Aucune amélioration d’accessibilité détectée.
 - **30/09/2025** — SyServerTable : fix double emit (#1186)  
   Release: `v1.0.10` · Hash: `f9b57f2e1f4a5a54a28d5f126fe93584f31e086a` | pattern ARIA
 
-- **31/07/2025** — Feat/improve tests (#884)  
-  Release: `v1.0.6` · Hash: `c2fa4e74bf232f907ff73899b53909c75844e14b` | pattern ARIA
-
 - **24/07/2025** — ComplexeTables: rgaa improvments + fix display (#829)  
   Release: `v1.0.4` · Hash: `1ce73af328b4960272770e8c8c5b22d786838649` | pattern ARIA · label PR a11y
   Labels PR: `Accessibility`
@@ -4906,25 +5350,23 @@ Aucune amélioration d’accessibilité détectée.
 
 - **12/06/2025** — gestion de la dimension des colonnes des les tableaux (#666)  
   Release: `v1.0.1` · Hash: `8566e67d97bab55244be6f39956b99283b43a927` | pattern ARIA
-  Labels PR: `PAG`
-
-- **10/06/2025** — Tables improve props and styles (#689)  
-  Release: `v1.0.1` · Hash: `88e3816fc167eb21dbaee3dca9df1a72dfa27547` | pattern ARIA
-
-- **05/06/2025** — Add filter management in tables components v2 (#665)  
-  Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
   Labels PR: `PAG`
 
 ## TableBulkActions
 
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
+- **05/11/2026** — SyTable: accessibilité (#2622)  
+  Release: `v1.2.2` · Hash: `6679da2dfe12ab16e9948bf0e891d1d534934667` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
 - **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
   Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
-
-- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
-  Release: `v1.1.6` · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
@@ -4965,9 +5407,6 @@ Aucune amélioration d’accessibilité détectée.
 - **30/09/2025** — SyServerTable : fix double emit (#1186)  
   Release: `v1.0.10` · Hash: `f9b57f2e1f4a5a54a28d5f126fe93584f31e086a` | pattern ARIA
 
-- **31/07/2025** — Feat/improve tests (#884)  
-  Release: `v1.0.6` · Hash: `c2fa4e74bf232f907ff73899b53909c75844e14b` | pattern ARIA
-
 - **24/07/2025** — ComplexeTables: rgaa improvments + fix display (#829)  
   Release: `v1.0.4` · Hash: `1ce73af328b4960272770e8c8c5b22d786838649` | pattern ARIA · label PR a11y
   Labels PR: `Accessibility`
@@ -5004,25 +5443,23 @@ Aucune amélioration d’accessibilité détectée.
 
 - **12/06/2025** — gestion de la dimension des colonnes des les tableaux (#666)  
   Release: `v1.0.1` · Hash: `8566e67d97bab55244be6f39956b99283b43a927` | pattern ARIA
-  Labels PR: `PAG`
-
-- **10/06/2025** — Tables improve props and styles (#689)  
-  Release: `v1.0.1` · Hash: `88e3816fc167eb21dbaee3dca9df1a72dfa27547` | pattern ARIA
-
-- **05/06/2025** — Add filter management in tables components v2 (#665)  
-  Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
   Labels PR: `PAG`
 
 ## TableHeader
 
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
+- **05/11/2026** — SyTable: accessibilité (#2622)  
+  Release: `v1.2.2` · Hash: `6679da2dfe12ab16e9948bf0e891d1d534934667` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
 - **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
   Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
-
-- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
-  Release: `v1.1.6` · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
@@ -5063,9 +5500,6 @@ Aucune amélioration d’accessibilité détectée.
 - **30/09/2025** — SyServerTable : fix double emit (#1186)  
   Release: `v1.0.10` · Hash: `f9b57f2e1f4a5a54a28d5f126fe93584f31e086a` | pattern ARIA
 
-- **31/07/2025** — Feat/improve tests (#884)  
-  Release: `v1.0.6` · Hash: `c2fa4e74bf232f907ff73899b53909c75844e14b` | pattern ARIA
-
 - **24/07/2025** — ComplexeTables: rgaa improvments + fix display (#829)  
   Release: `v1.0.4` · Hash: `1ce73af328b4960272770e8c8c5b22d786838649` | pattern ARIA · label PR a11y
   Labels PR: `Accessibility`
@@ -5104,14 +5538,11 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.1` · Hash: `8566e67d97bab55244be6f39956b99283b43a927` | pattern ARIA
   Labels PR: `PAG`
 
-- **10/06/2025** — Tables improve props and styles (#689)  
-  Release: `v1.0.1` · Hash: `88e3816fc167eb21dbaee3dca9df1a72dfa27547` | pattern ARIA
-
-- **05/06/2025** — Add filter management in tables components v2 (#665)  
-  Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
-  Labels PR: `PAG`
-
 ## AutocompleteFilter
+
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
 
 - **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
   Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
@@ -5124,6 +5555,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DateFilter
 
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
 - **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
   Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
@@ -5134,6 +5569,10 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
 ## NumberFilter
+
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
 
 - **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
   Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
@@ -5146,6 +5585,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## PeriodFilter
 
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
 - **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
   Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
@@ -5156,6 +5599,10 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
 ## SelectFilter
+
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
 
 - **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
   Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
@@ -5168,6 +5615,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## TextFilter
 
+- **16/11/2026** —  SyServerTable: corrections test accessibilité (#2794)  
+  Release: `v1.2.2` · Hash: `29045f8a7340f19aab51c727e2990bb79560d2a8` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
+
 - **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
   Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
@@ -5178,6 +5629,10 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
 ## OrganizeColumns
+
+- **05/11/2026** — SyTable: accessibilité (#2622)  
+  Release: `v1.2.2` · Hash: `6679da2dfe12ab16e9948bf0e891d1d534934667` | mot-clé a11y · pattern ARIA · label PR a11y
+  Labels PR: `Accessibility`
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y

@@ -1,18 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { VBtn, VForm } from 'vuetify/components'
+import { VBtn, VCol, VForm, VRow } from 'vuetify/components'
 import MonthPicker from '../MonthPicker.vue'
-import { fn, userEvent, within } from 'storybook/test'
+import { fn } from 'storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import type { MonthPickerProps } from '../types'
 import { default as MonthPickerMeta } from '../MonthPicker.stories'
+import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
 
-const meta = {
+const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker/Validation',
 	component: MonthPicker,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div class="pa-5"><story/></div>',
 		}),
 	],
 	parameters: {
@@ -45,7 +46,7 @@ const meta = {
 		'isValidateOnBlur': true,
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof MonthPicker>
+}
 
 export default meta
 
@@ -59,6 +60,7 @@ export const WithError: Story = {
 				code: `
 				<template>
 					<MonthPicker
+						ref="monthPickerRef"
 						v-model="selectedMonth"
 						label="Mois de début"
 						:custom-rules="customRules"
@@ -70,8 +72,10 @@ export const WithError: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref } from 'vue'
+					import { onMounted, ref } from 'vue'
 					import { MonthPicker } from '@cnamts/synapse'
+
+					const monthPickerRef = ref<InstanceType<typeof MonthPicker> | null>(null)
 
 					const selectedMonth = ref('13/2025')
 
@@ -87,6 +91,10 @@ export const WithError: Story = {
 							},
 						},
 					]
+
+					onMounted(() => {
+						monthPickerRef.value?.validateOnSubmit()
+					})
 				</script>
 				`,
 			},
@@ -107,13 +115,7 @@ export const WithError: Story = {
 			},
 		],
 	},
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, '13/2025')
-		input.blur()
-	},
-
+	render: renderValidatedOnMount(MonthPicker),
 }
 
 export const WithWarning: Story = {
@@ -124,6 +126,7 @@ export const WithWarning: Story = {
 				code: `
 				<template>
 					<MonthPicker
+						ref="monthPickerRef"
 						v-model="selectedMonth"
 						label="Mois de début"
 						:custom-warning-rules="customWarningRules"
@@ -135,8 +138,10 @@ export const WithWarning: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref } from 'vue'
+					import { onMounted, ref } from 'vue'
 					import { MonthPicker } from '@cnamts/synapse'
+
+					const monthPickerRef = ref<InstanceType<typeof MonthPicker> | null>(null)
 
 					const selectedMonth = ref('01/2035')
 
@@ -160,6 +165,10 @@ export const WithWarning: Story = {
 							},
 						},
 					]
+
+					onMounted(() => {
+						monthPickerRef.value?.validateOnSubmit()
+					})
 				</script>
 				`,
 			},
@@ -188,12 +197,7 @@ export const WithWarning: Story = {
 			},
 		],
 	},
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, '01/2035')
-		input.blur()
-	},
+	render: renderValidatedOnMount(MonthPicker),
 }
 
 export const WithSuccess: Story = {
@@ -204,6 +208,7 @@ export const WithSuccess: Story = {
 				code: `
 				<template>
 					<MonthPicker
+						ref="monthPickerRef"
 						v-model="selectedMonth"
 						label="Mois de début"
 						:custom-success-rules="customSuccessRules"
@@ -216,10 +221,12 @@ export const WithSuccess: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref } from 'vue'
+					import { onMounted, ref } from 'vue'
 					import { MonthPicker } from '@cnamts/synapse'
 
-					const selectedMonth = ref('06/2026')
+					const monthPickerRef = ref<InstanceType<typeof MonthPicker> | null>(null)
+
+					const selectedMonth = ref(\`06/\${new Date().getFullYear()}\`)
 
 					const customSuccessRules = [
 						{
@@ -236,20 +243,24 @@ export const WithSuccess: Story = {
 							},
 						},
 					]
+
+					onMounted(() => {
+						monthPickerRef.value?.validateOnSubmit()
+					})
 				</script>
 				`,
 			},
 		],
 	},
 	args: {
-		modelValue: '06/2026',
+		modelValue: `06/${new Date().getFullYear()}`,
 		showSuccessMessages: true,
 		customSuccessRules: [
 			{
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
-						if (!value || value === '') return true // Ne pas afficher de success si le champ est vide
+						if (!value || value === '') return false // Ne pas afficher de succès si le champ est vide
 						const [, year] = value.split('/').map(Number) as [number, number]
 						const currentYear = new Date().getFullYear()
 						return year === currentYear
@@ -260,13 +271,7 @@ export const WithSuccess: Story = {
 			},
 		],
 	},
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		const currentYear = new Date().getFullYear()
-		await userEvent.type(input, `06/${currentYear}`)
-		input.blur()
-	},
+	render: renderValidatedOnMount(MonthPicker),
 }
 
 export const WithCustomRules: Story = {
@@ -439,7 +444,7 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
   <!-- Champ avec validation normale -->
   <MonthPicker
     v-model="value1"
-    label="Avec validation"
+    label="Mois de début (avec validation)"
     required
     :custom-rules="customRules"
   />
@@ -447,17 +452,42 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
   <!-- Champ avec gestion d'erreurs désactivée -->
   <MonthPicker
     v-model="value2"
-    label="Sans gestion d'erreurs"
+    label="Mois de début (sans gestion d'erreurs)"
     required
     disable-error-handling
     :custom-rules="customRules"
   />
 </template>`,
 			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { MonthPicker } from '@cnamts/synapse'
+
+const value1 = ref('')
+const value2 = ref('')
+
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
+          return 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).'
+        }
+        return true
+      },
+      fieldIdentifier: 'selectedMonth',
+    },
+  },
+]
+</script>`,
+			},
 		],
 	},
 	render: () => ({
-		components: { MonthPicker },
+		components: { MonthPicker, VCol, VRow },
 		setup() {
 			const value1 = ref('')
 			const value2 = ref('')
@@ -483,28 +513,28 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
 			<div>
 				<p class="mb-4">Cette démonstration compare un MonthPicker standard et un avec <code>disableErrorHandling=true</code>.</p>
 
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-					<div>
+				<VRow class="mb-4">
+					<VCol cols="12" md="6">
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<MonthPicker
 							v-model="value1"
-							label="Mois de début"
+							label="Mois de début (avec validation)"
 							required
 							:custom-rules="customRules"
 						/>
-					</div>
+					</VCol>
 
-					<div>
+					<VCol cols="12" md="6">
 						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
 						<MonthPicker
 							v-model="value2"
-							label="Mois de début"
+							label="Mois de début (sans gestion d'erreurs)"
 							required
 							disable-error-handling
 							:custom-rules="customRules"
 						/>
-					</div>
-				</div>
+					</VCol>
+				</VRow>
 
 				<div class="mt-4 text-body-2">
 					<p>Instructions :</p>
@@ -566,30 +596,32 @@ const selectedMonth = ref('')
 			},
 		],
 	},
+	args: {
+		required: true,
+		isValidateOnBlur: false,
+		showSuccessMessages: true,
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					message: 'Le format doit être MM/AAAA (ex: 03/2026).',
+					validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+				},
+			},
+		],
+	},
 	render: args => ({
 		components: { MonthPicker },
 		setup() {
-			const selectedMonth = ref('')
+			const selectedMonth = ref(args.modelValue)
 			return { args, selectedMonth }
 		},
 		template: `
 			<div>
 				<p class="mb-4">La validation se déclenche à chaque frappe (<code>isValidateOnBlur="false"</code>).</p>
 				<MonthPicker
+					v-bind="args"
 					v-model="selectedMonth"
-					label="Mois de début"
-					required
-					:is-validate-on-blur="false"
-					:custom-rules="[
-						{
-							type: 'custom',
-							options: {
-								message: 'Le format doit être MM/AAAA (ex: 03/2026).',
-								validate: (value) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value),
-							},
-						},
-					]"
-					show-success-messages
 					width="400px"
 				/>
 			</div>
@@ -624,11 +656,11 @@ des messages depuis le parent sans déclencher de règle de validation.
 		:success-messages="successMessages"
 		show-success-messages
 	/>
-	<div class="mt-4">
-		<VBtn @click="setError">Simuler une erreur</VBtn>
-		<VBtn @click="setWarning" class="ml-2">Simuler un avertissement</VBtn>
-		<VBtn @click="setSuccess" class="ml-2">Simuler un succès</VBtn>
-		<VBtn @click="reset" class="ml-2">Réinitialiser</VBtn>
+	<div class="mt-4 d-flex flex-wrap ga-2">
+		<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
+		<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
+		<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
+		<VBtn @click="reset">Réinitialiser</VBtn>
 	</div>
 </template>`,
 			},
@@ -636,6 +668,7 @@ des messages depuis le parent sans déclencher de règle de validation.
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import { MonthPicker } from '@cnamts/synapse'
 
 const selectedMonth = ref('')
@@ -667,10 +700,13 @@ function reset() {
 			},
 		],
 	},
+	args: {
+		showSuccessMessages: true,
+	},
 	render: args => ({
 		components: { MonthPicker, VBtn },
 		setup() {
-			const selectedMonth = ref('')
+			const selectedMonth = ref(args.modelValue)
 			const errorMessages = ref<string[] | null>(null)
 			const warningMessages = ref<string[] | null>(null)
 			const successMessages = ref<string[] | null>(null)
@@ -704,12 +740,11 @@ function reset() {
 					Les messages ci-dessous sont injectés par le parent sans déclencher de règle de validation.
 				</p>
 				<MonthPicker
+					v-bind="args"
 					v-model="selectedMonth"
-					label="Mois de début"
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
-					show-success-messages
 					width="400px"
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2">
@@ -724,6 +759,9 @@ function reset() {
 }
 
 export const SyFormValidation: Story = {
+	args: {
+		required: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -746,6 +784,7 @@ export const SyFormValidation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import { MonthPicker, SyForm } from '@cnamts/synapse'
 
 const selectedMonth = ref('')
@@ -766,7 +805,7 @@ const customRules = [
     },
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
     const isValid = e.isValid
     alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -806,11 +845,10 @@ function handleSubmit(e) {
 			<div>
 				<SyForm @submit="handleSubmit">
 					<MonthPicker
-						v-model="selectedMonth"
 						v-bind="args"
+						v-model="selectedMonth"
 						:custom-rules="customRules"
 						width="400px"
-						required
 					/>
 					<div class="mt-4">
 						<VBtn type="submit" color="primary">Valider</VBtn>
@@ -822,6 +860,9 @@ function handleSubmit(e) {
 }
 
 export const VFormValidation: Story = {
+	args: {
+		required: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -845,6 +886,7 @@ export const VFormValidation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn, VForm } from 'vuetify/components'
 import { MonthPicker } from '@cnamts/synapse'
 
 const selectedMonth = ref('')
@@ -910,9 +952,7 @@ async function handleSubmit() {
 						v-bind="args"
 						ref="fieldRef"
 						v-model="selectedMonth"
-						label="Mois de début"
 						:custom-rules="customRules"
-						required
 						width="400px"
 					/>
 					<div class="mt-4">
@@ -925,6 +965,9 @@ async function handleSubmit() {
 }
 
 export const SyFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -947,6 +990,7 @@ export const SyFormVuetifyValidation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import { MonthPicker, SyForm } from '@cnamts/synapse'
 
 const selectedMonth = ref('')
@@ -956,7 +1000,7 @@ const vuetifyRules = [
     (value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
     const isValid = e.isValid
     alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -985,9 +1029,8 @@ function handleSubmit(e) {
 			<div>
 				<SyForm @submit="handleSubmit">
 					<MonthPicker
-						v-model="selectedMonth"
 						v-bind="args"
-						:use-vuetify-validation="true"
+						v-model="selectedMonth"
 						:rules="vuetifyRules"
 						width="400px"
 					/>
@@ -1001,6 +1044,10 @@ function handleSubmit(e) {
 }
 
 export const VFormVuetifyValidation: Story = {
+	args: {
+		useVuetifyValidation: true,
+		required: true,
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -1025,7 +1072,6 @@ native de Vuetify.
 			:use-vuetify-validation="true"
 			:rules="rules"
 			required
-			:is-validate-on-blur="true"
 		/>
 		<div class="mt-4">
 			<VBtn type="submit" color="primary">Valider</VBtn>
@@ -1037,6 +1083,7 @@ native de Vuetify.
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn, VForm } from 'vuetify/components'
 import { MonthPicker } from '@cnamts/synapse'
 
 const selectedMonth = ref('')
@@ -1058,7 +1105,6 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 		components: { MonthPicker, VBtn, VForm },
 		setup() {
 			const selectedMonth = ref('')
-			const fieldRef = ref()
 
 			const rules = [
 				(value: string) => !!value || 'Le mois est requis',
@@ -1070,7 +1116,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 				alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selectedMonth, fieldRef, rules, handleSubmit }
+			return { args, selectedMonth, rules, handleSubmit }
 		},
 		template: `
 			<div>
@@ -1082,10 +1128,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						label="Mois de début"
-						:use-vuetify-validation="true"
 						:rules="rules"
-						:is-validate-on-blur="true"
 						width="400px"
 					/>
 					<div class="mt-4">

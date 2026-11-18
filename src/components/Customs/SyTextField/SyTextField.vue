@@ -13,7 +13,7 @@
 		mdiChevronUp,
 		mdiChevronDown,
 	} from '@mdi/js'
-	import { computed, onMounted, readonly as readonlyState, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
+	import { computed, onMounted, readonly as readonlyState, ref, watch, nextTick, useAttrs, useId, type ComponentPublicInstance, toRef } from 'vue'
 	import type { IconType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
@@ -372,6 +372,29 @@
 
 	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
 
+	// Le helpText affiché sous le champ (quand des messages occupent la zone de messages)
+	// reste associé au champ via aria-describedby, comme lorsqu'il est affiché en hint.
+	const helpTextId = `sy-text-field-help-${useId()}`
+
+	const syncHelpTextDescribedby = () => {
+		const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+		if (!inputElement) return
+		const ids = (inputElement.getAttribute('aria-describedby') ?? '')
+			.split(' ')
+			.filter((id: string) => id.trim() && id !== helpTextId)
+		if (showHelpTextBelow.value) {
+			ids.push(helpTextId)
+		}
+		if (ids.length > 0) {
+			inputElement.setAttribute('aria-describedby', ids.join(' '))
+		}
+		else {
+			inputElement.removeAttribute('aria-describedby')
+		}
+	}
+
+	watch(showHelpTextBelow, syncHelpTextDescribedby, { flush: 'post' })
+
 	onMounted(() => {
 		nextTick(() => {
 			const removeSvgRole = () => {
@@ -484,6 +507,7 @@
 			}
 
 			setupAriaDescribedby()
+			syncHelpTextDescribedby()
 		})
 
 		// Watch for error state changes to update aria-describedby dynamically
@@ -635,6 +659,7 @@
 				'success-field': hasSuccess,
 				'basic-field': !hasError && !hasWarning && !hasSuccess,
 				'help-text-as-hint': showHelpTextAsMessage,
+				'has-help-text-below': showHelpTextBelow,
 			}"
 			@focus="handleFocusEvent"
 			@blur="handleBlurEvent"
@@ -834,6 +859,15 @@
 
 			<template #details>
 				<slot name="details" />
+				<!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages -->
+				<div
+					v-if="showHelpTextBelow"
+					:id="helpTextId"
+					class="help-text-below mt-1"
+					:class="{ 'text-disabled': props.disabled }"
+				>
+					{{ props.helpText }}
+				</div>
 			</template>
 
 			<template #loader="{ color: loaderColor, isActive: loaderActive }">
@@ -846,14 +880,6 @@
 				/>
 			</template>
 		</VTextField>
-
-		<div
-			v-if="showHelpTextBelow"
-			class="help-text-below px-4 mt-1"
-			:class="{ 'text-disabled': props.disabled }"
-		>
-			{{ props.helpText }}
-		</div>
 	</div>
 </template>
 
@@ -1055,9 +1081,16 @@
 }
 
 .help-text-below {
+	// Passe à la ligne sous le message (et l'éventuel compteur), dans la colonne du champ
+	flex-basis: 100%;
+	order: 1;
 	color: rgb(var(--v-theme-on-surface));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
+}
+
+.has-help-text-below :deep(.v-input__details) {
+	flex-wrap: wrap;
 }
 
 .help-text-below.text-disabled {

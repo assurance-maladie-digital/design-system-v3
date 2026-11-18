@@ -57,7 +57,8 @@ export const EuropeanFormat: Story = {
 						format: 'DD/MM/YYYY',
 						dateFormatReturn: 'YYYY/MM/DD',
 						placeholder: 'JJ/MM/AAAA',
-						label: 'Date (JJ/MM/AAAA)',
+						label: 'Date de la consultation',
+						helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 						required: true,
 						noIcon: true,
 					}
@@ -71,7 +72,8 @@ export const EuropeanFormat: Story = {
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': 'YYYY/MM/DD',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date (JJ/MM/AAAA)',
+		'label': 'Date de la consultation',
+		'helpText': 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		'required': true,
 		'noIcon': true,
 		'onUpdate:modelValue': fn(),
@@ -116,7 +118,7 @@ export const AutoClampFeature: Story = {
             <DatePicker
               v-model="dateSlash"
               placeholder="JJ/MM/AAAA"
-              label="Date (JJ/MM/AAAA)"
+              label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
               format="DD/MM/YYYY"
               noCalendar
               autoClamp
@@ -126,7 +128,7 @@ export const AutoClampFeature: Story = {
             <DatePicker
               v-model="dateDash"
               placeholder="JJ-MM-AAAA"
-              label="Date (JJ-MM-AAAA)"
+              label="Date de naissance" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
               format="DD-MM-YYYY"
               noCalendar
               autoClamp
@@ -137,7 +139,7 @@ export const AutoClampFeature: Story = {
             <DatePicker
               v-model="dateDot"
               placeholder="AAAA.MM.JJ"
-              label="Date (AAAA.MM.JJ)"
+              label="Date de l'ordonnance" help-text="Format attendu : année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres"
               format="YYYY.MM.DD"
               noCalendar
               autoClamp
@@ -147,7 +149,7 @@ export const AutoClampFeature: Story = {
             <DatePicker
               v-model="dateRange"
               placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-              label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+              label="Période d'hospitalisation" help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret"
               format="DD/MM/YYYY"
               displayRange
               noCalendar
@@ -199,7 +201,7 @@ export const AutoClampFeature: Story = {
             v-bind="args"
             v-model="dateSlash"
             placeholder="JJ/MM/AAAA"
-            label="Date (JJ/MM/AAAA)"
+            label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
             format="DD/MM/YYYY"
           />
           <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
@@ -209,7 +211,7 @@ export const AutoClampFeature: Story = {
             v-bind="args"
             v-model="dateDash"
             placeholder="JJ-MM-AAAA"
-            label="Date (JJ-MM-AAAA)"
+            label="Date de naissance" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
             format="DD-MM-YYYY"
           />
           <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
@@ -219,7 +221,7 @@ export const AutoClampFeature: Story = {
             v-bind="args"
             v-model="dateDot"
             placeholder="AAAA.MM.JJ"
-            label="Date (AAAA.MM.JJ)"
+            label="Date de l'ordonnance" help-text="Format attendu : année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres"
             format="YYYY.MM.DD"
           />
           <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
@@ -229,7 +231,7 @@ export const AutoClampFeature: Story = {
             v-bind="args"
             v-model="dateRange"
             placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-            label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+            label="Période d'hospitalisation" help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret"
             format="DD/MM/YYYY"
             display-range
           />
@@ -252,35 +254,35 @@ export const DifferentFormats: Story = {
 						<DatePicker
 							v-model="value1"
 							placeholder="JJ/MM/AAAA"
-							label="Date (JJ/MM/AAAA)"
+							label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 							format="DD/MM/YYYY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value2"
 							placeholder="MM/JJ/AAAA"
-							label="Date (MM/JJ/AAAA)"
+							label="Date de l'examen" help-text="Format attendu : mois en 2 chiffres / jour en 2 chiffres / année en 4 chiffres"
 							format="MM/DD/YYYY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value3"
 							placeholder="AAAA-MM-JJ"
-							label="Date (AAAA-MM-JJ)"
+							label="Date de la prescription" help-text="Format attendu : année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres"
 							format="YYYY-MM-DD"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value4"
 							placeholder="JJ-MM-AA"
-							label="Date (JJ-MM-AA)"
+							label="Date de délivrance" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 2 chiffres"
 							format="DD-MM-YY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value5"
 							placeholder="JJ.MM.AAAA"
-							label="Date (JJ.MM.AAAA)"
+							label="Date de sortie" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
 							format="DD.MM.YYYY"
 							no-calendar
 						/>
@@ -327,7 +329,7 @@ export const DifferentFormats: Story = {
                     v-bind="args"
                     v-model="value1"
                     placeholder="JJ/MM/AAAA"
-					label="Date (JJ/MM/AAAA)"
+					label="Date de la consultation" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
                     format="DD/MM/YYYY"
                     class="py-4"
                 />
@@ -335,7 +337,7 @@ export const DifferentFormats: Story = {
                     v-bind="args"
                     v-model="value2"
                     placeholder="MM/JJ/AAAA"
-					label="Date (MM/JJ/AAAA)"
+					label="Date de l'examen" help-text="Format attendu : mois en 2 chiffres / jour en 2 chiffres / année en 4 chiffres"
                     format="MM/DD/YYYY"
 					class="py-4"
                 />
@@ -343,7 +345,7 @@ export const DifferentFormats: Story = {
                     v-bind="args"
                     v-model="value3"
                     placeholder="AAAA-MM-JJ"
-					label="Date (AAAA-MM-JJ)"
+					label="Date de la prescription" help-text="Format attendu : année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres"
                     format="YYYY-MM-DD"
 					class="py-4"
                 />
@@ -351,7 +353,7 @@ export const DifferentFormats: Story = {
                     v-bind="args"
                     v-model="value4"
                     placeholder="JJ-MM-AA"
-					label="Date (JJ-MM-AA)"
+					label="Date de délivrance" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 2 chiffres"
                     format="DD-MM-YY"
 					class="py-4"
                 />
@@ -359,7 +361,7 @@ export const DifferentFormats: Story = {
                     v-bind="args"
                     v-model="value5"
                     placeholder="JJ.MM.AAAA"
-					label="Date (JJ.MM.AAAA)"
+					label="Date de sortie" help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
                     format="DD.MM.YYYY"
 					class="py-4"
                 />

@@ -9,7 +9,6 @@ exports[`HeaderBurgerMenu > should render the component 1`] = `
 >
   <div
     class="menu-wrapper"
-    role="menu"
     style="
       left: 0px;
       top: 0px;

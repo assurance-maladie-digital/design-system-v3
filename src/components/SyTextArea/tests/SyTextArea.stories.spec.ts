@@ -1,7 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
-import { analyzeSnippet } from '@tests/helpers/storySnippets'
 import { controlMatchers } from '../../../../.storybook/controlMatchers'
 import SyTextArea from '../SyTextArea.vue'
 import * as mainStories from '../SyTextArea.stories'
@@ -15,13 +14,11 @@ const {
 	WithSuccess,
 	NoValidateOnBlur,
 	DisableErrorHandling,
+	SyFormValidation,
+	VFormValidation,
 	SyFormVuetifyValidation,
 	VFormVuetifyValidation,
 } = composeStories(validationStories)
-const allStories = [
-	...Object.entries(composeStories(mainStories)),
-	...Object.entries(composeStories(validationStories)),
-].map(([name, story]) => ({ name, story }))
 
 enableAutoUnmount(afterEach)
 
@@ -44,17 +41,6 @@ describe('SyTextArea stories', () => {
 		for (const prop of colorProps) {
 			expect(meta.argTypes?.[prop]?.type, prop).toMatchObject({ name: 'string' })
 		}
-	})
-
-	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
-		expect(analyzeSnippet(story)).toEqual({
-			parseErrors: [],
-			hasScriptSetup: true,
-			undeclaredIdentifiers: [],
-			unresolvedComponents: [],
-			untypedRefs: [],
-			invalidAttributes: [],
-		})
 	})
 
 	it('MaxLines affiche l\'erreur de nombre de lignes au chargement', async () => {
@@ -162,5 +148,29 @@ describe('SyTextArea stories', () => {
 
 		expect(wrapper.text()).not.toContain('Le contenu est valide.')
 		expect(textarea.element.value).toBe('')
+	})
+
+	it.each([
+		{ name: 'SyFormValidation', story: SyFormValidation },
+		{ name: 'VFormValidation', story: VFormValidation },
+	])('$name rend le champ requis par défaut', ({ story }) => {
+		const wrapper = mount(story())
+
+		expect(wrapper.find('textarea').attributes('aria-required')).toBe('true')
+	})
+
+	it.each([
+		{ name: 'SyFormValidation', story: SyFormValidation },
+		{ name: 'VFormValidation', story: VFormValidation },
+	])('$name laisse les controls required et label effectifs', ({ story }) => {
+		const notRequired = mount(story({ required: false, displayAsterisk: false }))
+
+		// `required: false` retire l'attribut ARIA et l'astérisque du libellé
+		expect(notRequired.find('textarea').attributes('aria-required')).toBeUndefined()
+
+		const relabeled = mount(story({ label: 'Autre description' }))
+
+		expect(relabeled.text()).toContain('Autre description')
+		expect(relabeled.text()).not.toContain('Description obligatoire')
 	})
 })

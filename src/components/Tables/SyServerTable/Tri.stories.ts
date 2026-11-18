@@ -51,15 +51,14 @@ const serverMultiSortDataset: Record<string, string>[] = [
  */
 export const ServerSortBy: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs triés côté serveur"
+		hide-caption
 		v-model:options="options"
 		:headers="headers"
 		:items="users"
@@ -118,7 +117,8 @@ export const ServerSortBy: Story = {
 			page: 1,
 		},
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs triés côté serveur',
+		hideCaption: true,
 		serverItemsLength: 15,
 		suffix: 'server-sort',
 		density: 'default',
@@ -150,15 +150,14 @@ export const ServerSortBy: Story = {
  */
 export const ServerMultiSort: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <template>
 	<SyServerTable
+		caption="Utilisateurs triés sur plusieurs colonnes"
+		hide-caption
 		v-model:options="options"
 		:headers="headers"
 		:items="users"
@@ -220,7 +219,8 @@ export const ServerMultiSort: Story = {
 			page: 1,
 		},
 		headers: serverHeaders,
-		caption: '',
+		caption: 'Utilisateurs triés sur plusieurs colonnes',
+		hideCaption: true,
 		serverItemsLength: 7,
 		suffix: 'server-multi-sort',
 		density: 'default',

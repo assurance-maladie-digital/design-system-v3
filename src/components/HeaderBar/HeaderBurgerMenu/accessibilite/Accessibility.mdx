@@ -1,15 +1,197 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks'
-import * as HeaderBurgerMenuStories from '../HeaderBurgerMenu.stories';
-import '@/stories/styles/shared.css';
+import * as Stories from '../HeaderBurgerMenu.stories'
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
+import '@/stories/styles/shared.css'
+import {
+  AccessibilityGuideLayout,
+  AuditSection,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
 
-<Meta of={HeaderBurgerMenuStories}/>
+<Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+  componentName="HeaderBurgerMenu"
+  iconSrc={AccessibilityIcon}
+>
+  <CriteriaSection>
+    <CriteriaCard title="Structure et sémantique">
+      <ul>
+        <li>
+          Lorsque le menu est ouvert, son contenu est présenté dans une boîte de
+          dialogue modale nommée « Menu principal ».
+        </li>
+        <li>
+          L’élément <code>nav</code> forme un repère de navigation et porte le
+          nom accessible « Menu public ». Ce nom aide notamment à distinguer ce
+          repère d’autres zones de navigation de la page.
+        </li>
+        <li>
+          Les éléments de navigation sont des liens natifs. Ils conservent ainsi
+          leur comportement habituel au clavier et avec les technologies
+          d’assistance.
+        </li>
+        <li>
+          Ce menu burger est une navigation par liens, et non un widget de menu
+          applicatif ARIA. Le rôle <code>menu</code> n’est donc pas ajouté au
+          conteneur : ce rôle implique une structure d’éléments
+          <code>menuitem</code> et un modèle de navigation clavier spécifique.
+        </li>
+        <li>
+          Avec les balises par défaut, <code>HeaderBurgerMenu</code> rend une
+          liste <code>ul</code> qui attend des enfants <code>li</code>.
+          <code>HeaderMenuItem</code> et <code>HeaderMenuSection</code> rendent
+          par défaut des <code>li</code> ; une section contient elle-même une
+          liste <code>ul</code> dont les éléments doivent également être des
+          <code>li</code>.
+        </li>
+        <li>
+          Le développeur qui compose le menu doit vérifier l’arborescence HTML
+          réellement produite. La prop <code>innerTag</code> de{' '}
+          <code>HeaderBurgerMenu</code>, la prop <code>tag</code> de{' '}
+          <code>HeaderMenuItem</code>, et les props <code>tag</code> et{' '}
+          <code>innerTag</code> de <code>HeaderMenuSection</code> et{' '}
+          <code>HeaderSubMenu</code> permettent de changer les balises : elles
+          doivent être configurées ensemble pour que chaque parent accepte le
+          type d’enfant rendu. Par exemple, ne placez pas un <code>li</code>{' '}
+          directement dans un <code>div</code>, ni un <code>div</code> comme
+          enfant direct d’un <code>ul</code>.
+        </li>
+      </ul>
+    </CriteriaCard>
 
+    <CriteriaCard title="Ouverture, fermeture et focus">
+      <ul>
+        <li>
+          Le bouton d’ouverture est un bouton natif doté d’un nom accessible qui
+          indique l’action disponible : « Ouvrir le menu » ou « Fermer le menu ».
+        </li>
+        <li>
+          À l’ouverture, le focus est déplacé dans la boîte de dialogue. La
+          navigation avec <code>Tab</code> et <code>Maj + Tab</code> reste dans le
+          menu tant qu’il est ouvert.
+        </li>
+        <li>
+          Le menu peut être fermé avec <code>Échap</code>, en activant son bouton
+          de fermeture ou en cliquant en dehors de sa zone de navigation.
+        </li>
+        <li>
+          À la fermeture, le focus revient au bouton qui a ouvert le menu.
+        </li>
+        <li>
+          L’ouverture du menu empêche le défilement de la page en arrière-plan ;
+          celui-ci est rétabli à la fermeture.
+        </li>
+      </ul>
+    </CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/HeaderBurgerMenu.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/646" target="_blank" style={{color:'#0C41BD'}}>issue #646</a>)</p>
-	</div>
+    <CriteriaCard title="Sous-menus">
+      <ul>
+        <li>
+          Un bouton de sous-menu expose son état avec <code>aria-expanded</code>
+          et identifie le contenu associé avec <code>aria-controls</code>.
+        </li>
+        <li>
+          Le bouton doit avoir un libellé visible qui décrit le sous-menu. Son
+          intitulé accessible précise également si l’action permet de l’ouvrir
+          ou de le fermer.
+        </li>
+        <li>
+          La touche <code>Échap</code> ferme le sous-menu et replace le focus sur
+          son bouton.
+        </li>
+        <li>
+          Les liens des sous-menus doivent conserver un ordre de lecture et de
+          tabulation cohérent avec leur organisation visuelle.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Contenu personnalisable">
+      <ul>
+        <li>
+          Le contenu du menu est fourni par le slot par défaut. Les liens doivent
+          avoir des intitulés explicites et des destinations valides. Pour une
+          navigation structurée, préférez <code>HeaderMenuSection</code> et
+          <code>HeaderMenuItem</code>.
+        </li>
+        <li>
+          Les props <code>tag</code>, <code>innerTag</code> et{' '}
+          <code>titleTag</code> (selon les composants) peuvent modifier la
+          sémantique HTML : vérifiez le
+          DOM rendu après toute personnalisation.
+        </li>
+        <li>
+          Les composants et contenus personnalisés, y compris les slots de
+          navigation, doivent rester accessibles au clavier et disposer de noms
+          accessibles pertinents.
+        </li>
+        <li>
+          La propriété <code>v-model</code> permet à l’application de contrôler
+          l’état ouvert ou fermé du menu. Les changements d’état doivent rester
+          perceptibles et ne pas déplacer le focus de manière inattendue.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Contraste et visibilité">
+      <ul>
+        <li>
+          Les textes, liens, boutons et indicateurs de focus doivent rester
+          suffisamment contrastés avec leur arrière-plan.
+        </li>
+        <li>
+          Le focus clavier doit être visible sur le bouton d’ouverture, le bouton
+          de fermeture, les liens et les contrôles de sous-menu.
+        </li>
+        <li>
+          L’état ouvert ou fermé ne doit pas être communiqué uniquement par la
+          couleur ou l’apparence de l’icône.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Vérifications">
+      <ul>
+        <li>
+          Vérifiez l’ouverture et la fermeture du menu au clavier, le retour du
+          focus au bouton d’ouverture ainsi que le confinement du focus.
+        </li>
+        <li>
+          Testez les sous-menus, les liens désactivés et les contenus fournis par
+          les slots dans leur contexte d’utilisation.
+        </li>
+        <li>
+          Inspectez le DOM rendu, menu ouvert, pour confirmer que les balises
+          configurées forment une hiérarchie valide. Exécutez également un
+          contrôle automatisé d’accessibilité sur le contenu du menu, y compris
+          lorsqu’il est rendu dans un <code>Teleport</code>.
+        </li>
+        <li>
+          Les contrôles automatisés complètent les essais manuels ; ils ne
+          remplacent pas la vérification avec clavier et technologies
+          d’assistance.
+        </li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="HeaderBurgerMenu">
+    <Story of={Stories.WithAnItem} />
+  </DemoSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener noreferrer">Modèle de boîte de dialogue modale — WAI-ARIA Authoring Practices</a></li>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/link/" target="_blank" rel="noopener noreferrer">Modèle de lien — WAI-ARIA Authoring Practices</a></li>
+    </ul>
+  </ResourcesSection>
+
+  <AuditSection>
+    <p>Rapport d’audit manuel : <a href="/audits/HeaderBurgerMenu.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/646" target="_blank" rel="noopener noreferrer" style={{ color: '#0C41BD' }}>issue #646</a>)</p>
+  </AuditSection>
+</AccessibilityGuideLayout>

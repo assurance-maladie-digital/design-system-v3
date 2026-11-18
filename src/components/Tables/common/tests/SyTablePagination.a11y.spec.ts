@@ -30,6 +30,7 @@ describe('SyTablePagination – accessibility', () => {
 	})
 
 	it('associates each selector with its own visible label', async () => {
+		// eslint-disable-next-line vue/one-component-per-file -- Host de test pour vérifier plusieurs paginations dans le même rendu.
 		const wrapper = mount(defineComponent({
 			setup: () => () => h('div', [
 				h('table', { id: 'pagination-table' }),
@@ -59,6 +60,7 @@ describe('SyTablePagination – accessibility', () => {
 	})
 
 	it('labels the closed field and opened list and still emits selection changes', async () => {
+		// eslint-disable-next-line vue/one-component-per-file -- Host de test pour auditer la pagination avec son contexte DOM.
 		const wrapper = mount(defineComponent({
 			setup: () => () => h('div', [
 				h('table', { id: 'pagination-table' }),

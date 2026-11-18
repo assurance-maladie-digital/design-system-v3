@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import dayjs from 'dayjs'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls, syServerTableItemsArgTypes } from '../common/storyArgTypes'
 import type { FilterOption, FilterType } from '../common/types'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
@@ -109,15 +110,14 @@ const serverCustomFilterUsers: Record<string, unknown>[] = [
 ]
 export const ServerFilterByText: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par texte"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -282,7 +282,8 @@ export const ServerFilterByText: Story = {
 				filterType: 'text',
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs filtrés par texte',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -315,15 +316,14 @@ export const ServerFilterByText: Story = {
 
 export const ServerFilterByNumber: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par nombre"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -496,7 +496,8 @@ export const ServerFilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs filtrés par nombre',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -530,15 +531,14 @@ export const ServerFilterByNumber: Story = {
 
 export const ServerFilterBySelect: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par liste de choix"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -741,7 +741,8 @@ export const ServerFilterBySelect: Story = {
 				],
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs filtrés par liste de choix',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -775,15 +776,14 @@ export const ServerFilterBySelect: Story = {
 
 export const ServerFilterBySelectMultiple: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 		<template>
 			<SyServerTable
+				caption="Utilisateurs filtrés par choix multiples"
+				hide-caption
 				v-model:options="options"
 				:items="filteredUsers"
 				:headers="headers"
@@ -994,7 +994,8 @@ export const ServerFilterBySelectMultiple: Story = {
 				],
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs filtrés par choix multiples',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,
@@ -1028,15 +1029,14 @@ export const ServerFilterBySelectMultiple: Story = {
 
 export const ServerFilterByAutocomplete: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 		<template>
 			<SyServerTable
+				caption="Utilisateurs filtrés par saisie assistée"
+				hide-caption
 				v-model:options="options"
 				:items="filteredUsers"
 				:headers="headers"
@@ -1150,6 +1150,8 @@ export const ServerFilterByAutocomplete: Story = {
 		],
 	},
 	args: {
+		caption: 'Utilisateurs filtrés par saisie assistée',
+		hideCaption: true,
 		headers: [
 			{
 				title: 'Nom',
@@ -1209,15 +1211,14 @@ export const ServerFilterByAutocomplete: Story = {
 
 export const ServerFilterByExacteDate: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par date exacte"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -1370,7 +1371,8 @@ export const ServerFilterByExacteDate: Story = {
 			page: 1,
 			filters: [],
 		},
-		caption: '',
+		caption: 'Utilisateurs filtrés par date exacte',
+		hideCaption: true,
 		suffix: 'server-filter-date',
 		density: 'default',
 		striped: false,
@@ -1397,15 +1399,14 @@ export const ServerFilterByExacteDate: Story = {
 
 export const ServerFilterByPeriod: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs filtrés par période"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -1575,7 +1576,8 @@ export const ServerFilterByPeriod: Story = {
 			page: 1,
 			filters: [],
 		},
-		caption: '',
+		caption: 'Utilisateurs filtrés par période',
+		hideCaption: true,
 		suffix: 'server-filter-date',
 		density: 'default',
 		striped: false,
@@ -1602,15 +1604,14 @@ export const ServerFilterByPeriod: Story = {
 
 export const CustomFilterSlot: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 				<template>
 					<SyServerTable
+						caption="Utilisateurs avec filtre personnalisé"
+						hide-caption
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
@@ -1625,7 +1626,7 @@ export const CustomFilterSlot: Story = {
 								<div class="custom-filter-info mb-2">
 									Filtre personnalisé :
 								</div>
-								<v-select
+								<SySelect
 									v-model="customFilterValue"
 									:items="statusOptions"
 									label="Statut"
@@ -1649,7 +1650,7 @@ export const CustomFilterSlot: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref, watch } from 'vue'
-					import { SyServerTable } from '@cnamts/synapse'
+					import { SyServerTable, SySelect } from '@cnamts/synapse'
 					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 					import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
 					
@@ -1837,7 +1838,8 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs avec filtre personnalisé',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 4,
 			page: 1,
@@ -1850,7 +1852,7 @@ export const CustomFilterSlot: Story = {
 		...commonTableEventArgs(),
 	},
 	render: args => ({
-		components: { SyServerTable },
+		components: { SyServerTable, SySelect },
 		setup() {
 			const { items, totalItems, state, options, fetchData, StateEnum } = useServerTableDemo(args, serverCustomFilterUsers)
 
@@ -1893,7 +1895,7 @@ export const CustomFilterSlot: Story = {
 						<div class="custom-filter-info mb-2">
 							Filtre personnalisé :
 						</div>
-						<VSelect
+						<SySelect
 							v-model="customFilterValue"
 							:items="statusOptions"
 							label="Statut"
@@ -1915,15 +1917,14 @@ export const CustomFilterSlot: Story = {
 
 export const CustomFilterInputs: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 		<template>
 		  <SyServerTable
+			caption="Utilisateurs avec champs de filtre personnalisés"
+			hide-caption
 			v-model:options="options"
 			:items="filteredUsers"
 			:headers="headers"
@@ -2113,7 +2114,8 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
-		caption: '',
+		caption: 'Utilisateurs avec champs de filtre personnalisés',
+		hideCaption: true,
 		options: {
 			itemsPerPage: 5,
 			page: 1,

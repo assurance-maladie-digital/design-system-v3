@@ -28,6 +28,7 @@ export const ComponentsList: StoryObj = {
 			setup() {
 				const theme = useTheme()
 				const isAp = theme.global.name.value === 'ap'
+				const isPa = theme.global.name.value === 'pa'
 				const components = [
 					{
 						title: 'HeaderBar',
@@ -112,6 +113,13 @@ export const ComponentsList: StoryObj = {
 						link: '/?path=/docs/composants-composants-vuetify-vstepper--docs',
 						img: `/components/stepper${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
+					},
+					{
+						title: 'SyNavList',
+						description: 'Utilisé pour naviguer entre des pages, avec des actions rapides et un sous-niveau par entrée.',
+						link: '/?path=/docs/labs-synavlist--docs',
+						img: `/components/sy-nav-list${isAp ? '-ap' : ''}.svg`,
+						category: 'Labs',
 					},
 					{
 						title: 'SyTabs',
@@ -531,6 +539,7 @@ export const ComponentsList: StoryObj = {
 					'Données',
 					'Feedback',
 					'Filtres',
+					'Labs',
 				]
 
 				const apComponents = [
@@ -594,13 +603,29 @@ export const ComponentsList: StoryObj = {
 					'DataListGroup',
 					'DataList',
 					'SyBtnMenu',
+					'SyNavList',
 					'SocialMediaLinks',
 					'SyInputSelect',
 					'ExternalLinks',
 					'RatingPicker',
 				]
 
+				// Composants non proposés dans le thème PA
+				const paExcludedComponents = [
+					'FooterBar',
+					'HeaderBar',
+				]
+
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
+					// La rubrique Labs n'est affichée que dans le Storybook local
+					if (component.category === 'Labs' && !import.meta.env.DEV) {
+						return false
+					}
+
+					if (isPa && paExcludedComponents.includes(component.title)) {
+						return false
+					}
+
 					if (isAp) {
 						return (
 							component.category === category

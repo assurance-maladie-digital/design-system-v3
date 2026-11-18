@@ -54,6 +54,7 @@ export { useDatePickerSyncGuard } from './useDatePickerSyncGuard'
 
 // Shared calendar logic (accessibility, view mode, month/year navigation)
 export { useDatePickerCalendar } from './useDatePickerCalendar'
+export { useYearListRegionAria } from './useYearListRegionAria'
 
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'

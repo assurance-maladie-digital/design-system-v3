@@ -111,7 +111,8 @@
 		getDisplayedMonthYearState,
 		resolveDatePickerStateFromModelValue,
 	} from '../utils/dateFormattingUtils'
-	import { isModelValueEqual } from '../utils/validationUtils'
+	import { resolveTitle } from '../utils/titleUtils'
+	import { adaptCustomRulesWithStringFallback, isModelValueEqual } from '../utils/validationUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
@@ -721,11 +722,16 @@
 			return true
 		}
 
+		// Les sélections calendrier passent un objet Date aux règles, alors que la
+		// saisie texte passe une chaîne : envelopper avec le repli chaîne pour
+		// qu'une règle écrite pour une chaîne ne refuse pas une date valide
+		// (repli transitoire non cassant, même format que la saisie texte).
+		const rulesFormat = (props.validateWithReturnFormat ? props.dateFormatReturn : undefined) || props.format || ''
 		const validationResult = await Promise.resolve(validateField(
 			date,
-			props.customRules,
-			props.customWarningRules,
-			props.customSuccessRules,
+			adaptCustomRulesWithStringFallback(props.customRules, rulesFormat),
+			adaptCustomRulesWithStringFallback(props.customWarningRules, rulesFormat),
+			adaptCustomRulesWithStringFallback(props.customSuccessRules ?? [], rulesFormat),
 		))
 
 		if (!validationResult.hasError) {
@@ -1072,17 +1078,11 @@
 		getCurrentDate,
 		setCurrentDate: (date: Date) => {
 			keyboardNavigatedDate.value = date
+			const displayedState = getDisplayedMonthYearState(date)
+			if (currentMonth.value === displayedState.month && currentYear.value === displayedState.year) return
 
-			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
-			nextTick(() => {
-				if (datePickerRef.value) {
-					const displayedState = getDisplayedMonthYearState(date)
-					if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
-						syncDisplayedMonthYearFromDate(date)
-						nextTick(() => refreshVisibleCalendarUi({ focusDay: true }))
-					}
-				}
-			})
+			syncDisplayedMonthYearFromDate(date)
+			return reapplyAccessibility({ restoreFocus: false })?.then(() => refreshVisibleCalendarUi())
 		},
 		onSelectDate: (date: Date) => {
 			void updateSelectedDates(date)
@@ -1261,6 +1261,7 @@
 		)
 
 	const {
+		reapplyAccessibility,
 		handleViewModeUpdateWrapper,
 		syncDisplayedMonthYearFromDate,
 		onUpdateMonth,
@@ -1578,7 +1579,7 @@
 					<div
 						ref="menuActivatorRef"
 						class="date-text-input-activator"
-						:title="props.placeholder || locales.label"
+						:title="resolveTitle(props.title, props.placeholder, locales.label)"
 						v-bind="{ ...menuProps, onKeydown: undefined, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
 						@focus="redirectActivatorFocus"
 					>

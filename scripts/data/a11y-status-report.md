@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 27/10/2026
+Généré le: 17/11/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -16,7 +16,7 @@ Généré le: 27/10/2026
 | **CopyBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/Selects/SelectBtnField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
+| **Customs/Selects/SyInputSelect** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/SyCheckbox** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/SyCheckBoxGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
@@ -45,7 +45,7 @@ Généré le: 27/10/2026
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **HeaderToolbar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -73,12 +73,13 @@ Généré le: 27/10/2026
 | **SyAlert** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyBtnMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyHeading** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
+| **SyNavList** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **SyTextArea** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **Tables/SyServerTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
-| **Tables/SyTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **Tables/SyServerTable** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
+| **Tables/SyTable** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **TableToolbar** | ❌ Non | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **ToolbarContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 70 / 76 (92.11%)**
+**Total des composants conformes : 74 / 77 (96.10%)**

@@ -33,6 +33,11 @@ const meta = {
 	argTypes: {
 		...commonTableArgTypes,
 		...syServerTableItemsArgTypes,
+		hideCaption: {
+			description: 'Masque la légende à l’écran en la conservant pour les lecteurs d’écran.',
+			control: 'boolean',
+			table: { defaultValue: { summary: 'false' } },
+		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
@@ -42,9 +47,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -276,9 +278,6 @@ export const Default: Story = {
 
 export const ManyServerTables: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -292,6 +291,7 @@ export const ManyServerTables: Story = {
 			  :server-items-length="totalUsersTable1"
 			  :loading="stateTable1 === StateEnum.PENDING"
 			  suffix="table1"
+			  caption="Utilisateurs classés par nom"
 			  @update:options="fetchDataTable1"
 			/>
 			<SyServerTable
@@ -301,6 +301,7 @@ export const ManyServerTables: Story = {
 			  :server-items-length="totalUsersTable2"
 			  :loading="stateTable2 === StateEnum.PENDING"
 			  suffix="table2"
+			  caption="Utilisateurs classés par prénom"
 			  @update:options="fetchDataTable2"
 			/>
 		  </div>
@@ -548,6 +549,7 @@ export const ManyServerTables: Story = {
 		  :server-items-length="totalUsersTable1"
 		  :loading="stateTable1 === StateEnum.PENDING"
 		  suffix="table1"
+		  caption="Utilisateurs classés par nom"
 		  class="mb-10"
 		  @update:options="fetchDataTable1"
 		/>
@@ -558,6 +560,7 @@ export const ManyServerTables: Story = {
 		  :server-items-length="totalUsersTable2"
 		  :loading="stateTable2 === StateEnum.PENDING"
 		  suffix="table2"
+		  caption="Utilisateurs classés par prénom"
 		  @update:options="fetchDataTable2"
 		/>
 	  </div>

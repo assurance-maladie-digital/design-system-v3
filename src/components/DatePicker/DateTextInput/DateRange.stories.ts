@@ -8,6 +8,9 @@ import { fn } from 'storybook/test'
 interface DatePickerProps {
 	'modelValue'?: string | string[] | null
 	'label'?: string
+	'helpText'?: string
+	'hint'?: string
+	'persistentHint'?: boolean
 	'placeholder'?: string
 	'format'?: string
 	'dateFormatReturn'?: string
@@ -87,6 +90,10 @@ const meta = {
 			control: 'text',
 			description: 'Libellé du champ',
 			defaultValue: 'Période',
+		},
+		helpText: {
+			control: 'text',
+			description: 'Consigne facultative, recommandée pour indiquer l’ordre et le format de saisie. Le texte reste visible et associé au champ en cas d’erreur.',
 		},
 		required: {
 			control: 'boolean',
@@ -179,6 +186,8 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+const rangeHelpText = 'Saisissez la date de début puis la date de fin, chacune au format JJ/MM/AAAA. Les deux dates sont séparées par un tiret. Exemple : 12/03/2026 - 18/04/2026.'
+
 export const Default: Story = {
 	parameters: {
 		sourceCode: [
@@ -189,8 +198,8 @@ export const Default: Story = {
 					<DatePicker
 						v-model="dateRange"
 						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+						label="Période d'hospitalisation"
+						help-text="${rangeHelpText}"
 						display-range
 						no-calendar
 					/>
@@ -201,8 +210,8 @@ export const Default: Story = {
 	},
 	args: {
 		'format': 'DD/MM/YYYY',
-		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
-		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
+		'label': 'Période d\'hospitalisation',
+		'helpText': rangeHelpText,
 		'displayRange': true,
 		'displayIcon': true,
 		'isOutlined': true,
@@ -246,8 +255,8 @@ export const WithInitialValue: Story = {
 					<DatePicker
 						v-model="dateRange"
 						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+						label="Période d'hospitalisation"
+						help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret"
 						display-range
 						no-calendar
 					/>
@@ -259,8 +268,8 @@ export const WithInitialValue: Story = {
 	args: {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
-		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
-		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
+		'label': 'Période d\'hospitalisation',
+		'helpText': 'Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret',
 		'displayRange': true,
 		'displayIcon': true,
 		'isOutlined': true,
@@ -304,7 +313,8 @@ export const WithCustomFormat: Story = {
 						format="YYYY-MM-DD"
 						date-format-return="DD/MM/YYYY"
 						placeholder="AAAA-MM-JJ - AAAA-MM-JJ"
-						label="Période (AAAA-MM-JJ - AAAA-MM-JJ)"
+						label="Période d'hospitalisation"
+						help-text="Format attendu : date de début puis date de fin, chacune avec année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres, séparées par un tiret"
 						display-range
 						no-calendar
 					/>
@@ -318,7 +328,8 @@ export const WithCustomFormat: Story = {
 		format: 'YYYY-MM-DD',
 		dateFormatReturn: 'DD/MM/YYYY',
 		placeholder: 'AAAA-MM-JJ - AAAA-MM-JJ',
-		label: 'Période (AAAA-MM-JJ - AAAA-MM-JJ)',
+		label: 'Période d\'hospitalisation',
+		helpText: 'Format attendu : date de début puis date de fin, chacune avec année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres, séparées par un tiret',
 		displayRange: true,
 		displayIcon: true,
 		isOutlined: true,
@@ -356,8 +367,8 @@ export const WithValidation: Story = {
 					<DatePicker
 						v-model="dateRange"
 						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+						label="Période d'hospitalisation"
+						help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret. Date de début postérieure ou égale au 01/01/1995"
 						display-range
 						no-calendar
 						required
@@ -380,8 +391,8 @@ export const WithValidation: Story = {
 	args: {
 		noCalendar: true,
 		format: 'DD/MM/YYYY',
-		placeholder: 'JJ/MM/AAAA - JJ/MM/AAAA',
-		label: 'Période (JJ/MM/AAAA - JJ/MM/AAAA, max 30 jours)',
+		label: 'Période d\'hospitalisation',
+		helpText: 'Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret. Date de début postérieure ou égale au 01/01/1999',
 		displayRange: true,
 		displayIcon: true,
 		isOutlined: true,

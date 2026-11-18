@@ -1,3 +1,4 @@
+import ts from 'typescript'
 import { compileScript, compileTemplate, parse } from 'vue/compiler-sfc'
 
 /** Onglet du paramètre `sourceCode` d'une story. */
@@ -38,10 +39,18 @@ function isSourceCodeTab(tab: unknown): tab is SourceCodeTab {
 	return typeof tab === 'object' && tab !== null && 'code' in tab && typeof tab.code === 'string'
 }
 
-function parseSnippet(story: StoryWithSourceCode) {
+function getSourceCodeTabs(story: StoryWithSourceCode): SourceCodeTab[] {
 	const { sourceCode } = story.parameters
-	const tabs = Array.isArray(sourceCode) ? sourceCode.filter(isSourceCodeTab) : []
-	return parse(tabs.map(tab => tab.code).join('\n'))
+	return Array.isArray(sourceCode) ? sourceCode.filter(isSourceCodeTab) : []
+}
+
+/** Code de l'onglet `name` du paramètre `sourceCode` d'une story, chaîne vide s'il n'existe pas. */
+export function getSnippetTab(story: StoryWithSourceCode, name: string): string {
+	return getSourceCodeTabs(story).find(tab => tab.name === name)?.code ?? ''
+}
+
+function parseSnippet(story: StoryWithSourceCode) {
+	return parse(getSourceCodeTabs(story).map(tab => tab.code).join('\n'))
 }
 
 function isStaticAttribute(prop: unknown): prop is { name: string } {
@@ -102,4 +111,84 @@ export function analyzeSnippet(story: StoryWithSourceCode): SnippetAnalysis {
 		untypedRefs: unique(descriptor.scriptSetup?.content ?? '', /\b(\w+)\s*=\s*ref\(null\)/g),
 		invalidAttributes: getStaticAttributeNames(descriptor.template?.ast).filter(name => name.endsWith(':')),
 	}
+}
+
+function importedNames(declaration: ts.ImportDeclaration): string[] {
+	const clause = declaration.importClause
+	if (!clause || clause.isTypeOnly) {
+		return []
+	}
+	const bindings = clause.namedBindings
+	const named = bindings && ts.isNamedImports(bindings)
+		? bindings.elements.filter(element => !element.isTypeOnly).map(element => element.name.text)
+		: bindings ? [bindings.name.text] : []
+	return clause.name ? [clause.name.text, ...named] : named
+}
+
+function declaresBinding(statement: ts.Statement, name: string): boolean {
+	if (ts.isVariableStatement(statement)) {
+		return statement.declarationList.declarations.some(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === name)
+	}
+	return (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) && statement.name?.text === name
+}
+
+/**
+ * Exécute le `<script setup>` de l'extrait d'une story, tel que recopié par un consommateur,
+ * et renvoie la valeur de la variable `name` déclarée à sa racine.
+ * Les imports sont retirés et remplacés par les valeurs de `imports` (fonction vide par défaut).
+ * Lève une erreur si l'extrait n'a pas de `<script setup>` ou ne déclare pas `name`.
+ */
+export function evaluateSnippetBinding(
+	story: StoryWithSourceCode,
+	name: string,
+	imports: Record<string, unknown> = {},
+): unknown {
+	const content = parseSnippet(story).descriptor.scriptSetup?.content
+	if (content === undefined) {
+		throw new Error('L\'extrait ne contient pas de <script setup>.')
+	}
+
+	const source = ts.createSourceFile(`${SNIPPET_ID}.ts`, content, ts.ScriptTarget.ES2022)
+	const statements = source.statements.filter(statement => !ts.isImportDeclaration(statement))
+	if (!statements.some(statement => declaresBinding(statement, name))) {
+		throw new Error(`L'extrait ne déclare pas « ${name} ».`)
+	}
+
+	const names = source.statements.filter(ts.isImportDeclaration).flatMap(importedNames)
+	const script = ts.factory.updateSourceFile(source, statements)
+	const { outputText } = ts.transpileModule(`${ts.createPrinter().printFile(script)}\nreturn ${name}`, {
+		compilerOptions: { target: ts.ScriptTarget.ES2022 },
+	})
+	const noop = () => undefined
+	return new Function(...names, outputText)(...names.map(imported => (imported in imports ? imports[imported] : noop)))
+}
+
+/**
+ * Imports nommés du `<script setup>` de l'extrait d'une story absents de leur module,
+ * au format `module:export`. `modules` associe chaque module importable à ses exports réels.
+ * Un module absent de `modules` est signalé pour chacun de ses imports.
+ * Les imports de type (`import type`, `import { type X }`) sont ignorés : ils n'existent pas à l'exécution.
+ */
+export function findUnknownSnippetImports(
+	story: StoryWithSourceCode,
+	modules: Record<string, Record<string, unknown>>,
+): string[] {
+	const content = parseSnippet(story).descriptor.scriptSetup?.content ?? ''
+	const source = ts.createSourceFile(`${SNIPPET_ID}.ts`, content, ts.ScriptTarget.ES2022)
+
+	return source.statements.filter(ts.isImportDeclaration).flatMap((declaration) => {
+		const clause = declaration.importClause
+		const bindings = clause?.namedBindings
+		if (!clause || clause.isTypeOnly || !bindings || !ts.isNamedImports(bindings) || !ts.isStringLiteral(declaration.moduleSpecifier)) {
+			return []
+		}
+		const moduleName = declaration.moduleSpecifier.text
+		const exports = modules[moduleName]
+		return bindings.elements
+			.filter(element => !element.isTypeOnly)
+			// `import { A as B }` : c'est `A` qui doit être exporté par le module
+			.map(element => (element.propertyName ?? element.name).text)
+			.filter(name => exports === undefined || !(name in exports))
+			.map(name => `${moduleName}:${name}`)
+	})
 }

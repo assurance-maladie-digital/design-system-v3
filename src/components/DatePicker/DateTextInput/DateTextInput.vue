@@ -77,6 +77,8 @@
 	const props = withDefaults(defineProps<DateTextInputProps>(), {
 		autoClamp: false,
 		bgColor: 'white',
+		calendarActivator: false,
+		clearable: true,
 		customSuccessRules: () => [],
 		customRules: () => [],
 		customWarningRules: () => [],
@@ -97,6 +99,7 @@
 		format: locales.formatDefault,
 		hint: undefined,
 		isOutlined: true,
+		hideDetails: false,
 		isValidateOnBlur: true,
 		maxErrors: 1,
 		modelValue: undefined,
@@ -147,6 +150,8 @@
 	// `pushError` est conservé pour failWithDisplayedError() qui a besoin d'un accès direct
 	// pour afficher des erreurs locales (ex: format invalide) sans passer par le flow complet.
 	const {
+		validity: formValidity,
+		isPristine: formIsPristine,
 		hasError: bridgeHasError,
 		hasWarning: bridgeHasWarning,
 		hasSuccess: bridgeHasSuccess,
@@ -246,7 +251,20 @@
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
-	const formatDescription = computed(() => `${locales.formatHint} ${displayFormat.value}`)
+	const calendarHintId = `${formatDescriptionId}-calendar`
+	// Le helpText (affiché et associé au champ par SyTextField) remplace la description de
+	// format masquée, qui l'annoncerait en double : seul l'avertissement du calendrier reste à part.
+	const hasHelpText = computed(() => Boolean(props.helpText?.trim()))
+	const hasSeparateCalendarHint = computed(() => hasHelpText.value && props.calendarActivator)
+	const describedBy = computed(() => {
+		if (!hasHelpText.value) return formatDescriptionId
+		return hasSeparateCalendarHint.value ? calendarHintId : undefined
+	})
+	const formatDescription = computed(() => {
+		const formatHint = isRange.value ? locales.rangeFormatHint : locales.formatHint
+		const description = `${formatHint} ${locales.dateFormatDescription(displayFormat.value)}`
+		return props.calendarActivator ? `${description}. ${locales.activationOpensCalendar}` : description
+	})
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => {
@@ -1308,6 +1326,8 @@
 	}
 
 	const publicApi: DateTextInputPublicApi = {
+		formValidity,
+		formIsPristine,
 		validateOnSubmit,
 		validate: bridgeValidate,
 		reset,
@@ -1371,7 +1391,7 @@
 		<SyTextField
 			ref="inputRef"
 			v-model="inputValue"
-			:aria-describedby="formatDescriptionId"
+			:aria-describedby="describedBy"
 			:class="{
 				'error-field': isOnError,
 				'warning-field': isOnWarning,
@@ -1388,8 +1408,16 @@
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>
 		<DatePickerLiveRegion
+			v-if="!hasHelpText"
 			:id="formatDescriptionId"
 			:text="formatDescription"
+			live="off"
+		/>
+		<DatePickerLiveRegion
+			v-if="hasSeparateCalendarHint"
+			:id="calendarHintId"
+			:text="locales.activationOpensCalendar"
+			live="off"
 		/>
 	</div>
 </template>

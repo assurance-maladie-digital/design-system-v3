@@ -1375,7 +1375,7 @@ describe('SyServerTable', () => {
 			await wrapper.vm.$nextTick()
 			await vi.dynamicImportSettled()
 
-			const filterThs = wrapper.findAll('tr.filters th')
+			const filterThs = wrapper.findAll('tr.filters td')
 			const truncatedFilterTh = filterThs.find(th => (th.attributes('style') || '').includes('max-width'))
 
 			expect(truncatedFilterTh).toBeDefined()

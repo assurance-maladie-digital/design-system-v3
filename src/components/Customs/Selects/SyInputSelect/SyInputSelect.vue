@@ -79,6 +79,7 @@
 	}, { immediate: true })
 
 	const isOpen = ref(false)
+	const menu = ref<HTMLElement | null>(null)
 	const selectedItem = ref<Record<string, unknown> | string | null>(props.modelValue)
 	const hasError = ref(false)
 
@@ -97,6 +98,7 @@
 	})
 
 	const inputId = `sy-input-select-${useId()}`
+	const listId = `${inputId}-list`
 
 	const selectItem = async (item: unknown) => {
 		if (props.readonly || props.disabled) return
@@ -105,6 +107,27 @@
 		isOpen.value = false
 		await validateField(item)
 		emit('update:errorMessages', localErrorMessages.value)
+	}
+
+	const focusTrigger = () => {
+		menu.value?.focus()
+	}
+
+	// La liste (ou le bouton d'effacement) est démontée : le focus revient au déclencheur
+	// au lieu de partir sur le body.
+	const closeListAndFocusTrigger = () => {
+		closeList()
+		focusTrigger()
+	}
+
+	const selectOption = async (item: unknown) => {
+		await selectItem(item)
+		focusTrigger()
+	}
+
+	const clearSelection = async () => {
+		await selectItem(null)
+		focusTrigger()
 	}
 
 	const getItemText = (item: unknown) => {
@@ -117,6 +140,14 @@
 		}
 		return labelWithAsterisk.value
 	})
+
+	const isClearVisible = computed(() => props.clearable && Boolean(selectedItem.value))
+
+	// Nom accessible du déclencheur : libellé du champ, suivi du texte de la valeur sélectionnée
+	const triggerLabel = computed(() => locales.value.triggerLabel(
+		labelWithAsterisk.value,
+		selectedItem.value && typeof selectedItem.value === 'object' ? selectedItemText.value : undefined,
+	))
 
 	const isShouldDisplayAsterisk = computed(() => {
 		return props.displayAsterisk && props.required
@@ -154,7 +185,6 @@
 		hasError.value = newValue.length > 0
 	})
 
-	const menu = ref<HTMLElement | null>(null)
 	const menuWidth = ref('')
 	onMounted(() => {
 		watch(
@@ -286,57 +316,75 @@
 		:error-messages="localErrorMessages"
 		:label="labelWithAsterisk"
 		:title="labelWithAsterisk"
-		role="menu"
 		:readonly="props.readonly"
 		:disabled="props.disabled"
 		@click="checkForErrors"
 	>
-		<div
-			ref="menu"
-			v-click-outside="closeList"
-			:class="[
-				'sy-input-select',
-				buttonClass,
-				hasError ? 'text-error' : 'text-'+options.menu.color,
-				hasError ? 'error--text' : '',
-				bgColor ? 'bg-color' : '',
-			]"
-			role="menu"
-			tabindex="0"
-			@click="toggleMenu"
-			@keydown.enter.prevent="toggleMenu"
-			@keydown.space.prevent="toggleMenu"
-		>
-			<span :class="{ 'error--text': hasError }">{{ selectedItemText }}</span>
-			<SyIcon
-				v-if="hasError"
-				class="ml-2"
-				color="error"
-				:icon="mdiInformation"
-				decorative
-			/>
-			<SyIcon
-				:icon="mdiChevronDown"
-				decorative
-			/>
-			<SyIcon
-				v-if="selectedItemText && props.clearable"
-				:icon="mdiCloseCircle"
-				:label="locales.clearLabel"
-				:decorative="false"
+		<div class="sy-input-select__field">
+			<div
+				ref="menu"
+				v-click-outside="closeList"
+				:class="[
+					'sy-input-select',
+					buttonClass,
+					hasError ? 'text-error' : 'text-'+options.menu.color,
+					hasError ? 'error--text' : '',
+					bgColor ? 'bg-color' : '',
+					isClearVisible ? 'sy-input-select--clearable' : '',
+				]"
 				role="button"
-				@click.stop.prevent="selectItem(null)"
-			/>
+				:aria-label="triggerLabel"
+				aria-haspopup="listbox"
+				:aria-expanded="isOpen ? 'true' : 'false'"
+				:aria-controls="isOpen ? listId : undefined"
+				tabindex="0"
+				@click="toggleMenu"
+				@keydown.enter.prevent="toggleMenu"
+				@keydown.space.prevent="toggleMenu"
+				@keydown.esc="closeList"
+			>
+				<span :class="{ 'error--text': hasError }">{{ selectedItemText }}</span>
+				<SyIcon
+					v-if="hasError"
+					class="ml-2"
+					color="error"
+					:icon="mdiInformation"
+					decorative
+				/>
+				<SyIcon
+					:icon="mdiChevronDown"
+					decorative
+				/>
+			</div>
+			<!-- Hors du déclencheur : un bouton ne peut pas contenir d'élément interactif -->
+			<button
+				v-if="isClearVisible"
+				type="button"
+				:class="[
+					'sy-input-select__clear',
+					hasError ? 'text-error' : 'text-'+options.menu.color,
+				]"
+				:aria-label="locales.clearLabel"
+				@click.stop.prevent="clearSelection"
+			>
+				<SyIcon
+					:icon="mdiCloseCircle"
+					decorative
+				/>
+			</button>
 		</div>
 		<VList
 			v-if="isOpen"
+			:id="listId"
+			role="listbox"
 			:aria-label="props.label"
 			:is-header-toolbar="props.isHeaderToolbar"
 			:style="`min-width:${menuWidth}px; ${props.outlined ? 'top: 36px;' : 'top: 30px;'}`"
 			:title="props.label"
 			class="v-list"
 			v-bind="options.list"
-			@keydown.esc.prevent="isOpen = false"
+			tabindex="-1"
+			@keydown.esc.prevent="closeListAndFocusTrigger"
 		>
 			<VListItem
 				v-for="(item, index) in formattedItems"
@@ -344,11 +392,11 @@
 				:ref="'options-' + index"
 				:aria-selected="selectedItem === item"
 				:base-color="options.option.color"
-				:tabindex="index + 1"
+				tabindex="0"
 				class="v-list-item"
 				role="option"
 				v-bind="options.option"
-				@click="selectItem(item)"
+				@click="selectOption(item)"
 			>
 				<VListItemTitle>
 					{{ getItemText(item) }}
@@ -367,6 +415,39 @@
 .v-input {
 	cursor: pointer;
 	position: relative;
+}
+
+.sy-input-select__field {
+	position: relative;
+	display: inline-flex;
+	max-width: 100%;
+}
+
+// Place réservée au bouton d'effacement, superposé à droite du déclencheur
+.sy-input-select--clearable {
+	padding-inline-end: 40px;
+}
+
+.sy-input-select__clear {
+	position: absolute;
+	inset-block: 0;
+	inset-inline-end: 8px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 24px;
+	margin-block: auto;
+	height: 24px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	cursor: pointer;
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+	}
 }
 
 .v-list {

@@ -42,6 +42,7 @@ import {
       <li><strong>Utiliser dans une balise de formulaire</strong> : Intégrer le composant dans une balise <code>form</code> ou le composant <code>SyForm</code> pour la sémantique et l'accessibilité.</li>
       <li><strong>Fournir des messages d'erreur clairs</strong> : Utiliser des messages d'erreur explicites et accessibles pour informer les utilisateurs des problèmes de téléchargement.</li>
       <li><strong>Gérer les états de téléchargement</strong> : Fournir des indications visuelles et textuelles pour les différents états de téléchargement, y compris les erreurs et les succès.</li>
+      <li><strong>Éviter les champs désactivés</strong> : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférez un champ actif accompagné d'un message expliquant la contrainte, ou n'affichez le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.</li>
     </ul>
   </BestPracticesSection>
 

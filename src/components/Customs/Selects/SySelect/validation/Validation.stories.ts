@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SySelect from '../SySelect.vue'
 import SyForm from '../../../SyForm/SyForm.vue'
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, nextTick } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
 
@@ -14,7 +14,7 @@ const meta: Meta<typeof SySelect> = {
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof SySelect>
+}
 
 export default meta
 
@@ -25,6 +25,7 @@ const items = [
 	{ text: 'Option 2', value: '2' },
 	{ text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 export const WithError: Story = {
 	parameters: {
@@ -47,7 +48,7 @@ export const WithError: Story = {
       {
         type: 'custom',
         options: {
-          validate: (v) => v !== '1',
+          validate: (v: string | null) => v !== '1',
           message: 'Option 1 n\\'est pas autorisée, choisissez Option 2 ou 3.'
         }
       }
@@ -68,7 +69,7 @@ const items = [
   { text: 'Option 3', value: '3' },
 ]
 
-const selectRef = ref(null)
+const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 onMounted(() => {
   selectRef.value?.validateOnSubmit()
@@ -136,7 +137,7 @@ export const WithWarning: Story = {
       {
         type: 'custom',
         options: {
-          validate: (v) => v !== '1',
+          validate: (v: string | null) => v !== '1',
           warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
         }
       }
@@ -148,14 +149,21 @@ export const WithWarning: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
-const value = ref<string | null>(null)
+
+const value = ref<string | null>('1')
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+
+const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+onMounted(() => {
+  selectRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -220,7 +228,7 @@ export const WithSuccess: Story = {
       {
         type: 'custom',
         options: {
-          validate: (v) => v !== null && v !== undefined,
+          validate: (v: string | null) => v !== null,
           successMessage: 'Option sélectionnée avec succès.'
         }
       }
@@ -232,14 +240,21 @@ export const WithSuccess: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
-const value = ref(null)
+
+const value = ref<string | null>('1')
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+
+const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+onMounted(() => {
+  selectRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -272,7 +287,7 @@ const items = [
 						{
 							type: 'custom',
 							options: {
-								validate: (v) => v !== null && v !== undefined,
+								validate: (v) => v !== null,
 								successMessage: 'Option sélectionnée avec succès.'
 							}
 						}
@@ -319,13 +334,13 @@ export const NoValidateOnBlur: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref(null)
-const selectRef = ref(null)
-const validationMode = ref('neutral')
+const value = ref<string | null>(null)
+const selectRef = ref<{ validateOnSubmit: () => Promise<boolean>, clearValidation: () => void } | null>(null)
+const validationMode = ref<'neutral' | 'invalid' | 'valid'>('neutral')
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
@@ -336,7 +351,7 @@ const customRules = computed(() => validationMode.value === 'invalid'
   ? [{
       type: 'custom',
       options: {
-        validate: (v) => v !== '1',
+        validate: (v: string | null) => v !== '1',
         message: "Option 1 n'est pas autorisée."
       }
     }]
@@ -356,7 +371,7 @@ const customSuccessRules = computed(() => {
     return [{
       type: 'custom',
       options: {
-        validate: (v) => v !== null && v !== undefined,
+        validate: (v: string | null) => v !== null,
         successMessage: 'Option sélectionnée avec succès.'
       }
     }]
@@ -365,14 +380,25 @@ const customSuccessRules = computed(() => {
   return []
 })
 
-const handleManualChange = (newValue) => {
+const handleManualChange = async (newValue: string | null) => {
   validationMode.value = 'neutral'
   value.value = newValue
+  await nextTick()
+  selectRef.value?.clearValidation()
 }
 
-const applyButtonValue = async (newValue) => {
+const applyButtonValue = async (newValue: string | null) => {
+  if (newValue === null) {
+    validationMode.value = 'neutral'
+    value.value = null
+    await nextTick()
+    selectRef.value?.clearValidation()
+    return
+  }
+
   validationMode.value = newValue === '1' ? 'invalid' : newValue ? 'valid' : 'neutral'
   value.value = newValue
+  await nextTick()
   await selectRef.value?.validateOnSubmit()
 }
 </script>`,
@@ -390,7 +416,7 @@ const applyButtonValue = async (newValue) => {
 			components: { SySelect, VBtn },
 			setup() {
 				const value = ref<string | null>(null)
-				const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+				const selectRef = ref<{ validateOnSubmit: () => Promise<boolean>, clearValidation: () => void } | null>(null)
 				const validationMode = ref<'neutral' | 'invalid' | 'valid'>('neutral')
 
 				const customRules = computed(() => validationMode.value === 'invalid'
@@ -417,7 +443,7 @@ const applyButtonValue = async (newValue) => {
 						return [{
 							type: 'custom',
 							options: {
-								validate: (v: string | null) => v !== null && v !== undefined,
+								validate: (v: string | null) => v !== null,
 								successMessage: 'Option sélectionnée avec succès.',
 							},
 						}]
@@ -426,14 +452,25 @@ const applyButtonValue = async (newValue) => {
 					return []
 				})
 
-				const handleManualChange = (newValue: string | null) => {
+				const handleManualChange = async (newValue: string | null) => {
 					validationMode.value = 'neutral'
 					value.value = newValue
+					await nextTick()
+					selectRef.value?.clearValidation()
 				}
 
 				const applyButtonValue = async (newValue: string | null) => {
+					if (newValue === null) {
+						validationMode.value = 'neutral'
+						value.value = null
+						await nextTick()
+						selectRef.value?.clearValidation()
+						return
+					}
+
 					validationMode.value = newValue === '1' ? 'invalid' : newValue ? 'valid' : 'neutral'
 					value.value = newValue
+					await nextTick()
 					await selectRef.value?.validateOnSubmit()
 				}
 
@@ -498,8 +535,8 @@ const items = [
 	{ text: 'Option 3', value: '3' },
 ]
 
-const value1 = ref(null)
-const value2 = ref(null)
+const value1 = ref<string | null>(null)
+const value2 = ref<string | null>(null)
 </script>`,
 			},
 		],
@@ -511,12 +548,12 @@ const value2 = ref(null)
 		return {
 			components: { SySelect },
 			setup() {
-				const value1 = ref(null)
-				const value2 = ref(null)
+				const value1 = ref<string | null>(null)
+				const value2 = ref<string | null>(null)
 				return { args, value1, value2 }
 			},
 			template: `
-				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
+				<div class="pa-4 d-flex flex-column ga-4">
 					<SySelect
 						v-model="value1"
 						v-bind="args"
@@ -586,7 +623,7 @@ const options = [
   { text: 'Option 3', value: '3' },
 ]
 
-const onSubmit = (event) => {
+const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide : ' + JSON.stringify(formData.value))
   } else {
@@ -680,8 +717,8 @@ import { ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
-const value = ref('')
-const selectRef = ref(null)
+const value = ref<string | null>('')
+const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
@@ -728,7 +765,7 @@ async function onSubmit() {
 			template: `
 				<div class="pa-4">
 					<VForm @submit.prevent="onSubmit">
-						<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de intégration.</p>
+						<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de l'intégration.</p>
 						<SySelect
 							ref="selectRef"
 							v-model="value"
@@ -762,7 +799,7 @@ export const SyFormVuetifyValidation: Story = {
       label="Option"
       use-vuetify-validation
       :show-success-messages="false"
-      :rules="[v => !!v || 'Ce champ est requis']"
+      :rules="[requiredRule]"
     />
     <VBtn type="submit" color="primary" class="mt-4">
       Soumettre
@@ -778,12 +815,13 @@ import { ref } from 'vue'
 import { SySelect, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref(null)
+const value = ref<string | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 function onSubmit(event: { isValid: boolean }) {
   if (event.isValid) {
@@ -806,7 +844,7 @@ function onSubmit(event: { isValid: boolean }) {
 	render: args => ({
 		components: { SySelect, SyForm, VBtn },
 		setup() {
-			const value = ref(null)
+			const value = ref<string | null>(null)
 
 			function onSubmit(event: { isValid: boolean }) {
 				if (event.isValid) {
@@ -817,7 +855,7 @@ function onSubmit(event: { isValid: boolean }) {
 				}
 			}
 
-			return { args, value, onSubmit }
+			return { args, value, requiredRule, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
@@ -825,7 +863,7 @@ function onSubmit(event: { isValid: boolean }) {
 					<SySelect
 						v-model="value"
 						v-bind="args"
-						:rules="[v => !!v || 'Ce champ est requis']"
+						:rules="[requiredRule]"
 					/>
 					<VBtn
 						type="submit"
@@ -858,7 +896,7 @@ export const VFormAndVuetifyValidation: Story = {
       :items="items"
       label="Option"
       use-vuetify-validation
-      :rules="[v => !!v || 'Ce champ est requis']"
+      :rules="[requiredRule]"
     />
     <VBtn type="submit" color="primary" class="mt-4">
       Soumettre
@@ -874,18 +912,21 @@ import { ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
-const value = ref(null)
-const formRef = ref(null)
+const value = ref<string | null>(null)
+const formRef = ref<InstanceType<typeof VForm> | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 async function onSubmit() {
   const result = await formRef.value?.validate()
   if (result?.valid) {
     alert('Formulaire valide : ' + value.value)
+  } else {
+    alert('Formulaire invalide : veuillez choisir une option.')
   }
 }
 </script>`,
@@ -901,7 +942,7 @@ async function onSubmit() {
 	render: args => ({
 		components: { SySelect, VBtn, VForm },
 		setup() {
-			const value = ref(null)
+			const value = ref<string | null>(null)
 			const formRef = ref<InstanceType<typeof VForm> | null>(null)
 
 			async function onSubmit() {
@@ -909,9 +950,12 @@ async function onSubmit() {
 				if (result?.valid) {
 					alert(`Formulaire valide : ${value.value}`)
 				}
+				else {
+					alert('Formulaire invalide : veuillez choisir une option.')
+				}
 			}
 
-			return { args, value, formRef, onSubmit }
+			return { args, value, formRef, requiredRule, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
@@ -919,7 +963,7 @@ async function onSubmit() {
 					<SySelect
 						v-model="value"
 						v-bind="args"
-						:rules="[v => !!v || 'Ce champ est requis']"
+						:rules="[requiredRule]"
 					/>
 					<VBtn
 						type="submit"

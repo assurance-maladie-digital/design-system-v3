@@ -41,6 +41,32 @@ describe('SyTabs - Visual regression tests', () => {
 				cy.wrap($tab).should('have.css', 'color', 'rgb(84, 88, 89)')
 			})
 	})
+
+	// Casse vérifiée sur le style calculé : les libellés restent dans leur casse d'origine
+	// dans le DOM, seule la règle CSS text-transform les met en forme (issue #2770).
+	it('displays the labels in uppercase by default', () => {
+		cy.mountWithVuetify(SyTabs, {
+			props: { items: defaultItems },
+		})
+
+		cy.get('.sy-tabs__button').each(($tab) => {
+			cy.wrap($tab).should('have.css', 'text-transform', 'uppercase')
+		})
+		cy.get('.sy-tabs__button').first().invoke('text').invoke('trim').should('eq', 'Onglet 1')
+	})
+
+	it('applies the text-transform option to the labels (issue #2770)', () => {
+		cy.mountWithVuetify(SyTabs, {
+			props: {
+				items: defaultItems,
+				vuetifyOptions: { tab: { 'text-transform': 'none' } },
+			},
+		})
+
+		cy.get('.sy-tabs__button').each(($tab) => {
+			cy.wrap($tab).should('have.css', 'text-transform', 'none')
+		})
+	})
 })
 
 // Déclenche :focus-visible via l'option native focus({ focusVisible: true }).

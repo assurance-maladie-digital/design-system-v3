@@ -83,17 +83,16 @@ L'option B, invalide, est présélectionnée et la validation est déclenchée a
 import { onMounted, ref } from 'vue'
 import { SyRadioGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('b')
-const radioGroupRef = ref(null)
+const radioGroupRef = ref<InstanceType<typeof SyRadioGroup> | null>(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
 	{ label: 'Option B', value: 'b' },
 ]
 
-const customRules: ValidationRule[] = [
+const customRules = [
 	{
 		type: 'custom',
 		options: {
@@ -203,17 +202,16 @@ Utilise les **customWarningRules** pour afficher un avertissement non bloquant.
 import { onMounted, ref } from 'vue'
 import { SyRadioGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('b')
-const radioGroupRef = ref(null)
+const radioGroupRef = ref<InstanceType<typeof SyRadioGroup> | null>(null)
 
 const options = [
-	{ label: 'Option A (recommandée)', value: 'a' },
+	{ label: 'Option A', value: 'a' },
 	{ label: 'Option B', value: 'b' },
 ]
 
-const customWarningRules: ValidationRule[] = [
+const customWarningRules = [
 	{
 		type: 'custom',
 		options: {
@@ -224,7 +222,7 @@ const customWarningRules: ValidationRule[] = [
 	},
 ]
 
-const onSubmit = (event: { isValid: boolean }) => {
+const onSubmit = () => {
 	alert('Formulaire soumis (les warnings ne bloquent pas la soumission)')
 }
 
@@ -313,17 +311,16 @@ export const WithSuccess: Story = {
 import { onMounted, ref } from 'vue'
 import { SyRadioGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('a')
-const radioGroupRef = ref(null)
+const radioGroupRef = ref<InstanceType<typeof SyRadioGroup> | null>(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
 	{ label: 'Option B', value: 'b' },
 ]
 
-const customSuccessRules: ValidationRule[] = [
+const customSuccessRules = [
 	{
 		type: 'custom',
 		options: {
@@ -593,7 +590,7 @@ import { SyRadioGroup } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const selected = ref<string | null>(null)
-const radioRef = ref(null)
+const radioRef = ref<InstanceType<typeof SyRadioGroup> | null>(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
@@ -691,7 +688,6 @@ Utilise le composant natif **VForm** de Vuetify avec la prop **useVuetifyValidat
 import { ref } from 'vue'
 import { SyRadioGroup } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
-import type { VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>(null)
 const form = ref<InstanceType<typeof VForm> | null>(null)
@@ -701,7 +697,7 @@ const options = [
 	{ label: 'Option B', value: 'b' },
 ]
 
-const rules: VuetifyValidationRule[] = [
+const rules = [
 	(v: string | null) => !!v || 'Une sélection est requise',
 	(v: string | null) => v === 'a' || "Vous devez sélectionner l'option A",
 ]
@@ -794,7 +790,6 @@ Combine **SyForm** avec la prop **useVuetifyValidation** pour utiliser les règl
 import { ref } from 'vue'
 import { SyRadioGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>(null)
 
@@ -803,7 +798,7 @@ const options = [
 	{ label: 'Option B', value: 'b' },
 ]
 
-const rules: VuetifyValidationRule[] = [
+const rules = [
 	(v: string | null) => !!v || 'Une sélection est requise',
 ]
 

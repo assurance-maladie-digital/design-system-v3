@@ -3354,6 +3354,42 @@
   ],
   "Captcha": [
     {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -3490,6 +3526,42 @@
     }
   ],
   "CaptchaAlert": [
+    {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -3628,6 +3700,42 @@
   ],
   "CaptchaBase": [
     {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -3764,6 +3872,42 @@
     }
   ],
   "CaptchaBtn": [
+    {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -3902,6 +4046,42 @@
   ],
   "CaptchaForm": [
     {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -4038,6 +4218,42 @@
     }
   ],
   "CaptchaHelpdesk": [
+    {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -4176,6 +4392,42 @@
   ],
   "CaptchaImg": [
     {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -4312,6 +4564,42 @@
     }
   ],
   "CaptchaInformation": [
+    {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -5157,6 +5445,31 @@
   ],
   "CopyBtn": [
     {
+      "hash": "4a56cc44a3c23ee4ae292d39085642331e2ddba7",
+      "date": "2026-11-09 10:03:45 +0100",
+      "dateFr": "09/11/2026",
+      "message": "Doc: extract tests snipets on CI (#2771)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d5e9e1efeaae01680bcf73e50a2aec18f229535d",
+      "date": "2026-10-30 11:51:24 +0100",
+      "dateFr": "30/10/2026",
+      "message": "CopyBtn : nom accessible des exemples (aria-label) et import de VIcon dans SlotIcon (#2725)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
       "hash": "eb0307f7c72cde537c9c3f26980118810f0adc9c",
       "date": "2026-10-05 10:40:12 +0200",
       "dateFr": "05/10/2026",
@@ -5273,6 +5586,17 @@
     }
   ],
   "SelectBtnField": [
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
       "date": "2026-10-23 15:21:56 +0200",
@@ -5449,6 +5773,50 @@
   ],
   "SyAutocomplete": [
     {
+      "hash": "c1780f784b6f78041cf7b2937021c5db284f5300",
+      "date": "2026-11-16 15:15:12 +0100",
+      "dateFr": "16/11/2026",
+      "message": "SyAutocomplete : annule la recherche en attente après sélection (#2796)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c877bd16e2621a0d82ef6d544685de6a58c1f5c7",
+      "date": "2026-11-13 12:38:09 +0100",
+      "dateFr": "13/11/2026",
+      "message": "SyAutocomplete : réinitialiser le filtrage après sélection (#2766)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
       "date": "2026-10-23 15:21:56 +0200",
       "dateFr": "23/10/2026",
@@ -5605,6 +5973,28 @@
   ],
   "SyInputSelect": [
     {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "312a37bc46ce5d3bda4738d6b28eb2a56421e919",
       "date": "2026-10-15 16:34:04 +0200",
       "dateFr": "15/10/2026",
@@ -5717,6 +6107,28 @@
     }
   ],
   "SySelect": [
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
       "date": "2026-10-22 16:48:50 +0200",
@@ -6043,6 +6455,17 @@
   ],
   "SyCheckBoxGroup": [
     {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -6077,6 +6500,17 @@
     }
   ],
   "SyCheckbox": [
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "9099bd12f8b762c86fff317a56be129231501fbd",
       "date": "2026-08-27 16:25:29 +0200",
@@ -6287,6 +6721,28 @@
   ],
   "SyForm": [
     {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "e9328b1e7366761231ea1f35445b2f450d0d7028",
+      "date": "2026-11-12 15:17:29 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Fix/syform datepicker validity (#2786)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "312a37bc46ce5d3bda4738d6b28eb2a56421e919",
       "date": "2026-10-15 16:34:04 +0200",
       "dateFr": "15/10/2026",
@@ -6321,6 +6777,54 @@
       "labels": [
         "Documentation"
       ]
+    }
+  ],
+  "IntegrationMixedForm": [
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "e9328b1e7366761231ea1f35445b2f450d0d7028",
+      "date": "2026-11-12 15:17:29 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Fix/syform datepicker validity (#2786)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "IntegrationTestForm": [
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "e9328b1e7366761231ea1f35445b2f450d0d7028",
+      "date": "2026-11-12 15:17:29 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Fix/syform datepicker validity (#2786)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
     }
   ],
   "SyIcon": [
@@ -6802,6 +7306,20 @@
   ],
   "SyPagination": [
     {
+      "hash": "6679da2dfe12ab16e9948bf0e891d1d534934667",
+      "date": "2026-11-05 10:53:45 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyTable: accessibilité (#2622)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -6904,6 +7422,17 @@
     }
   ],
   "SyRadioGroup": [
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
       "date": "2026-10-23 15:21:56 +0200",
@@ -7184,6 +7713,78 @@
     }
   ],
   "FieldState": [
+    {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "72ab8cc2f622395911f2a005db59eef29ead97d8",
+      "date": "2026-11-04 17:28:39 +0100",
+      "dateFr": "04/11/2026",
+      "message": "SyTextField : contraste du texte d'aide, du préfixe, du suffixe et du libellé flottant (#2729)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
+      "hash": "dd47b205d4ed7d88049aca5be0be4f9e0196cd4d",
+      "date": "2026-11-04 16:12:49 +0100",
+      "dateFr": "04/11/2026",
+      "message": "Ajout de la prop validate-on (#2723)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
@@ -7544,6 +8145,78 @@
     }
   ],
   "SyTextField": [
+    {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "72ab8cc2f622395911f2a005db59eef29ead97d8",
+      "date": "2026-11-04 17:28:39 +0100",
+      "dateFr": "04/11/2026",
+      "message": "SyTextField : contraste du texte d'aide, du préfixe, du suffixe et du libellé flottant (#2729)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
+      "hash": "dd47b205d4ed7d88049aca5be0be4f9e0196cd4d",
+      "date": "2026-11-04 16:12:49 +0100",
+      "dateFr": "04/11/2026",
+      "message": "Ajout de la prop validate-on (#2723)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
@@ -8104,6 +8777,116 @@
   ],
   "DatePicker": [
     {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f4309d363b06c14e1e9e1e64013ac2998bc039ce",
+      "date": "2026-11-12 12:04:14 +0100",
+      "dateFr": "12/11/2026",
+      "message": "DatePicker : fiabilise le focus lors de la navigation clavier entre les mois (#2784)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "37fa8bd63302c14c17fea1aaed077e2afa958987",
+      "date": "2026-11-12 11:46:26 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Feat/datepicker add helptext (#2783)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4cf321da54ef73fc4bf0681b216cf88c6deca201",
+      "date": "2026-11-10 09:25:26 +0100",
+      "dateFr": "10/11/2026",
+      "message": "DatePicker : ajout d'un label ARIA sur la région de liste des années (#2775)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "84c7fb89fdfe6e0e6cadfd46d9855f652857ae6e",
+      "date": "2026-11-09 15:50:29 +0100",
+      "dateFr": "09/11/2026",
+      "message": "DatePicker : Amelioration pour lecteur d'ecran (#2774)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "fa5dacdaa720b57ff03fc5ae44081860a2f93db7",
+      "date": "2026-11-06 16:10:20 +0100",
+      "dateFr": "06/11/2026",
+      "message": "DatePicker : ajout d'une notice d'accessibilité sur l'utilisation du calendrier (#2764)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4c7df625ec5e152b85d6917e318c209b3ba21a6a",
+      "date": "2026-11-05 14:48:43 +0100",
+      "dateFr": "05/11/2026",
+      "message": "DatePicker : permettre de désactiver l'attribut title avec title false (#2750)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -8276,6 +9059,94 @@
     }
   ],
   "ComplexDatePicker": [
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f4309d363b06c14e1e9e1e64013ac2998bc039ce",
+      "date": "2026-11-12 12:04:14 +0100",
+      "dateFr": "12/11/2026",
+      "message": "DatePicker : fiabilise le focus lors de la navigation clavier entre les mois (#2784)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "37fa8bd63302c14c17fea1aaed077e2afa958987",
+      "date": "2026-11-12 11:46:26 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Feat/datepicker add helptext (#2783)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4cf321da54ef73fc4bf0681b216cf88c6deca201",
+      "date": "2026-11-10 09:25:26 +0100",
+      "dateFr": "10/11/2026",
+      "message": "DatePicker : ajout d'un label ARIA sur la région de liste des années (#2775)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "84c7fb89fdfe6e0e6cadfd46d9855f652857ae6e",
+      "date": "2026-11-09 15:50:29 +0100",
+      "dateFr": "09/11/2026",
+      "message": "DatePicker : Amelioration pour lecteur d'ecran (#2774)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4c7df625ec5e152b85d6917e318c209b3ba21a6a",
+      "date": "2026-11-05 14:48:43 +0100",
+      "dateFr": "05/11/2026",
+      "message": "DatePicker : permettre de désactiver l'attribut title avec title false (#2750)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
@@ -8455,6 +9326,149 @@
     }
   ],
   "DatePickerLiveRegion": [
+    {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "e9328b1e7366761231ea1f35445b2f450d0d7028",
+      "date": "2026-11-12 15:17:29 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Fix/syform datepicker validity (#2786)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f4309d363b06c14e1e9e1e64013ac2998bc039ce",
+      "date": "2026-11-12 12:04:14 +0100",
+      "dateFr": "12/11/2026",
+      "message": "DatePicker : fiabilise le focus lors de la navigation clavier entre les mois (#2784)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "37fa8bd63302c14c17fea1aaed077e2afa958987",
+      "date": "2026-11-12 11:46:26 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Feat/datepicker add helptext (#2783)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "715e400e3d0735c1a129293b8fe622eebd6646e4",
+      "date": "2026-11-10 10:13:38 +0100",
+      "dateFr": "10/11/2026",
+      "message": "DatePicker : ajout de la prop clearable (#2779)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4cf321da54ef73fc4bf0681b216cf88c6deca201",
+      "date": "2026-11-10 09:25:26 +0100",
+      "dateFr": "10/11/2026",
+      "message": "DatePicker : ajout d'un label ARIA sur la région de liste des années (#2775)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "84c7fb89fdfe6e0e6cadfd46d9855f652857ae6e",
+      "date": "2026-11-09 15:50:29 +0100",
+      "dateFr": "09/11/2026",
+      "message": "DatePicker : Amelioration pour lecteur d'ecran (#2774)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "fa5dacdaa720b57ff03fc5ae44081860a2f93db7",
+      "date": "2026-11-06 16:10:20 +0100",
+      "dateFr": "06/11/2026",
+      "message": "DatePicker : ajout d'une notice d'accessibilité sur l'utilisation du calendrier (#2764)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4c7df625ec5e152b85d6917e318c209b3ba21a6a",
+      "date": "2026-11-05 14:48:43 +0100",
+      "dateFr": "05/11/2026",
+      "message": "DatePicker : permettre de désactiver l'attribut title avec title false (#2750)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c2702833ebc2cd1d3fc3e1d3822e217c06bca2d2",
+      "date": "2026-11-05 14:36:22 +0100",
+      "dateFr": "05/11/2026",
+      "message": "DateTextInput : description du format de date en langage naturel  (#2748)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
@@ -8810,6 +9824,94 @@
   ],
   "DateTextInput": [
     {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "37fa8bd63302c14c17fea1aaed077e2afa958987",
+      "date": "2026-11-12 11:46:26 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Feat/datepicker add helptext (#2783)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "715e400e3d0735c1a129293b8fe622eebd6646e4",
+      "date": "2026-11-10 10:13:38 +0100",
+      "dateFr": "10/11/2026",
+      "message": "DatePicker : ajout de la prop clearable (#2779)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "84c7fb89fdfe6e0e6cadfd46d9855f652857ae6e",
+      "date": "2026-11-09 15:50:29 +0100",
+      "dateFr": "09/11/2026",
+      "message": "DatePicker : Amelioration pour lecteur d'ecran (#2774)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c2702833ebc2cd1d3fc3e1d3822e217c06bca2d2",
+      "date": "2026-11-05 14:36:22 +0100",
+      "dateFr": "05/11/2026",
+      "message": "DateTextInput : description du format de date en langage naturel  (#2748)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -9045,6 +10147,58 @@
       "dateFr": "22/09/2026",
       "message": "Refactor: Migration de la validation des DatePickers (#2499)",
       "version": "1.1.6",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "BidirectionalComplexValidation": [
+    {
+      "hash": "e9328b1e7366761231ea1f35445b2f450d0d7028",
+      "date": "2026-11-12 15:17:29 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Fix/syform datepicker validity (#2786)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "DatePickerBidirectionalValidation": [
+    {
+      "hash": "e9328b1e7366761231ea1f35445b2f450d0d7028",
+      "date": "2026-11-12 15:17:29 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Fix/syform datepicker validity (#2786)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "DatePickerSyFormValidity": [
+    {
+      "hash": "e9328b1e7366761231ea1f35445b2f450d0d7028",
+      "date": "2026-11-12 15:17:29 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Fix/syform datepicker validity (#2786)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "DatePickerValidationExamples": [
+    {
+      "hash": "e9328b1e7366761231ea1f35445b2f450d0d7028",
+      "date": "2026-11-12 15:17:29 +0100",
+      "dateFr": "12/11/2026",
+      "message": "Fix/syform datepicker validity (#2786)",
+      "version": "1.2.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -9427,6 +10581,20 @@
     }
   ],
   "ErrorPage": [
+    {
+      "hash": "6d9e7d49b94fb6b1738bb3fa4c3aab2b2f131721",
+      "date": "2026-10-30 09:46:02 +0100",
+      "dateFr": "30/10/2026",
+      "message": "ErrorPage : incohérences des stories de ErrorPage (#2684)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Issue"
+      ]
+    },
     {
       "hash": "a9dea254e921bf06a6b343e07fae495ba0ce0ee2",
       "date": "2026-03-25 10:38:49 +0100",
@@ -9940,6 +11108,17 @@
   ],
   "FileUpload": [
     {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -9999,6 +11178,17 @@
     }
   ],
   "FileUploadContent": [
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
@@ -10506,6 +11696,17 @@
   ],
   "HeaderBar": [
     {
+      "hash": "6b192879a8f171e0897bd0af94139cd319eadd5a",
+      "date": "2026-11-16 16:58:00 +0100",
+      "dateFr": "16/11/2026",
+      "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "0d0a38a3c858047c2f33b433dce83932b07d9ee7",
       "date": "2026-10-15 10:39:55 +0200",
       "dateFr": "15/10/2026",
@@ -10779,6 +11980,17 @@
   ],
   "HeaderBurgerMenu": [
     {
+      "hash": "6b192879a8f171e0897bd0af94139cd319eadd5a",
+      "date": "2026-11-16 16:58:00 +0100",
+      "dateFr": "16/11/2026",
+      "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
       "date": "2026-02-11 12:51:15 +0100",
       "dateFr": "11/02/2026",
@@ -10924,6 +12136,17 @@
   ],
   "HeaderMenuSection": [
     {
+      "hash": "6b192879a8f171e0897bd0af94139cd319eadd5a",
+      "date": "2026-11-16 16:58:00 +0100",
+      "dateFr": "16/11/2026",
+      "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "855a71637fe2452668e6ec16945100fcda300f8f",
       "date": "2025-08-04 11:06:46 +0200",
       "dateFr": "04/08/2025",
@@ -10950,6 +12173,17 @@
     }
   ],
   "HeaderSubMenu": [
+    {
+      "hash": "6b192879a8f171e0897bd0af94139cd319eadd5a",
+      "date": "2026-11-16 16:58:00 +0100",
+      "dateFr": "16/11/2026",
+      "message": "HeaderNavigationBar : supprime le titre vide du menu mobile (#2740)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "855a71637fe2452668e6ec16945100fcda300f8f",
       "date": "2025-08-04 11:06:46 +0200",
@@ -11974,6 +13208,28 @@
   ],
   "LunarCalendar": [
     {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -12127,6 +13383,64 @@
     }
   ],
   "MonthPicker": [
+    {
+      "hash": "de8ca2354b804f08065fa2fb2716cb1210049072",
+      "date": "2026-11-16 12:07:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": "DateTextInput : clarifie la description accessible du format des plages de dates (#2787)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6a5b5866fefc280a015a0939d4f179f2a8b458b5",
+      "date": "2026-10-29 16:00:58 +0100",
+      "dateFr": "29/10/2026",
+      "message": " SyTextField : attribut direction invalide, stories copiables et étude sur le contraste (#2718)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
       "date": "2026-10-05 10:18:21 +0200",
@@ -12426,6 +13740,50 @@
     }
   ],
   "NirField": [
+    {
+      "hash": "9ac64776b13cc6e1a24ba4849da1a1e77f820c6f",
+      "date": "2026-11-13 09:44:33 +0100",
+      "dateFr": "13/11/2026",
+      "message": "add banner (#2791)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6e3142372b596716381f4615abe9034f1ceb303e",
+      "date": "2026-11-10 14:25:48 +0100",
+      "dateFr": "10/11/2026",
+      "message": "NirField: aligner controls, extraits et messages  (#2765)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
       "date": "2026-10-05 09:23:58 +0200",
@@ -12758,6 +14116,20 @@
   ],
   "Notification": [
     {
+      "hash": "02e7cf6c7cdf4cb329fc50aed1feae65f869a4a3",
+      "date": "2026-11-10 15:04:45 +0100",
+      "dateFr": "10/11/2026",
+      "message": "NotificationBar : rend les extraits de code des stories autonomes et … (#2776)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -12781,6 +14153,20 @@
     }
   ],
   "NotificationBar": [
+    {
+      "hash": "02e7cf6c7cdf4cb329fc50aed1feae65f869a4a3",
+      "date": "2026-11-10 15:04:45 +0100",
+      "dateFr": "10/11/2026",
+      "message": "NotificationBar : rend les extraits de code des stories autonomes et … (#2776)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -13302,6 +14688,42 @@
   ],
   "PasswordField": [
     {
+      "hash": "0745b36f182dccf98051e2e6105d819690efd4c3",
+      "date": "2026-11-10 14:42:35 +0100",
+      "dateFr": "10/11/2026",
+      "message": "PasswordField : correction incohérences stories (#2749)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Issue"
+      ]
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "e945f9bca8bd9b042d2459700cb37aa26da92083",
       "date": "2026-09-15 14:54:14 +0200",
       "dateFr": "15/09/2026",
@@ -13459,6 +14881,28 @@
   ],
   "PeriodField": [
     {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6827fad03bd70c0af8d890534fb928ec98280175",
+      "date": "2026-11-03 14:25:42 +0100",
+      "dateFr": "03/11/2026",
+      "message": "PeriodField : règles de validation ciblées par borne (#2730)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -13565,6 +15009,28 @@
     }
   ],
   "PhoneField": [
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1a2cca49585943c4e7dab769ffd0816bb000fc51",
+      "date": "2026-11-09 17:01:40 +0100",
+      "dateFr": "09/11/2026",
+      "message": "RGAA : optimisation de l'affichage des champs de formulaire sur mobile (#2762)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "a339f992d96ae62cd9c5a785bf5d9b895e447c00",
       "date": "2026-10-27 09:03:09 +0100",
@@ -13928,6 +15394,20 @@
   ],
   "EmotionPicker": [
     {
+      "hash": "c7aa49a7a792ecc2901b0515e62db322c09dcfdd",
+      "date": "2026-11-04 14:58:22 +0100",
+      "dateFr": "04/11/2026",
+      "message": "EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Feature"
+      ]
+    },
+    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -14071,6 +15551,20 @@
   ],
   "NumberPicker": [
     {
+      "hash": "c7aa49a7a792ecc2901b0515e62db322c09dcfdd",
+      "date": "2026-11-04 14:58:22 +0100",
+      "dateFr": "04/11/2026",
+      "message": "EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Feature"
+      ]
+    },
+    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -14202,6 +15696,20 @@
     }
   ],
   "RatingPicker": [
+    {
+      "hash": "c7aa49a7a792ecc2901b0515e62db322c09dcfdd",
+      "date": "2026-11-04 14:58:22 +0100",
+      "dateFr": "04/11/2026",
+      "message": "EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Feature"
+      ]
+    },
     {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
@@ -14370,6 +15878,20 @@
     }
   ],
   "StarsPicker": [
+    {
+      "hash": "c7aa49a7a792ecc2901b0515e62db322c09dcfdd",
+      "date": "2026-11-04 14:58:22 +0100",
+      "dateFr": "04/11/2026",
+      "message": "EmotionPicker : amélioration du focus pour etre iso maquette (#2726) (#2731)",
+      "version": "1.2.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false,
+      "labels": [
+        "Feature"
+      ]
+    },
     {
       "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
       "date": "2026-07-15 14:44:47 +0200",
@@ -14784,6 +16306,17 @@
   ],
   "StatusPage": [
     {
+      "hash": "183e104e7739130612a9a1916ebe988435dfc839",
+      "date": "2026-11-13 14:23:44 +0100",
+      "dateFr": "13/11/2026",
+      "message": "Fix/status page snippet imports (#2793)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
       "date": "2026-06-17 14:14:22 +0200",
       "dateFr": "17/06/2026",
@@ -15192,7 +16725,61 @@
       "a11yLabel": false
     }
   ],
+  "SyNavList": [
+    {
+      "hash": "dc1e17905ba0ebe38ec37bd59986e4de5672cba2",
+      "date": "2026-11-05 15:26:26 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyNavList : liste de navigation avec actions et sous-niveaux (#2726)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Feature"
+      ]
+    }
+  ],
+  "SyNavListPanel": [
+    {
+      "hash": "dc1e17905ba0ebe38ec37bd59986e4de5672cba2",
+      "date": "2026-11-05 15:26:26 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyNavList : liste de navigation avec actions et sous-niveaux (#2726)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Feature"
+      ]
+    }
+  ],
   "SyTextArea": [
+    {
+      "hash": "efef22792ed3b5d0ffcb913ec991060dd1d47967",
+      "date": "2026-11-16 10:47:18 +0100",
+      "dateFr": "16/11/2026",
+      "message": "[Form] fix de la doc des champs de formulaires (#2790)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "91116599d7d0321d97c1700cab15b712f4fdb910",
+      "date": "2026-11-10 10:10:55 +0100",
+      "dateFr": "10/11/2026",
+      "message": "Accessibilité : recommandation d'éviter les champs désactivés (#2780)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
       "date": "2026-10-05 09:23:58 +0200",
@@ -15375,6 +16962,31 @@
   ],
   "SyServerTable": [
     {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
+      "hash": "9ac64776b13cc6e1a24ba4849da1a1e77f820c6f",
+      "date": "2026-11-13 09:44:33 +0100",
+      "dateFr": "13/11/2026",
+      "message": "add banner (#2791)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
       "date": "2026-10-22 16:48:50 +0200",
       "dateFr": "22/10/2026",
@@ -15545,6 +17157,45 @@
     }
   ],
   "SyTable": [
+    {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
+      "hash": "9ac64776b13cc6e1a24ba4849da1a1e77f820c6f",
+      "date": "2026-11-13 09:44:33 +0100",
+      "dateFr": "13/11/2026",
+      "message": "add banner (#2791)",
+      "version": "1.2.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6679da2dfe12ab16e9948bf0e891d1d534934667",
+      "date": "2026-11-05 10:53:45 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyTable: accessibilité (#2622)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
     {
       "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
       "date": "2026-10-22 16:48:50 +0200",
@@ -15717,6 +17368,34 @@
   ],
   "SyTableFilter": [
     {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
+      "hash": "6679da2dfe12ab16e9948bf0e891d1d534934667",
+      "date": "2026-11-05 10:53:45 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyTable: accessibilité (#2622)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
       "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
       "date": "2026-10-22 16:48:50 +0200",
       "dateFr": "22/10/2026",
@@ -15732,17 +17411,6 @@
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
       "message": "Refactor: Migration de la validation des DatePickers (#2499)",
-      "version": "1.1.6",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
       "version": "1.1.6",
       "confidence": "faible",
       "keywords": false,
@@ -15893,17 +17561,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "c2fa4e74bf232f907ff73899b53909c75844e14b",
-      "date": "2025-07-31 11:47:54 +0200",
-      "dateFr": "31/07/2025",
-      "message": "Feat/improve tests (#884)",
-      "version": "1.0.6",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
       "date": "2025-07-24 16:01:40 +0200",
       "dateFr": "24/07/2025",
@@ -16032,31 +17689,6 @@
       "date": "2025-06-12 14:41:49 +0000",
       "dateFr": "12/06/2025",
       "message": "gestion de la dimension des colonnes des les tableaux (#666)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false,
-      "labels": [
-        "PAG"
-      ]
-    },
-    {
-      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
-      "date": "2025-06-10 15:57:25 +0200",
-      "dateFr": "10/06/2025",
-      "message": "Tables improve props and styles (#689)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
-      "date": "2025-06-05 09:31:38 +0200",
-      "dateFr": "05/06/2025",
-      "message": "Add filter management in tables components v2 (#665)",
       "version": "1.0.1",
       "confidence": "faible",
       "keywords": false,
@@ -16069,6 +17701,34 @@
   ],
   "SyTablePagination": [
     {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
+      "hash": "6679da2dfe12ab16e9948bf0e891d1d534934667",
+      "date": "2026-11-05 10:53:45 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyTable: accessibilité (#2622)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
       "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
       "date": "2026-10-22 16:48:50 +0200",
       "dateFr": "22/10/2026",
@@ -16084,17 +17744,6 @@
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
       "message": "Refactor: Migration de la validation des DatePickers (#2499)",
-      "version": "1.1.6",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
       "version": "1.1.6",
       "confidence": "faible",
       "keywords": false,
@@ -16245,17 +17894,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "c2fa4e74bf232f907ff73899b53909c75844e14b",
-      "date": "2025-07-31 11:47:54 +0200",
-      "dateFr": "31/07/2025",
-      "message": "Feat/improve tests (#884)",
-      "version": "1.0.6",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
       "date": "2025-07-24 16:01:40 +0200",
       "dateFr": "24/07/2025",
@@ -16384,31 +18022,6 @@
       "date": "2025-06-12 14:41:49 +0000",
       "dateFr": "12/06/2025",
       "message": "gestion de la dimension des colonnes des les tableaux (#666)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false,
-      "labels": [
-        "PAG"
-      ]
-    },
-    {
-      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
-      "date": "2025-06-10 15:57:25 +0200",
-      "dateFr": "10/06/2025",
-      "message": "Tables improve props and styles (#689)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
-      "date": "2025-06-05 09:31:38 +0200",
-      "dateFr": "05/06/2025",
-      "message": "Add filter management in tables components v2 (#665)",
       "version": "1.0.1",
       "confidence": "faible",
       "keywords": false,
@@ -16421,6 +18034,34 @@
   ],
   "TableBulkActions": [
     {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
+      "hash": "6679da2dfe12ab16e9948bf0e891d1d534934667",
+      "date": "2026-11-05 10:53:45 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyTable: accessibilité (#2622)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
       "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
       "date": "2026-10-22 16:48:50 +0200",
       "dateFr": "22/10/2026",
@@ -16436,17 +18077,6 @@
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
       "message": "Refactor: Migration de la validation des DatePickers (#2499)",
-      "version": "1.1.6",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
       "version": "1.1.6",
       "confidence": "faible",
       "keywords": false,
@@ -16597,17 +18227,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "c2fa4e74bf232f907ff73899b53909c75844e14b",
-      "date": "2025-07-31 11:47:54 +0200",
-      "dateFr": "31/07/2025",
-      "message": "Feat/improve tests (#884)",
-      "version": "1.0.6",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
       "date": "2025-07-24 16:01:40 +0200",
       "dateFr": "24/07/2025",
@@ -16736,31 +18355,6 @@
       "date": "2025-06-12 14:41:49 +0000",
       "dateFr": "12/06/2025",
       "message": "gestion de la dimension des colonnes des les tableaux (#666)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false,
-      "labels": [
-        "PAG"
-      ]
-    },
-    {
-      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
-      "date": "2025-06-10 15:57:25 +0200",
-      "dateFr": "10/06/2025",
-      "message": "Tables improve props and styles (#689)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
-      "date": "2025-06-05 09:31:38 +0200",
-      "dateFr": "05/06/2025",
-      "message": "Add filter management in tables components v2 (#665)",
       "version": "1.0.1",
       "confidence": "faible",
       "keywords": false,
@@ -16773,6 +18367,34 @@
   ],
   "TableHeader": [
     {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
+      "hash": "6679da2dfe12ab16e9948bf0e891d1d534934667",
+      "date": "2026-11-05 10:53:45 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyTable: accessibilité (#2622)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
       "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
       "date": "2026-10-22 16:48:50 +0200",
       "dateFr": "22/10/2026",
@@ -16788,17 +18410,6 @@
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
       "message": "Refactor: Migration de la validation des DatePickers (#2499)",
-      "version": "1.1.6",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
       "version": "1.1.6",
       "confidence": "faible",
       "keywords": false,
@@ -16949,17 +18560,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "c2fa4e74bf232f907ff73899b53909c75844e14b",
-      "date": "2025-07-31 11:47:54 +0200",
-      "dateFr": "31/07/2025",
-      "message": "Feat/improve tests (#884)",
-      "version": "1.0.6",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
       "date": "2025-07-24 16:01:40 +0200",
       "dateFr": "24/07/2025",
@@ -17096,34 +18696,23 @@
       "labels": [
         "PAG"
       ]
-    },
-    {
-      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
-      "date": "2025-06-10 15:57:25 +0200",
-      "dateFr": "10/06/2025",
-      "message": "Tables improve props and styles (#689)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
-      "date": "2025-06-05 09:31:38 +0200",
-      "dateFr": "05/06/2025",
-      "message": "Add filter management in tables components v2 (#665)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false,
-      "labels": [
-        "PAG"
-      ]
     }
   ],
   "AutocompleteFilter": [
+    {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
     {
       "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
       "date": "2026-04-07 16:39:07 +0200",
@@ -17160,6 +18749,20 @@
   ],
   "DateFilter": [
     {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
       "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
       "date": "2026-04-07 16:39:07 +0200",
       "dateFr": "07/04/2026",
@@ -17194,6 +18797,20 @@
     }
   ],
   "NumberFilter": [
+    {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
     {
       "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
       "date": "2026-04-07 16:39:07 +0200",
@@ -17230,6 +18847,20 @@
   ],
   "PeriodFilter": [
     {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
       "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
       "date": "2026-04-07 16:39:07 +0200",
       "dateFr": "07/04/2026",
@@ -17264,6 +18895,20 @@
     }
   ],
   "SelectFilter": [
+    {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
     {
       "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
       "date": "2026-04-07 16:39:07 +0200",
@@ -17300,6 +18945,20 @@
   ],
   "TextFilter": [
     {
+      "hash": "29045f8a7340f19aab51c727e2990bb79560d2a8",
+      "date": "2026-11-16 20:14:17 +0100",
+      "dateFr": "16/11/2026",
+      "message": " SyServerTable: corrections test accessibilité (#2794)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
+    {
       "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
       "date": "2026-04-07 16:39:07 +0200",
       "dateFr": "07/04/2026",
@@ -17334,6 +18993,20 @@
     }
   ],
   "OrganizeColumns": [
+    {
+      "hash": "6679da2dfe12ab16e9948bf0e891d1d534934667",
+      "date": "2026-11-05 10:53:45 +0100",
+      "dateFr": "05/11/2026",
+      "message": "SyTable: accessibilité (#2622)",
+      "version": "1.2.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": true,
+      "labels": [
+        "Accessibility"
+      ]
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",

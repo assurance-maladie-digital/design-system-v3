@@ -9,7 +9,7 @@ import * as CaptchaStories from './Captcha.stories';
 </div>
 
 {/* func-version-start */}
-<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.4</p>
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.2.2</p>
 {/* func-version-end */}
 {/* a11y-version-start */}
 <p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.3</p>
@@ -54,7 +54,7 @@ import * as CaptchaStories from './Captcha.stories';
 
 ## Vérification de la réponse
 
-Le composant ne vérifie pas la réponse saisie : sans règle supplémentaire, il valide seulement que le champ est rempli (`required`). Seul le serveur connaît la bonne réponse, la vérification est donc à la charge de l'application :
+Le composant ne vérifie pas la réponse saisie : sans règle supplémentaire, il valide seulement que le champ est rempli (`required`, actif par défaut ; `:required="false"` le désactive). Seul le serveur connaît la bonne réponse, la vérification est donc à la charge de l'application :
 
 - **Pendant la saisie**, avec une règle `custom` asynchrone dans `custom-rules` qui appelle l'API de vérification (voir la page Validation du Captcha).
 - **À la soumission**, en appelant l'API puis, si la réponse est incorrecte, en transmettant le message d'erreur via la prop `error-messages`. Tant que ce message est présent, le `SyForm` parent est invalide et sa soumission renvoie `isValid: false`.

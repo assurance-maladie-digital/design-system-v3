@@ -57,8 +57,22 @@ describe('SyTabs', () => {
 
 			// Vérifier le texte des onglets
 			testItems.forEach((item, index) => {
-				expect(tabButtons[index]?.text()).toBe(item.label.toUpperCase())
+				expect(tabButtons[index]?.text()).toBe(item.label)
 			})
+		})
+
+		it('conserve le libellé d’origine lorsque text-transform vaut none', () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					vuetifyOptions: {
+						tab: { 'text-transform': 'none' },
+					},
+				},
+			})
+			// La casse visuelle (règle CSS text-transform) est vérifiée dans SyTabs.visual.cy.ts :
+			// les styles scopés et leurs v-bind() ne sont pas appliqués dans l'environnement Vitest.
+			expect(wrapper.get('.sy-tabs__button').text()).toBe(testItems[0]?.label)
 		})
 
 		it('doit afficher le contenu de l\'onglet actif', () => {
@@ -76,7 +90,7 @@ describe('SyTabs', () => {
 			// Le premier onglet devrait avoir la classe active
 			const activeTab = wrapper.find('.sy-tabs__button--active')
 			expect(activeTab.exists()).toBe(true)
-			expect(activeTab.text()).toBe(testItems[0]?.label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[0]?.label)
 		})
 	})
 
@@ -94,7 +108,7 @@ describe('SyTabs', () => {
 
 			// Vérifier que le deuxième onglet est actif
 			const activeTab = wrapper.find('.sy-tabs__button--active')
-			expect(activeTab.text()).toBe(testItems[1]?.label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[1]?.label)
 
 			// Vérifier que le bon panneau est affiché
 			const visiblePanel = wrapper.find('.sy-tabs-panel:not([hidden])')
@@ -113,7 +127,7 @@ describe('SyTabs', () => {
 
 			// Vérifier que le bon onglet est actif
 			const activeTab = wrapper.find('.sy-tabs__button--active')
-			expect(activeTab.text()).toBe(testItems[1]?.label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[1]?.label)
 		})
 	})
 

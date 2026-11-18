@@ -5,9 +5,14 @@ import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
 import ap2026Theme from './Ap2026Theme'
+import { renderSidebarLabel } from './sidebarIcons'
 
 const channel = addons.getChannel()
 registerConformiteAddon()
+
+addons.setConfig({
+	sidebar: { renderLabel: renderSidebarLabel },
+})
 
 type Theme = 'cnam' | 'pa' | 'ap' | 'ap2026'
 

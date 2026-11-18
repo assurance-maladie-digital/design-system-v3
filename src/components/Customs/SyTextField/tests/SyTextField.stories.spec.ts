@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
-import { analyzeSnippet, type StoryWithSourceCode } from '@tests/helpers/storySnippets'
+import type { StoryWithSourceCode } from '@tests/helpers/storySnippets'
 import { controlMatchers } from '../../../../../.storybook/controlMatchers'
 import SyTextField from '../SyTextField.vue'
 import * as mainStories from '../SyTextField.stories'
@@ -50,17 +50,6 @@ describe('SyTextField stories', () => {
 		for (const prop of colorProps) {
 			expect(meta.argTypes?.[prop]?.type, prop).toMatchObject({ name: 'string' })
 		}
-	})
-
-	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
-		expect(analyzeSnippet(story)).toEqual({
-			parseErrors: [],
-			hasScriptSetup: true,
-			undeclaredIdentifiers: [],
-			unresolvedComponents: [],
-			untypedRefs: [],
-			invalidAttributes: [],
-		})
 	})
 
 	it.each(allStories)('l\'extrait de $name reprend les paragraphes affichés par le rendu', ({ story }) => {

@@ -1,25 +1,126 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from '../DatePicker.vue'
 import SyForm from '../../../Customs/SyForm/SyForm.vue'
-import { onMounted, ref, watch, computed } from 'vue'
+import { computed, nextTick, onMounted, ref } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
-import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+import type { DatePickerRule } from '../../types'
+import DatePickerSyFormValidity from '../../docExamples/DatePickerSyFormValidity.vue'
 
 const meta: Meta<typeof DatePicker> = {
 	title: 'Composants/Formulaires/DatePicker/CalendarMode/Validation',
 	component: DatePicker,
 	parameters: {
 		layout: 'fullscreen',
+		// La valeur est portée par le v-model local de chaque story
+		controls: { exclude: ['modelValue'] },
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof DatePicker>
+}
 
 export default meta
 
 type Story = StoryObj<typeof meta>
+
+export const SyFormLiveValidity: Story = {
+	name: 'Validité du SyForm avant soumission',
+	parameters: {
+		controls: { disable: true },
+		docs: {
+			description: {
+				story: 'Une custom rule interdit le 15 du mois : sélectionnez-le pour voir le formulaire passer à `false`, puis un autre jour pour le faire repasser à `true` et activer le bouton Soumettre.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm
+    v-model="valid"
+    class="pa-4"
+    @submit="onSubmit"
+  >
+    <div class="d-flex flex-column align-start ga-4">
+      <p>
+        Ouvrez le calendrier et sélectionnez le 15 du mois : la custom rule affiche une erreur et le formulaire passe à
+        <code>false</code>. Choisissez un autre jour puis quittez le champ : le formulaire redevient
+        <code>true</code> avant la soumission.
+      </p>
+      <DatePicker
+        v-model="date"
+        label="Date"
+        hint="Format attendu : JJ/MM/AAAA"
+        persistent-hint
+        placeholder="JJ/MM/AAAA"
+        format="DD/MM/YYYY"
+        required
+        :custom-rules="customRules"
+      />
+      <p role="status">
+        Validité du SyForm (<code>v-model</code>) <code>{{ String(valid) }}</code>
+      </p>
+      <div class="d-flex flex-wrap ga-3">
+        <VBtn
+          type="button"
+          variant="outlined"
+        >
+          Sortir du champ
+        </VBtn>
+        <VBtn
+          type="submit"
+          color="primary"
+          :disabled="valid !== true"
+        >
+          Soumettre
+        </VBtn>
+      </div>
+      <p
+        v-if="submitted !== null"
+        role="status"
+      >
+        Dernière soumission <code>isValid = {{ submitted }}</code>
+      </p>
+    </div>
+  </SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: unknown) => !(value instanceof Date && value.getDate() === 15),
+      message: 'Le 15 du mois n\\'est pas autorisé',
+    },
+  },
+]
+
+const date = ref<string | null>('')
+const valid = ref<boolean | null>(null)
+const submitted = ref<boolean | null>(null)
+
+function onSubmit({ isValid }: { isValid: boolean }) {
+  submitted.value = isValid
+}
+</script>`,
+			},
+		],
+	},
+	render: () => ({
+		components: { DatePickerSyFormValidity },
+		template: '<DatePickerSyFormValidity mode="calendar" />',
+	}),
+}
 
 export const WithError: Story = {
 	parameters: {
@@ -36,11 +137,11 @@ export const WithError: Story = {
   <DatePicker
     ref="datePickerRef"
     v-model="value"
-    label="Date (JJ/MM/AAAA)"
+    label="Date de la consultation"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     :custom-rules="[
-      { type: 'notAfterToday', options: { message: "La date ne peut pas être après aujourd'hui" } }
+      { type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd’hui' } }
     ]"
     show-success-messages
   />
@@ -54,7 +155,7 @@ import { onMounted, ref } from 'vue'
 import { DatePicker } from '@cnamts/synapse'
 
 const value = ref('01/01/2100')
-const datePickerRef = ref(null)
+const datePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 
 onMounted(() => {
   datePickerRef.value?.validateOnSubmit()
@@ -64,12 +165,12 @@ onMounted(() => {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		showSuccessMessages: true,
 		customRules: [
-			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd’hui' } },
 		],
 	},
 	render: args => ({
@@ -88,8 +189,8 @@ onMounted(() => {
 			<div class="pa-4">
 				<DatePicker
 					ref="datePickerRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -112,7 +213,8 @@ export const WithWarning: Story = {
   <DatePicker
     ref="datePickerRef"
     v-model="value"
-    label="Date avec avertissement (JJ/MM/AAAA)"
+    label="Date de la consultation"
+    help-text="Une date antérieure au 01/01/2031 déclenche un avertissement"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     :custom-warning-rules="[
@@ -136,7 +238,7 @@ import { onMounted, ref } from 'vue'
 import { DatePicker } from '@cnamts/synapse'
 
 const value = ref('20/12/2023')
-const datePickerRef = ref(null)
+const datePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 
 onMounted(() => {
   datePickerRef.value?.validateOnSubmit()
@@ -146,7 +248,8 @@ onMounted(() => {
 		],
 	},
 	args: {
-		label: 'Date avec avertissement (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Une date antérieure au 01/01/2031 déclenche un avertissement',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		customWarningRules: [
@@ -176,8 +279,8 @@ onMounted(() => {
 			<div class="pa-4">
 				<DatePicker
 					ref="datePickerRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -200,7 +303,7 @@ export const WithSuccess: Story = {
   <DatePicker
     ref="datePickerRef"
     v-model="value"
-    label="Date valide (JJ/MM/AAAA)"
+    label="Date de la consultation"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     required
@@ -219,7 +322,7 @@ import { onMounted, ref } from 'vue'
 import { DatePicker } from '@cnamts/synapse'
 
 const value = ref('22/01/2024')
-const datePickerRef = ref(null)
+const datePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 
 onMounted(() => {
   datePickerRef.value?.validateOnSubmit()
@@ -229,7 +332,7 @@ onMounted(() => {
 		],
 	},
 	args: {
-		label: 'Date valide (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -254,8 +357,8 @@ onMounted(() => {
 			<div class="pa-4">
 				<DatePicker
 					ref="datePickerRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -321,7 +424,7 @@ const value2 = ref('')
 			return { args, value1, value2 }
 		},
 		template: `
-			<div class="pa-4 d-flex flex-column" style="gap: 16px;">
+			<div class="pa-4 d-flex flex-column ga-4">
 				<DatePicker
 					v-bind="args"
 					v-model="value1"
@@ -354,7 +457,7 @@ export const CustomRules: Story = {
 <template>
   <DatePicker
     v-model="value"
-    label="Date (JJ/MM/AAAA)"
+    label="Date de la consultation"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     :custom-rules="[
@@ -389,7 +492,7 @@ const value = ref('')
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		customRules: [
@@ -418,8 +521,8 @@ const value = ref('')
 		template: `
 			<div class="pa-4">
 				<DatePicker
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -441,7 +544,8 @@ export const CustomRulesReturnFormat: Story = {
 <template>
   <DatePicker
     v-model="value"
-    label="Date (JJ/MM/AAAA)"
+    label="Date de la consultation"
+    help-text="Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres"
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     date-format-return="YYYY-MM-DD"
@@ -477,7 +581,8 @@ const customRules = [
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
+		helpText: 'Format attendu : jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: 'YYYY-MM-DD',
@@ -505,8 +610,8 @@ const customRules = [
 		template: `
 			<div class="pa-4">
 				<DatePicker
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -518,7 +623,7 @@ export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `isValidateOnBlur: false`, la validation ne se déclenche pas au blur. Les boutons permettent de simuler une valeur programmatique avec validation manuelle.',
+				story: 'Avec `isValidateOnBlur: false`, la validation n\'attend plus la sortie du champ : elle devient en temps réel et s\'exécute à chaque modification de la valeur. Les boutons simulent une valeur programmatique suivie d\'une validation manuelle via `validateOnSubmit()`.',
 			},
 		},
 		sourceCode: [
@@ -530,7 +635,7 @@ export const NoValidateOnBlur: Story = {
     <DatePicker
       ref="datePickerRef"
       :model-value="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -553,12 +658,12 @@ export const NoValidateOnBlur: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { DatePicker } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
 const value = ref('')
-const datePickerRef = ref(null)
+const datePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 
 const handleChange = (newValue: string) => {
   value.value = newValue
@@ -566,6 +671,8 @@ const handleChange = (newValue: string) => {
 
 const applyValue = async (newValue: string) => {
   value.value = newValue
+  // Attendre la propagation de la prop avant de valider
+  await nextTick()
   await datePickerRef.value?.validateOnSubmit()
 }
 
@@ -577,7 +684,7 @@ const resetValue = () => {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		isValidateOnBlur: false,
@@ -599,6 +706,8 @@ const resetValue = () => {
 
 			const applyValue = async (newValue: string) => {
 				value.value = newValue
+				// Attendre la propagation de la prop avant de valider
+				await nextTick()
 				await datePickerRef.value?.validateOnSubmit()
 			}
 
@@ -617,8 +726,8 @@ const resetValue = () => {
 					@update:model-value="handleChange"
 				/>
 				<div class="d-flex ga-4 mt-2">
-					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue('01/01/2100')">Valeur invalide</VBtn>
-					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue('22/01/2024')">Valeur valide</VBtn>
+					<VBtn color="primary" @mousedown.prevent @click="applyValue('01/01/2100')">Valeur invalide</VBtn>
+					<VBtn color="primary" @mousedown.prevent @click="applyValue('22/01/2024')">Valeur valide</VBtn>
 					<VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>
 				</div>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
@@ -632,7 +741,7 @@ export const BidirectionalValidation: Story = {
 		controls: { exclude: ['modelValue', 'label', 'placeholder', 'format', 'customRules'] },
 		docs: {
 			description: {
-				story: 'Démonstration de la validation bidirectionnelle entre deux DatePickers. Modifier une date revalide l\'autre automatiquement.',
+				story: 'Validation bidirectionnelle entre deux DatePickers : la date de début ne peut pas être postérieure à la date de fin, et inversement. Les règles de chaque champ dépendent de la valeur de l\'autre : quand ses `customRules` changent, le DatePicker revalide automatiquement sa date, sans appel manuel à `validateOnSubmit()`.',
 			},
 		},
 		sourceCode: [
@@ -640,111 +749,57 @@ export const BidirectionalValidation: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="date-validation-playground">
-    <h1>Validation bidirectionnelle des dates</h1>
-    <p>Démonstration de la validation bidirectionnelle entre les DatePickers.</p>
-    <div class="date-range-container">
-      <div>
-        <h2>Date de début</h2>
-        <DatePicker
-          ref="startDatePickerRef"
-          v-model="startDate"
-          label="Date de début (JJ/MM/AAAA)"
-          placeholder="JJ/MM/AAAA"
-          :custom-rules="startDateRules"
-          required
-          @update:model-value="validateEndDate"
-        />
-      </div>
-      <div>
-        <h2>Date de fin</h2>
-        <DatePicker
-          ref="endDatePickerRef"
-          v-model="endDate"
-          label="Date de fin (JJ/MM/AAAA)"
-          placeholder="JJ/MM/AAAA"
-          :custom-rules="endDateRules"
-          required
-          @update:model-value="validateStartDate"
-        />
-      </div>
-    </div>
+  <div class="d-flex flex-wrap ga-4">
+    <DatePicker
+      v-model="startDate"
+      label="Date de début"
+      placeholder="JJ/MM/AAAA"
+      format="DD/MM/YYYY"
+      required
+      :custom-rules="startDateRules"
+    />
+    <DatePicker
+      v-model="endDate"
+      label="Date de fin"
+      placeholder="JJ/MM/AAAA"
+      format="DD/MM/YYYY"
+      required
+      :custom-rules="endDateRules"
+    />
   </div>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-<script lang="ts" setup>
-import { ref, watch, computed } from 'vue'
+<script setup lang="ts">
+import { computed, ref } from 'vue'
 import { DatePicker } from '@cnamts/synapse'
-import { useDateFormat } from '@cnamts/synapse'
-
-const { parseDate } = useDateFormat()
 
 const startDate = ref<string | null>(null)
 const endDate = ref<string | null>(null)
-const startDatePickerRef = ref(null)
-const endDatePickerRef = ref(null)
 
-const createEndDateValidationRule = () => ({
-  type: 'custom',
-  options: {
-    validate: (value: string) => {
-      if (!value) return true
-      if (!startDate.value) return 'Veuillez d\u2019abord sélectionner une date de début'
-      const start = parseDate(startDate.value, 'DD/MM/YYYY')
-      const end = parseDate(value, 'DD/MM/YYYY')
-      if (!start || !end) return true
-      return end >= start || 'La date de fin ne peut pas être antérieure à la date de début'
-    },
-    message: 'La date de fin ne peut pas être antérieure à la date de début',
-  },
-})
-
-const createStartDateValidationRule = () => ({
-  type: 'custom',
-  options: {
-    validate: (value: string) => {
-      if (!value || !endDate.value) return true
-      const start = parseDate(value, 'DD/MM/YYYY')
-      const end = parseDate(endDate.value, 'DD/MM/YYYY')
-      if (!start || !end) return true
-      return start <= end || 'La date de début ne peut pas être postérieure à la date de fin'
-    },
-    message: 'La date de début ne peut pas être postérieure à la date de fin',
-  },
-})
-
+// Une date de référence vide désactive la règle.
+// Le DatePicker revalide sa date dès que ses customRules changent.
 const startDateRules = computed(() => [
-  { type: 'required', options: { message: 'La date de début est requise.' } },
-  createStartDateValidationRule(),
+  {
+    type: 'notAfterDate',
+    options: {
+      date: endDate.value ?? '',
+      message: 'La date de début ne peut pas être postérieure à la date de fin',
+    },
+  },
 ])
 
 const endDateRules = computed(() => [
-  { type: 'required', options: { message: 'La date de fin est requise.' } },
-  createEndDateValidationRule(),
+  {
+    type: 'notBeforeDate',
+    options: {
+      date: startDate.value ?? '',
+      message: 'La date de fin ne peut pas être antérieure à la date de début',
+    },
+  },
 ])
-
-const validateEndDate = () => {
-  if (endDatePickerRef.value && endDate.value) {
-    endDatePickerRef.value.validateOnSubmit()
-  }
-}
-
-const validateStartDate = () => {
-  if (startDatePickerRef.value && startDate.value) {
-    startDatePickerRef.value.validateOnSubmit()
-  }
-}
-
-watch(startDate, () => {
-  setTimeout(() => validateEndDate(), 0)
-})
-
-watch(endDate, () => {
-  setTimeout(() => validateStartDate(), 0)
-})
 </script>`,
 			},
 		],
@@ -753,145 +808,58 @@ watch(endDate, () => {
 		format: 'DD/MM/YYYY',
 		required: true,
 	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const { parseDate } = useDateFormat()
+	render: args => ({
+		components: { DatePicker },
+		setup() {
+			const startDate = ref<string | null>(null)
+			const endDate = ref<string | null>(null)
 
-				const startDate = ref<string | null>(null)
-				const endDate = ref<string | null>(null)
-
-				const startDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
-				const endDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
-
-				const createEndDateValidationRule = () => ({
-					type: 'custom',
+			// Une date de référence vide désactive la règle.
+			// Le DatePicker revalide sa date dès que ses customRules changent.
+			const startDateRules = computed<DatePickerRule[]>(() => [
+				{
+					type: 'notAfterDate',
 					options: {
-						validate: (value: string) => {
-							if (!value) return true
-							if (!startDate.value) return 'Veuillez d\u2019abord sélectionner une date de début'
-							const start = parseDate(startDate.value, 'DD/MM/YYYY')
-							const end = parseDate(value, 'DD/MM/YYYY')
-							if (!start || !end) return true
-							return end >= start || 'La date de fin ne peut pas être antérieure à la date de début'
-						},
-						message: 'La date de fin ne peut pas être antérieure à la date de début',
-					},
-				})
-
-				const createStartDateValidationRule = () => ({
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || !endDate.value) return true
-							const start = parseDate(value, 'DD/MM/YYYY')
-							const end = parseDate(endDate.value, 'DD/MM/YYYY')
-							if (!start || !end) return true
-							return start <= end || 'La date de début ne peut pas être postérieure à la date de fin'
-						},
+						date: endDate.value ?? '',
 						message: 'La date de début ne peut pas être postérieure à la date de fin',
 					},
-				})
+				},
+			])
 
-				const startDateRules = computed(() => [
-					{
-						type: 'required',
-						options: {
-							message: 'La date de début est requise.',
-						},
+			const endDateRules = computed<DatePickerRule[]>(() => [
+				{
+					type: 'notBeforeDate',
+					options: {
+						date: startDate.value ?? '',
+						message: 'La date de fin ne peut pas être antérieure à la date de début',
 					},
-					createStartDateValidationRule(),
-				])
+				},
+			])
 
-				const endDateRules = computed(() => [
-					{
-						type: 'required',
-						options: {
-							message: 'La date de fin est requise.',
-						},
-					},
-					createEndDateValidationRule(),
-				])
-
-				const validateEndDate = () => {
-					if (endDatePickerRef.value && endDate.value) {
-						endDatePickerRef.value.validateOnSubmit()
-					}
-				}
-
-				const validateStartDate = () => {
-					if (startDatePickerRef.value && startDate.value) {
-						startDatePickerRef.value.validateOnSubmit()
-					}
-				}
-
-				watch(startDate, () => {
-					setTimeout(() => {
-						validateEndDate()
-					}, 0)
-				})
-
-				watch(endDate, () => {
-					setTimeout(() => {
-						validateStartDate()
-					}, 0)
-				})
-
-				return {
-					args,
-					startDate,
-					endDate,
-					startDatePickerRef,
-					endDatePickerRef,
-					startDateRules,
-					endDateRules,
-					validateEndDate,
-					validateStartDate,
-				}
-			},
-
-			template: `
-				<div class="date-validation-playground pa-4">
-					<h1>Validation bidirectionnelle des dates</h1>
-					<p class="description">
-						Démonstration de la validation bidirectionnelle entre les DatePickers.
-						Les messages d'erreur apparaissent directement dans les composants.
-					</p>
-					<div class="date-range-container">
-						<div class="date-picker-wrapper">
-							<h2>Date de début</h2>
-							<DatePicker
-								ref="startDatePickerRef"
-								v-bind="args"
-								v-model="startDate"
-								label="Date de début (JJ/MM/AAAA)"
-								placeholder="JJ/MM/AAAA"
-								:custom-rules="startDateRules"
-								@update:model-value="validateEndDate"
-							/>
-						</div>
-						<div class="date-picker-wrapper">
-							<h2>Date de fin</h2>
-							<DatePicker
-								ref="endDatePickerRef"
-								v-bind="args"
-								v-model="endDate"
-								label="Date de fin (JJ/MM/AAAA)"
-								placeholder="JJ/MM/AAAA"
-								:custom-rules="endDateRules"
-								@update:model-value="validateStartDate"
-							/>
-						</div>
-					</div>
-					<div class="current-values">
-						<p><strong>Date de début:</strong> {{ startDate || 'Non sélectionnée' }}</p>
-						<p><strong>Date de fin:</strong> {{ endDate || 'Non sélectionnée' }}</p>
-					</div>
+			return { args, startDate, endDate, startDateRules, endDateRules }
+		},
+		template: `
+			<div class="pa-4">
+				<div class="d-flex flex-wrap ga-4">
+					<DatePicker
+						v-bind="args"
+						v-model="startDate"
+						label="Date de début"
+						placeholder="JJ/MM/AAAA"
+						:custom-rules="startDateRules"
+					/>
+					<DatePicker
+						v-bind="args"
+						v-model="endDate"
+						label="Date de fin"
+						placeholder="JJ/MM/AAAA"
+						:custom-rules="endDateRules"
+					/>
 				</div>
-			`,
-		}
-	},
+				<div class="mt-4 text-body-2">Date de début : {{ startDate || 'non sélectionnée' }} | Date de fin : {{ endDate || 'non sélectionnée' }}</div>
+			</div>
+		`,
+	}),
 }
 
 export const SyFormValidation: Story = {
@@ -909,7 +877,7 @@ export const SyFormValidation: Story = {
   <SyForm @submit="onSubmit">
     <DatePicker
       v-model="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -933,7 +901,7 @@ import { VBtn } from 'vuetify/components'
 
 const value = ref('')
 
-const onSubmit = (event) => {
+const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide : ' + value.value)
   } else {
@@ -945,7 +913,7 @@ const onSubmit = (event) => {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -972,8 +940,8 @@ const onSubmit = (event) => {
 			<div class="pa-4">
 				<SyForm @submit="onSubmit">
 					<DatePicker
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						class="mb-4"
 					/>
 					<VBtn
@@ -1006,7 +974,7 @@ export const VFormValidation: Story = {
     <DatePicker
       ref="datePickerRef"
       v-model="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -1028,7 +996,7 @@ import { DatePicker } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('')
-const datePickerRef = ref(null)
+const datePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
 
 async function onSubmit() {
   const isValid = await datePickerRef.value?.validateOnSubmit()
@@ -1044,7 +1012,7 @@ async function onSubmit() {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -1074,8 +1042,8 @@ async function onSubmit() {
         <VForm @submit.prevent="onSubmit">
           <DatePicker
             ref="datePickerRef"
-            v-model="value"
             v-bind="args"
+            v-model="value"
             class="mb-4"
           />
           <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
@@ -1101,7 +1069,7 @@ export const SyFormCustomRulesValidation: Story = {
   <SyForm @submit="onSubmit">
     <DatePicker
       v-model="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       required
@@ -1136,7 +1104,7 @@ import { VBtn } from 'vuetify/components'
 
 const value = ref('')
 
-const onSubmit = (event) => {
+const onSubmit = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide : ' + value.value)
   } else {
@@ -1149,7 +1117,7 @@ const onSubmit = (event) => {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -1186,8 +1154,8 @@ const onSubmit = (event) => {
       <div class="pa-4">
         <SyForm @submit="onSubmit">
           <DatePicker
-            v-model="value"
             v-bind="args"
+            v-model="value"
             class="mb-4"
           />
           <VBtn
@@ -1220,15 +1188,12 @@ export const VFormVuetifyValidation: Story = {
     <DatePicker
       ref="datePickerRef"
       v-model="value"
-      label="Date (JJ/MM/AAAA)"
+      label="Date de la consultation"
       placeholder="JJ/MM/AAAA"
       format="DD/MM/YYYY"
       use-vuetify-validation
       required
-      :rules="[
-        v => !!v || 'La date est requise.',
-        v => (v && v.length >= 8) || 'La date doit contenir au moins 8 caractères (JJ/MM/AAAA).'
-      ]"
+      :rules="rules"
       class="mb-4"
     />
     <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
@@ -1244,7 +1209,11 @@ import { DatePicker } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('')
-const datePickerRef = ref(null)
+const datePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
+const rules = [
+  (v: string) => !!v || 'La date est requise.',
+  (v: string) => (v && v.length >= 8) || 'La date doit contenir au moins 8 caractères (JJ/MM/AAAA).',
+]
 
 async function onSubmit() {
   const isValid = await datePickerRef.value?.validateOnSubmit()
@@ -1259,7 +1228,7 @@ async function onSubmit() {
 		],
 	},
 	args: {
-		label: 'Date (JJ/MM/AAAA)',
+		label: 'Date de la consultation',
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useVuetifyValidation: true,
@@ -1292,8 +1261,8 @@ async function onSubmit() {
 				<VForm @submit.prevent="onSubmit">
 					<DatePicker
 						ref="datePickerRef"
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>

@@ -2169,7 +2169,7 @@ exports[`mounthpicker > should open the menu when clicking on the input 1`] = `
   <div class="visual-picker-header">
     <div
       class="visual-picker-header__title"
-      id="v-6-title"
+      id="v-7-title"
     >
       Sélectionner un mois
     </div>
@@ -2440,19 +2440,19 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
                 v-field-label
                 v-label
               "
-              id="input-v-4-label"
+              id="input-v-5-label"
             >
               <!---->
               Début du projet
             </label>
             <!---->
             <input
-              aria-describedby="input-v-4-messages"
+              aria-describedby="input-v-5-messages"
               aria-label="Début du projet"
-              aria-labelledby="input-v-4-label"
+              aria-labelledby="input-v-5-label"
               autocomplete="off"
               class="v-field__input"
-              id="input-v-4"
+              id="input-v-5"
               name="v-1"
               size="1"
               title="Début du projet"
@@ -2480,7 +2480,7 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-4"
+                for="input-v-5"
               >
                 <!---->
                 Début du projet
@@ -2524,7 +2524,7 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-v-4-messages"
+        id="input-v-5-messages"
         role="alert"
       >
         <transition-group-stub
@@ -2539,10 +2539,11 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
             Format MM/AAAA
           </div>
         </transition-group-stub>
+        <!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages -->
+        <!-- v-if -->
         <!---->
       </div>
     </div>
-    <!-- v-if -->
   </div>
   <!---->
   <!---->

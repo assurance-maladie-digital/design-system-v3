@@ -6,6 +6,7 @@ export interface DatePickerIds {
 	titleId: string
 	headingId: string
 	inputId: string
+	activatorHintId: string
 }
 
 export const useDatePickerIds = (): DatePickerIds => {
@@ -17,5 +18,6 @@ export const useDatePickerIds = (): DatePickerIds => {
 		titleId: `${contentId}-title`,
 		headingId: `${contentId}-heading`,
 		inputId: `${contentId}-input`,
+		activatorHintId: `${contentId}-activator-hint`,
 	}
 }

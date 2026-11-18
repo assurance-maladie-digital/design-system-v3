@@ -547,6 +547,27 @@ describe('useDatePickerAccessibility', () => {
 		expect(daysContainer.querySelector('[data-v-date="2026-08-02"]')?.getAttribute('role')).toBe('gridcell')
 	})
 
+	it('applies grid semantics to the incoming month while the outgoing month is still present', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-month">
+					<div class="v-date-picker-month__days picker-reverse-transition-leave-active">
+						<div class="v-date-picker-month__day" data-v-date="2026-11-03"><button>3</button></div>
+					</div>
+					<div class="v-date-picker-month__days picker-reverse-transition-enter-active">
+						<div class="v-date-picker-month__day" data-v-date="2026-10-27"><button>27</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const incomingDay = document.querySelector('[data-v-date="2026-10-27"]')
+		expect(incomingDay?.getAttribute('role')).toBe('gridcell')
+		expect(incomingDay?.parentElement?.getAttribute('role')).toBe('row')
+	})
+
 	it('preserves navigation button labels with different icons', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">

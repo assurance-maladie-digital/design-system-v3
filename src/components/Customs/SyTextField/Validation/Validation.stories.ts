@@ -8,12 +8,12 @@ import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import type { SyTextFieldProps } from '../types'
 
-const meta = {
+const meta: Meta<typeof SyTextField> = {
 	title: 'Composants/Formulaires/SyTextField/Validation',
 	component: SyTextField,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div class="pa-5"><story/></div>',
 		}),
 	],
 	parameters: {
@@ -75,7 +75,7 @@ const meta = {
 		'isValidateOnBlur': true,
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof SyTextField>
+}
 
 export default meta
 
@@ -673,7 +673,7 @@ Dans cette story, ces trois props sont pilotées par les boutons : leurs Control
 		<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
 		<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
 		<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
-		<VBtn color="black" @click="reset">Réinitialiser</VBtn>
+		<VBtn @click="reset">Réinitialiser</VBtn>
 	</div>
 </template>`,
 			},
@@ -773,7 +773,7 @@ function reset() {
 					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
 					<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
 					<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
-					<VBtn color="black" @click="reset">Réinitialiser</VBtn>
+					<VBtn @click="reset">Réinitialiser</VBtn>
 				</div>
 			</div>
 		`,

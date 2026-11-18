@@ -2,6 +2,7 @@ import { type Ref, nextTick } from 'vue'
 import dayjs from 'dayjs'
 import { getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
 import type { ViewMode } from './useDatePickerViewMode'
+import { useYearListRegionAria } from './useYearListRegionAria'
 
 /**
  * Options du composable `useDatePickerCalendar`.
@@ -30,7 +31,7 @@ export interface UseDatePickerCalendarOptions {
 	currentYearName: Ref<string | null>
 
 	// Accessibility functions (from useDatePickerAccessibility)
-	updateAccessibility: (el: HTMLElement, mode: ViewMode) => void
+	updateAccessibility: (el: HTMLElement, mode: ViewMode) => void | Promise<void>
 	cleanupGridSemantics: (el: HTMLElement) => void
 
 	// Keyboard navigation
@@ -65,7 +66,7 @@ export interface UseDatePickerCalendarOptions {
 }
 
 export interface UseDatePickerCalendarReturn {
-	reapplyAccessibility: () => void
+	reapplyAccessibility: (options?: { restoreFocus?: boolean }) => Promise<void> | undefined
 	waitForTransitionEnd: (container: HTMLElement, callback: () => void) => void
 	handleViewModeUpdateWrapper: (mode: ViewMode) => void
 	syncDisplayedMonthYearFromDate: (date: Date) => void
@@ -99,15 +100,21 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 		onYearChangeBridge,
 	} = options
 
+	const { applyYearListRegionAria } = useYearListRegionAria({
+		getRootEl,
+		isDatePickerVisible,
+		currentViewMode,
+	})
+
 	/**
 	 * Nettoie la sémantique grid ARIA injectée avant que Vuetify ne re-render le mois,
 	 * puis la réapplique dans le prochain tick. Restaure le focus sur l'élément actif.
 	 */
-	const reapplyAccessibility = (): void => {
+	const reapplyAccessibility: UseDatePickerCalendarReturn['reapplyAccessibility'] = ({ restoreFocus = true } = {}) => {
 		const rootEl = getRootEl()
 		if (!rootEl) return
 
-		const activeElement = document.activeElement instanceof HTMLElement
+		const activeElement = restoreFocus && document.activeElement instanceof HTMLElement
 			? document.activeElement
 			: null
 		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
@@ -118,37 +125,35 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
 		const yearLabel = activeYearButton?.getAttribute('aria-label') ?? activeYearButton?.textContent?.trim() ?? ''
 		cleanupGridSemantics(rootEl)
-		nextTick(() => {
-			updateAccessibility(rootEl, currentViewMode.value)
-			nextTick(() => {
-				if (!activeElement || (!rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel)) return
+		return nextTick(async () => {
+			await updateAccessibility(rootEl, currentViewMode.value)
+			if (!activeElement || (!rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel)) return
 
-				if (dayDate) {
-					const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
-					const focusTarget = shouldRestoreButtonFocus
-						? dayCell?.querySelector<HTMLElement>('button')
-						: dayCell
-					focusTarget?.focus({ preventScroll: true })
-					return
-				}
+			if (dayDate) {
+				const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
+				const focusTarget = shouldRestoreButtonFocus
+					? dayCell?.querySelector<HTMLElement>('button')
+					: dayCell
+				focusTarget?.focus({ preventScroll: true })
+				return
+			}
 
-				if (monthLabel) {
-					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn'))
-					const target = monthButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
-					)
-					target?.focus({ preventScroll: true })
-					return
-				}
+			if (monthLabel) {
+				const monthButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn'))
+				const target = monthButtons.find(button =>
+					(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
+				)
+				target?.focus({ preventScroll: true })
+				return
+			}
 
-				if (yearLabel) {
-					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
-					const target = yearButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
-					)
-					target?.focus({ preventScroll: true })
-				}
-			})
+			if (yearLabel) {
+				const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
+				const target = yearButtons.find(button =>
+					(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
+				)
+				target?.focus({ preventScroll: true })
+			}
 		})
 	}
 
@@ -258,7 +263,12 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 					firstBtn?.focus({ preventScroll: true })
 				}
 
-				waitForTransitionEnd(yearsContainer, focusActiveYear)
+				waitForTransitionEnd(yearsContainer, () => {
+					// Le DOM de la vue années peut être recréé pendant la transition :
+					// réappliquer role=region + aria-label APRÈS la transition.
+					applyYearListRegionAria()
+					focusActiveYear()
+				})
 			})
 		}
 	}

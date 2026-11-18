@@ -217,6 +217,24 @@ describe('SySelect.vue', () => {
 
 			wrapper.unmount()
 		})
+
+		it('place le helpText sous le message, dans la zone de détails du champ (alignée après une icône à gauche)', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					helpText: 'Texte d\'aide',
+					errorMessages: ['Erreur de test'],
+					prependIcon: 'info',
+				},
+				attachTo: document.body,
+			})
+
+			const details = wrapper.find('.v-input__details')
+			expect(details.find('.help-text-below').text()).toContain('Texte d\'aide')
+			// Le message reste avant le texte d'aide
+			expect(details.text().indexOf('Erreur de test')).toBeLessThan(details.text().indexOf('Texte d\'aide'))
+
+			wrapper.unmount()
+		})
 	})
 
 	// Comme les autres champs, un SySelect vide garde son libellé dans le champ quand une

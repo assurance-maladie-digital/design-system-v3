@@ -228,8 +228,6 @@
 		statusRegionId,
 		setupAria,
 	} = useTableAria({
-		announceRowCount: false,
-		keepHeaderControlsAccessible: true,
 		table,
 		items: filteredItems,
 		totalItemsCount: itemsLength,
@@ -428,7 +426,6 @@
 										density="compact"
 										hide-details
 										:is-header="true"
-										:aria-label="locales.selectAllRows"
 										:title="locales.selectAllRows"
 										@click="toggleAllRows"
 									>

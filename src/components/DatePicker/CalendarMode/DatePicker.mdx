@@ -1,7 +1,8 @@
-import {Meta, Canvas, Controls, Source} from '@storybook/addon-docs/blocks';
+import {Meta, Canvas, Controls, Source, Story} from '@storybook/addon-docs/blocks';
 import * as DatePickerStories from "./DatePicker.stories.ts";
 import * as ValidationStories from "./validation/Validation.stories.ts";
 import * as GestionDesFormatsStories from "./gestionDesFormats/GestionDesFormats.stories.ts";
+import * as datePickers from "../datePickers.stories";
 
 <Meta of={DatePickerStories}/>
 
@@ -11,17 +12,16 @@ import * as GestionDesFormatsStories from "./gestionDesFormats/GestionDesFormats
 </div>
 
 {/* func-version-start */}
-<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.2.1</p>
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.2.2</p>
 {/* func-version-end */}
 {/* a11y-version-start */}
-<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.3</p>
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.2.2</p>
 {/* a11y-version-end */}
 
 <div className="doc-notice" role="note">
   <p><strong>Composant en maintenance corrective</strong></p>
   <p>En raison de sa complexité, le DatePicker ne reçoit plus d'évolution fonctionnelle : seules les corrections de bugs sont réalisées. Pour signaler une anomalie, consultez la page <a href="/?path=/docs/démarrer-signaler-une-anomalie--docs">Signaler une anomalie</a>.</p>
 </div>
-
 
 ## Description
 
@@ -124,6 +124,16 @@ Cette prop est désactivée par défaut : les règles existantes ne sont pas mod
 ### Formats de date différents
 
 <Canvas of={GestionDesFormatsStories.DifferentFormats}/>
+
+## Validation après migration
+
+<Story of={datePickers.ValidationModes} />
+
+Le DatePicker migré repose sur l'entrée de validation unifiée du design system et conserve un bridge métier dédié pour les règles propres à la date.
+
+- Le mode recommandé pour DatePicker reste la validation Synapse via `customRules`, `customWarningRules` et `customSuccessRules`
+- Le mode `useVuetifyValidation` + `rules` est aussi disponible quand le besoin est celui d'un champ standard
+- Le bridge DatePicker reste responsable des contraintes métier date : plage, required conditionnel, flux CalendarMode et synchro calendrier/saisie
 
 ## Exemple d'utilisation dans le code
 

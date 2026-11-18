@@ -199,7 +199,7 @@ describe('SyInputSelect', () => {
 				},
 			})
 
-			const clearIcon = wrapper.find('.sy-input-select .v-icon[aria-label="Supprimer"]')
+			const clearIcon = wrapper.find('button[aria-label="Supprimer"]')
 			expect(clearIcon.exists()).toBe(true)
 		})
 
@@ -211,8 +211,16 @@ describe('SyInputSelect', () => {
 				},
 			})
 
-			const clearIcon = wrapper.find('.sy-input-select .v-icon[aria-label="Supprimer"]')
+			const clearIcon = wrapper.find('button[aria-label="Supprimer"]')
 			expect(clearIcon.exists()).toBe(false)
+		})
+
+		it('n\'affiche pas le bouton de suppression tant qu\'aucune valeur n\'est sélectionnée', () => {
+			const wrapper = mount(SyInputSelect, {
+				props: { clearable: true, label: 'Régime' },
+			})
+
+			expect(wrapper.find('button[aria-label="Supprimer"]').exists()).toBe(false)
 		})
 
 		it('efface la valeur sélectionnée quand l\'icône de suppression est cliquée', async () => {
@@ -223,7 +231,7 @@ describe('SyInputSelect', () => {
 				},
 			})
 
-			const clearIcon = wrapper.find('.sy-input-select .v-icon[aria-label="Supprimer"]')
+			const clearIcon = wrapper.find('button[aria-label="Supprimer"]')
 			await clearIcon.trigger('click')
 			expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([null])
 		})

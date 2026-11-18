@@ -48,7 +48,7 @@
 
 	const monthAriaLabel = computed(() => {
 		const full = fullMonthName.value || expandMonthAccessibleName(monthLabel.value)
-		return locales.selectMonth(full)
+		return locales.selectMonth(monthLabel.value, full)
 	})
 
 	const yearAriaLabel = computed(() => {

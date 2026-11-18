@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import { nextTick } from 'vue'
@@ -76,6 +76,7 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 	})
 
 	it('has no obvious axe violations in combined mode', async () => {
+		const helpText = 'Saisissez les dates du séjour au format JJ/MM/AAAA.'
 		const wrapper = mount(DatePicker, {
 			props: {
 				label: 'Période de séjour',
@@ -83,13 +84,62 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 				modelValue: null,
 				useCombinedMode: true,
 				displayRange: true,
+				helpText,
 			},
 		})
+		// SyTextField associe sa zone de messages (qui affiche le helpText) après le rendu
+		await flushPromises()
+		const input = wrapper.get('input')
+		const descriptions = input.attributes('aria-describedby')?.split(/\s+/)
+			.map(id => wrapper.get(`[id="${id}"]`).text())
+		expect(descriptions).toEqual([locales.activationOpensCalendar, helpText])
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'DatePicker – combined mode with range', {
 			ignoreRules: ['region'],
 		})
+	})
+
+	it('keeps one visible format instruction associated with an invalid text range', async () => {
+		const helpText = 'Saisissez les deux dates dans l’ordre, séparées par un tiret. Exemple : 2026-03-12 - 2026-04-18. La période ne doit pas dépasser 30 jours.'
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Période',
+				format: 'YYYY-MM-DD',
+				helpText,
+				modelValue: null,
+				noCalendar: true,
+				displayRange: true,
+				required: true,
+			},
+		})
+		// SyTextField associe sa zone de messages (qui affiche le helpText) après le rendu
+		await flushPromises()
+		const input = wrapper.get('input')
+		const getDescriptions = () => (input.attributes('aria-describedby') ?? '')
+			.split(/\s+/)
+			.filter(Boolean)
+			.map(id => wrapper.get(`[id="${id}"]`))
+		const initialDescriptions = getDescriptions()
+		const [instruction] = initialDescriptions
+		expect(initialDescriptions).toHaveLength(1)
+		expect(instruction?.isVisible()).toBe(true)
+		expect(instruction?.text()).toBe(helpText)
+
+		await input.setValue('2026-04-18 - 2026-03-12')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.attributes('aria-invalid')).toBe('true')
+		const descriptions = getDescriptions()
+		expect(descriptions.filter(node => node.text() === helpText)).toHaveLength(1)
+		expect(descriptions.some(node => node.element === instruction?.element)).toBe(true)
+		expect(instruction?.isVisible()).toBe(true)
+		expect(descriptions.map(node => node.text()).join(' ')).toContain(locales.endBeforeStartEqual)
+		assertNoA11yViolations(await axe(wrapper.element), 'DatePicker – invalid text range', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations with disabled state', async () => {
@@ -179,4 +229,74 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 
 		wrapper.unmount()
 	})
+
+	it('has no obvious axe violations when the calendar opens on the year view (birth date mode)', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date de naissance',
+				format: 'DD/MM/YYYY',
+				modelValue: null,
+				isBirthDate: true,
+			},
+			attachTo: document.body,
+		})
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		// Apply ARIA semantics before running axe so we test the patched markup
+		await wrapper.vm.updateAccessibility()
+		await nextTick()
+
+		const yearsContainer = document.body.querySelector<HTMLElement>('.v-date-picker-years')
+		expect(yearsContainer).not.toBeNull()
+
+		// Le conteneur scrollable n'est plus focusable, donc sans nom propre ;
+		// role="rowgroup" car il est enfant direct du role="grid" posé sur .v-date-picker-years
+		const yearsContent = yearsContainer?.querySelector<HTMLElement>('.v-date-picker-years__content')
+		expect(yearsContent).not.toBeNull()
+		expect(yearsContent?.getAttribute('role')).toBe('rowgroup')
+		expect(yearsContent?.hasAttribute('aria-label')).toBe(false)
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'DatePicker – opened year view (birth date)', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	}, 60000)
+
+	it('expose un seul arrêt de tabulation dans la vue années, y compris après un cycle focus/blur', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date de naissance',
+				format: 'DD/MM/YYYY',
+				modelValue: null,
+				isBirthDate: true,
+			},
+			attachTo: document.body,
+		})
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await wrapper.vm.updateAccessibility()
+		await nextTick()
+
+		const yearsContainer = document.body.querySelector<HTMLElement>('.v-date-picker-years')
+		expect(yearsContainer).not.toBeNull()
+		const yearsContent = yearsContainer?.querySelector<HTMLElement>('.v-date-picker-years__content')
+		expect(yearsContent?.getAttribute('tabindex')).toBe('-1')
+		expect(yearsContainer?.querySelectorAll('[tabindex="0"]')).toHaveLength(1)
+
+		const firstYear = yearsContainer?.querySelector<HTMLElement>('button')
+		firstYear?.focus()
+		await nextTick()
+		firstYear?.blur()
+		await nextTick()
+		await nextTick()
+
+		expect(yearsContent?.getAttribute('tabindex')).toBe('-1')
+		expect(yearsContainer?.querySelectorAll('[tabindex="0"]')).toHaveLength(1)
+
+		wrapper.unmount()
+	}, 60000)
 })

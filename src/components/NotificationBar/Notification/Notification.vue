@@ -4,6 +4,7 @@
 	import { mdiAlertOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
 	import type { Notification } from '../types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { locales } from '../locales'
 
 	const props = withDefaults(defineProps<{
 		notification: Notification
@@ -92,7 +93,7 @@
 			<VBtn
 				class="notification__close ml-auto"
 				:class="{ 'ma-0': isMobileVersion && hasLongContent && !hasActionSlot }"
-				aria-label="Fermer la notification"
+				:aria-label="locales.closeNotification(props.closeBtnText)"
 				v-bind="options.btn"
 				@click="emits('close', notification.id)"
 			>

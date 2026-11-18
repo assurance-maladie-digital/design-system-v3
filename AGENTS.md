@@ -57,8 +57,9 @@ pnpm dev                 # Serveur de dev (Vite)
 pnpm build               # Type-check (vue-tsc) + build de la librairie
 pnpm storybook           # Storybook (doc + dev des composants)
 
-pnpm test:unit           # Tests unitaires Vitest (exclut les *.a11y.spec.ts)
+pnpm test:unit           # Tests unitaires Vitest (exclut les *.a11y.spec.ts et *.snippets.spec.ts)
 pnpm test:a11y           # Tests d'accessibilité (vitest-axe)
+pnpm test:snippets       # Extraits de code des stories (analyzeSnippet), hors CI
 pnpm test:visual         # Tests visuels Cypress (Electron headless)
 pnpm test:visual:open    # Tests visuels en mode interactif
 pnpm test:visual:update  # Met à jour les baselines visuelles
@@ -208,6 +209,7 @@ Règles :
 |---|---|---|---|
 | Unitaire | Vitest + `happy-dom` | `*.spec.ts` | Sérialiseur `vue3-snapshot-serializer`, coverage `v8` |
 | Accessibilité | `vitest-axe` | `*.a11y.spec.ts` | Exclus du run unitaire standard, lancés via `pnpm test:a11y` |
+| Extraits de stories | Vitest + `analyzeSnippet` | `*.snippets.spec.ts` | Code affiché dans la doc (`parameters.sourceCode`), sans montage. Exclus du run unitaire standard et de la CI, lancés via `pnpm test:snippets`. Les tests qui montent une story restent dans `*.stories.spec.ts` |
 | Visuel | Cypress image snapshot | `*.cy.ts` | **Electron headless** pour la reproductibilité |
 
 ⚠️ **Tests visuels & WSL** : les snapshots diffèrent entre WSL et Linux natif.
