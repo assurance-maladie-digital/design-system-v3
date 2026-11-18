@@ -176,6 +176,57 @@ export function evaluateSnippetBinding(
 }
 
 /**
+ * Valeur d'une expression littérale liée dans le template d'un extrait (`:foo="['+', '.']"`), sans l'exécuter.
+ * Seuls les chaînes, nombres, booléens, `null`, tableaux et objets sont acceptés.
+ * Lève une erreur pour toute autre expression (variable, appel, accès à une propriété…).
+ */
+export function evaluateSnippetLiteral(expression: string): unknown {
+	const source = ts.createSourceFile(`${SNIPPET_ID}.ts`, `(${expression})`, ts.ScriptTarget.ES2022)
+	const [statement] = source.statements
+	if (source.statements.length !== 1 || statement === undefined || !ts.isExpressionStatement(statement)) {
+		throw new Error(`Expression invalide dans l'extrait : ${expression}`)
+	}
+
+	return readLiteral(statement.expression)
+}
+
+function readLiteral(node: ts.Expression): unknown {
+	if (ts.isParenthesizedExpression(node)) {
+		return readLiteral(node.expression)
+	}
+	if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
+		return node.text
+	}
+	if (ts.isNumericLiteral(node)) {
+		return Number(node.text)
+	}
+	if (ts.isPrefixUnaryExpression(node) && node.operator === ts.SyntaxKind.MinusToken && ts.isNumericLiteral(node.operand)) {
+		return -Number(node.operand.text)
+	}
+	if (node.kind === ts.SyntaxKind.TrueKeyword) {
+		return true
+	}
+	if (node.kind === ts.SyntaxKind.FalseKeyword) {
+		return false
+	}
+	if (node.kind === ts.SyntaxKind.NullKeyword) {
+		return null
+	}
+	if (ts.isArrayLiteralExpression(node)) {
+		return node.elements.map(readLiteral)
+	}
+	if (ts.isObjectLiteralExpression(node)) {
+		return Object.fromEntries(node.properties.map((property) => {
+			if (!ts.isPropertyAssignment(property) || !(ts.isIdentifier(property.name) || ts.isStringLiteral(property.name))) {
+				throw new Error(`Propriété non littérale dans l'extrait : ${ts.SyntaxKind[property.kind]}`)
+			}
+			return [property.name.text, readLiteral(property.initializer)]
+		}))
+	}
+	throw new Error(`Expression non littérale dans l'extrait : ${ts.SyntaxKind[node.kind]}`)
+}
+
+/**
  * Imports nommés du `<script setup>` de l'extrait d'une story absents des modules partagés,
  * au format `module:export`. Un module absent de la table est signalé pour chacun de ses imports.
  * Les imports de type (`import type`, `import { type X }`) sont ignorés : ils n'existent pas à l'exécution.
