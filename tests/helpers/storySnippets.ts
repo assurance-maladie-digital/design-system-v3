@@ -179,14 +179,11 @@ export function evaluateSnippetBinding(
 }
 
 /**
- * Imports nommés du `<script setup>` de l'extrait d'une story absents de leur module,
- * au format `module:export`. `modules` associe chaque module importable à ses exports réels.
- * Un module absent de `modules` est signalé pour chacun de ses imports.
+ * Imports nommés du `<script setup>` de l'extrait d'une story absents des modules partagés,
+ * au format `module:export`. Un module absent de la table est signalé pour chacun de ses imports.
  * Les imports de type (`import type`, `import { type X }`) sont ignorés : ils n'existent pas à l'exécution.
  */
-export function findUnknownSnippetImports(
-	story: StoryWithSourceCode
-): string[] {
+export function findUnknownSnippetImports(story: StoryWithSourceCode): string[] {
 	const content = parseSnippet(story).descriptor.scriptSetup?.content ?? ''
 	const source = ts.createSourceFile(`${SNIPPET_ID}.ts`, content, ts.ScriptTarget.ES2022)
 
