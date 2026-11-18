@@ -3,7 +3,7 @@ import { composeStories } from '@storybook/vue3-vite'
 import { camelize } from 'vue'
 import { parse } from 'vue/compiler-sfc'
 import { mdiContentDuplicate } from '@mdi/js'
-import { analyzeSnippet, evaluateSnippetBinding } from '@tests/helpers/storySnippets'
+import { analyzeSnippet, evaluateSnippetBinding, evaluateSnippetLiteral } from '@tests/helpers/storySnippets'
 import CopyBtn from '../CopyBtn.vue'
 import * as stories from '../CopyBtn.stories'
 
@@ -27,7 +27,7 @@ function getContent(node: unknown): string | undefined {
 function evaluateBoundExpression(story: SnippetStory, expression: string): unknown {
 	return /^[A-Z_$][\w$]*$/i.test(expression)
 		? evaluateSnippetBinding(story, expression)
-		: new Function(`return (${expression})`)()
+		: evaluateSnippetLiteral(expression)
 }
 
 // Attributs posés sur `<CopyBtn>` dans l'extrait affiché (`foo`, `:foo` et `v-bind:foo`), en camelCase, avec leur valeur.
