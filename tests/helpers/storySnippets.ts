@@ -24,17 +24,6 @@ export interface StoryWithSourceCode {
 	parameters: Record<string, unknown>
 }
 
-/** Retourne le code d'un onglet nommé du paramètre `sourceCode` d'une story. */
-export function getSnippetTab(story: StoryWithSourceCode, name: string): string {
-	const { sourceCode } = story.parameters
-	if (!Array.isArray(sourceCode)) {
-		return ''
-	}
-
-	const tab = sourceCode.find((entry): entry is SourceCodeTab => isSourceCodeTab(entry) && entry.name === name)
-	return tab?.code ?? ''
-}
-
 /** Résultat de l'analyse d'un extrait de story recopié comme SFC. */
 export interface SnippetAnalysis {
 	/** Erreurs de parsing ou de compilation du SFC. */
