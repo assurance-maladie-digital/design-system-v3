@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analyzeSnippet, evaluateSnippetBinding, findUnknownSnippetImports, getSnippetTab } from '../storySnippets'
+import { analyzeSnippet, evaluateSnippetBinding, evaluateSnippetLiteral, findUnknownSnippetImports, getSnippetTab } from '../storySnippets'
 
 function story(template: string, script?: string) {
 	const sourceCode = [{ name: 'Template', code: template }]
@@ -208,5 +208,33 @@ describe('getSnippetTab', () => {
 	it('renvoie une chaîne vide si l\'onglet ou le paramètre sourceCode est absent', () => {
 		expect(getSnippetTab(story('<template><div /></template>'), 'Script')).toBe('')
 		expect(getSnippetTab({ parameters: {} }, 'Template')).toBe('')
+	})
+})
+
+describe('evaluateSnippetLiteral', () => {
+	it.each([
+		['\'-\'', '-'],
+		['"Libellé"', 'Libellé'],
+		['`texte`', 'texte'],
+		['5000', 5000],
+		['-1', -1],
+		['true', true],
+		['false', false],
+		['null', null],
+		['[\'+\', \'(\', \')\', \'.\']', ['+', '(', ')', '.']],
+		['{ menu: { offset: 16 }, \'z-index\': 8 }', { 'menu': { offset: 16 }, 'z-index': 8 }],
+	])('lit le littéral %s', (expression, expected) => {
+		expect(evaluateSnippetLiteral(expression)).toEqual(expected)
+	})
+
+	it.each([
+		'items.length',
+		'getLabel()',
+		'value',
+		'`${prefix}-id`',
+		'{ ...options }',
+		'1 + 1',
+	])('refuse l\'expression non littérale %s sans l\'exécuter', (expression) => {
+		expect(() => evaluateSnippetLiteral(expression)).toThrow(/non littérale/)
 	})
 })

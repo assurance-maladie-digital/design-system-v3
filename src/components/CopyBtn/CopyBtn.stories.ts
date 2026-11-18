@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import CopyBtn from './CopyBtn.vue'
-import { VIcon } from 'vuetify/components'
+import { config } from './config'
+import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 import { mdiContentDuplicate } from '@mdi/js'
 
 const duplicateIcon = mdiContentDuplicate
@@ -15,47 +16,26 @@ const meta = {
 	argTypes: {
 		ariaLabel: {
 			control: { type: 'text' },
-			default: 'copy-btn',
 		},
 		ariaOwns: {
 			description: 'Préfixe de l’identifiant du conteneur et valeur du data-test-id du bouton. Ne définit pas de relation ARIA.',
 			control: { type: 'text' },
-			default: 'copy-btn',
 		},
 		textToCopy: {
 			control: { type: 'text' },
-			default: 'test',
 		},
 		hideTooltip: {
 			control: { type: 'boolean' },
-			default: false,
 		},
 		tooltipDuration: {
 			control: { type: 'number' },
-			default: 2000,
 		},
 		separatorsToRemove: {
 			control: { type: 'text' },
-			default: '',
 		},
 		vuetifyOptions: {
 			control: { type: 'object' },
-			default: () => ({
-				menu: {
-					location: 'end center',
-					offset: 16,
-					zIndex: 8,
-					contentClass: 'sy-copy-tooltip-menu text-white text-body-2 ml-2',
-				},
-				btn: {
-					icon: true,
-					variant: 'text',
-					density: 'comfortable',
-				},
-				icon: {
-					color: 'grey-darken-20',
-				},
-			}),
+			table: { defaultValue: { summary: 'object', detail: JSON.stringify(config, null, 2) } },
 		},
 	},
 } satisfies Meta<typeof CopyBtn>
@@ -94,27 +74,8 @@ export const Default: Story = {
 	},
 	args: {
 		ariaLabel: 'Copier le numéro de patient',
-		ariaOwns: 'copy-btn-1',
 		textToCopy: '1970756541',
 		hideTooltip: false,
-		tooltipDuration: 2000,
-		vuetifyOptions: {
-			menu: {
-				location: 'end center',
-				offset: 16,
-				zIndex: 8,
-				contentClass: 'sy-copy-tooltip-menu text-white text-body-2 ml-2',
-			},
-			btn: {
-				icon: true,
-				variant: 'text',
-				color: 'primary',
-				density: 'comfortable',
-			},
-			icon: {
-				color: 'grey-darken-20',
-			},
-		},
 	},
 	render: (args) => {
 		return {
@@ -129,9 +90,12 @@ export const Default: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de patient"
-						text-to-copy="1970756541"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 						:vuetify-options="args.vuetifyOptions"
 					/>
               	</div>
@@ -173,7 +137,6 @@ export const NoTooltip: Story = {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: true,
-		tooltipDuration: 2000,
 	},
 	render: (args) => {
 		return {
@@ -188,10 +151,12 @@ export const NoTooltip: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de patient"
-						text-to-copy="1970756541"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
-						
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					/>
               	</div>
 			`,
@@ -215,7 +180,10 @@ export const SlotIcon: Story = {
 			text-to-copy="1970756541"
 		>
 			<template #icon>
-				<VIcon :icon="duplicateIcon" />
+				<SyIcon
+					:icon="duplicateIcon"
+					decorative
+				/>
 			</template>
 		</CopyBtn>
 	</div>
@@ -225,8 +193,7 @@ export const SlotIcon: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import { CopyBtn } from '@cnamts/synapse'
-	import { VIcon } from 'vuetify/components'
+	import { CopyBtn, SyIcon } from '@cnamts/synapse'
 	import { mdiContentDuplicate } from '@mdi/js'
 	
 	const duplicateIcon = mdiContentDuplicate
@@ -239,12 +206,11 @@ export const SlotIcon: Story = {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		icon: duplicateIcon,
 	},
 	render: (args) => {
 		return {
-			components: { CopyBtn, VIcon },
+			components: { CopyBtn, SyIcon },
 			setup() {
 				return { args }
 			},
@@ -255,12 +221,18 @@ export const SlotIcon: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de patient"
-						text-to-copy="1970756541"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					>
 						<template #icon>
-							<VIcon :icon="args.icon" />
+							<SyIcon
+								:icon="args.icon"
+								decorative
+							/>
 						</template>
 					</CopyBtn>
               	</div>
@@ -300,10 +272,8 @@ export const RemoveSeparators: Story = {
 	},
 	args: {
 		ariaLabel: 'Copier l\'IBAN sans tirets',
-		ariaOwns: 'copy-btn-remove-separators',
 		textToCopy: 'FR76-3000-4000-0300-0000-0000-000',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		separatorsToRemove: '-',
 	},
 	render: (args) => {
@@ -319,11 +289,12 @@ export const RemoveSeparators: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier l'IBAN sans tirets"
-						:text-to-copy="args.textToCopy"
-						:separators-to-remove="args.separatorsToRemove"
-						:hide-tooltip="args.hideTooltip"
+						:aria-label="args.ariaLabel"
 						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
+						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					/>
               	</div>
 			`,
@@ -362,10 +333,8 @@ export const MultiSeparators: Story = {
 	},
 	args: {
 		ariaLabel: 'Copier le numéro sans séparateurs',
-		ariaOwns: 'copy-btn-multi-separators',
 		textToCopy: '+33 (0)6.12.34.56.78',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		separatorsToRemove: ['+', '(', ')', '.'],
 	},
 	render: (args) => {
@@ -381,11 +350,12 @@ export const MultiSeparators: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro sans séparateurs"
-						:text-to-copy="args.textToCopy"
-						:separators-to-remove="args.separatorsToRemove"
-						:hide-tooltip="args.hideTooltip"
+						:aria-label="args.ariaLabel"
 						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
+						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					/>
               	</div>
 			`,
@@ -424,10 +394,9 @@ export const RemoveSpaces: Story = {
 	},
 	args: {
 		ariaLabel: 'Copier le numéro de sécurité sociale sans espaces',
-		ariaOwns: 'copy-btn-remove-spaces',
 		textToCopy: '1 97 07 56 541 123 45',
 		hideTooltip: false,
-		tooltipDuration: 2000,
+		separatorsToRemove: ' ',
 	},
 	render: (args) => {
 		return {
@@ -442,11 +411,12 @@ export const RemoveSpaces: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de sécurité sociale sans espaces"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
 						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
-						:aria-owns="args.ariaOwns"
-						separators-to-remove=" "
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					/>
               	</div>
 			`,
@@ -492,7 +462,6 @@ export const SlotTooltip: Story = {
 		ariaLabel: 'Copier le numéro de patient',
 		textToCopy: '1970756541',
 		hideTooltip: false,
-		tooltipDuration: 2000,
 		tooltip: 'Texte personnalisé',
 	},
 	render: (args) => {
@@ -508,9 +477,12 @@ export const SlotTooltip: Story = {
 					</p>
 	
 					<CopyBtn
-						aria-label="Copier le numéro de patient"
-						text-to-copy="1970756541"
+						:aria-label="args.ariaLabel"
+						:aria-owns="args.ariaOwns"
+						:text-to-copy="args.textToCopy"
 						:hide-tooltip="args.hideTooltip"
+						:tooltip-duration="args.tooltipDuration"
+						:separators-to-remove="args.separatorsToRemove"
 					>
 						<template #tooltip>
 							{{ args.tooltip }}
