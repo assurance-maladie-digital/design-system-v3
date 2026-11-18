@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import SyCheckbox from '../SyCheckbox.vue'
 import SyForm from '../../SyForm/SyForm.vue'
 import { VBtn, VForm } from 'vuetify/components'
+import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof SyCheckbox> = {
@@ -211,10 +212,32 @@ onMounted(() => checkboxRef.value?.validateOnSubmit())
  * `required` (qui se contente d'exiger que la case soit cochée).
  */
 export const WithCustomRules: Story = {
+	args: {
+		'label': 'J\'accepte (uniquement si le prérequis est validé)',
+		'required': false,
+		'isValidateOnBlur': false,
+		'onUpdate:modelValue': fn(),
+	},
+	argTypes: {
+		customRules: {
+			...getValidationDocumentation().customRules,
+			control: { disable: true },
+			description: 'Règles recalculées par la démo à chaque changement du prérequis : le control est désactivé pour ne pas les remplacer.',
+		},
+		modelValue: {
+			control: { disable: true },
+			description: 'Piloté par le `v-model` de la démo : cochez la case directement.',
+		},
+		useVuetifyValidation: {
+			...getValidationDocumentation().useVuetifyValidation,
+			control: { disable: true },
+			description: 'Désactivé dans cette démo : en mode Vuetify, les `customRules` ne s\'appliquent pas et la règle du prérequis serait ignorée.',
+		},
+	},
 	parameters: {
 		docs: {
 			description: {
-				story: 'La règle dépend d\'un état externe (le prérequis). Cocher la case sans valider le prérequis déclenche une erreur.',
+				story: 'La règle dépend d\'un état externe (le prérequis). Cocher la case sans valider le prérequis déclenche une erreur. Cocher ensuite le prérequis retire immédiatement l\'erreur, le décocher la fait réapparaître : les règles sont recalculées à chaque changement du prérequis, ce qui relance la validation de la case. Les controls `customRules`, `modelValue` et `useVuetifyValidation` sont désactivés car pilotés par la démo.',
 			},
 		},
 		sourceCode: [
@@ -257,7 +280,7 @@ const customRules = computed(() => {
 			},
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { SyCheckbox },
 		setup() {
 			const prerequisite = ref(false)
@@ -276,16 +299,15 @@ const customRules = computed(() => {
 				}]
 			})
 
-			return { prerequisite, accepted, customRules }
+			return { args, prerequisite, accepted, customRules }
 		},
 		template: `
 			<div class="d-flex flex-column ga-2">
 				<SyCheckbox v-model="prerequisite" label="Prérequis : j'ai lu le document" hide-details />
 				<SyCheckbox
+					v-bind="args"
 					v-model="accepted"
-					label="J'accepte (uniquement si le prérequis est validé)"
 					:custom-rules="customRules"
-					:is-validate-on-blur="false"
 				/>
 			</div>
 		`,
