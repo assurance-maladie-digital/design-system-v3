@@ -65,11 +65,14 @@ export const Default: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyTabs :items="items" />`,
+				code: `
+<template><SyTabs :items="items" /></template>
+`,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
 
 const items = [
@@ -77,6 +80,7 @@ const items = [
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
 	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
+</script>
 `,
 			},
 		],
@@ -84,7 +88,7 @@ const items = [
 }
 
 /**
- * Exemple de base du composant SyTabs avecun onglet disabled.
+ * Exemple de base du composant SyTabs avec un onglet disabled.
  */
 export const Disabled: Story = {
 	args: {
@@ -99,19 +103,23 @@ export const Disabled: Story = {
 			{
 				name: 'Template',
 				code: `
+<template>
 <SyTabs :items="items" />
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
-				
+
 const items = [
 	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2", disabled: true },
 	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
+</script>
 `,
 			},
 		],
@@ -153,8 +161,8 @@ export const WithVModel: Story = {
   <div>
     <div class="mb-4">
       Onglet actif: {{ activeTab }}
-      <button 
-        class="ml-4 px-2 py-1 bg-primary text-white rounded" 
+      <button
+        class="ml-4 px-2 py-1 bg-primary text-white rounded"
         @click="activeTab = activeTab === 'tab1' ? 'tab2' : activeTab === 'tab2' ? 'tab3' : 'tab1'"
       >
         Changer d'onglet
@@ -167,6 +175,7 @@ export const WithVModel: Story = {
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { ref } from 'vue'
 import { SyTabs } from '@cnamts/synapse'
 
@@ -176,6 +185,7 @@ const items = [
   { label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
   { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" }
 ]
+</script>
 `,
 			},
 		],
@@ -206,6 +216,7 @@ export const WithTabsPrependSlot: Story = {
 			{
 				name: 'Template',
 				code: `
+<template>
 <SyTabs :items="items">
 	<template #tabs-prepend>
 		<div class="d-flex align-center align-self-stretch px-4 bg-info-variant-lighten rounded">
@@ -213,11 +224,13 @@ export const WithTabsPrependSlot: Story = {
 		</div>
 	</template>
 </SyTabs>
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
 
 const items = [
@@ -225,6 +238,7 @@ const items = [
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
 	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
+</script>
 `,
 			},
 		],
@@ -255,6 +269,7 @@ export const WithTabsAppendSlot: Story = {
 			{
 				name: 'Template',
 				code: `
+<template>
 <SyTabs :items="items">
 	<template #tabs-append>
 		<div class="d-flex align-center align-self-stretch px-4 bg-info-variant-lighten rounded">
@@ -262,18 +277,21 @@ export const WithTabsAppendSlot: Story = {
 		</div>
 	</template>
 </SyTabs>
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
-				
+
 const items = [
 	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
 	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
+</script>
 `,
 			},
 		],
@@ -307,6 +325,7 @@ export const WithTabPrependSlot: Story = {
 			{
 				name: 'Template',
 				code: `
+<template>
 <SyTabs :items="items">
 	<template #tab-prepend="{ index, isActive }">
 		<VIcon
@@ -317,11 +336,13 @@ export const WithTabPrependSlot: Story = {
 		/>
 	</template>
 </SyTabs>
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
 import { VIcon } from 'vuetify/components'
 import { mdiHome } from '@mdi/js'
@@ -331,6 +352,7 @@ const items = [
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
 	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
+</script>
 `,
 			},
 		],
@@ -364,6 +386,7 @@ export const WithTabAppendSlot: Story = {
 			{
 				name: 'Template',
 				code: `
+<template>
 <SyTabs :items="items">
 	<template #tab-append="{ index, isActive }">
 		<VIcon
@@ -374,12 +397,14 @@ export const WithTabAppendSlot: Story = {
 		/>
 	</template>
 </SyTabs>
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
-import { SyTabs } from '@cnamts/synapse'				
+<script setup lang="ts">
+import { SyTabs } from '@cnamts/synapse'
 import { VIcon } from 'vuetify/components'
 import { mdiHome } from '@mdi/js'
 
@@ -388,6 +413,7 @@ const items = [
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
 	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
+</script>
 `,
 			},
 		],
@@ -432,6 +458,7 @@ export const WithCustomContent: Story = {
 			{
 				name: 'Template',
 				code: `
+<template>
 <SyTabs :items="items">
 	<template #panel-0>
 		<div class="pa-4 bg-info-variant-lighten rounded">
@@ -446,18 +473,21 @@ export const WithCustomContent: Story = {
 		</div>
 	</template>
 </SyTabs>
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
-				
+
 const items = [
 	{ label: 'Onglet 1', value: 'tab1' },
 	{ label: 'Onglet 2', value: 'tab2' },
 	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
+</script>
 `,
 			},
 		],
@@ -479,19 +509,23 @@ export const ManyTabs: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyTabs :items="items" />`,
+				code: `
+<template><SyTabs :items="items" /></template>
+`,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
-				
+
 // Création d'un grand nombre d'onglets pour tester le comportement de défilement
 const items = Array.from({ length: 10 }, (_, i) => ({
   label: \`Onglet \${i + 1}\`,
   value: \`tab\${i + 1}\`,
   content: \`Contenu de l'onglet \${i + 1}\`,
 }))
+</script>
 `,
 			},
 		],
@@ -523,7 +557,8 @@ export const CustomTheme: Story = {
 			{
 				name: 'Template',
 				code: `
-<SyTabs 
+<template>
+<SyTabs
   :items="items"
   :vuetifyOptions="{
     sheet: { theme: 'dark', color: '#0C419A' },
@@ -531,11 +566,13 @@ export const CustomTheme: Story = {
     tabs: { height: '60' }
   }"
 />
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
 
 const items = [
@@ -544,6 +581,7 @@ const items = [
   { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
 
+</script>
 `,
 			},
 		],
@@ -571,6 +609,7 @@ export const CustomTabStyles: Story = {
 			{
 				name: 'Template',
 				code: `
+<template>
 <SyTabs
 	:items="items"
 	:vuetify-options="{
@@ -582,17 +621,20 @@ export const CustomTabStyles: Story = {
 		},
 	}"
 />
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
-				
+
 const items = [
 	{ label: 'Onglet 1', value: 'tab1' },
 	{ label: 'Onglet 2', value: 'tab2' },
 ]
+</script>
 `,
 			},
 		],
@@ -615,18 +657,22 @@ export const NavigationMode: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyTabs :items="items" />`,
+				code: `
+<template><SyTabs :items="items" /></template>
+`,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
-				
+
 const items = [
 	{ label: 'Accueil', value: 'home', href: '#' },
 	{ label: 'Profil', value: 'profile', href: '#profile' },
 	{ label: 'Paramètres', value: 'settings', href: '#settings' },
 ]
+</script>
 `,
 			},
 		],
@@ -671,6 +717,7 @@ export const WithTabConfirmation: Story = {
 			{
 				name: 'Template',
 				code: `
+<template>
 <div>
 	<div class="mb-4 pa-2 bg-warning-variant-lighten">
 		<strong>Note :</strong> Essayez de changer d'onglet. Une boîte de dialogue de confirmation s'affichera.
@@ -681,13 +728,15 @@ export const WithTabConfirmation: Story = {
 		@confirm-tab-change="showConfirmDialog"
 	/>
 </div>
+</template>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
+<script setup lang="ts">
 import { SyTabs } from '@cnamts/synapse'
-				
+
 const items = [
 	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
 	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
@@ -701,6 +750,7 @@ function showConfirmDialog(message, callback) {
 	const confirmed = window.confirm(message)
 	callback(confirmed)
 }
+</script>
 `,
 			},
 		],

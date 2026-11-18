@@ -1,5 +1,17 @@
 import ts from 'typescript'
 import { compileScript, compileTemplate, parse } from 'vue/compiler-sfc'
+import * as vue from 'vue'
+import * as vuetifyComponents from 'vuetify/components'
+import * as mdi from '@mdi/js'
+import * as synapse from '@/main'
+
+/** Exports des modules disponibles dans les extraits de stories du design system. */
+const modules: Record<string, Record<string, unknown>> = {
+	'@cnamts/synapse': synapse,
+	'@mdi/js': mdi,
+	'vue': vue,
+	'vuetify/components': vuetifyComponents,
+}
 
 /** Onglet du paramètre `sourceCode` d'une story. */
 export interface SourceCodeTab {
@@ -10,6 +22,17 @@ export interface SourceCodeTab {
 /** Story composée (`composeStories`) ou objet de story exposant ses `parameters`. */
 export interface StoryWithSourceCode {
 	parameters: Record<string, unknown>
+}
+
+/** Retourne le code d'un onglet nommé du paramètre `sourceCode` d'une story. */
+export function getSnippetTab(story: StoryWithSourceCode, name: string): string {
+	const { sourceCode } = story.parameters
+	if (!Array.isArray(sourceCode)) {
+		return ''
+	}
+
+	const tab = sourceCode.find((entry): entry is SourceCodeTab => isSourceCodeTab(entry) && entry.name === name)
+	return tab?.code ?? ''
 }
 
 /** Résultat de l'analyse d'un extrait de story recopié comme SFC. */
@@ -162,8 +185,7 @@ export function evaluateSnippetBinding(
  * Les imports de type (`import type`, `import { type X }`) sont ignorés : ils n'existent pas à l'exécution.
  */
 export function findUnknownSnippetImports(
-	story: StoryWithSourceCode,
-	modules: Record<string, Record<string, unknown>>,
+	story: StoryWithSourceCode
 ): string[] {
 	const content = parseSnippet(story).descriptor.scriptSetup?.content ?? ''
 	const source = ts.createSourceFile(`${SNIPPET_ID}.ts`, content, ts.ScriptTarget.ES2022)
