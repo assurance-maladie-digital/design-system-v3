@@ -4,7 +4,7 @@ import { VCarousel, VCarouselItem, VCard, VCardTitle, VCardText, VBtn } from 'vu
 const meta: Meta<typeof VCarousel> = {
 	title: 'Composants/Composants Vuetify/VCarousel',
 	component: VCarousel,
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	parameters: {
 		docs: {
 			source: {

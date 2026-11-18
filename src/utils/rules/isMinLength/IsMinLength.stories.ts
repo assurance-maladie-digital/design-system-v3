@@ -5,6 +5,7 @@ import { isMinLengthFn } from './index'
 export default {
 	title: 'Guide Du Dev/Utilitaires/Règles de validation/isMinLength',
 	component: isMinLengthFn,
+	tags: ['!manifest'],
 }
 
 export const Default: StoryObj<unknown> = {

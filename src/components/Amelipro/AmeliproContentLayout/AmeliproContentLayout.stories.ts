@@ -47,5 +47,5 @@ export const DeprecationNotice = {
 	...createDeprecationNotice([
 		{ label: 'PageContainer', url: '/?path=/docs/composants-layout-pagecontainer--docs&globals=theme:ap' },
 	]),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

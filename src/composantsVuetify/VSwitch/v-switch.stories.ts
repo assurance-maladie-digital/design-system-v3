@@ -3,7 +3,7 @@ import { VSwitch } from 'vuetify/components'
 
 const meta: Meta<typeof VSwitch> = {
 	title: 'Composants/Composants Vuetify/VSwitch',
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	component: VSwitch,
 	parameters: {
 		docs: {

@@ -5,6 +5,7 @@ import { isMaxLengthFn } from './index'
 export default {
 	title: 'Guide Du Dev/Utilitaires/Règles de validation/isMaxLength',
 	component: isMaxLengthFn,
+	tags: ['!manifest'],
 }
 
 export const Default: StoryObj<unknown> = {

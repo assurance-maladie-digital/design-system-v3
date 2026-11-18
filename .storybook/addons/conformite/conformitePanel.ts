@@ -107,6 +107,16 @@ export const ConformitePanel = ({
 						},
 					},
 					React.createElement(
+						'caption',
+						{
+							style: {
+								textAlign: 'left',
+								paddingBottom: 8,
+							},
+						},
+						`Conformité du composant ${result.component}`,
+					),
+					React.createElement(
 						'thead',
 						null,
 						React.createElement(
@@ -117,6 +127,7 @@ export const ConformitePanel = ({
 									'th',
 									{
 										key: label,
+										scope: 'col',
 										style: {
 											textAlign: 'left',
 											padding: 8,

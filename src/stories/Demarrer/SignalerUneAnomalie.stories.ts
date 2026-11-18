@@ -5,6 +5,7 @@ import '../styles/shared.css'
 export default {
 	title: 'Démarrer/Signaler une anomalie',
 	component: SyAlert,
+	tags: ['!manifest'],
 }
 
 export const InfoIntro = {
@@ -23,7 +24,7 @@ export const InfoIntro = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const InfoPratiques = {
@@ -43,7 +44,7 @@ export const InfoPratiques = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const AnomalieGraphique = {
@@ -102,7 +103,7 @@ export const AnomalieGraphique = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const AnomalieFonctionnelle = {
@@ -171,7 +172,7 @@ export const AnomalieFonctionnelle = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const AnomalieAccessibilite = {
@@ -214,7 +215,7 @@ export const AnomalieAccessibilite = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const AnomalieDocumentaire = {
@@ -257,5 +258,5 @@ export const AnomalieDocumentaire = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

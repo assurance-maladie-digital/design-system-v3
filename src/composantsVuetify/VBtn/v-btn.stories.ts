@@ -8,7 +8,7 @@ const sizeOptions = ['x-small', 'small', 'default', 'large', 'x-large'] as const
 
 const meta: Meta = {
 	title: 'Composants/Composants Vuetify/VBtn',
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 	argTypes: {
 		variant: {
 			control: 'select',

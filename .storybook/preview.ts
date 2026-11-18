@@ -132,6 +132,7 @@ const preview: Preview = {
 		},
 	],
 	parameters: {
+		htmlLang: 'fr-FR',
 		interactions: {
 			disable: true,
 		},

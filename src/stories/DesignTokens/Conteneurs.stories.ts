@@ -3,6 +3,7 @@ import type { StoryObj } from '@storybook/vue3-vite'
 
 export default {
 	title: 'Design Tokens/Conteneurs de page',
+	tags: ['!manifest'],
 }
 
 export const Desktop: StoryObj = {
@@ -39,7 +40,7 @@ export const Desktop: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Tablet: StoryObj = {
@@ -69,7 +70,7 @@ export const Tablet: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Mobile: StoryObj = {
@@ -99,5 +100,5 @@ export const Mobile: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }

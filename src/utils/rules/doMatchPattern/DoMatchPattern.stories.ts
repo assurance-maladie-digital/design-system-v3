@@ -5,6 +5,7 @@ import { doMatchPatternFn } from './index'
 export default {
 	title: 'Guide Du Dev/Utilitaires/Règles de validation/doMatchPattern',
 	component: doMatchPatternFn,
+	tags: ['!manifest'],
 }
 
 export const Default: StoryObj<unknown> = {

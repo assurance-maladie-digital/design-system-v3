@@ -54,6 +54,7 @@ function createSection(
 
 export default {
 	title: 'Design Tokens/Couleurs',
+	tags: ['!manifest'],
 }
 
 type ThemeKey = 'cnam' | 'pa' | 'ap' | 'ap2026'
@@ -67,7 +68,7 @@ export const TokenOptimisationWarning: StoryObj = {
 			</SyAlert>
 		`,
 	}),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Theme: StoryObj = {
@@ -101,7 +102,7 @@ export const Theme: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const ColorIntegration: StoryObj = {
@@ -109,7 +110,7 @@ export const ColorIntegration: StoryObj = {
 		components: { ColorIntegrationExample },
 		template: '<ColorIntegrationExample />',
 	}),
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const MainColors: StoryObj = {
@@ -172,7 +173,7 @@ export const MainColors: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const ColorOn: StoryObj = {
@@ -227,7 +228,7 @@ export const ColorOn: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const Interaction: StoryObj = {
@@ -278,7 +279,7 @@ export const Interaction: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 export const Disabled: StoryObj = {
 	render: () => {
@@ -325,7 +326,7 @@ export const Disabled: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const MainSection = {
@@ -382,7 +383,7 @@ export const Backgrounds: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 export const OnBackgrounds: StoryObj = {
 	render: () => {
@@ -430,7 +431,7 @@ export const OnBackgrounds: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 export const Surfaces: StoryObj = {
 	render: () => {
@@ -484,7 +485,7 @@ export const Surfaces: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 export const OnSurfaces: StoryObj = {
 	render: () => {
@@ -532,7 +533,7 @@ export const OnSurfaces: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 export const Overlay: StoryObj = {
 	render: () => {
@@ -574,7 +575,7 @@ export const Overlay: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 export const Borders: StoryObj = {
 	render: () => {
@@ -628,7 +629,7 @@ export const Borders: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const BorderSection = {
@@ -737,7 +738,7 @@ export const Feedback: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const OnFeedback: StoryObj = {
@@ -804,7 +805,7 @@ export const OnFeedback: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const FeedbackSection = {
@@ -888,7 +889,7 @@ export const PaletteOrange: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteRed: StoryObj = {
@@ -947,7 +948,7 @@ export const PaletteRed: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteYellow: StoryObj = {
@@ -1031,7 +1032,7 @@ export const PaletteYellow: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteForestGreen: StoryObj = {
@@ -1082,7 +1083,7 @@ export const PaletteForestGreen: StoryObj = {
             `,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteGreen: StoryObj = {
@@ -1161,7 +1162,7 @@ export const PaletteGreen: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteTurquoise: StoryObj = {
@@ -1241,7 +1242,7 @@ export const PaletteTurquoise: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteBlue: StoryObj = {
@@ -1322,7 +1323,7 @@ export const PaletteBlue: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteCyan: StoryObj = {
@@ -1397,7 +1398,7 @@ export const PaletteCyan: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteFrostedBlue: StoryObj = {
@@ -1460,7 +1461,7 @@ export const PaletteFrostedBlue: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteParma: StoryObj = {
@@ -1538,7 +1539,7 @@ export const PaletteParma: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteMauve: StoryObj = {
@@ -1613,7 +1614,7 @@ export const PaletteMauve: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PalettePink: StoryObj = {
@@ -1690,7 +1691,7 @@ export const PalettePink: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteBrick: StoryObj = {
@@ -1753,7 +1754,7 @@ export const PaletteBrick: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteGrey: StoryObj = {
@@ -1837,7 +1838,7 @@ export const PaletteGrey: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteWhite: StoryObj = {
@@ -1896,7 +1897,7 @@ export const PaletteWhite: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteBlack: StoryObj = {
@@ -1937,7 +1938,7 @@ export const PaletteBlack: StoryObj = {
 			`,
 		}
 	},
-	tags: ['!dev'],
+	tags: ['!dev', '!manifest'],
 }
 
 export const PaletteSection = {
