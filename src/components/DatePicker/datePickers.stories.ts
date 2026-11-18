@@ -3,7 +3,7 @@ import type { StoryObj } from '@storybook/vue3-vite'
 import DatePicker from './CalendarMode/DatePicker.vue'
 
 export default {
-	title: 'datePickers',
+	title: 'Composants/Formulaires/DatePicker/datePickers',
 }
 
 export const Century: StoryObj = {
@@ -63,7 +63,7 @@ export const ValidationModes: StoryObj = {
 				'<div style="display: grid; gap: 16px; margin: 16px 0;">',
 				'<div style="padding: 16px; border-radius: 8px; border: 1px solid #d7e3f4; background: #f7fbff;">',
 				'<h3 style="margin: 0 0 8px; color: #0d47a1;">Validation Synapse unifiée</h3>',
-				'<p style="margin: 0 0 8px;">Mode recommande quand il faut gerer les regles metier date, les plages et les flux calendrier.</p>',
+				'<p style="margin: 0 0 8px;">Mode recommandé quand il faut gérer les règles métier date, les plages et les flux calendrier.</p>',
 				'<ul style="margin: 0; padding-left: 20px;">',
 				'<li><code>customRules</code>, <code>customWarningRules</code>, <code>customSuccessRules</code></li>',
 				'<li>messages error / warning / success</li>',
@@ -75,11 +75,11 @@ export const ValidationModes: StoryObj = {
 				'</div>',
 				'<div style="padding: 16px; border-radius: 8px; border: 1px solid #e0e0e0; background: #fafafa;">',
 				'<h3 style="margin: 0 0 8px; color: #424242;">Validation Vuetify native</h3>',
-				'<p style="margin: 0 0 8px;">Disponible aussi sur DatePicker quand le besoin se limite a des regles de champ au format Vuetify.</p>',
+				'<p style="margin: 0 0 8px;">Disponible aussi sur DatePicker quand le besoin se limite à des règles de champ au format Vuetify.</p>',
 				'<ul style="margin: 0; padding-left: 20px;">',
 				'<li><code>useVuetifyValidation</code> + <code>rules</code></li>',
 				'<li>fonctions retournant <code>true</code> ou un message</li>',
-				'<li>utile pour un comportement aligne avec les autres champs migres</li>',
+				'<li>utile pour un comportement aligné avec les autres champs migrés</li>',
 				'</ul>',
 				'<div style="margin-top: 16px; max-width: 320px;">',
 				'<DatePicker v-bind="args" v-model="vuetifyValue" label="Date Vuetify" use-vuetify-validation :rules="vuetifyRules" />',

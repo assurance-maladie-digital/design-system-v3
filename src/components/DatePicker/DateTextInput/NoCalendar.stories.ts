@@ -67,7 +67,7 @@ const meta = {
 		actions: { argTypesRegex: '^on.*' },
 		events: {
 			remapEvents: {
-				'update:model-value': 'onUpdate:modelValue',
+				'update:modelValue': 'onUpdate:modelValue',
 				'focus': 'onFocus',
 				'blur': 'onBlur',
 				'input': 'onInput',
@@ -105,7 +105,7 @@ const meta = {
 			},
 		},
 		'onDate-selected': {
-			description: 'Emis lorsqu\'une date complète est saisie manuellement',
+			description: 'Émis lorsqu\'une date complète est saisie manuellement',
 			table: {
 				category: 'events',
 				type: { summary: '(value: DateValue) => void' },
@@ -352,7 +352,7 @@ export const Default: Story = {
 		'displayAppendIcon': false,
 		'noIcon': false,
 		'displayRange': false,
-		'displayPrependIcon': false,
+		'displayPrependIcon': true,
 		'showSuccessMessages': false,
 		'disableErrorHandling': false,
 		'onUpdate:modelValue': fn(),
@@ -499,7 +499,7 @@ export const Required: Story = {
 		'displayAppendIcon': false,
 		'noIcon': false,
 		'displayRange': false,
-		'displayPrependIcon': false,
+		'displayPrependIcon': true,
 		'showSuccessMessages': false,
 		'disableErrorHandling': false,
 		'onUpdate:modelValue': fn(),

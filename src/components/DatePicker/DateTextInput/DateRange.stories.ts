@@ -368,7 +368,7 @@ export const WithValidation: Story = {
 						v-model="dateRange"
 						format="DD/MM/YYYY"
 						label="Période d'hospitalisation"
-						help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret. Date de début postérieure ou égale au 01/01/1995"
+						help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret. Date de début postérieure ou égale au 01/01/1999"
 						display-range
 						no-calendar
 						required
@@ -376,8 +376,8 @@ export const WithValidation: Story = {
 							{
 								type: 'notBeforeDate',
 								options: {
-									date: '01/01/1995',
-									message: 'La periode doit être postérieure ou égale au 01/01/1995',
+									date: '01/01/1999',
+									message: 'La période doit être postérieure ou égale au 01/01/1999',
 									fieldIdentifier: 'date',
 									},
 							},
@@ -402,7 +402,7 @@ export const WithValidation: Story = {
 				type: 'notBeforeDate',
 				options: {
 					date: '01/01/1999',
-					message: 'La date doit être postérieure ou égale au 01/01/1999',
+					message: 'La période doit être postérieure ou égale au 01/01/1999',
 					fieldIdentifier: 'date',
 				},
 			},
