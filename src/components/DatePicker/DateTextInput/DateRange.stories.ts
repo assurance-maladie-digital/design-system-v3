@@ -206,6 +206,17 @@ export const Default: Story = {
 				</template>
 				`,
 			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const dateRange = ref<string | null>(null)
+				</script>
+				`,
+			},
 		],
 	},
 	args: {
@@ -261,6 +272,17 @@ export const WithInitialValue: Story = {
 						no-calendar
 					/>
 				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const dateRange = ref<string | [string, string] | null>('01/06/2025 - 30/06/2025')
+				</script>
 				`,
 			},
 		],
@@ -321,6 +343,17 @@ export const WithCustomFormat: Story = {
 				</template>
 				`,
 			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const dateRange = ref<string | null>(null)
+				</script>
+				`,
+			},
 		],
 	},
 	args: {
@@ -368,22 +401,33 @@ export const WithValidation: Story = {
 						v-model="dateRange"
 						format="DD/MM/YYYY"
 						label="Période d'hospitalisation"
-						help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret. Date de début postérieure ou égale au 01/01/1995"
+						help-text="Format attendu : date de début puis date de fin, chacune avec jour en 2 chiffres / mois en 2 chiffres / année en 4 chiffres, séparées par un tiret. Date de début postérieure ou égale au 01/01/1999"
 						display-range
 						no-calendar
 						required
-						:customRules=[
+						:customRules="[
 							{
 								type: 'notBeforeDate',
 								options: {
-									date: '01/01/1995',
-									message: 'La periode doit être postérieure ou égale au 01/01/1995',
+									date: '01/01/1999',
+									message: 'La période doit être postérieure ou égale au 01/01/1999',
 									fieldIdentifier: 'date',
 									},
 							},
-						],
+						]"
 					/>
 				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const dateRange = ref<string | null>('10/06/1998 - 12/07/1998')
+				</script>
 				`,
 			},
 		],
@@ -402,7 +446,7 @@ export const WithValidation: Story = {
 				type: 'notBeforeDate',
 				options: {
 					date: '01/01/1999',
-					message: 'La date doit être postérieure ou égale au 01/01/1999',
+					message: 'La période doit être postérieure ou égale au 01/01/1999',
 					fieldIdentifier: 'date',
 				},
 			},
