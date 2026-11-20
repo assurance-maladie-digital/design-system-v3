@@ -567,9 +567,7 @@ export const WithError: Story = {
 				<template>
 					<PeriodField 
 						v-model="selectedPeriod"
-						:custom-rules="[
-							{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } }
-						]"
+						:custom-rules="periodRules"
 					/>
 					<p>Période sélectionnée : {{ selectedPeriod }}</p>
 				</template>
@@ -583,6 +581,9 @@ export const WithError: Story = {
 					import { PeriodField } from '@cnamts/synapse'
 					
 					const selectedPeriod = ref({ from: '01/01/2100', to: '05/01/2100' })
+					const periodRules = [
+						{ type: 'notAfterToday', options: { message: "La date ne peut pas être après aujourd'hui" } },
+					]
 				</script>
 				`,
 			},
@@ -723,7 +724,7 @@ export const WithWarning: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const date = ref('20/12/2031')
+					const selectedPeriod = ref({ from: '20/12/2023', to: '21/12/2023' })
 				</script>
 				`,
 			},
@@ -867,7 +868,7 @@ export const WithSuccess: Story = {
 					import { ref } from 'vue'
 					import { PeriodField } from '@cnamts/synapse'
 					
-					const selectedPeriod = ref({ from: '22/01/2024', to: '23/01/2024 })
+					const selectedPeriod = ref({ from: '22/01/2024', to: '23/01/2024' })
 				</script>
 				`,
 			},
@@ -1131,7 +1132,7 @@ export const ValidationBehaviors: Story = {
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import PeriodField from '../PeriodField.vue'
+import { PeriodField } from '@cnamts/synapse'
 
 const periodDefault = ref({ from: null, to: null })
 const periodNoErrors = ref({ from: null, to: null })
@@ -1247,51 +1248,53 @@ export const FormValidation: Story = {
 				<script setup lang="ts">
 				import { ref } from 'vue'
 				import { PeriodField } from '@cnamts/synapse'
-				
+				import { VAlert, VBtn, VCol, VContainer, VForm, VRow } from 'vuetify/components'
+
 				// Référence au formulaire
-				const formRef = ref(null)
+				const formRef = ref<InstanceType<typeof VForm> | null>(null)
+				const periodFieldRef = ref<InstanceType<typeof PeriodField> | null>(null)
 				const isSubmitting = ref(false)
 				const isFormSubmitted = ref(false)
-				const formData = ref(null)
-				
+				const formData = ref<string | null>(null)
+				const formStatus = ref('')
+
 				// Données du formulaire
-				const form = {
-					name: '',
-					period: { from: null, to: null }
-				}
-				
+				const form = ref<{ period: { from: string | null, to: string | null } }>({
+					period: { from: null, to: null },
+				})
+
 				// Règles de validation pour le champ période
 				const periodRules = [
-					{ 
-						type: 'custom', 
-						options: { 
-							validator: (value) => {
-								if (!value.from || !value.to) return 'Les deux dates sont obligatoires'
+					{
+						type: 'custom',
+						options: {
+							validate: (value: Date | null) => {
+								if (!value) return 'Les deux dates sont obligatoires'
 								return true
 							},
-							successMessage: 'Période valide'
-						}
+							successMessage: 'Période valide',
+						},
 					},
 					{
 						type: 'notAfterToday',
-						options: { message: "La date ne peut pas être après aujourd'hui" }
-					}
+						options: { message: "La date ne peut pas être après aujourd'hui" },
+					},
 				]
-				
+
 				// Soumission du formulaire
 				const submitForm = async (): Promise<void> => {
-				if (periodFieldRef.value) {
-					const isValid = await periodFieldRef.value.validateOnSubmit()
-					if (isValid) {
-						formStatus.value = 'Formulaire soumis avec succès !'
-						isFormSubmitted.value = true
-						formData.value = JSON.stringify(form.value)
-					}
-					else {
-						formStatus.value = 'Erreur de validation, veuillez corriger les champs'
+					if (periodFieldRef.value) {
+						const isValid = await periodFieldRef.value.validateOnSubmit()
+						if (isValid) {
+							formStatus.value = 'Formulaire soumis avec succès !'
+							isFormSubmitted.value = true
+							formData.value = JSON.stringify(form.value)
+						}
+						else {
+							formStatus.value = 'Erreur de validation, veuillez corriger les champs'
+						}
 					}
 				}
-			}
 				</script>
 				`,
 			},
