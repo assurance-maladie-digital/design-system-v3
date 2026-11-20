@@ -320,7 +320,7 @@ export const DifferentFormats: Story = {
 				const value2 = ref('12/24/2025')
 				const value3 = ref('2025-12-24')
 				const value4 = ref('24-12-25')
-				const value5 = ref('25.12.2025')
+				const value5 = ref('24.12.2025')
 				return { args, value1, value2, value3, value4, value5 }
 			},
 			template: `

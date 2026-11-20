@@ -36,6 +36,10 @@ const meta = {
 		},
 	},
 	argTypes: {
+		'headingLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
 		'onUpdate:modelValue': {
 			description: 'Émis lorsque la valeur du champ est mise à jour',
 			table: {
@@ -159,7 +163,7 @@ const meta = {
 		},
 		'period': {
 			control: 'object',
-			description: 'Définit la période sélectionnable dans le calendrier avec des dates min et max (au format MM/DD/YYYY). Les dates hors de cette période seront désactivées',
+			description: 'Définit la période sélectionnable dans le calendrier avec des dates min et max (au format d\'affichage, ex: DD/MM/YYYY). Les dates hors de cette période seront désactivées',
 			defaultValue: {
 				min: '',
 				max: '',
@@ -175,7 +179,7 @@ const meta = {
 			control: 'select',
 			options: ['', 'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
 			description: 'Format de la date émise par le v-model. Si vide, utilise le même format que la prop "format"',
-			defaultValue: 'DD/MM/YYYY',
+			defaultValue: '',
 		},
 		'validateWithReturnFormat': {
 			control: 'boolean',
@@ -247,7 +251,7 @@ const meta = {
 				category: 'props',
 			},
 			control: 'boolean',
-			description: 'Désactive l\'affichage du calendrier, permettant uniquement la saisie manuelle (utile pour les tests automatisés). ⚠️ Incompatible avec useCombinedMode, displayWeekendDays, displayHolidayDays, showWeekNumber et textFieldActivator.',
+			description: 'Désactive l\'affichage du calendrier, permettant uniquement la saisie manuelle (utile pour les tests automatisés, copier-coller et robots). ⚠️ Incompatible avec useCombinedMode, displayWeekendDays, displayHolidayDays, showWeekNumber et textFieldActivator.',
 			defaultValue: false,
 		},
 		'isOutlined': {
@@ -276,7 +280,7 @@ const meta = {
 			defaultValue: false,
 		},
 		'bgColor': {
-			control: 'text',
+			control: 'color',
 			description: 'Couleur de fond du champ de saisie (ex: white, transparent, #f5f5f5)',
 			defaultValue: 'white',
 		},
@@ -356,21 +360,21 @@ const meta = {
 			description: 'Tableau réactif contenant tous les messages d\'erreur. Combine les erreurs injectées via errorMessages et celles générées par la validation. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
 			table: {
 				type: { summary: 'Readonly<Ref<string[]>>' },
-				category: 'expose',
+				category: 'exposed',
 			},
 		},
 		'warnings': {
 			description: 'Tableau réactif contenant tous les messages d\'avertissement. Combine les avertissements injectés via warningMessages et ceux générés par customWarningRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
 			table: {
 				type: { summary: 'Readonly<Ref<string[]>>' },
-				category: 'expose',
+				category: 'exposed',
 			},
 		},
 		'successes': {
 			description: 'Tableau réactif contenant tous les messages de succès. Combine les succès injectés via successMessages et ceux générés par customSuccessRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
 			table: {
 				type: { summary: 'Readonly<Ref<string[]>>' },
-				category: 'expose',
+				category: 'exposed',
 			},
 		},
 	},
@@ -549,6 +553,7 @@ export const Required: Story = {
 						required
 						displayAsterisk
 						format="DD/MM/YYYY"
+						:is-validate-on-blur="false"
 					/>
 				</template>
 				`,
@@ -606,7 +611,7 @@ export const Required: Story = {
 				<h4 class="mb-4">Sans astérisque & isValidateOnBlur à true (par defaut):</h4>
                 <DatePicker v-bind="args" v-model="value1"/>
 				<h4 class="mb-4">Avec astérisque & isValidateOnBlur à false:</h4>
-				<DatePicker v-bind="args" label="Date de l'ordonnance" displayAsterisk  v-model="value2" :isValidateOnBlur='false'/>
+				<DatePicker v-bind="args" label="Date de l'ordonnance" displayAsterisk  v-model="value2" :is-validate-on-blur="false"/>
 				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
               </div>
             `,
@@ -644,7 +649,7 @@ export const DateRange: Story = {
 					import { ref } from 'vue'
 					import { DatePicker } from '@cnamts/synapse'
 					
-					 const dateRange = ref<[string, string] | null>(null)
+					 const dateRange = ref<[string, string] | null>(['15/01/2023', '20/01/2023'])
 				</script>
 				`,
 			},
@@ -665,7 +670,7 @@ export const DateRange: Story = {
 		'disabled': false,
 		'noIcon': false,
 		'noCalendar': false,
-		'modelValue': ['', ''],
+		'modelValue': ['15/01/2023', '20/01/2023'],
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
 		'onBlur': fn(),
@@ -677,7 +682,7 @@ export const DateRange: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref(['2023-01-15', '2023-01-20'] as [string, string] | null)
+				const value = ref(['15/01/2023', '20/01/2023'] as [string, string] | null)
 				return { args, value }
 			},
 			template: `
@@ -1038,7 +1043,7 @@ export const WithCustomPeriod: Story = {
 						useCombinedMode
 						:period="{
 							min: '01/01/1995',
-							max: '12/31/2005',
+							max: '31/12/2005',
 						}"
 						:customRules="customRules"
 					/>
@@ -1088,7 +1093,7 @@ export const WithCustomPeriod: Story = {
 		useCombinedMode: true,
 		period: {
 			min: '01/01/1995',
-			max: '12/31/2005',
+			max: '31/12/2005',
 		},
 		customRules: [
 			{

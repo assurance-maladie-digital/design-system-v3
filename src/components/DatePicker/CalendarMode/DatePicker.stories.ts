@@ -176,7 +176,7 @@ const meta = {
 			control: 'select',
 			options: ['', 'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
 			description: 'Format de la date émise par le v-model. Si vide, utilise le même format que la prop "format"',
-			defaultValue: 'DD/MM/YYYY',
+			defaultValue: '',
 		},
 		'validateWithReturnFormat': {
 			control: 'boolean',
@@ -282,7 +282,7 @@ const meta = {
 			defaultValue: false,
 		},
 		'bgColor': {
-			control: 'text',
+			control: 'color',
 			description: 'Couleur de fond du champ de saisie (ex: white, transparent, #f5f5f5)',
 			defaultValue: 'white',
 		},
@@ -368,7 +368,10 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
+					import { ref } from 'vue'
 					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref('')
 				</script>
 				`,
 			},
@@ -496,7 +499,11 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
+					import { ref } from 'vue'
 					import { DatePicker } from '@cnamts/synapse'
+
+					const date1 = ref('')
+					const date2 = ref('')
 				</script>
 				`,
 			},
@@ -646,7 +653,7 @@ export const WithCustomPeriod: Story = {
 									fieldIdentifier: 'date',
 								},
 							},
-						],
+						]"
 					/>
 				</template>
 				`,
@@ -655,7 +662,10 @@ export const WithCustomPeriod: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
+					import { ref } from 'vue'
 					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref('')
 				</script>
 				`,
 			},
@@ -1084,20 +1094,12 @@ export const UTC: Story = {
 
 				const dateString = computed({
 					get() {
-						return dayjs.utc(utcIso.value).format(DISPLAY_FORMAT.value)
+						return dayjs.utc(utcIso.value).tz(selectedTimeZone.value).format(DISPLAY_FORMAT.value)
 					},
 					set(v: string) {
-						const parsed = dayjs.utc(v, DISPLAY_FORMAT.value, true)
+						const parsed = dayjs.tz(v, DISPLAY_FORMAT.value, selectedTimeZone.value)
 						if (!parsed.isValid() || parsed.format(DISPLAY_FORMAT.value) !== v) return
-						utcIso.value = dayjs.utc()
-							.year(parsed.year())
-							.month(parsed.month())
-							.date(parsed.date())
-							.hour(0)
-							.minute(0)
-							.second(0)
-							.millisecond(0)
-							.toISOString()
+						utcIso.value = parsed.utc().toISOString()
 						args['onUpdate:modelValue']?.(v)
 					},
 				})
