@@ -36,11 +36,9 @@ const meta = {
 			control: false,
 		},
 		'search': {
-			description: 'La valeur du champ de recherche',
+			description: 'La valeur du champ de recherche, gérée par le champ de recherche dans ces exemples (`v-model:search`). Control désactivé.',
 			type: 'string',
-			control: {
-				type: 'text',
-			},
+			control: false,
 		},
 		'searchLabel': {
 			description: 'Le label du champ de recherche',

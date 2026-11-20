@@ -34,9 +34,10 @@ describe('TableToolbar stories', () => {
 		}
 	})
 
-	it('désactive les Controls des compteurs gérés par les exemples', () => {
+	it('désactive les Controls des valeurs gérées par les exemples', () => {
 		expect(stories.default.argTypes.nbTotal.control).toBe(false)
 		expect(stories.default.argTypes.nbFiltered.control).toBe(false)
+		expect(stories.default.argTypes.search.control).toBe(false)
 		for (const { story } of allStories) {
 			expect(story.args).not.toHaveProperty('nbTotal')
 			expect(story.args).not.toHaveProperty('nbFiltered')
