@@ -1132,7 +1132,7 @@ export const ValidationBehaviors: Story = {
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import PeriodField from '../PeriodField.vue'
+import { PeriodField } from '@cnamts/synapse'
 
 const periodDefault = ref({ from: null, to: null })
 const periodNoErrors = ref({ from: null, to: null })
