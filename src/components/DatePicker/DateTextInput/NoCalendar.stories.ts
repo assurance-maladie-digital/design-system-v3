@@ -614,6 +614,17 @@ export const WithAppendIcon: Story = {
         </template>
         `,
 			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+				</script>
+				`,
+			},
 		],
 	},
 	args: {

@@ -206,6 +206,17 @@ export const Default: Story = {
 				</template>
 				`,
 			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const dateRange = ref<string | null>(null)
+				</script>
+				`,
+			},
 		],
 	},
 	args: {
@@ -261,6 +272,17 @@ export const WithInitialValue: Story = {
 						no-calendar
 					/>
 				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const dateRange = ref<string | [string, string] | null>('01/06/2025 - 30/06/2025')
+				</script>
 				`,
 			},
 		],
@@ -321,6 +343,17 @@ export const WithCustomFormat: Story = {
 				</template>
 				`,
 			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const dateRange = ref<string | null>(null)
+				</script>
+				`,
+			},
 		],
 	},
 	args: {
@@ -372,7 +405,7 @@ export const WithValidation: Story = {
 						display-range
 						no-calendar
 						required
-						:customRules=[
+						:customRules="[
 							{
 								type: 'notBeforeDate',
 								options: {
@@ -381,9 +414,20 @@ export const WithValidation: Story = {
 									fieldIdentifier: 'date',
 									},
 							},
-						],
+						]"
 					/>
 				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const dateRange = ref<string | null>('10/06/1998 - 12/07/1998')
+				</script>
 				`,
 			},
 		],

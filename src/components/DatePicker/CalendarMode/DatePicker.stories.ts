@@ -653,7 +653,7 @@ export const WithCustomPeriod: Story = {
 									fieldIdentifier: 'date',
 								},
 							},
-						],
+						]"
 					/>
 				</template>
 				`,
