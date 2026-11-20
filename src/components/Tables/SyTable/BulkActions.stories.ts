@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import { computed, ref } from 'vue'
 import { mdiChevronLeft, mdiChevronRight, mdiDelete, mdiPencil } from '@mdi/js'
-import type { VDataTable } from 'vuetify/components'
+import { VBtn, type VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -94,7 +94,7 @@ export const Default: Story = {
 		...commonTableEventArgs(),
 	},
 	render: args => ({
-		components: { SyTable, DialogBox, SySelect },
+		components: { SyTable, DialogBox, SySelect, VBtn },
 		setup() {
 			const items = ref([...manyItems])
 			const options = ref({ itemsPerPage: -1 })
@@ -199,6 +199,7 @@ export const Default: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyTable, DialogBox, SySelect } from '@cnamts/synapse'
+	import { VBtn } from 'vuetify/components'
 	import { mdiDelete, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -267,7 +268,7 @@ export const SequentialEdit: Story = {
 		...commonTableEventArgs(),
 	},
 	render: args => ({
-		components: { SyTable, DialogBox, SyTextField, SySelect },
+		components: { SyTable, DialogBox, SyTextField, SySelect, VBtn },
 		setup() {
 			const items = ref([...baseItems])
 			const selected = ref<number[]>([])
@@ -363,6 +364,7 @@ export const SequentialEdit: Story = {
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
 	import { SyTable, DialogBox, SyTextField, SySelect } from '@cnamts/synapse'
+	import { VBtn } from 'vuetify/components'
 	import { mdiChevronLeft, mdiChevronRight, mdiPencil } from '@mdi/js'
 
 	const headers = [
