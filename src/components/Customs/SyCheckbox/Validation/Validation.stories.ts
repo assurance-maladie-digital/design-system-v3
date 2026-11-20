@@ -6,6 +6,8 @@ import { VBtn, VForm } from 'vuetify/components'
 import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
+const validationDoc = getValidationDocumentation()
+
 const meta: Meta<typeof SyCheckbox> = {
 	title: 'Composants/Formulaires/SyCheckbox/Validation',
 	component: SyCheckbox,
@@ -21,7 +23,7 @@ const meta: Meta<typeof SyCheckbox> = {
 		},
 	},
 	argTypes: {
-		...getValidationDocumentation(),
+		...validationDoc,
 		label: { control: 'text', description: 'Label de la case' },
 	},
 	args: {
@@ -220,18 +222,18 @@ export const WithCustomRules: Story = {
 	},
 	argTypes: {
 		customRules: {
-			...getValidationDocumentation().customRules,
+			...validationDoc.customRules,
 			control: { disable: true },
-			description: 'Règles recalculées par la démo à chaque changement du prérequis : le control est désactivé pour ne pas les remplacer.',
+			description: `${validationDoc.customRules.description} Dans cette démo, les règles sont recalculées à chaque changement du prérequis : le control est désactivé pour ne pas les remplacer.`,
 		},
 		modelValue: {
 			control: { disable: true },
 			description: 'Piloté par le `v-model` de la démo : cochez la case directement.',
 		},
 		useVuetifyValidation: {
-			...getValidationDocumentation().useVuetifyValidation,
+			...validationDoc.useVuetifyValidation,
 			control: { disable: true },
-			description: 'Désactivé dans cette démo : en mode Vuetify, les `customRules` ne s\'appliquent pas et la règle du prérequis serait ignorée.',
+			description: `${validationDoc.useVuetifyValidation.description} Désactivé dans cette démo : en mode Vuetify, les \`customRules\` ne s'appliquent pas et la règle du prérequis serait ignorée.`,
 		},
 	},
 	parameters: {

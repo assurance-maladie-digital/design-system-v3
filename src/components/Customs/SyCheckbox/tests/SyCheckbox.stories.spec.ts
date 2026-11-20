@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { type VueWrapper, enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
 import * as validationStories from '../Validation/Validation.stories'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const { WithCustomRules } = composeStories(validationStories)
 
@@ -66,6 +67,12 @@ describe('SyCheckbox stories', () => {
 		expect(WithCustomRules.args['onUpdate:modelValue']).toEqual(expect.any(Function))
 		for (const prop of ['customRules', 'modelValue', 'useVuetifyValidation']) {
 			expect(WithCustomRules.argTypes[prop]?.control, prop).toMatchObject({ disable: true })
+		}
+		// La doc générique de la prop est conservée, la précision de la démo est ajoutée à la suite
+		const validationDoc = getValidationDocumentation()
+		for (const prop of ['customRules', 'useVuetifyValidation'] as const) {
+			expect(WithCustomRules.argTypes[prop]?.description, prop).toContain(validationDoc[prop].description)
+			expect(WithCustomRules.argTypes[prop]?.description, prop).toContain('cette démo')
 		}
 	})
 })
