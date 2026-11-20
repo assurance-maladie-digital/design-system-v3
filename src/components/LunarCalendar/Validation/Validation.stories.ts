@@ -7,6 +7,41 @@ import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
 
+interface YearBoundsField {
+	value: string
+	label: string
+}
+
+/**
+ * Rendu des stories de bornes d'années : un champ par valeur, validé au montage
+ * pour afficher l'erreur dès le chargement. Les props viennent des args (`minYear`, `maxYear`…).
+ */
+function renderYearBounds(fields: YearBoundsField[]) {
+	return (args: Record<string, unknown>) => ({
+		components: { LunarCalendar },
+		setup() {
+			const values = ref(fields.map(field => field.value))
+			const fieldRefs = ref<Array<{ validateOnSubmit: () => Promise<boolean> }>>([])
+			onMounted(() => {
+				fieldRefs.value.forEach(field => field.validateOnSubmit())
+			})
+			return { args, fields, values, fieldRefs }
+		},
+		template: `
+			<div class="d-flex flex-column ga-4">
+				<LunarCalendar
+					v-for="(field, index) in fields"
+					:key="field.label"
+					ref="fieldRefs"
+					v-bind="args"
+					v-model="values[index]"
+					:label="field.label"
+				/>
+			</div>
+		`,
+	})
+}
+
 const meta: Meta<typeof LunarCalendar> = {
 	title: 'Composants/Formulaires/LunarCalendar/Validation',
 	component: LunarCalendar,
@@ -127,7 +162,7 @@ onMounted(() => {
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
-						if (typeof value !== 'string' || !value) return true
+						if (!value) return true
 						const day = Number(value.split('/')[0])
 						return isNaN(day) || day <= 30
 					},
@@ -190,7 +225,7 @@ onMounted(() => {
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
-						if (typeof value !== 'string' || !value) return true
+						if (!value) return true
 						const year = Number(value.split('/')[2])
 						return isNaN(year) || year >= 1912
 					},
@@ -481,32 +516,11 @@ onMounted(() => {
 	args: {
 		minYear: 1420,
 	},
-	render: (args) => {
-		return {
-			components: { LunarCalendar },
-			setup() {
-				const inRange = ref('12/12/1425')
-				const atBound = ref('12/12/1420')
-				const outOfRange = ref('12/12/1410')
-				const inRangeRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-				const atBoundRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-				const outOfRangeRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-				onMounted(() => {
-					inRangeRef.value?.validateOnSubmit()
-					atBoundRef.value?.validateOnSubmit()
-					outOfRangeRef.value?.validateOnSubmit()
-				})
-				return { args, inRange, atBound, outOfRange, inRangeRef, atBoundRef, outOfRangeRef }
-			},
-			template: `
-				<div class="d-flex flex-column ga-4">
-					<LunarCalendar ref="inRangeRef" v-bind="args" v-model="inRange" label="Dans les bornes — 1425" />
-					<LunarCalendar ref="atBoundRef" v-bind="args" v-model="atBound" label="Aux bornes — 1420" />
-					<LunarCalendar ref="outOfRangeRef" v-bind="args" v-model="outOfRange" label="Hors limite — 1410" />
-				</div>
-			`,
-		}
-	},
+	render: renderYearBounds([
+		{ value: '12/12/1425', label: 'Dans les bornes — 1425' },
+		{ value: '12/12/1420', label: 'Aux bornes — 1420' },
+		{ value: '12/12/1410', label: 'Hors limite — 1410' },
+	]),
 }
 
 export const WithMaxYearOnly: Story = {
@@ -571,32 +585,11 @@ onMounted(() => {
 	args: {
 		maxYear: 1450,
 	},
-	render: (args) => {
-		return {
-			components: { LunarCalendar },
-			setup() {
-				const inRange = ref('12/12/1440')
-				const atBound = ref('12/12/1450')
-				const outOfRange = ref('12/12/1460')
-				const inRangeRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-				const atBoundRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-				const outOfRangeRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-				onMounted(() => {
-					inRangeRef.value?.validateOnSubmit()
-					atBoundRef.value?.validateOnSubmit()
-					outOfRangeRef.value?.validateOnSubmit()
-				})
-				return { args, inRange, atBound, outOfRange, inRangeRef, atBoundRef, outOfRangeRef }
-			},
-			template: `
-				<div class="d-flex flex-column ga-4">
-					<LunarCalendar ref="inRangeRef" v-bind="args" v-model="inRange" label="Dans les bornes — 1440" />
-					<LunarCalendar ref="atBoundRef" v-bind="args" v-model="atBound" label="Aux bornes — 1450" />
-					<LunarCalendar ref="outOfRangeRef" v-bind="args" v-model="outOfRange" label="Hors limite — 1460" />
-				</div>
-			`,
-		}
-	},
+	render: renderYearBounds([
+		{ value: '12/12/1440', label: 'Dans les bornes — 1440' },
+		{ value: '12/12/1450', label: 'Aux bornes — 1450' },
+		{ value: '12/12/1460', label: 'Hors limite — 1460' },
+	]),
 }
 
 export const SyFormValidation: Story = {
