@@ -60,6 +60,24 @@ jobs:
       - name: Accessibility tests (axe via vitest-axe)
         run: pnpm test:a11y
 
+  # Extraits de code affichés dans la doc (`parameters.sourceCode`), séparés de `test:unit`.
+  # Volontairement absent des `needs` du build : le job tourne en parallèle et n'allonge pas la CI.
+  test-snippets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Story snippet tests (analyzeSnippet)
+        run: pnpm test:snippets
+
   build:
     needs: [lint, test, test-a11y]
     runs-on: ubuntu-latest
