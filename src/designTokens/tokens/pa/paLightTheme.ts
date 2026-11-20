@@ -34,6 +34,7 @@ export const paLightTheme = {
 	surface: baseTokens.color.white.base,
 	surfaceBright: baseTokens.color.blue.lighten97,
 	surfaceDim: baseTokens.color.blue.lighten90,
+	surfaceVariant: baseTokens.color.grey.darken20,
 	onSurface: baseTokens.color.grey.darken60,
 	onSurfaceVariant: baseTokens.color.grey.lighten90,
 
