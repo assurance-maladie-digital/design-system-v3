@@ -586,6 +586,7 @@ export const Customization: Story = {
 				code: `
 <script setup lang="ts">
 import { FileList } from '@cnamts/synapse'
+import { VIcon } from 'vuetify/components'
 import { ref } from 'vue'
 import { mdiCertificateOutline, mdiCardAccountDetailsOutline } from '@mdi/js'
 
