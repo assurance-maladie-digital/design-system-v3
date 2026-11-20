@@ -209,7 +209,7 @@ Règles :
 |---|---|---|---|
 | Unitaire | Vitest + `happy-dom` | `*.spec.ts` | Sérialiseur `vue3-snapshot-serializer`, coverage `v8` |
 | Accessibilité | `vitest-axe` | `*.a11y.spec.ts` | Exclus du run unitaire standard, lancés via `pnpm test:a11y` |
-| Extraits de stories | Vitest + `analyzeSnippet` | `*.snippets.spec.ts` | Code affiché dans la doc (`parameters.sourceCode`), sans montage. Exclus du run unitaire standard, lancés via `pnpm test:snippets` et par le job CI `test-snippets` (en parallèle, hors du chemin du build). Les tests qui montent une story restent dans `*.stories.spec.ts` |
+| Extraits de stories | Vitest + `analyzeSnippet` | `*.snippets.spec.ts` | Code affiché dans la doc (`parameters.sourceCode`), sans montage. Exclus du run unitaire standard, lancés via `pnpm test:snippets` et par le job CI `test-snippets` (en parallèle, hors du chemin du build). Les tests qui montent une story restent dans `*.stories.spec.ts`. Le test générique `tests/stories/storySnippets.snippets.spec.ts` vérifie tous les extraits (syntaxe, identifiants non déclarés) ; les extraits cassés connus sont listés dans `knownBrokenSnippets.ts`, liste à vider au fil des corrections |
 | Visuel | Cypress image snapshot | `*.cy.ts` | **Electron headless** pour la reproductibilité |
 
 ⚠️ **Tests visuels & WSL** : les snapshots diffèrent entre WSL et Linux natif.
