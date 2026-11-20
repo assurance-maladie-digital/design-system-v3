@@ -1076,6 +1076,7 @@
 
 		.v-messages__message {
 			color: rgb(var(--v-theme-on-surface)) !important;
+			opacity: var(--v-medium-emphasis-opacity) !important;
 		}
 	}
 }
@@ -1085,6 +1086,7 @@
 	flex-basis: 100%;
 	order: 1;
 	color: rgb(var(--v-theme-on-surface));
+	opacity: var(--v-medium-emphasis-opacity);
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
@@ -1094,6 +1096,7 @@
 }
 
 .help-text-below.text-disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+	color: rgb(var(--v-theme-on-surface));
+	opacity: var(--v-disabled-opacity);
 }
 </style>

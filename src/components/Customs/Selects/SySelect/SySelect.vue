@@ -1376,7 +1376,8 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity)) !important;
+			color: rgb(var(--v-theme-on-surface)) !important;
+			opacity: var(--v-medium-emphasis-opacity) !important;
 		}
 	}
 }
@@ -1405,21 +1406,12 @@
 	background-color: transparent;
 }
 
-.help-text {
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: var(--v-fontSize-liensEtLibelles);
-	line-height: 1.2;
-}
-
-.help-text.text-disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
-}
-
 .help-text-below {
 	// Passe à la ligne sous le message, dans la colonne du champ
 	flex-basis: 100%;
 	order: 1;
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgb(var(--v-theme-on-surface));
+	opacity: var(--v-medium-emphasis-opacity);
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
@@ -1429,7 +1421,8 @@
 }
 
 .help-text-below.text-disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+	color: rgb(var(--v-theme-on-surface));
+	opacity: var(--v-disabled-opacity);
 }
 
 /* Focus = anneau seul (pas de fond) ; le fond gris reste réservé au survol (:hover) et à la
