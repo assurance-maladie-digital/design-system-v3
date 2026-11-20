@@ -217,7 +217,6 @@ export const WithCustomRules: Story = {
 	args: {
 		'label': 'J\'accepte (uniquement si le prérequis est validé)',
 		'required': false,
-		'isValidateOnBlur': false,
 		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {
@@ -247,13 +246,14 @@ export const WithCustomRules: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<SyCheckbox v-model="prerequisite" label="Prérequis : j'ai lu le document" hide-details />
-	<SyCheckbox
-		v-model="accepted"
-		label="J'accepte (uniquement si le prérequis est validé)"
-		:custom-rules="customRules"
-		:is-validate-on-blur="false"
-	/>
+	<div class="d-flex flex-column ga-2">
+		<SyCheckbox v-model="prerequisite" label="Prérequis : j'ai lu le document" hide-details />
+		<SyCheckbox
+			v-model="accepted"
+			label="J'accepte (uniquement si le prérequis est validé)"
+			:custom-rules="customRules"
+		/>
+	</div>
 </template>`,
 			},
 			{
