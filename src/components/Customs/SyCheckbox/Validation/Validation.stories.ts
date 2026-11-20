@@ -217,6 +217,7 @@ export const WithCustomRules: Story = {
 	args: {
 		'label': 'J\'accepte (uniquement si le prérequis est validé)',
 		'required': false,
+		'isValidateOnBlur': false,
 		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {
@@ -252,6 +253,7 @@ export const WithCustomRules: Story = {
 			v-model="accepted"
 			label="J'accepte (uniquement si le prérequis est validé)"
 			:custom-rules="customRules"
+			:is-validate-on-blur="false"
 		/>
 	</div>
 </template>`,
