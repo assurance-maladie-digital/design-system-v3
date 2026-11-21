@@ -110,7 +110,7 @@
     "axios": "^1.14.0",
     "chromatic": "^18.14.2",
     "cross-env": "^10.1.0",
-    "cypress": "^15.13.0",
+    "cypress": "^16.0.0",
     "eslint": "^9.13.0",
     "eslint-plugin-storybook": "10.6.5",
     "eslint-plugin-vue": "^10.0.0",
