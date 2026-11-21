@@ -1,5 +1,17 @@
 import ts from 'typescript'
 import { compileScript, compileTemplate, parse } from 'vue/compiler-sfc'
+import * as vue from 'vue'
+import * as vuetifyComponents from 'vuetify/components'
+import * as mdi from '@mdi/js'
+import * as synapse from '@/main'
+
+/** Exports des modules disponibles dans les extraits de stories du design system. */
+const modules: Record<string, Record<string, unknown>> = {
+	'@cnamts/synapse': synapse,
+	'@mdi/js': mdi,
+	'vue': vue,
+	'vuetify/components': vuetifyComponents,
+}
 
 /** Onglet du paramètre `sourceCode` d'une story. */
 export interface SourceCodeTab {
@@ -215,15 +227,11 @@ function readLiteral(node: ts.Expression): unknown {
 }
 
 /**
- * Imports nommés du `<script setup>` de l'extrait d'une story absents de leur module,
- * au format `module:export`. `modules` associe chaque module importable à ses exports réels.
- * Un module absent de `modules` est signalé pour chacun de ses imports.
+ * Imports nommés du `<script setup>` de l'extrait d'une story absents des modules partagés,
+ * au format `module:export`. Un module absent de la table est signalé pour chacun de ses imports.
  * Les imports de type (`import type`, `import { type X }`) sont ignorés : ils n'existent pas à l'exécution.
  */
-export function findUnknownSnippetImports(
-	story: StoryWithSourceCode,
-	modules: Record<string, Record<string, unknown>>,
-): string[] {
+export function findUnknownSnippetImports(story: StoryWithSourceCode): string[] {
 	const content = parseSnippet(story).descriptor.scriptSetup?.content ?? ''
 	const source = ts.createSourceFile(`${SNIPPET_ID}.ts`, content, ts.ScriptTarget.ES2022)
 
