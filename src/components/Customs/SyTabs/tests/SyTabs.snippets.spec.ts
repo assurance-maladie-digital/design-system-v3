@@ -1,9 +1,20 @@
 import { describe, expect, it } from 'vitest'
 import { composeStories } from '@storybook/vue3-vite'
+import * as vue from 'vue'
+import * as vuetifyComponents from 'vuetify/components'
+import * as mdi from '@mdi/js'
 import { analyzeSnippet, findUnknownSnippetImports, getSnippetTab } from '@tests/helpers/storySnippets'
+import * as synapse from '@/main'
 import * as stories from '../SyTabs.stories'
 
 const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({ name, story }))
+
+const modules = {
+	'@cnamts/synapse': synapse,
+	'vuetify/components': vuetifyComponents,
+	'vue': vue,
+	'@mdi/js': mdi,
+}
 
 describe('SyTabs snippets', () => {
 	it.each(allStories)('le snippet de $name est valide et autonome', ({ story }) => {
@@ -18,7 +29,7 @@ describe('SyTabs snippets', () => {
 	})
 
 	it.each(allStories)('le snippet de $name n\'importe que des exports disponibles', ({ story }) => {
-		expect(findUnknownSnippetImports(story)).toEqual([])
+		expect(findUnknownSnippetImports(story, modules)).toEqual([])
 	})
 
 	it.each(allStories)('le snippet de $name expose les onglets Template et Script', ({ story }) => {

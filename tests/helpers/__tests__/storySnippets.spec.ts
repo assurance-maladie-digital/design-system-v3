@@ -166,23 +166,26 @@ const rules = [{ validate: (text: string) => text.length > 2 }]
 })
 
 describe('findUnknownSnippetImports', () => {
+	const modules = {
+		'vue': { ref: () => undefined },
+		'@cnamts/synapse': { SyTextArea: {} },
+	}
+
 	it('ne signale rien quand chaque import existe dans son module', () => {
-		expect(findUnknownSnippetImports(story('<template><SyTextArea /></template>', validScript))).toEqual([])
+		expect(findUnknownSnippetImports(story('<template><SyTextArea /></template>', validScript), modules)).toEqual([])
 	})
 
 	it('signale les exports introuvables et les modules inconnus', () => {
 		const script = `<script setup lang="ts">
-import { ref, refInconnue } from 'vue'
+import { ref, computed } from 'vue'
 import { SyTextAreaX } from '@cnamts/synapse'
-import { VBtnInconnu } from 'vuetify/components'
-import { MissingExport } from '@unknown/library'
+import { VBtn } from 'vuetify/components'
 </script>`
 
-		expect(findUnknownSnippetImports(story('<template><div /></template>', script))).toEqual([
-			'vue:refInconnue',
+		expect(findUnknownSnippetImports(story('<template><div /></template>', script), modules)).toEqual([
+			'vue:computed',
 			'@cnamts/synapse:SyTextAreaX',
-			'vuetify/components:VBtnInconnu',
-			'@unknown/library:MissingExport',
+			'vuetify/components:VBtn',
 		])
 	})
 
@@ -193,7 +196,7 @@ import type { SyTextAreaProps } from '@cnamts/synapse'
 import { SyTextArea as Field } from '@cnamts/synapse'
 </script>`
 
-		expect(findUnknownSnippetImports(story('<template><Field /></template>', script))).toEqual([])
+		expect(findUnknownSnippetImports(story('<template><Field /></template>', script), modules)).toEqual([])
 	})
 })
 
