@@ -12,15 +12,15 @@ Chaque champ de formulaire doit avoir une étiquette associée via (ordre de pri
 **Non-conformité type :** `<input type="text" placeholder="Votre nom">` sans `<label>`, ni `aria-label`.
 **Priorité :** 🔴 Bloquant
 
-```tsx
-// ✅ Label explicite avec for/id
-<label htmlFor="email">Email</label>
+```vue
+<!-- ✅ Label explicite avec for/id -->
+<label for="email">Email</label>
 <input id="email" type="email" />
 
-// ✅ aria-label (si pas de label visible)
+<!-- ✅ aria-label (si pas de label visible) -->
 <input type="search" aria-label="Rechercher sur le site" />
 
-// ✅ aria-labelledby
+<!-- ✅ aria-labelledby -->
 <span id="label-tel">Téléphone</span>
 <span id="hint-tel">Format : 01 23 45 67 89</span>
 <input aria-labelledby="label-tel hint-tel" type="tel" />
@@ -67,22 +67,22 @@ Regrouper les champs de même nature avec `<fieldset>` + `<legend>`.
 **Non-conformité type :** Groupe de boutons radio sans `<fieldset>` ; groupe de champs d'adresse sans légende de groupe.
 **Priorité :** 🟠 Majeur
 
-```tsx
+```vue
 <fieldset>
   <legend>Adresse de livraison</legend>
-  <label htmlFor="rue">Rue</label>
+  <label for="rue">Rue</label>
   <input id="rue" type="text" />
-  <label htmlFor="ville">Ville</label>
+  <label for="ville">Ville</label>
   <input id="ville" type="text" />
 </fieldset>
 
-// Radio buttons obligatoirement groupés
+<!-- Radio buttons obligatoirement groupés -->
 <fieldset>
   <legend>Civilité</legend>
   <input type="radio" id="mme" name="civilite" value="mme" />
-  <label htmlFor="mme">Madame</label>
+  <label for="mme">Madame</label>
   <input type="radio" id="m" name="civilite" value="m" />
-  <label htmlFor="m">Monsieur</label>
+  <label for="m">Monsieur</label>
 </fieldset>
 ```
 
@@ -96,7 +96,7 @@ Alternative ARIA : `role="group"` + `aria-label` ou `role="radiogroup"`.
 **Non-conformité type :** `<select>` avec 20+ options sans aucun `<optgroup>` alors que les options relèvent de catégories distinctes.
 **Priorité :** 🟡 Mineur
 
-```tsx
+```vue
 <select>
   <optgroup label="Île-de-France">
     <option value="75">Paris</option>
@@ -118,11 +118,11 @@ Chaque bouton doit avoir un intitulé décrivant son action.
 **Non-conformité type :** `<button>OK</button>` ; `<button>Envoyer</button>` quand plusieurs formulaires sont présents sur la page.
 **Priorité :** 🟠 Majeur
 
-```tsx
-// ❌ Mauvais
+```vue
+<!-- ❌ Mauvais -->
 <button>OK</button>
 
-// ✅ Bon
+<!-- ✅ Bon -->
 <button type="submit">Envoyer ma demande de contact</button>
 <button type="reset">Réinitialiser le formulaire</button>
 ```
@@ -137,12 +137,12 @@ Chaque bouton doit avoir un intitulé décrivant son action.
 **Non-conformité type :** Champ obligatoire sans `required` ; obligation signalée visuellement (couleur seule) sans attribut ARIA.
 **Priorité :** 🔴 Bloquant
 
-```tsx
-<label htmlFor="nom">
+```vue
+<label for="nom">
   Nom <span aria-hidden="true">*</span>
 </label>
 <input id="nom" required aria-required="true" />
-<p className="sr-only">Les champs marqués d'un * sont obligatoires</p>
+<p class="sr-only">Les champs marqués d'un * sont obligatoires</p>
 ```
 
 ### Messages d'erreur
@@ -151,8 +151,8 @@ Chaque bouton doit avoir un intitulé décrivant son action.
 **Non-conformité type :** Message d'erreur visible mais pas lié au champ via `aria-describedby` ; `aria-invalid` absent.
 **Priorité :** 🔴 Bloquant
 
-```tsx
-<label htmlFor="email">Email</label>
+```vue
+<label for="email">Email</label>
 <input
   id="email"
   type="email"
@@ -170,8 +170,8 @@ Chaque bouton doit avoir un intitulé décrivant son action.
 **Non-conformité type :** Champ de date sans indication du format attendu (JJ/MM/AAAA).
 **Priorité :** 🟠 Majeur
 
-```tsx
-<label htmlFor="tel">Téléphone</label>
+```vue
+<label for="tel">Téléphone</label>
 <p id="hint-tel">Format attendu : 01 23 45 67 89</p>
 <input id="tel" type="tel" aria-describedby="hint-tel" />
 ```
@@ -186,7 +186,7 @@ En cas d'erreur, suggérer le type de données attendu et donner un exemple.
 **Non-conformité type :** Message "Format invalide" sans préciser le format attendu.
 **Priorité :** 🟠 Majeur
 
-```tsx
+```vue
 <p id="error-date" role="alert">
   Erreur : format de date invalide. Saisissez une date au format JJ/MM/AAAA (ex: 15/03/2024).
 </p>
@@ -205,14 +205,14 @@ Pour les formulaires avec conséquences financières, juridiques ou de suppressi
 **Non-conformité type :** Formulaire de paiement sans étape de confirmation ni possibilité d'annulation.
 **Priorité :** 🔴 Bloquant
 
-```tsx
+```vue
 <h2>Vérifiez vos informations avant envoi</h2>
 <dl>
-  <dt>Nom</dt><dd>{nom}</dd>
-  <dt>Email</dt><dd>{email}</dd>
+  <dt>Nom</dt><dd>{{ nom }}</dd>
+  <dt>Email</dt><dd>{{ email }}</dd>
 </dl>
-<button onClick={goBack}>Modifier</button>
-<button onClick={submit}>Confirmer et envoyer</button>
+<button @click="goBack">Modifier</button>
+<button @click="submit">Confirmer et envoyer</button>
 ```
 
 ---
@@ -225,14 +225,14 @@ Champs concernant l'utilisateur : attribut `autocomplete` avec la bonne valeur.
 **Non-conformité type :** `<input type="email" name="email">` sans `autocomplete="email"`.
 **Priorité :** 🟡 Mineur
 
-```tsx
-<input type="text" autoComplete="given-name" name="prenom" />
-<input type="text" autoComplete="family-name" name="nom" />
-<input type="email" autoComplete="email" name="email" />
-<input type="tel" autoComplete="tel" name="telephone" />
-<input type="text" autoComplete="street-address" name="adresse" />
-<input type="text" autoComplete="postal-code" name="cp" />
-<input type="text" autoComplete="address-level2" name="ville" />
+```vue
+<input type="text" autocomplete="given-name" name="prenom" />
+<input type="text" autocomplete="family-name" name="nom" />
+<input type="email" autocomplete="email" name="email" />
+<input type="tel" autocomplete="tel" name="telephone" />
+<input type="text" autocomplete="street-address" name="adresse" />
+<input type="text" autocomplete="postal-code" name="cp" />
+<input type="text" autocomplete="address-level2" name="ville" />
 ```
 
 **Valeurs courantes :** `name`, `given-name`, `family-name`, `email`, `tel`, `street-address`, `postal-code`, `address-level2` (ville), `country-name`, `organization`, `username`, `new-password`, `current-password`, `bday`, `cc-number`, `cc-exp`, `cc-name`.

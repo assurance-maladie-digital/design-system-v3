@@ -32,12 +32,12 @@
 **Non-conformité type :** Lecteur vidéo custom dont les boutons ne sont pas focusables au clavier.
 **Priorité 4.11 :** 🔴 Bloquant
 
-```tsx
+```vue
 <figure>
   <video controls>
     <source src="/video.mp4" type="video/mp4" />
-    <track kind="captions" src="/sous-titres.vtt" srcLang="fr" label="Français" default />
-    <track kind="descriptions" src="/audiodesc.vtt" srcLang="fr" label="Audiodescription" />
+    <track kind="captions" src="/sous-titres.vtt" srclang="fr" label="Français" default />
+    <track kind="descriptions" src="/audiodesc.vtt" srclang="fr" label="Audiodescription" />
   </video>
   <figcaption>Présentation du service — <a href="/transcription">Transcription textuelle</a></figcaption>
 </figure>
@@ -100,7 +100,7 @@ Via `<caption>`, `aria-label`, `aria-labelledby` ou `title`.
 **Non-conformité type :** `<table>` de mise en page contenant des `<th>`.
 **Priorité :** 🟠 Majeur
 
-```tsx
+```vue
 <table>
   <caption>Liste des agents par département</caption>
   <thead>
@@ -134,18 +134,18 @@ L'intitulé du lien (seul ou avec son contexte) doit permettre de comprendre sa 
 **Non-conformité type :** `<a href="/rapport">En savoir plus</a>` sans contexte permettant de comprendre de quel rapport il s'agit.
 **Priorité :** 🟠 Majeur
 
-```tsx
-// ❌ Mauvais
+```vue
+<!-- ❌ Mauvais -->
 <a href="/rapport">Cliquez ici</a>
 <a href="/rapport">En savoir plus</a>
 
-// ✅ Bon
+<!-- ✅ Bon -->
 <a href="/rapport">Consulter le rapport annuel 2024 (PDF, 2 Mo)</a>
 
-// ✅ Acceptable avec contexte
+<!-- ✅ Acceptable avec contexte -->
 <p>Le rapport annuel est disponible. <a href="/rapport">Télécharger le rapport (PDF, 2 Mo)</a></p>
 
-// ✅ Lien image : alt pertinent
+<!-- ✅ Lien image : alt pertinent -->
 <a href="/accueil"><img src="/logo.png" alt="Retour à l'accueil" /></a>
 ```
 
@@ -159,11 +159,11 @@ Tout lien (`<a href>` ou `role="link"`) doit avoir un contenu accessible (texte,
 **Non-conformité type :** `<a href="/page"><svg>...</svg></a>` sans `aria-label` ni texte.
 **Priorité :** 🔴 Bloquant
 
-```tsx
-// ❌ Lien vide
+```vue
+<!-- ❌ Lien vide -->
 <a href="/page"></a>
 
-// ✅ Lien avec aria-label
+<!-- ✅ Lien avec aria-label -->
 <a href="/page" aria-label="Accéder à la page détails">
   <svg aria-hidden="true">...</svg>
 </a>
@@ -181,15 +181,15 @@ Tout composant généré par script doit exposer : nom, rôle, valeur, paramétr
 **Non-conformité type :** Accordéon custom sans `aria-expanded` sur le bouton ; menu déroulant sans `aria-haspopup`.
 **Priorité :** 🟠 Majeur
 
-```tsx
+```vue
 <button
-  aria-expanded={isOpen}
+  :aria-expanded="isOpen"
   aria-controls="panel-1"
-  onClick={() => setIsOpen(!isOpen)}
+  @click="isOpen = !isOpen"
 >
   Détails
 </button>
-<div id="panel-1" role="region" hidden={!isOpen}>
+<div id="panel-1" role="region" :hidden="!isOpen">
   Contenu du panneau
 </div>
 ```
@@ -210,23 +210,24 @@ Si JavaScript est désactivé, une alternative équivalente doit être disponibl
 
 Tout élément interactif créé par script doit être focusable et activable au clavier.
 
-**Test :** Parcourir la page au clavier (Tab, Entrée, Espace, flèches). Vérifier que tous les éléments interactifs sont atteignables et utilisables sans souris. Repérer les `<div onClick>` ou `<span onClick>` non focusables.
-**Non-conformité type :** `<div onClick={handleClick}>Action</div>` non focusable ; composant React custom non opérable au clavier.
+**Test :** Parcourir la page au clavier (Tab, Entrée, Espace, flèches). Vérifier que tous les éléments interactifs sont atteignables et utilisables sans souris. Repérer les `<div @click>` ou `<span @click>` non focusables.
+**Non-conformité type :** `<div @click="handleClick">Action</div>` non focusable ; composant Vue custom non opérable au clavier.
 **Priorité :** 🔴 Bloquant
 
-```tsx
-// ❌ Mauvais : div cliquable non accessible
-<div onClick={handleClick}>Action</div>
+```vue
+<!-- ❌ Mauvais : div cliquable non accessible -->
+<div @click="handleClick">Action</div>
 
-// ✅ Bon : bouton natif
-<button onClick={handleClick}>Action</button>
+<!-- ✅ Bon : bouton natif -->
+<button @click="handleClick">Action</button>
 
-// ✅ Si div nécessaire : rôle + tabindex + clavier
+<!-- ✅ Si div nécessaire : rôle + tabindex + clavier -->
 <div
   role="button"
-  tabIndex={0}
-  onClick={handleClick}
-  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleClick(); }}
+  tabindex="0"
+  @click="handleClick"
+  @keydown.enter="handleClick"
+  @keydown.space.prevent="handleClick"
 >
   Action
 </div>
@@ -256,15 +257,15 @@ Ne pas déclencher de changement de contexte (navigation, ouverture fenêtre, ch
 **Non-conformité type :** Message de confirmation "Formulaire envoyé" apparaissant visuellement mais sans `role="status"` ni `aria-live`.
 **Priorité :** 🟠 Majeur
 
-```tsx
-// Message de succès
+```vue
+<!-- Message de succès -->
 <div role="status">Formulaire envoyé avec succès.</div>
 
-// Message d'erreur
+<!-- Message d'erreur -->
 <div role="alert">Erreur : le champ email est invalide.</div>
 
-// Barre de progression
-<div role="progressbar" aria-valuenow={75} aria-valuemin={0} aria-valuemax={100}>
+<!-- Barre de progression -->
+<div role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
   75%
 </div>
 ```

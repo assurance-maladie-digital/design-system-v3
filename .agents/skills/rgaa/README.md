@@ -1,14 +1,16 @@
 # rgaa
 
-Skill pour assistants de code IA — auditer la conformité [RGAA 4.1.2](https://accessibilite.numerique.gouv.fr/) de sites web et composants React/HTML.
+Skill pour assistants de code IA — auditer la conformité [RGAA 4.1.2](https://accessibilite.numerique.gouv.fr/) des composants Vue 3 / Vuetify 3 du Design System Synapse.
+
+> Adapté pour Synapse à partir de `etalab-ia/skills` (licence MIT) : exemples en Vue, rapport restitué dans la conversation, articulation avec les skills `a11y-*`.
 
 ## Ce que fait cette skill
 
 Quand elle est activée, l'assistant IA peut :
 
-- **Auditer du code** HTML/React selon les 106 critères RGAA 4.1.2 (basés sur WCAG 2.1 niveau AA)
+- **Auditer du code** Vue/Vuetify selon les 106 critères RGAA 4.1.2 (basés sur WCAG 2.1 niveau AA)
 - **Produire un rapport structuré** avec statut C/NC/NA par critère, non-conformités détaillées et corrections priorisées (🔴 Bloquant, 🟠 Majeur, 🟡 Mineur)
-- **Exporter le rapport** dans `audits/rgaa-YYYY-MM-DD.md`
+- **Restituer le rapport** dans la conversation (fichier uniquement sur demande, au chemin indiqué)
 
 C'est un outil d'**audit a posteriori** : on lui fournit du code à analyser, il produit un rapport. Ce n'est pas un outil de génération de code.
 
@@ -42,7 +44,7 @@ Une fois la skill installée, l'assistant IA peut répondre à des demandes comm
 
 - *"Audite l'accessibilité de ce composant formulaire"*
 - *"Mon site est-il conforme RGAA ? Voici le code de la page d'accueil"*
-- *"Génère un rapport de conformité RGAA pour ces composants React"*
+- *"Génère un rapport de conformité RGAA pour ces composants Vue"*
 - *"Quelles sont les non-conformités RGAA de ce HTML ?"*
 
 ## Liens utiles

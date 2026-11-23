@@ -14,14 +14,14 @@ Balises concernées : `<img>`, `role="img"`, `<area>`, `<input type="image">`, `
 **Non-conformité type :** `<img src="chart.png">` sans attribut `alt` ; `<svg>` sans `role="img"` ni `aria-label`.
 **Priorité :** 🔴 Bloquant
 
-```tsx
-// Image porteuse d'information
+```vue
+<!-- Image porteuse d'information -->
 <img src="/chart.png" alt="Évolution du chiffre d'affaires 2024 : +15%" />
 
-// SVG porteuse d'information
+<!-- SVG porteuse d'information -->
 <svg role="img" aria-label="Logo du service">...</svg>
 
-// Bouton image
+<!-- Bouton image -->
 <input type="image" src="/search.png" alt="Rechercher" />
 ```
 
@@ -37,14 +37,14 @@ Balises concernées : `<img>`, `role="img"`, `<area>`, `<input type="image">`, `
 **Non-conformité type :** `<img src="decoration.png">` sans attribut `alt` (attribut absent) ; `<svg>` décoratif sans `aria-hidden`.
 **Priorité :** 🔴 Bloquant
 
-```tsx
-// Image décorative
+```vue
+<!-- Image décorative -->
 <img src="/decoration.png" alt="" />
 
-// SVG décorative
+<!-- SVG décorative -->
 <svg aria-hidden="true" focusable="false">...</svg>
 
-// Icône décorative dans un bouton avec texte
+<!-- Icône décorative dans un bouton avec texte -->
 <button>
   <svg aria-hidden="true" focusable="false">...</svg>
   Rechercher
@@ -124,7 +124,7 @@ Utiliser `<figure>` + `<figcaption>`.
 **Non-conformité type :** `<img>` suivi d'un `<p>` comme légende sans structure `<figure>`.
 **Priorité :** 🟡 Mineur
 
-```tsx
+```vue
 <figure>
   <img src="/photo.jpg" alt="Vue du bâtiment" />
   <figcaption>Le nouveau siège inauguré en 2024</figcaption>
@@ -153,7 +153,7 @@ Le titre doit décrire le contenu du cadre.
 **Non-conformité type :** `title="iframe1"` ou `title="Cadre"`.
 **Priorité :** 🟠 Majeur
 
-```tsx
+```vue
 <iframe src="/map" title="Carte interactive de localisation des agences" />
 ```
 
@@ -169,12 +169,12 @@ Toute information véhiculée par la couleur doit aussi être accessible par un 
 **Non-conformité type :** Erreur de formulaire signalée uniquement par un fond rouge, sans icône ni texte explicatif.
 **Priorité :** 🟠 Majeur
 
-```tsx
-// ❌ Statut uniquement par couleur
-<span style={{ color: "red" }}>Erreur</span>
+```vue
+<!-- ❌ Statut uniquement par couleur -->
+<span style="color: red">Erreur</span>
 
-// ✅ Couleur + texte + icône
-<span style={{ color: "red" }}>
+<!-- ✅ Couleur + texte + icône -->
+<span style="color: red">
   <svg aria-hidden="true">...</svg> Erreur : champ obligatoire
 </span>
 ```

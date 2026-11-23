@@ -57,7 +57,7 @@
 **Non-conformité type :** Citation ou terme en anglais sans `lang="en"` ; `lang` avec une valeur incorrecte.
 **Priorité :** 🟡 Mineur
 
-```tsx
+```vue
 <p>Le service est disponible en <span lang="en">open source</span>.</p>
 ```
 
@@ -79,7 +79,7 @@
 **Non-conformité type :** Texte arabe affiché sans `dir="rtl"` entraînant un affichage incorrect.
 **Priorité :** 🟡 Mineur
 
-```tsx
+```vue
 <p lang="ar" dir="rtl">نص بالعربية</p>
 ```
 
@@ -98,7 +98,7 @@
 **Non-conformité type :** `<h1>` suivi directement d'un `<h3>` ; plusieurs `<h1>` ; `<h2>` utilisé pour le style sans signification de section.
 **Priorité :** 🟠 Majeur
 
-```tsx
+```vue
 <h1>Titre principal de la page</h1>
   <h2>Section</h2>
     <h3>Sous-section</h3>
@@ -113,11 +113,11 @@
 **Non-conformité type :** Absence de `<main>` ; plusieurs `<main>` visibles ; `<nav>` utilisé pour tout groupe de liens.
 **Priorité :** 🟠 Majeur
 
-```tsx
-<header>  {/* Zone d'en-tête — role="banner" implicite */}
-<nav>     {/* Navigation principale et secondaire */}
-<main>    {/* Contenu principal — unique et visible */}
-<footer>  {/* Pied de page — role="contentinfo" implicite */}
+```vue
+<header>  <!-- Zone d'en-tête — role="banner" implicite -->
+<nav>     <!-- Navigation principale et secondaire -->
+<main>    <!-- Contenu principal — unique et visible -->
+<footer>  <!-- Pied de page — role="contentinfo" implicite -->
 ```
 
 ---
