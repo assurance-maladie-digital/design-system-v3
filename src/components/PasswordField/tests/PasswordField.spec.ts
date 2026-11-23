@@ -31,6 +31,17 @@ describe('PasswordField.vue', () => {
 		expect(vm.showEyeIcon).toBe(false)
 	})
 
+	it('updates the toggle button aria-label on click', async () => {
+		const wrapper = mount(PasswordField, { props: { label: 'Password' } })
+
+		const button = wrapper.find('.password-toggle-button')
+		expect(button.attributes('aria-label')).toBe('Afficher le mot de passe')
+		await button.trigger('click')
+		expect(button.attributes('aria-label')).toBe('Masquer le mot de passe')
+		await button.trigger('click')
+		expect(button.attributes('aria-label')).toBe('Afficher le mot de passe')
+	})
+
 	it('emits update:modelValue event on input', async () => {
 		const wrapper = mount(PasswordField, { props: { label: 'Password' } })
 		const input = wrapper.find('input')

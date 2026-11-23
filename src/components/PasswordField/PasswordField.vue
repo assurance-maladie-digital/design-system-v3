@@ -54,7 +54,6 @@
 	const alertMessage = ref('')
 	const fieldKey = ref(0)
 	const focused = ref(false)
-	const btnLabel = locales.value.showPassword
 
 	const showClear = computed(() => {
 		if (!props.clearable) return false
@@ -79,6 +78,7 @@
 	}
 
 	const showEyeIcon = ref(false)
+	const btnLabel = computed(() => showEyeIcon.value ? locales.value.hidePassword : locales.value.showPassword)
 
 	function togglePasswordVisibility() {
 		showEyeIcon.value = !showEyeIcon.value

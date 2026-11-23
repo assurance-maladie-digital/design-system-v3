@@ -53,6 +53,12 @@ import {
 			<ul>
 				<li>Les champs obligatoires possèdent un intitulé visible permettant de l'identifier comme tel.</li>
 				<li>L'attribut <code>required</code> ou <code>aria-required="true"</code> est présent.</li>
+				<li>La prop <code>required</code> du composant pilote la règle de validation et fait rendre <code>aria-required</code> sur le champ (l'attribut HTML <code>required</code> n'est pas rendu dans le DOM).</li>
+				<li>
+					En revanche, l'indication <strong>visible</strong> du caractère obligatoire relève de l'intégration : par défaut, aucun signe visuel n'est rendu.
+					Activez la prop <code>displayAsterisk</code> pour afficher un astérisque à côté du libellé (elle ne produit un effet qu'en combinaison avec <code>required</code>), ou ajoutez une mention explicite (ex. « obligatoire ») dans le libellé.
+					Si vous utilisez l'astérisque, expliquez sa signification dans le formulaire (ex. « * : champ obligatoire »).
+				</li>
 				<li>
 					<a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-required-ou-aria-requiredtrue-dans-les-champs-obligatoires/" target="_blank" rel="noopener noreferrer">
 						Documentation accede-web
@@ -96,6 +102,7 @@ import {
 			<li>Ne bloquez jamais le copier-coller dans un champ d'authentification.</li>
 			<li>Proposez un bouton pour afficher/masquer le mot de passe.</li>
 			<li>Fournissez une étiquette explicite et un texte d'aide si nécessaire.</li>
+			<li>Si le champ est obligatoire, ajoutez une indication visible : prop <code>displayAsterisk</code> ou mention « obligatoire » dans le libellé, en expliquant l'astérisque au niveau du formulaire.</li>
 			<li>Signalez les erreurs avec un message clair et des exemples de valeurs attendues.</li>
 			<li>Évitez les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale, l'utilisateur devant chercher comment l'activer. Préférez un champ actif accompagné d'un message expliquant la contrainte, ou n'affichez le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.</li>
 		</ul>
