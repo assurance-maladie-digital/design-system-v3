@@ -3,7 +3,16 @@ import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
 import * as validationStories from '../validation/validation.stories'
 
-const { ExternalMessages, ValidateOnInput, WithError, SyFormValidation, VFormVuetifyValidation } = composeStories(validationStories)
+const {
+	DisableErrorHandling,
+	ExternalMessages,
+	SyFormValidation,
+	SyFormVuetifyValidation,
+	ValidateOnInput,
+	VFormValidation,
+	VFormVuetifyValidation,
+	WithError,
+} = composeStories(validationStories)
 
 enableAutoUnmount(afterEach)
 
@@ -101,5 +110,61 @@ describe('Captcha validation stories', () => {
 		await flushPromises()
 
 		expect(wrapper.find('input').attributes('aria-required')).toBe('true')
+	})
+
+	it.each([
+		['SyFormValidation', SyFormValidation],
+		['VFormValidation', VFormValidation],
+		['SyFormVuetifyValidation', SyFormVuetifyValidation],
+		['VFormVuetifyValidation', VFormVuetifyValidation],
+		['DisableErrorHandling', DisableErrorHandling],
+	])('%s applique le Control required', async (_name, Story) => {
+		const wrapper = mount(Story({ required: false }), { attachTo: document.body })
+		await flushPromises()
+
+		for (const input of wrapper.findAll('input')) {
+			expect(input.attributes('aria-required')).not.toBe('true')
+		}
+	})
+
+	it.each([
+		['ValidateOnInput', ValidateOnInput],
+		['SyFormValidation', SyFormValidation],
+		['VFormValidation', VFormValidation],
+	])('%s applique les règles du Control customRules', async (_name, Story) => {
+		const customRules = [{
+			type: 'custom',
+			options: {
+				validate: () => false,
+				message: 'Règle définie dans le Control.',
+			},
+		}]
+		const wrapper = mount(Story({ customRules }), { attachTo: document.body })
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.setValue('ytqZNq')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('Règle définie dans le Control.')
+	})
+
+	it.each([
+		['SyFormVuetifyValidation', SyFormVuetifyValidation],
+		['VFormVuetifyValidation', VFormVuetifyValidation],
+	])('%s applique les règles du Control rules', async (_name, Story) => {
+		const rules = [() => 'Règle définie dans le Control.']
+		const wrapper = mount(Story({ rules }), { attachTo: document.body })
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.setValue('ytqZNq')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('Règle définie dans le Control.')
 	})
 })

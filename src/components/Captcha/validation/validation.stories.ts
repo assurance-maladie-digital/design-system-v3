@@ -6,6 +6,8 @@ import { VBtn, VCard, VForm } from 'vuetify/components'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
+const metaControlsExclude = ['onUpdate:modelValue', 'onUpdate:type', 'onImageError', 'onAudioError', 'onCreationError']
+
 const meta: Meta<typeof Captcha> = {
 	title: 'Composants/Formulaires/Captcha/Validation',
 	component: Captcha,
@@ -19,7 +21,7 @@ const meta: Meta<typeof Captcha> = {
 				component: 'Exemples de validation pour le composant Captcha.',
 			},
 		},
-		controls: { exclude: ['onUpdate:modelValue', 'onUpdate:type', 'onImageError', 'onAudioError', 'onCreationError'] },
+		controls: { exclude: metaControlsExclude },
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
@@ -58,6 +60,55 @@ type StoryArgs = {
 } & Record<string, unknown>
 
 type Story = StoryObj<StoryArgs>
+
+// Simulation de l'API de vérification : seules les réponses 'ytqZNq' et '941335' sont acceptées.
+function verifyCaptcha(answer: string | null) {
+	if (answer === 'ytqZNq' || answer === '941335') {
+		return Promise.resolve({ response: { data: { message: 'Success' } } })
+	}
+	return Promise.reject(new Error('Le captcha est incorrect'))
+}
+
+const lengthRule = {
+	type: 'custom',
+	options: {
+		validate: (value: string | null) => String(value || '').length >= 6,
+		message: 'Le captcha doit contenir au moins 6 caractères.',
+		fieldIdentifier: 'captcha',
+	},
+}
+
+const verificationRule = {
+	type: 'custom',
+	options: {
+		validate: async (value: string | null) => {
+			try {
+				const r = await verifyCaptcha(value)
+				return r.response.data.message === 'Success'
+			}
+			catch {
+				return false
+			}
+		},
+		message: 'Le captcha est incorrect',
+		fieldIdentifier: 'captcha',
+		successMessage: 'Le captcha est correct',
+	},
+}
+
+const vuetifyRules = [
+	(value: string | null) => !!value || 'Ce champ est requis',
+	(value: string | null) => String(value || '').length >= 6 || 'Le captcha doit contenir au moins 6 caractères',
+	async (value: string | null) => {
+		try {
+			const r = await verifyCaptcha(value)
+			return r.response.data.message === 'Success' || 'Le captcha est incorrect'
+		}
+		catch {
+			return 'Le captcha est incorrect'
+		}
+	},
+]
 
 export const WithError: Story = {
 	parameters: {
@@ -366,6 +417,8 @@ const verifyCaptcha = (answer: string | null) => {
 	args: {
 		required: true,
 		showSuccessMessages: true,
+		isValidateOnBlur: false,
+		customRules: [lengthRule, verificationRule],
 	},
 	render: (args) => {
 		return {
@@ -375,14 +428,8 @@ const verifyCaptcha = (answer: string | null) => {
 				watch(() => args.modelValue, () => {
 					captchaValue.value = args.modelValue
 				})
-				const verifyCaptcha = (answer: string | null) => {
-					if (answer === 'ytqZNq' || answer === '941335') {
-						return Promise.resolve({ response: { data: { message: 'Success' } } })
-					}
-					return Promise.reject(new Error('Le captcha est incorrect'))
-				}
 
-				return { args, captchaValue, verifyCaptcha }
+				return { args, captchaValue }
 			},
 			template: `
 				<VCard class="pa-8" max-width="400" min-width="400">
@@ -390,32 +437,6 @@ const verifyCaptcha = (answer: string | null) => {
 					<Captcha
 						v-bind="args"
 						v-model="captchaValue"
-						:is-validate-on-blur="false"
-						:custom-rules="[
-							{
-								type: 'custom',
-								options: {
-									validate: (value) => String(value || '').length >= 6,
-									message: 'Le captcha doit contenir au moins 6 caractères.',
-								},
-							},
-							{
-								type: 'custom',
-								options: {
-									validate: async (value) => {
-										try {
-											const r = await verifyCaptcha(value)
-											return r.response.data.message === 'Success'
-										}
-										catch {
-											return false
-										}
-									},
-									message: 'Le captcha est incorrect',
-									successMessage: 'Le captcha est correct',
-								}
-							},
-						]"
 					/>
 				</VCard>
 			`,
@@ -437,6 +458,8 @@ export const ExternalMessages: Story = {
 				story: 'Messages injectés par le parent via `errorMessages`, `warningMessages` et `successMessages`.',
 			},
 		},
+		// Les messages sont pilotés par les boutons de la démo.
+		controls: { exclude: [...metaControlsExclude, 'errorMessages', 'warningMessages', 'successMessages'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -572,6 +595,8 @@ export const DisableErrorHandling: Story = {
 				story: 'Désactivation de la gestion des erreurs via `disableErrorHandling`.',
 			},
 		},
+		// `disableErrorHandling` est fixé par la comparaison des deux champs.
+		controls: { exclude: [...metaControlsExclude, 'disableErrorHandling'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -635,46 +660,41 @@ const customRules = [
 			},
 		],
 	},
+	args: {
+		required: true,
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string | null) => typeof value === 'string' && value.trim().length > 0,
+					message: 'Ce champ est requis.',
+					fieldIdentifier: 'captcha',
+				},
+			},
+			{
+				type: 'custom',
+				options: {
+					validate: async (value: string | null) => {
+						try {
+							const r = await verifyCaptcha(value)
+							return r.response.data.message === 'Success'
+						}
+						catch {
+							return false
+						}
+					},
+					message: 'Le captcha est incorrect.',
+				},
+			},
+		],
+	},
 	render: args => ({
 		components: { Captcha, VCard },
 		setup() {
 			const value1 = ref('')
 			const value2 = ref('')
 
-			const verifyCaptcha = (answer: string | null) => {
-				if (answer === 'ytqZNq' || answer === '941335') {
-					return Promise.resolve({ response: { data: { message: 'Success' } } })
-				}
-				return Promise.reject(new Error('Le captcha est incorrect'))
-			}
-
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string | null) => typeof value === 'string' && value.trim().length > 0,
-						message: 'Ce champ est requis.',
-						fieldIdentifier: 'captcha',
-					},
-				},
-				{
-					type: 'custom',
-					options: {
-						validate: async (value: string | null) => {
-							try {
-								const r = await verifyCaptcha(value)
-								return r.response.data.message === 'Success'
-							}
-							catch {
-								return false
-							}
-						},
-						message: 'Le captcha est incorrect.',
-					},
-				},
-			]
-
-			return { args, value1, value2, customRules }
+			return { args, value1, value2 }
 		},
 		template: `
 			<div>
@@ -687,8 +707,6 @@ const customRules = [
 							<Captcha
 								v-bind="args"
 								v-model="value1"
-								required
-								:custom-rules="customRules"
 							/>
 						</VCard>
 					</div>
@@ -699,9 +717,7 @@ const customRules = [
 							<Captcha
 								v-bind="args"
 								v-model="value2"
-								required
 								disable-error-handling
-								:custom-rules="customRules"
 							/>
 						</VCard>
 					</div>
@@ -800,7 +816,9 @@ function handleSubmit(e: { isValid: boolean }) {
 	},
 	args: {
 		modelValue: '',
+		required: true,
 		showSuccessMessages: true,
+		customRules: [lengthRule, verificationRule],
 	},
 	render: args => ({
 		components: { Captcha, VBtn, SyForm },
@@ -810,46 +828,11 @@ function handleSubmit(e: { isValid: boolean }) {
 				captchaValue.value = newValue
 			})
 
-			const verifyCaptcha = (answer: string | null) => {
-				if (answer === 'ytqZNq' || answer === '941335') {
-					return Promise.resolve({ response: { data: { message: 'Success' } } })
-				}
-				return Promise.reject(new Error('Le captcha est incorrect'))
-			}
-
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string | null) => String(value || '').length >= 6,
-						message: 'Le captcha doit contenir au moins 6 caractères.',
-						fieldIdentifier: 'captcha',
-					},
-				},
-				{
-					type: 'custom',
-					options: {
-						validate: async (value: string | null) => {
-							try {
-								const r = await verifyCaptcha(value)
-								return r.response.data.message === 'Success'
-							}
-							catch {
-								return false
-							}
-						},
-						message: 'Le captcha est incorrect',
-						fieldIdentifier: 'captcha',
-						successMessage: 'Le captcha est correct',
-					},
-				},
-			]
-
 			function handleSubmit(e: { isValid: boolean }) {
 				alert(e.isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, captchaValue, customRules, handleSubmit }
+			return { args, captchaValue, handleSubmit }
 		},
 		template: `
 			<div>
@@ -859,8 +842,6 @@ function handleSubmit(e: { isValid: boolean }) {
 						<Captcha
 							v-bind="args"
 							v-model="captchaValue"
-							:custom-rules="customRules"
-							required
 						/>
 						<div class="mt-4">
 							<VBtn type="submit" color="primary">Valider</VBtn>
@@ -955,7 +936,9 @@ async function handleSubmit() {
 	},
 	args: {
 		modelValue: '',
+		required: true,
 		showSuccessMessages: true,
+		customRules: [lengthRule, verificationRule],
 	},
 	render: args => ({
 		components: { Captcha, VBtn, VForm },
@@ -966,41 +949,6 @@ async function handleSubmit() {
 			})
 			const captchaRef = ref<InstanceType<typeof Captcha> | null>(null)
 
-			const verifyCaptcha = (answer: string | null) => {
-				if (answer === 'ytqZNq' || answer === '941335') {
-					return Promise.resolve({ response: { data: { message: 'Success' } } })
-				}
-				return Promise.reject(new Error('Le captcha est incorrect'))
-			}
-
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string | null) => String(value || '').length >= 6,
-						message: 'Le captcha doit contenir au moins 6 caractères.',
-						fieldIdentifier: 'captcha',
-					},
-				},
-				{
-					type: 'custom',
-					options: {
-						validate: async (value: string | null) => {
-							try {
-								const r = await verifyCaptcha(value)
-								return r.response.data.message === 'Success'
-							}
-							catch {
-								return false
-							}
-						},
-						message: 'Le captcha est incorrect',
-						successMessage: 'Le captcha est correct',
-						fieldIdentifier: 'captcha',
-					},
-				},
-			]
-
 			async function handleSubmit() {
 				if (captchaRef.value) {
 					const result = await captchaRef.value.validateOnSubmit()
@@ -1008,7 +956,7 @@ async function handleSubmit() {
 				}
 			}
 
-			return { args, value, captchaRef, customRules, handleSubmit }
+			return { args, value, captchaRef, handleSubmit }
 		},
 		template: `
 			<div>
@@ -1019,8 +967,6 @@ async function handleSubmit() {
 							ref="captchaRef"
 							v-bind="args"
 							v-model="value"
-							:custom-rules="customRules"
-							required
 						/>
 						<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 					</VCard>
@@ -1097,6 +1043,9 @@ function handleSubmit(e: { isValid: boolean }) {
 	},
 	args: {
 		modelValue: '',
+		required: true,
+		useVuetifyValidation: true,
+		rules: vuetifyRules,
 	},
 	render: args => ({
 		components: { Captcha, VBtn, SyForm },
@@ -1106,32 +1055,11 @@ function handleSubmit(e: { isValid: boolean }) {
 				captchaValue.value = newValue
 			})
 
-			const verifyCaptcha = (answer: string | null) => {
-				if (answer === 'ytqZNq' || answer === '941335') {
-					return Promise.resolve({ response: { data: { message: 'Success' } } })
-				}
-				return Promise.reject(new Error('Le captcha est incorrect'))
-			}
-
-			const rules = [
-				(value: string | null) => !!value || 'Ce champ est requis',
-				(value: string | null) => String(value || '').length >= 6 || 'Le captcha doit contenir au moins 6 caractères',
-				async (value: string | null) => {
-					try {
-						const r = await verifyCaptcha(value)
-						return r.response.data.message === 'Success' || 'Le captcha est incorrect'
-					}
-					catch {
-						return 'Le captcha est incorrect'
-					}
-				},
-			]
-
 			function handleSubmit(e: { isValid: boolean }) {
 				alert(e.isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, captchaValue, rules, handleSubmit }
+			return { args, captchaValue, handleSubmit }
 		},
 		template: `
 			<div>
@@ -1141,9 +1069,6 @@ function handleSubmit(e: { isValid: boolean }) {
 						<Captcha
 							v-bind="args"
 							v-model="captchaValue"
-							:use-vuetify-validation="true"
-							:rules="rules"
-							required
 						/>
 						<div class="mt-4">
 							<VBtn type="submit" color="primary">Valider</VBtn>
@@ -1222,6 +1147,9 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 	},
 	args: {
 		modelValue: '',
+		required: true,
+		useVuetifyValidation: true,
+		rules: vuetifyRules,
 	},
 	render: args => ({
 		components: { Captcha, VBtn, VForm },
@@ -1231,33 +1159,12 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 				captchaValue.value = newValue
 			})
 
-			const rules = [
-				(value: string | null) => !!value || 'Ce champ est requis',
-				(value: string | null) => String(value || '').length >= 6 || 'Le captcha doit contenir au moins 6 caractères',
-				async (value: string | null) => {
-					try {
-						const r = await verifyCaptcha(value)
-						return r.response.data.message === 'Success' || 'Le captcha est incorrect'
-					}
-					catch {
-						return 'Le captcha est incorrect'
-					}
-				},
-			]
-
-			const verifyCaptcha = (answer: string | null) => {
-				if (answer === 'ytqZNq' || answer === '941335') {
-					return Promise.resolve({ response: { data: { message: 'Success' } } })
-				}
-				return Promise.reject(new Error('Le captcha est incorrect'))
-			}
-
 			async function handleSubmit(e: Promise<{ valid: boolean }>) {
 				const result = await e
 				alert(result.valid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, captchaValue, rules, handleSubmit }
+			return { args, captchaValue, handleSubmit }
 		},
 		template: `
 			<div>
@@ -1267,9 +1174,6 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 						<Captcha
 							v-bind="args"
 							v-model="captchaValue"
-							:use-vuetify-validation="true"
-							:rules="rules"
-							required
 						/>
 						<div class="mt-4">
 							<VBtn type="submit" color="primary">Valider</VBtn>

@@ -3,7 +3,12 @@ import { composeStories } from '@storybook/vue3-vite'
 import { analyzeSnippet, getSnippetTab } from '@tests/helpers/storySnippets'
 import * as stories from '../validation/validation.stories'
 
-const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({ name, story }))
+const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({
+	name,
+	story,
+	// Args déclarés par la story elle-même, sans les valeurs par défaut de Meta.
+	ownArgs: Object.entries(stories).find(([exportName]) => exportName === name)?.[1].args ?? {},
+}))
 
 describe('Captcha validation snippets', () => {
 	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
@@ -17,16 +22,23 @@ describe('Captcha validation snippets', () => {
 		})
 	})
 
-	it.each(allStories)('l\'extrait de $name reflète showSuccessMessages et required du rendu', ({ story }) => {
+	it.each(allStories)('l\'extrait de $name déclare showSuccessMessages comme la story', ({ story, ownArgs }) => {
 		const template = getSnippetTab(story, 'Template')
 		const showsSuccess = /successMessage|:success-messages/.test(template + getSnippetTab(story, 'Script'))
 
 		if (showsSuccess) {
-			expect(story.args.showSuccessMessages).toBe(true)
+			expect(ownArgs.showSuccessMessages).toBe(true)
 			expect(template).toContain('show-success-messages')
 		}
-		if (story.args.required === false && !/\srequired[\s/>]/.test(template)) {
-			expect(template).toContain(':required="false"')
-		}
+	})
+
+	it.each(allStories)('l\'extrait de $name déclare required comme la story', ({ story, ownArgs }) => {
+		const template = getSnippetTab(story, 'Template')
+		const snippetOptional = template.includes(':required="false"')
+		const snippetRequired = /\srequired[\s/>]/.test(template)
+
+		expect(ownArgs).toHaveProperty('required')
+		expect(snippetRequired || snippetOptional).toBe(true)
+		expect(story.args.required).toBe(snippetRequired && !snippetOptional)
 	})
 })
