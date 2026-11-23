@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { VBtn, VCol, VForm, VRow } from 'vuetify/components'
 import MonthPicker from '../MonthPicker.vue'
 import { fn } from 'storybook/test'
@@ -349,59 +349,63 @@ export const WithCustomRules: Story = {
 			},
 		],
 	},
+	args: {
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value || !/^\d{2}\/\d{4}$/.test(value)) {
+							return false
+						}
+						return true
+					},
+					message: 'Le format doit être MM/AAAA (ex: 03/2026).',
+					fieldIdentifier: 'selectedMonth',
+				},
+			},
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value || value === '') return true // Ne pas afficher d'erreur si le champ est vide
+						const [month] = value.split('/').map(Number)
+						if (!month || month < 1 || month > 12) {
+							return false
+						}
+						return true
+					},
+					message: 'Le mois doit être compris entre 01 et 12.',
+					fieldIdentifier: 'selectedMonth',
+				},
+			},
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value || value === '') return true // Ne pas afficher d'erreur si le champ est vide
+						const [, year] = value.split('/').map(Number) as [number, number]
+						const currentYear = new Date().getFullYear()
+						if (year < currentYear - 10) {
+							return false
+						}
+						return true
+					},
+					message: 'La date ne peut pas être antérieure à 10 ans.',
+					fieldIdentifier: 'selectedMonth',
+				},
+			},
+		],
+	},
 	render: args => ({
 		components: { MonthPicker },
 		setup() {
 			const selectedMonth = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (newValue) => {
+				selectedMonth.value = newValue ?? ''
+			})
 
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || !/^\d{2}\/\d{4}$/.test(value)) {
-								return false
-							}
-							return true
-						},
-						message: 'Le format doit être MM/AAAA (ex: 03/2026).',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || value === '') return true // Ne pas afficher d'erreur si le champ est vide
-							const [month] = value.split('/').map(Number)
-							if (!month || month < 1 || month > 12) {
-								return false
-							}
-							return true
-						},
-						message: 'Le mois doit être compris entre 01 et 12.',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || value === '') return true // Ne pas afficher d'erreur si le champ est vide
-							const [, year] = value.split('/').map(Number) as [number, number]
-							const currentYear = new Date().getFullYear()
-							if (year < currentYear - 10) {
-								return false
-							}
-							return true
-						},
-						message: 'La date ne peut pas être antérieure à 10 ans.',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-			]
-
-			return { args, selectedMonth, customRules }
+			return { args, selectedMonth }
 		},
 		template: `
 			<div>
@@ -409,7 +413,6 @@ export const WithCustomRules: Story = {
 				<MonthPicker
 					v-bind="args"
 					v-model="selectedMonth"
-					:custom-rules="customRules"
 					width="400px"
 				/>
 				<div class="mt-4">
@@ -437,6 +440,7 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
 `,
 			},
 		},
+		controls: { disable: true },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -613,7 +617,10 @@ const selectedMonth = ref('')
 	render: args => ({
 		components: { MonthPicker },
 		setup() {
-			const selectedMonth = ref(args.modelValue)
+			const selectedMonth = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (newValue) => {
+				selectedMonth.value = newValue ?? ''
+			})
 			return { args, selectedMonth }
 		},
 		template: `
@@ -634,13 +641,17 @@ const selectedMonth = ref('')
  */
 export const ExternalMessages: Story = {
 	parameters: {
+		controls: {
+			exclude: ['errorMessages', 'warningMessages', 'successMessages', 'width', 'undefined', 'onUpdate:modelValue', 'onUpdate:open'],
+		},
 		docs: {
 			description: {
 				story: `
 ### Messages externes
 
 Les props \`errorMessages\`, \`warningMessages\` et \`successMessages\` permettent d'injecter
-des messages depuis le parent sans déclencher de règle de validation.
+des messages depuis le parent sans déclencher de règle de validation. Dans cette démo, les messages
+sont pilotés par les boutons : leurs controls sont masqués car ils écraseraient cet état local.
 `,
 			},
 		},
@@ -706,7 +717,10 @@ function reset() {
 	render: args => ({
 		components: { MonthPicker, VBtn },
 		setup() {
-			const selectedMonth = ref(args.modelValue)
+			const selectedMonth = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (newValue) => {
+				selectedMonth.value = newValue ?? ''
+			})
 			const errorMessages = ref<string[] | null>(null)
 			const warningMessages = ref<string[] | null>(null)
 			const successMessages = ref<string[] | null>(null)
@@ -761,6 +775,21 @@ function reset() {
 export const SyFormValidation: Story = {
 	args: {
 		required: true,
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
+							return false
+						}
+						return true
+					},
+					message: 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).',
+					fieldIdentifier: 'selectedMonth',
+				},
+			},
+		],
 	},
 	parameters: {
 		sourceCode: [
@@ -816,30 +845,17 @@ function handleSubmit(e: { isValid: boolean }) {
 	render: args => ({
 		components: { MonthPicker, VBtn, SyForm },
 		setup() {
-			const selectedMonth = ref('')
-
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-								return false
-							}
-							return true
-						},
-						message: 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-			]
+			const selectedMonth = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (newValue) => {
+				selectedMonth.value = newValue ?? ''
+			})
 
 			function handleSubmit(e: { isValid: boolean }) {
 				const isValid = e.isValid
 				alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selectedMonth, customRules, handleSubmit }
+			return { args, selectedMonth, handleSubmit }
 		},
 		template: `
 			<div>
@@ -847,7 +863,6 @@ function handleSubmit(e: { isValid: boolean }) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						:custom-rules="customRules"
 						width="400px"
 					/>
 					<div class="mt-4">
@@ -862,6 +877,21 @@ function handleSubmit(e: { isValid: boolean }) {
 export const VFormValidation: Story = {
 	args: {
 		required: true,
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
+							return false
+						}
+						return true
+					},
+					message: 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).',
+					fieldIdentifier: 'selectedMonth',
+				},
+			},
+		],
 	},
 	parameters: {
 		sourceCode: [
@@ -919,31 +949,18 @@ async function handleSubmit() {
 	render: args => ({
 		components: { MonthPicker, VBtn, VForm },
 		setup() {
-			const selectedMonth = ref('')
-			const fieldRef = ref<InstanceType<typeof MonthPicker> | null>(null)
-
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-								return false
-							}
-							return true
-						},
-						message: 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-			]
+			const selectedMonth = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (newValue) => {
+				selectedMonth.value = newValue ?? ''
+			})
+			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			async function handleSubmit() {
-				const result = await (fieldRef.value!.validateOnSubmit! as () => Promise<boolean>)()
+				const result = await fieldRef.value?.validateOnSubmit()
 				alert(result ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selectedMonth, customRules, handleSubmit, fieldRef }
+			return { args, selectedMonth, handleSubmit, fieldRef }
 		},
 		template: `
 			<div>
@@ -952,7 +969,6 @@ async function handleSubmit() {
 						v-bind="args"
 						ref="fieldRef"
 						v-model="selectedMonth"
-						:custom-rules="customRules"
 						width="400px"
 					/>
 					<div class="mt-4">
@@ -967,6 +983,10 @@ async function handleSubmit() {
 export const SyFormVuetifyValidation: Story = {
 	args: {
 		useVuetifyValidation: true,
+		rules: [
+			(value: string) => !!value || 'Le mois est requis',
+			(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
+		],
 	},
 	parameters: {
 		sourceCode: [
@@ -1011,19 +1031,17 @@ function handleSubmit(e: { isValid: boolean }) {
 	render: args => ({
 		components: { MonthPicker, VBtn, SyForm },
 		setup() {
-			const selectedMonth = ref('')
-
-			const vuetifyRules = [
-				(value: string) => !!value || 'Le mois est requis',
-				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
-			]
+			const selectedMonth = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (newValue) => {
+				selectedMonth.value = newValue ?? ''
+			})
 
 			function handleSubmit(e: { isValid: boolean }) {
 				const isValid = e.isValid
 				alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selectedMonth, vuetifyRules, handleSubmit }
+			return { args, selectedMonth, handleSubmit }
 		},
 		template: `
 			<div>
@@ -1031,7 +1049,6 @@ function handleSubmit(e: { isValid: boolean }) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						:rules="vuetifyRules"
 						width="400px"
 					/>
 					<div class="mt-4">
@@ -1047,6 +1064,10 @@ export const VFormVuetifyValidation: Story = {
 	args: {
 		useVuetifyValidation: true,
 		required: true,
+		rules: [
+			(value: string) => !!value || 'Le mois est requis',
+			(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
+		],
 	},
 	parameters: {
 		docs: {
@@ -1104,19 +1125,17 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 	render: args => ({
 		components: { MonthPicker, VBtn, VForm },
 		setup() {
-			const selectedMonth = ref('')
-
-			const rules = [
-				(value: string) => !!value || 'Le mois est requis',
-				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
-			]
+			const selectedMonth = ref(args.modelValue ?? '')
+			watch(() => args.modelValue, (newValue) => {
+				selectedMonth.value = newValue ?? ''
+			})
 
 			async function handleSubmit(e: Promise<{ valid: boolean }>) {
 				const result = await e
 				alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selectedMonth, rules, handleSubmit }
+			return { args, selectedMonth, handleSubmit }
 		},
 		template: `
 			<div>
@@ -1128,7 +1147,6 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 					<MonthPicker
 						v-bind="args"
 						v-model="selectedMonth"
-						:rules="rules"
 						width="400px"
 					/>
 					<div class="mt-4">

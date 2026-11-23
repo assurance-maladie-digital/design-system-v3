@@ -3,12 +3,13 @@ import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
 import * as validationStories from '../Validation/Validation.stories'
 
-const { SyFormValidation, VFormVuetifyValidation } = composeStories(validationStories)
+const { SyFormValidation, VFormVuetifyValidation, WithSuccess } = composeStories(validationStories)
 
 enableAutoUnmount(afterEach)
 
 afterEach(() => {
 	vi.unstubAllGlobals()
+	vi.useRealTimers()
 })
 
 describe('MonthPicker validation stories', () => {
@@ -34,5 +35,27 @@ describe('MonthPicker validation stories', () => {
 		const wrapper = mount(VFormVuetifyValidation())
 
 		expect(wrapper.find('input').attributes('aria-required')).toBe('true')
+	})
+
+	it('WithSuccess affiche le succès quelle que soit l\'année courante', async () => {
+		// La règle de la story compare la valeur à l'année courante : le scénario doit
+		// rester un succès après un changement d'année (pas de valeur d'exemple figée).
+		vi.useFakeTimers({ toFake: ['Date'] })
+		vi.setSystemTime(new Date('2030-06-15'))
+
+		const wrapper = mount(WithSuccess({ modelValue: '06/2030' }))
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('année en cours')
+	})
+
+	it('WithSuccess ne produit pas de succès pour une année différente de l\'année courante', async () => {
+		vi.useFakeTimers({ toFake: ['Date'] })
+		vi.setSystemTime(new Date('2030-06-15'))
+
+		const wrapper = mount(WithSuccess({ modelValue: '06/2029' }))
+		await flushPromises()
+
+		expect(wrapper.text()).not.toContain('année en cours')
 	})
 })
