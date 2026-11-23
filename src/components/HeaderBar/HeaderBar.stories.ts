@@ -330,7 +330,7 @@ export const CustomLogo: Story = {
 			setup() {
 				const logo = {
 					menuOpen: false,
-					homeAriaLabel: 'Logo de l\'Assurance Maladie, cliquez pour revenir à l\'accueil',
+					homeAriaLabel: 'Accueil - Sécurité sociale, l\'Assurance Maladie',
 					serviceTitle: 'Synapse',
 					serviceSubtitle: 'Design System',
 				}

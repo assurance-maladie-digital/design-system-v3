@@ -60,6 +60,14 @@ import {
 
       <li>Lorsque le logo ou le lien d’accueil est utilisé comme élément interactif, son nom accessible doit permettre à l’utilisateur de comprendre sa destination.</li>
 
+      <li><strong>Concaténation des alternatives :</strong> <code>homeAriaLabel</code> alimente l’attribut <code>alt</code> de l’image du logo, située <strong>à l’intérieur</strong> du lien. Le nom accessible du lien est la concaténation des alternatives de toutes les images qu’il contient, dans l’ordre du DOM : toute image labellisée injectée via le slot <code>logo-brand-content</code> s’y ajoute.</li>
+
+      <li>
+        <strong>Lien unique contenant plusieurs images :</strong> pour recomposer l’ordre des termes, renseignez <code>homeLink.aria-label</code>, qui est posé sur l’élément <code>&lt;a&gt;</code> et remplace entièrement le nom calculé (critère <strong>6.1 RGAA</strong>). Mettez la destination en tête.
+        <br />
+        <code>&lt;HeaderBar :home-link="&#123; href: '/', 'aria-label': 'Compte ameli - Accueil' &#125;" /&gt;</code>
+      </li>
+
       <li><strong>Accessibilité :</strong> les éléments interactifs doivent disposer d’un nom accessible explicite et pertinent, permettant aux utilisateurs de technologies d’assistance de comprendre leur fonction et leur destination.</li>
     </ul>
   </CriteriaCard>
