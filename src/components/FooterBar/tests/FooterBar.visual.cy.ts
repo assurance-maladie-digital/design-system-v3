@@ -1,5 +1,6 @@
 import FooterBar from '../FooterBar.vue'
 import { h } from 'vue'
+import imgUrl from '@/assets/amelipro/img/numero_3608.svg'
 
 describe('FooterBar - Visual regression tests', () => {
 	it('displays the footer bar by default', () => {
@@ -59,6 +60,29 @@ describe('FooterBar - Visual regression tests', () => {
 
 		cy.get('.v-footer').should('be.visible')
 		cy.matchImageSnapshot('footer-bar-version', cy.get('.v-footer'))
+	})
+
+	it('displays the footer bar with phone number', () => {
+		cy.mountWithVuetify(FooterBar, {
+			slots: {
+				prepend: () =>
+					h('img', {
+						src: imgUrl,
+						alt: 'au 3608 : Service gratuit + prix appel',
+						style: { cursor: 'pointer' },
+					}),
+			},
+		})
+
+		cy.get('.v-footer').should('be.visible')
+		cy.get('.v-footer img')
+			.should('be.visible')
+			.and('have.attr', 'alt', 'au 3608 : Service gratuit + prix appel')
+
+		cy.matchImageSnapshot(
+			'footer-bar-with-phone-number',
+			cy.get('.v-footer'),
+		)
 	})
 })
 
