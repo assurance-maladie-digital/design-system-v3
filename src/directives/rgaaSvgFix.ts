@@ -162,7 +162,7 @@ interface RgaaSvgFixConfig {
 	autoDetectButton?: boolean
 	/**
 	 * Si `true`, rend uniquement les SVG internes décoratifs
-	 * (`role` supprimé, `aria-hidden="true"`) sans modifier les attributs
+	 * (`role` supprimé, `aria-hidden="true"`, `focusable="false"`) sans modifier les attributs
 	 * du conteneur attaché à la directive.
 	 */
 	onlyInner?: boolean
@@ -286,6 +286,17 @@ function detectInteractivity(element: HTMLElement): boolean {
 }
 
 /**
+ * Masque un SVG aux technologies d'assistance : le conteneur porte le label si nécessaire
+ */
+function hideSvg(svg: SVGSVGElement) {
+	// Supprimer role="img" pour éviter un double énoncé
+	svg.removeAttribute('role')
+	svg.setAttribute('aria-hidden', 'true')
+	// Un élément aria-hidden ne doit pas être focusable (IE/Edge legacy)
+	svg.setAttribute('focusable', 'false')
+}
+
+/**
  * Corrige les attributs d'accessibilité des SVG en fonction de la configuration
  */
 function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
@@ -297,14 +308,7 @@ function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
 		// sans modifier les attributs du conteneur attaché à la directive
 		if (config.onlyInner) {
 			for (let i = 0; i < svgs.length; i++) {
-				const svg = svgs[i]!
-
-				// Toujours supprimer role="img"
-				svg.removeAttribute('role')
-				// Toujours masquer le SVG
-				svg.setAttribute('aria-hidden', 'true')
-				// Un élément aria-hidden ne doit pas être focusable (IE/Edge legacy)
-				svg.setAttribute('focusable', 'false')
+				hideSvg(svgs[i]!)
 			}
 
 			return
@@ -359,15 +363,7 @@ function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
 
 		// Corriger les attributs de chaque SVG
 		for (let i = 0; i < svgs.length; i++) {
-			const svg = svgs[i]!
-
-			// Pour tous les SVG:
-			// 1. Toujours supprimer role="img"
-			svg.removeAttribute('role')
-			// 2. Toujours masquer le SVG pour éviter un double énoncé, le conteneur porte le label si nécessaire
-			svg.setAttribute('aria-hidden', 'true')
-			// 3. Un élément aria-hidden ne doit pas être focusable (IE/Edge legacy)
-			svg.setAttribute('focusable', 'false')
+			hideSvg(svgs[i]!)
 		}
 	}
 }
