@@ -8,6 +8,18 @@ import type { MonthPickerProps } from '../types'
 import { default as MonthPickerMeta } from '../MonthPicker.stories'
 import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
 
+/**
+ * Valeur du champ pour `v-model` : initialisée par le Control `modelValue`,
+ * puis mise à jour quand ce Control change. La saisie reste locale à la story.
+ */
+function useArgsModel(args: MonthPickerProps) {
+	const model = ref(args.modelValue ?? '')
+	watch(() => args.modelValue, (value) => {
+		model.value = value ?? ''
+	})
+	return model
+}
+
 const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker/Validation',
 	component: MonthPicker,
@@ -400,10 +412,7 @@ export const WithCustomRules: Story = {
 	render: args => ({
 		components: { MonthPicker },
 		setup() {
-			const selectedMonth = ref(args.modelValue ?? '')
-			watch(() => args.modelValue, (newValue) => {
-				selectedMonth.value = newValue ?? ''
-			})
+			const selectedMonth = useArgsModel(args)
 
 			return { args, selectedMonth }
 		},
@@ -617,10 +626,7 @@ const selectedMonth = ref('')
 	render: args => ({
 		components: { MonthPicker },
 		setup() {
-			const selectedMonth = ref(args.modelValue ?? '')
-			watch(() => args.modelValue, (newValue) => {
-				selectedMonth.value = newValue ?? ''
-			})
+			const selectedMonth = useArgsModel(args)
 			return { args, selectedMonth }
 		},
 		template: `
@@ -717,10 +723,7 @@ function reset() {
 	render: args => ({
 		components: { MonthPicker, VBtn },
 		setup() {
-			const selectedMonth = ref(args.modelValue ?? '')
-			watch(() => args.modelValue, (newValue) => {
-				selectedMonth.value = newValue ?? ''
-			})
+			const selectedMonth = useArgsModel(args)
 			const errorMessages = ref<string[] | null>(null)
 			const warningMessages = ref<string[] | null>(null)
 			const successMessages = ref<string[] | null>(null)
@@ -845,10 +848,7 @@ function handleSubmit(e: { isValid: boolean }) {
 	render: args => ({
 		components: { MonthPicker, VBtn, SyForm },
 		setup() {
-			const selectedMonth = ref(args.modelValue ?? '')
-			watch(() => args.modelValue, (newValue) => {
-				selectedMonth.value = newValue ?? ''
-			})
+			const selectedMonth = useArgsModel(args)
 
 			function handleSubmit(e: { isValid: boolean }) {
 				const isValid = e.isValid
@@ -949,10 +949,7 @@ async function handleSubmit() {
 	render: args => ({
 		components: { MonthPicker, VBtn, VForm },
 		setup() {
-			const selectedMonth = ref(args.modelValue ?? '')
-			watch(() => args.modelValue, (newValue) => {
-				selectedMonth.value = newValue ?? ''
-			})
+			const selectedMonth = useArgsModel(args)
 			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			async function handleSubmit() {
@@ -1031,10 +1028,7 @@ function handleSubmit(e: { isValid: boolean }) {
 	render: args => ({
 		components: { MonthPicker, VBtn, SyForm },
 		setup() {
-			const selectedMonth = ref(args.modelValue ?? '')
-			watch(() => args.modelValue, (newValue) => {
-				selectedMonth.value = newValue ?? ''
-			})
+			const selectedMonth = useArgsModel(args)
 
 			function handleSubmit(e: { isValid: boolean }) {
 				const isValid = e.isValid
@@ -1125,10 +1119,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 	render: args => ({
 		components: { MonthPicker, VBtn, VForm },
 		setup() {
-			const selectedMonth = ref(args.modelValue ?? '')
-			watch(() => args.modelValue, (newValue) => {
-				selectedMonth.value = newValue ?? ''
-			})
+			const selectedMonth = useArgsModel(args)
 
 			async function handleSubmit(e: Promise<{ valid: boolean }>) {
 				const result = await e

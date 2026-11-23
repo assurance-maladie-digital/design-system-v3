@@ -3,7 +3,7 @@ import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
 import * as validationStories from '../Validation/Validation.stories'
 
-const { SyFormValidation, VFormVuetifyValidation, WithSuccess } = composeStories(validationStories)
+const { SyFormValidation, VFormVuetifyValidation, WithCustomRules, WithSuccess } = composeStories(validationStories)
 
 enableAutoUnmount(afterEach)
 
@@ -37,9 +37,8 @@ describe('MonthPicker validation stories', () => {
 		expect(wrapper.find('input').attributes('aria-required')).toBe('true')
 	})
 
-	it('WithSuccess affiche le succès quelle que soit l\'année courante', async () => {
-		// La règle de la story compare la valeur à l'année courante : le scénario doit
-		// rester un succès après un changement d'année (pas de valeur d'exemple figée).
+	it('WithSuccess affiche le succès pour un mois de l\'année courante', async () => {
+		// La règle de succès compare l'année saisie à l'année courante, et non à une année figée.
 		vi.useFakeTimers({ toFake: ['Date'] })
 		vi.setSystemTime(new Date('2030-06-15'))
 
@@ -57,5 +56,44 @@ describe('MonthPicker validation stories', () => {
 		await flushPromises()
 
 		expect(wrapper.text()).not.toContain('année en cours')
+	})
+	it('WithCustomRules applique les règles du Control customRules', async () => {
+		const customRules = [{
+			type: 'custom',
+			options: {
+				validate: () => false,
+				message: 'Règle définie dans le Control.',
+				fieldIdentifier: 'selectedMonth',
+			},
+		}]
+		const wrapper = mount(WithCustomRules({ modelValue: '03/2026', customRules }), { attachTo: document.body })
+		const input = wrapper.find('input')
+
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('Règle définie dans le Control.')
+	})
+
+	it('SyFormValidation valide avec les règles du Control customRules', async () => {
+		const alertMock = vi.fn()
+		vi.stubGlobal('alert', alertMock)
+		const customRules = [{
+			type: 'custom',
+			options: {
+				validate: () => false,
+				message: 'Règle définie dans le Control.',
+				fieldIdentifier: 'selectedMonth',
+			},
+		}]
+		const wrapper = mount(SyFormValidation({ customRules }), { attachTo: document.body })
+
+		await wrapper.find('input').setValue('03/2026')
+		await wrapper.find('form').trigger('submit')
+		await flushPromises()
+
+		expect(alertMock).toHaveBeenCalledWith('Veuillez corriger les erreurs.')
+		expect(wrapper.text()).toContain('Règle définie dans le Control.')
 	})
 })
