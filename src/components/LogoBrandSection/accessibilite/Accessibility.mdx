@@ -63,7 +63,7 @@ import {
 		<CriteriaCard title="Alternatives textuelles : éviter la redondance">
 			<ul>
 				<li><strong>Pas de double annonce</strong> : le logo secondaire possède sa propre alternative (ex. « Compte ameli »). Ne répétez pas le nom du service dans <code>homeLink.ariaLabel</code> : il serait annoncé une première fois dans le libellé du lien, puis une seconde fois par l'image qui le suit.</li>
-				<li><strong>Libellé complémentaire</strong> : utilisez <code>homeLink.ariaLabel</code> pour préciser la destination (« Accueil de mon espace ») ou laissez le libellé générique « Retour vers accueil du site ».</li>
+				<li><strong>Libellé complémentaire</strong> : <code>homeLink.ariaLabel</code> est placé <strong>avant</strong> le libellé générique (rendu : « <em>&lt;ariaLabel&gt;</em> Retour vers accueil du site »), il ne le remplace pas. Le plus sûr est de l'omettre ; si vous le fournissez, utilisez un complément qui ne parle pas d'accueil — par exemple le nom de l'espace, uniquement s'il n'est pas déjà annoncé par le logo secondaire.</li>
 				<li><strong>Alternative définie par le thème</strong> : le texte alternatif du logo secondaire provient de <code>secondaryLogoMapping</code> et n'est pas surchargeable via la prop <code>locales</code>. Pour le personnaliser ou rendre l'image décorative, reprenez le contenu via le slot par défaut.</li>
 				<li><strong>Logo secondaire non cliquable</strong> : hors thèmes <code>ameli</code> et <code>ameli-pro</code>, il est rendu dans un <code>&lt;div&gt;</code>. Son <code>alt</code> doit rester informatif s'il apporte une information absente du reste de l'en-tête ; il peut être vidé (<code>alt=""</code>) si l'information est déjà portée ailleurs.</li>
 				<li><strong>Structure en deux éléments distincts</strong> : le lien d'accueil et le logo secondaire sont des éléments séparés (lien ou <code>&lt;div&gt;</code>), ce qui évite la concaténation désordonnée des alternatives dans un même nom accessible. Si vous reprenez le markup pour regrouper les deux images dans un <strong>lien unique</strong> (cas fréquent hors DS), le nom accessible devient la concaténation des alternatives dans l'ordre du DOM : posez alors un <code>aria-label</code> sur le <code>&lt;a&gt;</code> avec la destination en tête (ex. <code>aria-label="Compte ameli - Accueil"</code>) et gardez un <code>alt</code> concis sans le mot « logo » sur l'image (critère RGAA 6.1).</li>
@@ -77,7 +77,7 @@ import {
 
 	<BestPracticesSection>
 		<ul>
-			<li>Fournissez un <code>homeLink.ariaLabel</code> descriptif pour le lien vers l'accueil, sans répéter le nom du service lorsqu'un logo secondaire l'annonce déjà (ex. <code>compte-ameli</code>).</li>
+			<li>Laissez <code>homeLink.ariaLabel</code> vide pour utiliser le libellé générique « Retour vers accueil du site ». Si vous le renseignez, il est concaténé <strong>avant</strong> ce libellé : évitez d'y répéter le nom du service lorsqu'un logo secondaire l'annonce déjà (ex. <code>compte-ameli</code>) et vérifiez que la phrase résultante reste pertinente.</li>
 			<li>Choisissez des niveaux de titres cohérents avec la hiérarchie de votre page.</li>
 			<li>Utilisez <code>mobileVersion</code> pour adapter l'affichage sur petits écrans.</li>
 			<li>Activez <code>reduceLogo</code> dans les espaces contraints ou avec logo secondaire.</li>
@@ -103,10 +103,20 @@ import {
 	:home-link="{ href: '/' }"
 />
 
-<!-- Correct aussi : ariaLabel complémentaire qui n'annonce pas le nom du service -->
+<!-- À éviter aussi : ariaLabel est placé AVANT le libellé générique, -->
+<!-- ce qui produit « Accueil de mon espace Retour vers accueil du site » -->
 <LogoBrandSection
 	theme="compte-ameli"
 	:home-link="{ href: '/', ariaLabel: 'Accueil de mon espace' }"
+/>
+
+<!-- Correct : complément qui nomme l'espace, sans parler d'accueil -->
+<!-- et sans répéter le nom du service (thème sans logo secondaire). -->
+<!-- Rendu : « Espace partenaires Retour vers accueil du site » -->
+<LogoBrandSection
+	theme="risque-pro"
+	service-title="Espace partenaires"
+	:home-link="{ href: '/', ariaLabel: 'Espace partenaires' }"
 />`}
 		/>
 	</BestPracticesSection>
