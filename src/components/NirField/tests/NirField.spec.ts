@@ -97,7 +97,7 @@ describe('NirField.vue', () => {
 		await wrapper.find('.number-field input').trigger('blur')
 		await wrapper.vm.$nextTick()
 		await flushPromises()
-		expect(wrapper.vm.numberValidation.errors.value[0]).toBe('Le numéro de sécurité sociale est invalide.')
+		expect(wrapper.vm.numberValidation.errors.value[0]).toBe('Le numéro de sécurité sociale est invalide, ce sont les 13 premiers chiffres sur votre carte vitale.')
 	})
 
 	it('validates the NIR field successfully', async () => {
@@ -119,7 +119,7 @@ describe('NirField.vue', () => {
 		await wrapper.find('.key-field input').trigger('blur')
 		await wrapper.vm.$nextTick()
 		await flushPromises()
-		expect(wrapper.vm.keyValidation.errors.value[0]).toBe('La clé de contrôle est invalide.')
+		expect(wrapper.vm.keyValidation.errors.value[0]).toBe('La clé de contrôle est invalide, ce sont les 2 derniers chiffres sur votre carte vitale.')
 	})
 
 	it('validates the key field successfully', async () => {
@@ -1060,7 +1060,7 @@ describe('NirField.vue', () => {
 				await fillAndValidateNir(wrapper, '123')
 
 				expect(wrapper.vm.errors.number.value.length).toBeGreaterThan(0)
-				expect(wrapper.vm.errors.number.value[0]).toBe('Le numéro de sécurité sociale est invalide.')
+				expect(wrapper.vm.errors.number.value[0]).toBe('Le numéro de sécurité sociale est invalide, ce sont les 13 premiers chiffres sur votre carte vitale.')
 				expect(wrapper.vm.errors.key.value.length).toBe(0) // Pas d'erreur clé
 			})
 
@@ -1068,7 +1068,7 @@ describe('NirField.vue', () => {
 				await fillAndValidateNir(wrapper, '2940375120005', '1')
 
 				expect(wrapper.vm.errors.key.value.length).toBeGreaterThan(0)
-				expect(wrapper.vm.errors.key.value[0]).toBe('La clé de contrôle est invalide.')
+				expect(wrapper.vm.errors.key.value[0]).toBe('La clé de contrôle est invalide, ce sont les 2 derniers chiffres sur votre carte vitale.')
 				expect(wrapper.vm.errors.number.value.length).toBe(0) // Pas d'erreur NIR
 			})
 
