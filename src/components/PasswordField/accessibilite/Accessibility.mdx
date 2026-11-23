@@ -81,9 +81,9 @@ import {
 	<ul>
 		<li>Le copier-coller doit être possible dans un champ d'authentification pour faciliter l'utilisation d'un gestionnaire de mot de passe.</li>
 		<li>Il faut pouvoir démasquer le mot de passe lors de la saisie pour améliorer la réussite de saisie.</li>
-		<li>Le bouton permettant d'afficher ou de masquer le mot de passe est un bouton à bascule (toggle button).</li>
-		<li>Son état doit être indiqué avec l'attribut <code>aria-pressed</code> (<code>true</code> lorsque le mot de passe est affiché, <code>false</code> lorsqu'il est masqué).</li>
-		<li>Le libellé du bouton ne doit pas changer lorsque son état change. Seul l'état porté par <code>aria-pressed</code> évolue afin d'être correctement annoncé par les technologies d'assistance.</li>
+		<li>Le bouton permettant d'afficher ou de masquer le mot de passe est un bouton d'action dont le libellé décrit l'action à venir (« Afficher le mot de passe » / « Masquer le mot de passe »).</li>
+		<li>Le libellé change à chaque activation ; <code>aria-pressed</code> n'est donc <strong>pas</strong> utilisé : combiner un libellé dynamique avec <code>aria-pressed</code> produirait une annonce contradictoire (ex. « Masquer le mot de passe, bouton bascule, enfoncé » alors que le mot de passe est visible).</li>
+		<li>Le changement d'état effectif (« Le mot de passe est visible » / « Le mot de passe est caché ») est annoncé via une zone <code>aria-live</code> décrite par le champ (<code>aria-describedby</code>).</li>
 		<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html" target="_blank" rel="noopener noreferrer">Documentation W3C — Accessible Authentication</a></li>
 		<li>
 			<a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" rel="noopener noreferrer">Documentation W3C — Button Pattern (Toggle Button)</a>

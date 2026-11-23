@@ -216,7 +216,6 @@
 					class="password-toggle-button"
 					size="small"
 					:aria-label="btnLabel"
-					:aria-pressed="showEyeIcon"
 					:aria-controls="passwordFieldId"
 					v-bind="options.btn"
 					@click="togglePasswordVisibility"
