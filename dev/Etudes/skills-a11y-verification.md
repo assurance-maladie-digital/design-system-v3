@@ -77,3 +77,26 @@ Lecture :
 - S3 : régression ponctuelle côté « avec » (1 passage sans test de régression) ; à surveiller, `a11y-testing` n'a été chargé que dans 1 passage sur 3 pour cette tâche.
 - S5 ne discrimine pas : le diff piégé est trop visible ; un diff aux défauts plus subtils serait nécessaire pour mesurer l'apport sur la revue.
 - La variance est réelle : le tout premier point de départ S3 (masquage par `flushPromises`) ne s'est reproduit dans aucun des 3 passages témoins.
+
+## Correction des limites
+
+### S3 — test de régression
+
+`a11y-fixes` impose désormais de charger `a11y-testing` et d'ajouter un test de régression vu en échec sans le correctif. 3 nouveaux passages « avec » :
+
+| | Test de régression | `a11y-testing` chargé | Score |
+|---|---|---|---|
+| Avant correction du skill | 2/3 | 1/3 | 11/12 |
+| Après | **3/3** (dont 3 contre-épreuves sans le correctif) | **3/3** | **12/12** |
+
+### S5 bis — revue d'un diff aux défauts discrets
+
+Nouveau commit piégé sur `SyAlert` (prop `details`), dont la spec passe : id `sy-alert-details` en dur, `aria-controls` vers un panneau en `v-if`, `Escape` sur un panneau jamais focalisé, `role="status"` créé en `v-if`, texte `rgba(on-surface, 0.55)`, tests limités à `toBeDefined()` sur l'état fermé. 3 passages par côté, notés sur ces 6 défauts.
+
+| | Sans skills | Avec skills |
+|---|---|---|
+| Score | 18/18 | 18/18 |
+| Contraste chiffré (ratio calculé) | 1/3 | 3/3 |
+| Skills `a11y-*` + `rgaa` chargés | — | 3/3 |
+
+Lecture : même avec des défauts discrets, le skill `review` d'origine, `AGENTS.md` et `doc/` suffisent pour la revue. L'apport des skills en revue se limite à la précision (ratios mesurés, renvois aux critères RGAA et aux composants de référence comme `Accordion`). Le bénéfice principal de la branche est côté **création** (S1, S3, S6), pas côté revue.
