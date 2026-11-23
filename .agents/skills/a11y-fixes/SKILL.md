@@ -10,7 +10,9 @@ metadata:
 
 Une correction a11y se fait **dans le composant**, avec les briques du DS. Adapter le test, ajouter une règle à `ignoreRules` ou attendre un tick avant `axe` pour faire taire une violation n'est pas une correction.
 
-Motif interactif concerné (dialog, menu, listbox…) : appliquer aussi le skill `a11y-aria-patterns`. Tests : skill `a11y-testing`.
+Motif interactif concerné (dialog, menu, listbox…) : appliquer aussi le skill `a11y-aria-patterns`.
+
+**REQUIRED SUB-SKILL :** charger `a11y-testing` avant d'écrire le moindre test. Toute correction s'accompagne d'un **test de régression** qui échoue sans le correctif (le vérifier en retirant temporairement le correctif). Faire passer une spec existante ne suffit pas, même en urgence : la spec qui échouait ne prouve rien si elle redevient muette au prochain changement.
 
 ## Corrections
 
@@ -62,4 +64,5 @@ Seule `region` s'ignore sans justification. Toute autre règle exige un commenta
 - [ ] Le nom accessible contient le texte visible.
 - [ ] Chaque message d'erreur ou d'aide est relié à son champ (`aria-describedby` vers un id `useId()`).
 - [ ] Le défaut est corrigé dans le composant ; aucune règle ajoutée à `ignoreRules` sans commentaire justificatif ; pas d'attente artificielle avant `axe`.
+- [ ] Un test de régression ciblant le défaut a été ajouté, et on l'a vu échouer sans le correctif.
 - [ ] La spec a11y du composant passe (commande dans `a11y-testing`).
