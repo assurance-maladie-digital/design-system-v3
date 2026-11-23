@@ -342,7 +342,7 @@ export const CustomLogo: Story = {
 						<svg data-v-7f5c1754="" width="22" height="64" fill="#0c419a" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-7f5c1754="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 						<img
 							src="/ameli.svg"
-							alt="Logo de ameli.fr"
+							alt="ameli.fr"
 						>
 					</template>
 				</HeaderBar>
@@ -352,7 +352,7 @@ export const CustomLogo: Story = {
 						<svg data-v-7f5c1754="" width="22" height="64" fill="#0c419a" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-7f5c1754="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 						<img
 							src="/ameli-pro.svg"
-							alt="Logo de ameli-pro"
+							alt="AmeliPro"
 						>
 					</template>
 				</HeaderBar>
@@ -362,7 +362,7 @@ export const CustomLogo: Story = {
 						<svg data-v-7f5c1754="" width="22" height="64" fill="#0c419a" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-7f5c1754="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 						<img
 							src="/cnam.svg"
-							alt="Logo de la CPAM"
+							alt="Caisse nationale"
 						>
 					</template>
 				</HeaderBar>
@@ -372,7 +372,7 @@ export const CustomLogo: Story = {
 						<svg data-v-7f5c1754="" width="22" height="64" fill="#006386" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-7f5c1754="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 						<img
 							src="/compte-ameli.svg"
-							alt="Logo du compte ameli"
+							alt="Compte ameli"
 						>
 					</template>
 				</HeaderBar>
@@ -398,7 +398,7 @@ export const CustomLogo: Story = {
 							<svg data-v-7f5c1754="" width="22" height="64" fill="#0c419a" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-7f5c1754="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 							<img
 								src="/ameli.svg"
-								alt="Logo de ameli.fr"
+								alt="ameli.fr"
 							>
 						</template>
 					</HeaderBar>
@@ -408,7 +408,7 @@ export const CustomLogo: Story = {
 							<svg data-v-7f5c1754="" width="22" height="64" fill="#0c419a" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-7f5c1754="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 							<img
 								src="/ameli-pro.svg"
-								alt="Logo de ameli-pro"
+								alt="AmeliPro"
 							>
 						</template>
 					</HeaderBar>
@@ -418,7 +418,7 @@ export const CustomLogo: Story = {
 							<svg data-v-7f5c1754="" width="22" height="64" fill="#0c419a" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-7f5c1754="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 							<img
 								src="/cnam.svg"
-								alt="Logo de la CPAM"
+								alt="Caisse nationale"
 							>
 						</template>
 					</HeaderBar>
@@ -428,7 +428,7 @@ export const CustomLogo: Story = {
 							<svg data-v-7f5c1754="" width="22" height="64" fill="#006386" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-7f5c1754="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 							<img
 								src="/compte-ameli.svg"
-								alt="Logo du compte ameli"
+								alt="Compte ameli"
 							>
 						</template>
 					</HeaderBar>

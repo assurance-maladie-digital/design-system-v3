@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/addon-docs/blocks';
+import { Meta, Source, Story } from '@storybook/addon-docs/blocks';
 import * as LogoBrandSectionStories from '../LogoBrandSection.stories';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import {
@@ -59,6 +59,15 @@ import {
 				<li><strong>Avatar conditionnel</strong> : Mode avatar si <code>reduceLogo</code> et logo secondaire présent.</li>
 			</ul>
 		</CriteriaCard>
+
+		<CriteriaCard title="Alternatives textuelles : éviter la redondance">
+			<ul>
+				<li><strong>Pas de double annonce</strong> : le logo secondaire possède sa propre alternative (ex. « Compte ameli »). Ne répétez pas le nom du service dans <code>homeLink.ariaLabel</code> : il serait annoncé une première fois dans le libellé du lien, puis une seconde fois par l'image qui le suit.</li>
+				<li><strong>Libellé complémentaire</strong> : utilisez <code>homeLink.ariaLabel</code> pour préciser la destination (« Accueil de mon espace ») ou laissez le libellé générique « Retour vers accueil du site ».</li>
+				<li><strong>Alternative définie par le thème</strong> : le texte alternatif du logo secondaire provient de <code>secondaryLogoMapping</code> et n'est pas surchargeable via la prop <code>locales</code>. Pour le personnaliser ou rendre l'image décorative, reprenez le contenu via le slot par défaut.</li>
+				<li><strong>Logo secondaire non cliquable</strong> : hors thèmes <code>ameli</code> et <code>ameli-pro</code>, il est rendu dans un <code>&lt;div&gt;</code>. Son <code>alt</code> doit rester informatif s'il apporte une information absente du reste de l'en-tête ; il peut être vidé (<code>alt=""</code>) si l'information est déjà portée ailleurs.</li>
+			</ul>
+		</CriteriaCard>
 	</CriteriaSection>
 
 	<DemoSection componentName="LogoBrandSection">
@@ -67,13 +76,38 @@ import {
 
 	<BestPracticesSection>
 		<ul>
-			<li>Fournissez toujours un <code>homeLink.ariaLabel</code> descriptif pour le lien vers l'accueil.</li>
+			<li>Fournissez un <code>homeLink.ariaLabel</code> descriptif pour le lien vers l'accueil, sans répéter le nom du service lorsqu'un logo secondaire l'annonce déjà (ex. <code>compte-ameli</code>).</li>
 			<li>Choisissez des niveaux de titres cohérents avec la hiérarchie de votre page.</li>
 			<li>Utilisez <code>mobileVersion</code> pour adapter l'affichage sur petits écrans.</li>
 			<li>Activez <code>reduceLogo</code> dans les espaces contraints ou avec logo secondaire.</li>
 			<li>Vérifiez que les <code>serviceTitle</code> et <code>serviceSubTitle</code> sont pertinents pour le contexte.</li>
 			<li>Testez les différents thèmes pour vous assurer que les contrastes sont maintenus.</li>
 		</ul>
+
+		<p><strong>Exemple d'implémentation</strong> — thème <code>compte-ameli</code> :</p>
+		<Source
+			dark
+			language="html"
+			code={`<!-- À éviter : « Compte ameli » annoncé deux fois de suite -->
+<!-- (dans le libellé du lien, puis par l'image du logo secondaire) -->
+<LogoBrandSection
+	theme="compte-ameli"
+	:home-link="{ href: '/', ariaLabel: 'Compte ameli' }"
+/>
+
+<!-- Correct : le lien annonce « Retour vers accueil du site », -->
+<!-- puis l'image annonce « Compte ameli » une seule fois -->
+<LogoBrandSection
+	theme="compte-ameli"
+	:home-link="{ href: '/' }"
+/>
+
+<!-- Correct aussi : ariaLabel complémentaire qui n'annonce pas le nom du service -->
+<LogoBrandSection
+	theme="compte-ameli"
+	:home-link="{ href: '/', ariaLabel: 'Accueil de mon espace' }"
+/>`}
+		/>
 	</BestPracticesSection>
 
 	<ResourcesSection>
