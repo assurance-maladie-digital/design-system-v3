@@ -92,7 +92,7 @@ export const createVuetifyOptions = (): VuetifyOptions => ({
 					...createFlattenTheme(paContextualTokens),
 				},
 			},
-			ap2026: { // This theme is deprecated
+			ap2026: {
 				dark: false,
 				colors: createKebabThemeColors({
 					...apLightTheme2026,
