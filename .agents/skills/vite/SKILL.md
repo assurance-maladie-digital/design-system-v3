@@ -9,6 +9,8 @@ metadata:
 
 # Vite
 
+> **Projet Synapse : Vite 6.4** (`package.json` : `"vite": "^6.4.4"`, bundler Rollup + esbuild). Ignorer tout ce qui concerne Vite 8, Rolldown et Oxc (options `rolldownOptions`, `oxc`, référence `rolldown-migration`) : ces conseils ne s'appliquent pas à ce dépôt. Utiliser `build.rollupOptions` et `esbuild`.
+
 > Based on Vite 8 beta (Rolldown-powered). Vite 8 uses Rolldown bundler and Oxc transformer.
 
 Vite is a next-generation frontend build tool with fast dev server (native ESM + HMR) and optimized production builds.
@@ -37,7 +39,7 @@ Vite is a next-generation frontend build tool with fast dev server (native ESM +
 | Topic | Description | Reference |
 |-------|-------------|-----------|
 | Environment API | Vite 6+ multi-environment support, custom runtimes | [environment-api](references/environment-api.md) |
-| Rolldown Migration | Vite 8 changes: Rolldown bundler, Oxc transformer, config migration | [rolldown-migration](references/rolldown-migration.md) |
+| Rolldown Migration | **Non applicable à Synapse (Vite 6.4)** — Vite 8 changes: Rolldown bundler, Oxc transformer, config migration | [rolldown-migration](references/rolldown-migration.md) |
 
 ## Quick Reference
 
