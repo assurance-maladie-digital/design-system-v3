@@ -66,7 +66,9 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-<template><SyTabs :items="items" /></template>
+<template>
+<SyTabs :items="items" />
+</template>
 `,
 			},
 			{
@@ -510,7 +512,9 @@ export const ManyTabs: Story = {
 			{
 				name: 'Template',
 				code: `
-<template><SyTabs :items="items" /></template>
+<template>
+<SyTabs :items="items" />
+</template>
 `,
 			},
 			{
@@ -580,7 +584,6 @@ const items = [
   { label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
   { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
-
 </script>
 `,
 			},
@@ -658,7 +661,9 @@ export const NavigationMode: Story = {
 			{
 				name: 'Template',
 				code: `
-<template><SyTabs :items="items" /></template>
+<template>
+<SyTabs :items="items" />
+</template>
 `,
 			},
 			{
@@ -744,7 +749,7 @@ const items = [
 ]
 
 // Fonction pour afficher une boîte de dialogue de confirmation
-function showConfirmDialog(message, callback) {
+function showConfirmDialog(message: string, callback: (confirmed: boolean) => void) {
 	// Dans un cas réel, vous afficheriez une boîte de dialogue personnalisée
 	// Ici nous utilisons window.confirm pour la démonstration
 	const confirmed = window.confirm(message)
