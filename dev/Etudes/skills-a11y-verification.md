@@ -28,4 +28,22 @@ Base : `dev` @ `33050773d`. Skills disponibles : ceux d'avant la réalisation (l
 
 ## Après réalisation
 
-À compléter.
+Base : `feat/skills-a11y`. Mêmes conditions (agent `general` neuf, worktree jetable), sauf S7 (agent `a11y-audit`).
+
+| # | Tâche | Skills chargés | Observé | Écart traité ? |
+|---|---|---|---|---|
+| S1 | Bouton « Copier le message » dans `SyAlert` | `vue-best-practices`, `a11y-fixes`, `a11y-testing` | Commandes ciblées exactes (plus de config inventée, plus de `test:a11y <chemin>`), `accessibilite/Accessibility.mdx` mis à jour, `role="status"`, libellés surchargeables via `locales` | Oui (enseignements 1 et 4) |
+| S3 | `aria-allowed-attr` sur `PhoneField`, « urgent » | `systematic-debugging`, `a11y-aria-patterns`, `a11y-fixes` | Cause corrigée dans `SySelect` (ARIA posé de façon synchrone au montage) + test de régression qui échoue sans le correctif ; aucune règle ignorée, aucune attente ajoutée | Oui (enseignement 2) |
+| S4 bis³ | Tests garantissant l'accessibilité du message d'erreur de `PasswordField` | `a11y-testing` | `aria-describedby` asserté vers l'id de la cible, `aria-invalid`, contrôle par mutation, scénarios axe en erreur | Oui, mais le témoin sans skill a fait aussi bien |
+| S5 | Revue d'un diff piégé sur `BackBtn`⁴ | `review`, `a11y-aria-patterns`, `a11y-fixes`, `a11y-testing`, `a11y-contrast`, `rgaa` | Les 5 défauts piégés relevés, rattachés aux critères RGAA (7.1, 7.3, 3.3, 1.1) et classés | — |
+| S6 | Texte du bouton de réinitialisation de `ChipList` « gris clair, légèrement transparent » | `a11y-contrast` | Refus d'un gris non conforme, ratios mesurés, couleur issue du thème, test `getTextContrast` ajouté | — |
+| S7 | Agent `a11y-audit` sur le diff piégé de S5 | `rgaa` + 4 `a11y-*` | Rapport C/NC/NA conforme au format, 4 NC + écart de test. **Défaut** : shell refusé (`git show` non autorisé) → permissions corrigées, revérifiées dans le dépôt | Oui |
+
+³ S4 (prop sur `NirField`) est sans objet : composant en maintenance corrective et prop `errorMessages` déjà présente ; l'agent a refusé à juste titre.
+⁴ `<span aria-label="Aide" @click>` imbriqué dans le `VBtn`, `<v-icon>` nu, libellé en dur, `#9e9e9e` + `opacity: 0.6`, `ignoreRules: ['nested-interactive', 'aria-prohibited-attr']` sans commentaire.
+
+### Bilan
+
+- Déclenchement : chaque skill `a11y-*` a été chargé au moins une fois sans qu'on le demande, et `review` charge les skills `a11y-*` concernés.
+- Création et revue appliquent bien les mêmes critères : S5 et S7 relèvent les mêmes défauts que ceux décrits dans les « Critères vérifiables ».
+- Limites : un seul passage par scénario (pas de répétition) ; le gain sur les erreurs grossières n'est pas mesurable, le point de départ les évitant déjà ; vérification au lecteur d'écran non automatisée.
