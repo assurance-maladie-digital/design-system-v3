@@ -24,6 +24,12 @@ permissions:
     resource: "git diff*"
     effect: allow
   - action: shell
+    resource: "git show*"
+    effect: allow
+  - action: shell
+    resource: "git status*"
+    effect: allow
+  - action: shell
     resource: "git log*"
     effect: allow
 ---
