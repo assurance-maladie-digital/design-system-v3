@@ -12,7 +12,7 @@ Le changement ne se limite pas aux champs de formulaire. La variable est lue par
 
 Les champs de formulaire listés ci-dessus remplacent aussi leurs couleurs `rgba(…)` codées en dur par la couleur pleine du thème, combinée aux variables `--v-medium-emphasis-opacity` et `--v-disabled-opacity`.
 
-Le thème `ap2026` n'est pas modifié et reste à 60 %.
+Le thème `ap2026`, un thème de test qui n'est pas utilisé, n'est pas modifié et reste à 60 %.
 
 L'API ne change pas.
 
