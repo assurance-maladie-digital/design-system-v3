@@ -47,3 +47,33 @@ Base : `feat/skills-a11y`. Mêmes conditions (agent `general` neuf, worktree jet
 - Déclenchement : chaque skill `a11y-*` a été chargé au moins une fois sans qu'on le demande, et `review` charge les skills `a11y-*` concernés.
 - Création et revue appliquent bien les mêmes critères : S5 et S7 relèvent les mêmes défauts que ceux décrits dans les « Critères vérifiables ».
 - Limites : un seul passage par scénario (pas de répétition) ; le gain sur les erreurs grossières n'est pas mesurable, le point de départ les évitant déjà ; vérification au lecteur d'écran non automatisée.
+
+## Banc comparatif (3 passages par côté)
+
+4 tâches × 2 côtés × 3 passages = 24 agents `general` neufs, chacun dans un worktree jetable. Côté « sans » : `dev`, session ouverte sur `dev` (skills `a11y-*` invisibles). Côté « avec » : `feat/skills-a11y`. Même prompt des deux côtés, notation sur une grille fixée avant les passages.
+
+| Tâche | Critères notés | Sans skills | Avec skills |
+|---|---|---|---|
+| S1 — bouton « Copier » dans `SyAlert` | `SyIcon`, libellés `locales`, scénario axe, `Accessibility.mdx`, commandes exactes, annonce `role="status"` | 14/18 (5, 4, 5) | **18/18** (6, 6, 6) |
+| S3 — `aria-allowed-attr` urgent sur `PhoneField` | pas d'`ignoreRules`, pas d'attente avant axe, correctif dans le composant, test de régression | 12/12 | 11/12 (3, 4, 4) |
+| S5 — revue d'un diff piégé (`BackBtn`) | 5 défauts relevés + rattachement RGAA | 18/18 | 18/18 |
+| S6 — « gris clair, légèrement transparent » sur `ChipList` | contraste ≥ 4,5:1, token du thème, contrôle du contraste, marques / thème sombre | 10/12 (4, 3, 3) | **12/12** |
+| **Total** | | **54/60 (90 %)** | **59/60 (98 %)** |
+
+Écarts observés de façon systématique (3 passages sur 3) :
+
+| Comportement | Sans | Avec |
+|---|---|---|
+| `accessibilite/Accessibility.mdx` mis à jour (S1) | 0/3 | 3/3 |
+| Libellés surchargeables via une prop `locales` (S1) | 0/3 | 3/3 |
+| Test Cypress `getTextContrast` ajouté (S6) | 0/3 | 3/3 |
+| Contraste vérifié sur les fonds des 3 marques (S6) | 1/3 | 3/3 |
+| Commande ou configuration inventée (`vitest.a11y.config.ts`, `--config vitest.config.ts`, `test:a11y <chemin>` pris pour un filtre) | 3 passages sur 6 (S1, S6) | 0/6 |
+| Skills `a11y-*` chargés sans consigne | — | 12/12 |
+
+Lecture :
+
+- Les skills apportent surtout de la **complétude** (livrables a11y, tests de contraste, surcharge des libellés) et **suppriment les commandes inventées**. Sur les fondamentaux (pas d'`ignoreRules`, correctif dans le composant, revue), le point de départ est déjà bon, porté par `AGENTS.md` et `doc/`.
+- S3 : régression ponctuelle côté « avec » (1 passage sans test de régression) ; à surveiller, `a11y-testing` n'a été chargé que dans 1 passage sur 3 pour cette tâche.
+- S5 ne discrimine pas : le diff piégé est trop visible ; un diff aux défauts plus subtils serait nécessaire pour mesurer l'apport sur la revue.
+- La variance est réelle : le tout premier point de départ S3 (masquage par `flushPromises`) ne s'est reproduit dans aucun des 3 passages témoins.
