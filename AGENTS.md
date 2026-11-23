@@ -26,7 +26,8 @@ Les charger avant toute tâche relevant de leur domaine :
 - `review` pour les revues de code, de pull requests et de diffs propres à Synapse ;
 - `a11y-aria-patterns` pour tout composant ou markup interactif (dialog, menu, listbox, onglets, focus, clavier) ;
 - `a11y-fixes` pour corriger un défaut d'accessibilité (règle axe en échec, nom accessible, icône, liaison d'erreur, focus) ;
-- `a11y-testing` pour écrire ou lancer des tests d'accessibilité (axe, clavier, focus, liaisons ARIA, lecteur d'écran).
+- `a11y-testing` pour écrire ou lancer des tests d'accessibilité (axe, clavier, focus, liaisons ARIA, lecteur d'écran) ;
+- `a11y-contrast` pour toute couleur, opacité, bordure ou indicateur de focus (contrastes, marques, thème sombre).
 
 Les instructions ci-dessous ne précisent que les conventions et contraintes propres à Synapse.
 
