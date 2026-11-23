@@ -89,6 +89,9 @@
  *    - Pour tous les éléments SVG, indépendamment du type d'icône :
  *      - Supprime systématiquement l'attribut `role="img"` du SVG
  *      - Ajoute systématiquement `aria-hidden="true"` au SVG
+ *      - Ajoute systématiquement `focusable="false"` au SVG (les anciens
+ *        navigateurs rendaient les SVG focusables ; un élément aria-hidden
+ *        ne doit jamais pouvoir recevoir le focus clavier)
  *
  *    - Pour le conteneur parent, selon le type d'icône et la configuration :
  *      - Icônes décoratives :
@@ -101,7 +104,7 @@
  *        - Supprime `aria-hidden="true"` du conteneur parent
  *
  *    - Cas particulier `onlyInner: true` :
- *      - Rend uniquement les SVG internes décoratifs (`role` supprimé, `aria-hidden="true"`)
+ *      - Rend uniquement les SVG internes décoratifs (`role` supprimé, `aria-hidden="true"`, `focusable="false"`)
  *      - Ne modifie AUCUN attribut du conteneur attaché à la directive
  *        (utile lorsque le conteneur porte déjà son propre rôle/label)
  *
@@ -300,6 +303,8 @@ function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
 				svg.removeAttribute('role')
 				// Toujours masquer le SVG
 				svg.setAttribute('aria-hidden', 'true')
+				// Un élément aria-hidden ne doit pas être focusable (IE/Edge legacy)
+				svg.setAttribute('focusable', 'false')
 			}
 
 			return
@@ -361,6 +366,8 @@ function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
 			svg.removeAttribute('role')
 			// 2. Toujours masquer le SVG pour éviter un double énoncé, le conteneur porte le label si nécessaire
 			svg.setAttribute('aria-hidden', 'true')
+			// 3. Un élément aria-hidden ne doit pas être focusable (IE/Edge legacy)
+			svg.setAttribute('focusable', 'false')
 		}
 	}
 }
