@@ -30,6 +30,8 @@ Les charger avant toute tâche relevant de leur domaine :
 - `a11y-contrast` pour toute couleur, opacité, bordure ou indicateur de focus (contrastes, marques, thème sombre) ;
 - `rgaa` pour auditer la conformité RGAA 4.1.2 ou rattacher un constat à un critère.
 
+Les skills `a11y-*` se terminent par des **critères vérifiables** : l'agent qui écrit doit les satisfaire, la revue (`review`, agent `a11y-audit`) contrôle les mêmes. Agents dédiés : `a11y-dev` (édition) et `a11y-audit` (lecture seule), dans `.opencode/agents/`, `.claude/agents/` et `.github/agents/`.
+
 Les instructions ci-dessous ne précisent que les conventions et contraintes propres à Synapse.
 
 ---
