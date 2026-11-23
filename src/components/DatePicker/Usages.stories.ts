@@ -8,7 +8,7 @@ export default {
 }
 
 const itemsToDo = [
-	'La date de fin ne peux pas être avant la date début.',
+	'La date de fin ne peut pas être avant la date début.',
 	'Indiquer à l\'utilisateur le format attendu (JJ/MM/AAAA).',
 	'Indiquer la date du jour à l\'utilisateur.',
 	'Faciliter le changement de mois et d\'années avec des listes.',

@@ -1,11 +1,46 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import { fn } from 'storybook/test'
 import LunarCalendar from '../LunarCalendar.vue'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
+
+interface YearBoundsField {
+	value: string
+	label: string
+}
+
+/**
+ * Rendu des stories de bornes d'années : un champ par valeur, validé au montage
+ * pour afficher l'erreur dès le chargement. Les props viennent des args (`minYear`, `maxYear`…).
+ */
+function renderYearBounds(fields: YearBoundsField[]) {
+	return (args: Record<string, unknown>) => ({
+		components: { LunarCalendar },
+		setup() {
+			const values = ref(fields.map(field => field.value))
+			const fieldRefs = ref<Array<{ validateOnSubmit: () => Promise<boolean> }>>([])
+			onMounted(() => {
+				fieldRefs.value.forEach(field => field.validateOnSubmit())
+			})
+			return { args, fields, values, fieldRefs }
+		},
+		template: `
+			<div class="d-flex flex-column ga-4">
+				<LunarCalendar
+					v-for="(field, index) in fields"
+					:key="field.label"
+					ref="fieldRefs"
+					v-bind="args"
+					v-model="values[index]"
+					:label="field.label"
+				/>
+			</div>
+		`,
+	})
+}
 
 const meta: Meta<typeof LunarCalendar> = {
 	title: 'Composants/Formulaires/LunarCalendar/Validation',
@@ -27,11 +62,27 @@ const meta: Meta<typeof LunarCalendar> = {
 		...getValidationDocumentation('date'),
 		modelValue: {
 			control: 'text',
-			description: 'La valeur du calendrier lunaire au format DD/MM/YYYY',
+			description: 'La valeur du calendrier lunaire au format JJ/MM/AAAA',
 		},
 		label: {
 			control: 'text',
 			description: 'Libellé du champ',
+		},
+		minYear: {
+			control: 'number',
+			description: 'Année minimale autorisée',
+			table: {
+				type: { summary: 'number' },
+				category: 'props',
+			},
+		},
+		maxYear: {
+			control: 'number',
+			description: 'Année maximale autorisée',
+			table: {
+				type: { summary: 'number' },
+				category: 'props',
+			},
 		},
 	},
 	args: {
@@ -344,7 +395,6 @@ function reset() {
 				<LunarCalendar
 					v-bind="args"
 					v-model="value"
-					show-success-messages
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
@@ -408,19 +458,33 @@ export const WithMinYearOnly: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Seule la borne minimale (`minYear`) est définie. La valeur initiale (1410) est antérieure à 1420 : l\'erreur est affichée dès le chargement.',
+				story: 'Seule la borne minimale (`minYear`) est définie (1420). Trois valeurs sont montrées : dans les bornes (1425), aux bornes (1420) et hors limite (1410, erreur affichée dès le chargement). Les props `label` et `modelValue` sont figées pour cette démonstration.',
 			},
 		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<LunarCalendar
-		ref="fieldRef"
-		v-model="dateValue"
-		label="Date de naissance"
-		:min-year="1420"
-	/>
+	<div class="d-flex flex-column ga-4">
+		<LunarCalendar
+			ref="inRangeRef"
+			v-model="inRange"
+			label="Dans les bornes — 1425"
+			:min-year="1420"
+		/>
+		<LunarCalendar
+			ref="atBoundRef"
+			v-model="atBound"
+			label="Aux bornes — 1420"
+			:min-year="1420"
+		/>
+		<LunarCalendar
+			ref="outOfRangeRef"
+			v-model="outOfRange"
+			label="Hors limite — 1410"
+			:min-year="1420"
+		/>
+	</div>
 </template>`,
 			},
 			{
@@ -429,40 +493,67 @@ export const WithMinYearOnly: Story = {
 import { onMounted, ref } from 'vue'
 import { LunarCalendar } from '@cnamts/synapse'
 
-const dateValue = ref('12/12/1410')
-const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+const inRange = ref('12/12/1425')
+const atBound = ref('12/12/1420')
+const outOfRange = ref('12/12/1410')
+const inRangeRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+const atBoundRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+const outOfRangeRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
 onMounted(() => {
-	fieldRef.value?.validateOnSubmit()
+	inRangeRef.value?.validateOnSubmit()
+	atBoundRef.value?.validateOnSubmit()
+	outOfRangeRef.value?.validateOnSubmit()
 })
 </script>`,
 			},
 		],
 	},
+	argTypes: {
+		label: { control: false },
+		modelValue: { control: false },
+	},
 	args: {
-		modelValue: '12/12/1410',
 		minYear: 1420,
 	},
-	render: renderValidatedOnMount(LunarCalendar),
+	render: renderYearBounds([
+		{ value: '12/12/1425', label: 'Dans les bornes — 1425' },
+		{ value: '12/12/1420', label: 'Aux bornes — 1420' },
+		{ value: '12/12/1410', label: 'Hors limite — 1410' },
+	]),
 }
 
 export const WithMaxYearOnly: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Seule la borne maximale (`maxYear`) est définie. La valeur initiale (1460) est postérieure à 1450 : l\'erreur est affichée dès le chargement.',
+				story: 'Seule la borne maximale (`maxYear`) est définie (1450). Trois valeurs sont montrées : dans les bornes (1440), aux bornes (1450) et hors limite (1460, erreur affichée dès le chargement). Les props `label` et `modelValue` sont figées pour cette démonstration.',
 			},
 		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<LunarCalendar
-		ref="fieldRef"
-		v-model="dateValue"
-		label="Date de naissance"
-		:max-year="1450"
-	/>
+	<div class="d-flex flex-column ga-4">
+		<LunarCalendar
+			ref="inRangeRef"
+			v-model="inRange"
+			label="Dans les bornes — 1440"
+			:max-year="1450"
+		/>
+		<LunarCalendar
+			ref="atBoundRef"
+			v-model="atBound"
+			label="Aux bornes — 1450"
+			:max-year="1450"
+		/>
+		<LunarCalendar
+			ref="outOfRangeRef"
+			v-model="outOfRange"
+			label="Hors limite — 1460"
+			:max-year="1450"
+		/>
+	</div>
 </template>`,
 			},
 			{
@@ -471,21 +562,34 @@ export const WithMaxYearOnly: Story = {
 import { onMounted, ref } from 'vue'
 import { LunarCalendar } from '@cnamts/synapse'
 
-const dateValue = ref('12/12/1460')
-const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+const inRange = ref('12/12/1440')
+const atBound = ref('12/12/1450')
+const outOfRange = ref('12/12/1460')
+const inRangeRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+const atBoundRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+const outOfRangeRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
 onMounted(() => {
-	fieldRef.value?.validateOnSubmit()
+	inRangeRef.value?.validateOnSubmit()
+	atBoundRef.value?.validateOnSubmit()
+	outOfRangeRef.value?.validateOnSubmit()
 })
 </script>`,
 			},
 		],
 	},
+	argTypes: {
+		label: { control: false },
+		modelValue: { control: false },
+	},
 	args: {
-		modelValue: '12/12/1460',
 		maxYear: 1450,
 	},
-	render: renderValidatedOnMount(LunarCalendar),
+	render: renderYearBounds([
+		{ value: '12/12/1440', label: 'Dans les bornes — 1440' },
+		{ value: '12/12/1450', label: 'Aux bornes — 1450' },
+		{ value: '12/12/1460', label: 'Hors limite — 1460' },
+	]),
 }
 
 export const SyFormValidation: Story = {
@@ -518,15 +622,10 @@ const value = ref('')
 
 const customRules = [
 	{
-		type: 'custom',
+		type: 'matchPattern',
 		options: {
-			validate: (value: string) => {
-				if (!value || !/^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(value)) {
-					return false
-				}
-				return true
-			},
-			message: 'La date doit être au format JJ/MM/AAAA.',
+			pattern: /^\\d{2}\\/\\d{2}\\/14\\d{2}$/,
+			message: "L'année doit être comprise entre 1400 et 1499.",
 			fieldIdentifier: 'date',
 		},
 	},
@@ -539,6 +638,9 @@ function handleSubmit(e: { isValid: boolean }) {
 </script>`,
 			},
 		],
+	},
+	argTypes: {
+		customRules: { control: false },
 	},
 	args: {
 		modelValue: '',
@@ -554,15 +656,10 @@ function handleSubmit(e: { isValid: boolean }) {
 
 			const customRules = [
 				{
-					type: 'custom',
+					type: 'matchPattern',
 					options: {
-						validate: (value: string) => {
-							if (!value || !/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
-								return false
-							}
-							return true
-						},
-						message: 'La date doit être au format JJ/MM/AAAA.',
+						pattern: /^\d{2}\/\d{2}\/14\d{2}$/,
+						message: 'L\'année doit être comprise entre 1400 et 1499.',
 						fieldIdentifier: 'date',
 					},
 				},
@@ -581,9 +678,7 @@ function handleSubmit(e: { isValid: boolean }) {
 					<LunarCalendar
 						v-bind="args"
 						v-model="value"
-						label="Date de naissance"
 						:custom-rules="customRules"
-						required
 					/>
 					<div class="mt-4">
 						<VBtn type="submit" color="primary">Valider</VBtn>
@@ -605,16 +700,7 @@ export const VFormValidation: Story = {
 			ref="lunarRef"
 			v-model="value"
 			label="Date de naissance"
-			:custom-rules="[
-				{
-					type: 'custom',
-					options: {
-						validate: (value) => !!value && /^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(value),
-						message: 'La date doit être au format JJ/MM/AAAA.',
-						fieldIdentifier: 'date',
-					},
-				},
-			]"
+			:custom-rules="customRules"
 			required
 		/>
 		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
@@ -631,6 +717,17 @@ import { VBtn, VForm } from 'vuetify/components'
 const value = ref('')
 const lunarRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
+const customRules = [
+	{
+		type: 'matchPattern',
+		options: {
+			pattern: /^\\d{2}\\/\\d{2}\\/14\\d{2}$/,
+			message: "L'année doit être comprise entre 1400 et 1499.",
+			fieldIdentifier: 'date',
+		},
+	},
+]
+
 async function handleSubmit() {
 	if (lunarRef.value) {
 		const result = await lunarRef.value.validateOnSubmit()
@@ -640,6 +737,9 @@ async function handleSubmit() {
 </script>`,
 			},
 		],
+	},
+	argTypes: {
+		customRules: { control: false },
 	},
 	args: {
 		modelValue: '',
@@ -654,6 +754,17 @@ async function handleSubmit() {
 			})
 			const lunarRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
+			const customRules = [
+				{
+					type: 'matchPattern',
+					options: {
+						pattern: /^\d{2}\/\d{2}\/14\d{2}$/,
+						message: 'L\'année doit être comprise entre 1400 et 1499.',
+						fieldIdentifier: 'date',
+					},
+				},
+			]
+
 			async function handleSubmit() {
 				if (lunarRef.value) {
 					const result = await lunarRef.value.validateOnSubmit()
@@ -661,7 +772,7 @@ async function handleSubmit() {
 				}
 			}
 
-			return { args, value, lunarRef, handleSubmit }
+			return { args, value, lunarRef, customRules, handleSubmit }
 		},
 		template: `
 			<div>
@@ -671,18 +782,7 @@ async function handleSubmit() {
 						v-bind="args"
 						ref="lunarRef"
 						v-model="value"
-						label="Date de naissance"
-						:custom-rules="[
-							{
-								type: 'custom',
-								options: {
-									validate: (value) => !!value && /^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(value),
-									message: 'La date doit être au format JJ/MM/AAAA.',
-									fieldIdentifier: 'date',
-								},
-							},
-						]"
-						required
+						:custom-rules="customRules"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 				</VForm>

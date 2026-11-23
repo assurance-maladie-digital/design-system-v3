@@ -273,7 +273,7 @@ export const CustomDateFormat: Story = {
 						v-model="date"
 						label="Date de l'ordonnance" help-text="Format attendu : année en 4 chiffres / mois en 2 chiffres / jour en 2 chiffres"
 						placeholder="AAAA.MM.JJ"
-						format="AAAA.MM.JJ"
+						format="YYYY.MM.DD"
 						useCombinedMode
 					/>
 				</template>

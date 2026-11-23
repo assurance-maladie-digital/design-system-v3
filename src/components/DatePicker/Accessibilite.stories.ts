@@ -36,6 +36,7 @@ export const BonnesPratiquesLabels: StoryObj = {
 						displayAsterisk
 						isBirthDate
 						format="DD/MM/YYYY"
+						class="mb-4"
 					/>
 					<DatePicker
 						v-model="appointmentDate"
@@ -78,6 +79,7 @@ export const BonnesPratiquesLabels: StoryObj = {
 					display-asterisk
 					is-birth-date
 					format="DD/MM/YYYY"
+					class="mb-4"
 				/>
 				<DatePicker
 					v-model="appointmentDate"

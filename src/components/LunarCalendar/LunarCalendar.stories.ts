@@ -32,7 +32,7 @@ const meta = {
 			},
 		},
 		modelValue: {
-			description: 'La valeur du calendrier lunaire au format DD/MM/YYYY',
+			description: 'La valeur du calendrier lunaire au format JJ/MM/AAAA',
 			control: { type: 'text' },
 			table: {
 				type: { summary: 'string' },
@@ -56,14 +56,13 @@ const meta = {
 			control: { type: 'boolean' },
 		},
 		displayPrependIcon: {
-			description: 'Affiche une icône au début du champ',
+			description: 'Affiche une icône calendrier au début du champ',
 			control: { type: 'boolean' },
 		},
 		displayAppendIcon: {
-			description: 'Affiche une icône à la fin du champ',
+			description: 'Affiche une icône calendrier à la fin du champ',
 			control: { type: 'boolean' },
 		},
-		// Nouvelles props iso SyTextField
 		helpText: {
 			description: 'Texte d\'aide affiché sous le champ',
 			control: { type: 'text' },
@@ -104,8 +103,12 @@ const meta = {
 			control: { type: 'text' },
 		},
 		counter: {
-			description: 'Compteur de caractères',
+			description: 'Compteur de caractères. Accepte un booléen (activer/désactiver), un nombre (longueur maximale) ou une chaîne (texte du compteur). Le control ne permet de tester que le booléen.',
 			control: { type: 'boolean' },
+			table: {
+				type: { summary: 'string | number | boolean' },
+				category: 'props',
+			},
 		},
 	},
 	args: {
@@ -271,7 +274,7 @@ export const WithClearable: Story = {
 	<LunarCalendar
 		label="Date de naissance"
 		v-model="dateValue"
-		placeholder="21/13/1442"
+		placeholder="21/12/1442"
 		is-clearable
 	/>
 </template>`,
@@ -282,14 +285,14 @@ export const WithClearable: Story = {
 import { ref } from 'vue'
 import { LunarCalendar } from '@cnamts/synapse'
 
-const dateValue = ref('12/13/1564')
+const dateValue = ref('12/12/1564')
 </script>`,
 			},
 		],
 	},
 	args: {
-		modelValue: '12/13/1564',
-		placeholder: '21/13/1442',
+		modelValue: '12/12/1564',
+		placeholder: '21/12/1442',
 		isClearable: true,
 	},
 	render: (args) => {
