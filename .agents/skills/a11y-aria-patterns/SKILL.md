@@ -23,7 +23,7 @@ Un motif interactif se **réutilise** avant de se réimplémenter. Le DS couvre 
 |---|---|---|
 | Dialog modal | `DialogBox` | VDialog + piège et restitution du focus internes : ne pas ajouter `vLockFocus` |
 | Popover / panneau modal | `HeaderBurgerMenu`, `FilterSideBar` | `v-lock-focus` + `Escape` + retour du focus au déclencheur |
-| Bouton + listbox | `SyInputSelect`, `SySelect`, `LangBtn` | `aria-haspopup="listbox"`, `aria-expanded`, `aria-controls` (si ouvert) |
+| Bouton + listbox | `SyInputSelect`, `LangBtn` | `aria-haspopup="listbox"`, `aria-expanded`, `aria-controls` (si ouvert) |
 | Combobox | `SyAutocomplete` | VAutocomplete + `role="status"` pour le nombre de résultats |
 | Tabs | `SyTabs` | `tablist`/`tab`, `tabindex` mobile, flèches, `Home`/`End` |
 | Accordéon | `Accordion` | bouton `aria-expanded` + `aria-controls` |
@@ -36,7 +36,7 @@ Un motif interactif se **réutilise** avant de se réimplémenter. Le DS couvre 
 
 ## Règles
 
-- **ARIA dès le premier rendu** : `role` et états (`aria-expanded`, `aria-controls`…) sont déclarés dans le template, liés à l'état réactif (props du composant Vuetify ou `v-bind`). Si l'élément est généré par Vuetify et n'accepte pas l'attribut par ses props, le poser de façon **synchrone** dans `onMounted`, jamais dans `nextTick` / `setTimeout`. Un état invalide transitoire se corrige dans le composant, pas dans le test.
+- **ARIA dès le premier rendu** : `role` et états (`aria-expanded`, `aria-controls`…) sont déclarés dans le template, liés à l'état réactif (props du composant Vuetify ou `v-bind`). Si l'élément est généré par Vuetify et n'accepte pas l'attribut par ses props, le poser de façon **synchrone** dans `onMounted`, jamais dans `nextTick` / `setTimeout`. Un état invalide transitoire se corrige dans le composant, pas dans le test. Contre-exemple connu, à ne pas imiter : `SySelect` (ARIA posé en `nextTick` et `setTimeout`).
 - `aria-controls` ne pointe que vers un id présent dans le DOM.
 - Pas de `tabindex` > 0 ; `tabindex="-1"` seulement pour un focus programmatique ou un *roving tabindex*.
 - Tout overlay modal : focus initial dedans, piège du focus, fermeture sur `Escape`, focus rendu au déclencheur (`nextTick(() => trigger.focus())`).

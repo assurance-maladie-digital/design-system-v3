@@ -17,7 +17,7 @@ Source : https://accessibilite.numerique.gouv.fr/
 1. **Délimiter le périmètre** : composant(s) `src/components/<Nom>/` (SFC `.vue`, props, slots, `locales.ts`, stories) ou diff.
 2. **Collecter les preuves automatiques** si possible :
    - `pnpm vitest run src/components/<Nom>/tests/<Nom>.a11y.spec.ts --coverage.enabled=false`
-   - `pnpm a11y:report` puis lire la section du composant dans `a11y-report.md`
+   - lire la section du composant dans `scripts/data/a11y-report.md` (régénéré par `pnpm a11y:report`, qui réécrit ce fichier suivi par git : ne le lancer que si l'on est autorisé à modifier le dépôt)
    - Rattacher chaque violation axe à son critère : `a11y-testing` → `references/axe-rgaa.md`.
 3. **Appliquer les « Critères vérifiables »** des skills `a11y-aria-patterns`, `a11y-fixes`, `a11y-testing`, `a11y-contrast` : chaque case non cochée est une NC candidate.
 4. **Parcourir les 13 thèmes RGAA** avec les fichiers de référence ci-dessous. Un composant de librairie rend la plupart des critères de page (titre, langue, liens d'évitement globaux) **NA** : les justifier en une ligne.
@@ -82,7 +82,7 @@ Source : https://accessibilite.numerique.gouv.fr/
 
 ## Restitution du rapport
 
-Afficher le rapport **dans la conversation**. N'écrire un fichier que si l'utilisateur le demande, au chemin qu'il indique (aucun dossier d'audit n'est prévu dans le dépôt). Ne jamais modifier `a11y-report.md` à la main : il est généré par `pnpm a11y:report`.
+Afficher le rapport **dans la conversation**. N'écrire un fichier que si l'utilisateur le demande, au chemin qu'il indique (aucun dossier d'audit n'est prévu dans le dépôt). Ne jamais modifier `scripts/data/a11y-report.md` à la main : il est généré par `pnpm a11y:report`.
 
 ## Grille de priorités
 

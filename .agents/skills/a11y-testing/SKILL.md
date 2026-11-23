@@ -17,8 +17,9 @@ Ce skill dit **quoi** tester. Le **comment** axe (patron, `assertNoA11yViolation
 pnpm vitest run src/components/<Nom>/tests/<Nom>.a11y.spec.ts --coverage.enabled=false
 # Toutes les specs du composant (unitaires + a11y)
 pnpm vitest run src/components/<Nom> --coverage.enabled=false
-# Suite a11y complète puis rapport a11y-report.md
+# Suite a11y complète
 pnpm test:a11y
+# Ou : suite a11y + rapport scripts/data/a11y-report.md (relance déjà toute la suite)
 pnpm a11y:report
 ```
 
@@ -59,7 +60,7 @@ Correspondance règle axe → critère RGAA : [references/axe-rgaa.md](reference
 
 ## Livrables d'un composant nouveau ou modifié
 
-Checklist de [doc/Accessibilite/README.md](../../../doc/Accessibilite/README.md#checklist-avant-pr), plus : `accessibilite/Accessibility.mdx` (créé ou mis à jour, sur le modèle de `SyAlert/accessibilite/`) et section a11y de `a11y-report.md` relue.
+Checklist de [doc/Accessibilite/README.md](../../../doc/Accessibilite/README.md#checklist-avant-pr), plus : `accessibilite/Accessibility.mdx` (créé ou mis à jour, sur le modèle de `SyAlert/accessibilite/`) et section du composant dans `scripts/data/a11y-report.md` relue.
 
 ## Critères vérifiables
 
