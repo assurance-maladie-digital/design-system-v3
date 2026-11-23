@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 
 import * as DialogBoxStories from '../DialogBox.stories.ts';
 import '@/stories/styles/shared.css';
@@ -8,7 +8,10 @@ import {
     AccessibilityGuideLayout,
     CriteriaSection,
     CriteriaCard,
-    AuditSection
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+    AuditSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={DialogBoxStories} />
@@ -16,6 +19,26 @@ import {
 	componentName="DialogBox"
 	iconSrc={AccessibilityIcon}
 >
+    <DemoSection componentName="DialogBox">
+        <Canvas of={DialogBoxStories.Default} withToolbar={false} />
+    </DemoSection>
+
+    <section className="accessibility-keyboard">
+        <h2>Navigation au clavier</h2>
+        <p>Vérifiez le déplacement du focus, la fermeture et la restauration du focus sur la démonstration.</p>
+        <table>
+            <caption>Touches et résultats attendus pour DialogBox</caption>
+            <thead>
+                <tr><th scope="col">Touche</th><th scope="col">Résultat attendu</th></tr>
+            </thead>
+            <tbody>
+                <tr><th scope="row">Tab / Shift+Tab</th><td>Le focus reste dans la boîte de dialogue ouverte.</td></tr>
+                <tr><th scope="row">Échap</th><td>Ferme la boîte de dialogue et rend le focus à l’élément déclencheur.</td></tr>
+                <tr><th scope="row">Entrée ou Espace</th><td>Active le bouton focalisé, notamment les actions de validation ou de fermeture.</td></tr>
+                <tr><th scope="row">Flèches</th><td>Déplacent la boîte uniquement lorsque le mode déplaçable est activé et que le titre est focalisé.</td></tr>
+            </tbody>
+        </table>
+    </section>
     <AuditSection>
         <div>Rapport d’audit manuel : <a href="/audits/DialogBox.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a></div>
         <div style={{color: 'grey', fontSize: '14px', marginTop: '0px'}}>
@@ -97,4 +120,20 @@ import {
             </ul>
         </CriteriaCard>
     </CriteriaSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>Donner à chaque boîte de dialogue un titre explicite et unique.</li>
+            <li>Limiter le contenu d’une boîte de dialogue à une tâche clairement identifiable.</li>
+            <li>Vérifier l’ordre des actions et placer l’action principale dans un emplacement prévisible.</li>
+            <li>Tester l’ouverture, la fermeture, le piège de focus et la restauration du focus sans souris.</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener noreferrer">WAI-ARIA — Boîte de dialogue modale</a></li>
+            <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA — Critères et tests</a></li>
+        </ul>
+    </ResourcesSection>
 </AccessibilityGuideLayout>

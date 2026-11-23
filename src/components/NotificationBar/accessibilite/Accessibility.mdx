@@ -17,7 +17,7 @@ import {
 	componentName="NotificationBar"
 	iconSrc={AccessibilityIcon}
 >
-	<div class="mt-8">
+	<div className="audit-section">
 		<p>Rapport d’audit manuel : <a href="/audits/NotificationBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4029" target="_blank" style={{color:'#0C41BD'}}>issue #4029</a>)</p>
 	</div>
@@ -36,7 +36,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🕒" title="Temps de lecture maîtrisé">
+		<CriteriaCard title="Temps de lecture maîtrisé">
 			<ul>
 				<li><strong>Pas d’expiration forcée</strong> : par défaut <code>timeout=-1</code> pour laisser le temps de lecture ; la temporisation reste configurable.</li>
 				<li><strong>File ou liste</strong> : <code>show-all</code> permet d’afficher toutes les notifications simultanément pour éviter la perte d’information.</li>

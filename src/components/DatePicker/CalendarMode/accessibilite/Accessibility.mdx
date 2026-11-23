@@ -1,12 +1,10 @@
-import { Meta, Story } from '@storybook/addon-docs/blocks'
+import { Canvas, Meta, Story } from '@storybook/addon-docs/blocks'
 import * as Stories from '../DatePicker.stories.ts'
-import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
 import '@/stories/styles/shared.css'
 import {
 	AccessibilityGuideLayout,
 	CriteriaSection,
 	CriteriaCard,
-	DemoSection,
 	BestPracticesSection,
 	ResourcesSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
@@ -15,76 +13,105 @@ import {
 
 <AccessibilityGuideLayout
 	componentName="DatePicker (mode calendrier)"
-	iconSrc={AccessibilityIcon}
+	title="Accessibilité du calendrier"
+	a11yVersion="Dernière mise à jour accessibilité : V1.2.2"
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/"
+	apgLabel="Modèle WAI-ARIA de sélecteur de date"
 >
+	<div className="accessibility-guide-content">
+		<section className="accessibility-notice-story">
+			<Story of={Stories.AccessibilityNotice} />
+		</section>
 
-<Story of={Stories.AccessibilityNotice} />
+		<section id="calendar-demo">
+			<div className="accessibility-demo-section">
+				<h2>Démonstration interactive</h2>
+				<p className="accessibility-demo-intro">
+					Ouvrez le calendrier avec le clavier, parcourez les jours, changez de mois et fermez le dialogue.
+					Vérifiez le retour du focus vers le champ après la fermeture.
+				</p>
+				<div className="accessibility-demo-canvas">
+					<Canvas of={Stories.Default} withToolbar={false} />
+				</div>
+			</div>
+		</section>
 
-<CriteriaSection>
-	<CriteriaCard title="Structure sémantique" icon="">
-		<ul>
-			<li><strong>Champ</strong> : <code>&lt;input&gt;</code> readonly (texte) sans <code>role="combobox"</code> forcé; l’ouverture se fait via clic ou clavier.</li>
-			<li>
-				<strong>Attributs ARIA de l'input (aria-expanded / aria-haspopup)</strong> : Ces attributs sont volontairement retirés pour les raisons suivantes :
+		<section id="calendar-keyboard" className="accessibility-keyboard">
+			<h2>Navigation au clavier</h2>
+			<p>Utilisez uniquement le clavier sur la démonstration et comparez le résultat avec le comportement attendu.</p>
+			<table>
+				<caption>Touches et résultats attendus</caption>
+				<thead>
+					<tr><th scope="col">Touche</th><th scope="col">Résultat attendu</th></tr>
+				</thead>
+				<tbody>
+					<tr><th scope="row">Entrée ou Espace</th><td>Ouvre le calendrier depuis le champ ; active le jour ou le contrôle focalisé.</td></tr>
+					<tr><th scope="row">Tab / Shift+Tab</th><td>Déplace le focus entre les contrôles du dialogue ouvert.</td></tr>
+					<tr><th scope="row">Flèches</th><td>Déplace le focus jour par jour ou entre les options du dialogue mois/années.</td></tr>
+					<tr><th scope="row">PageUp / PageDown</th><td>Change de mois ; avec Shift, change d’année.</td></tr>
+					<tr><th scope="row">Home / End</th><td>Atteint le premier ou le dernier jour de la semaine affichée.</td></tr>
+					<tr><th scope="row">Dialogue mois/années</th><td>Les flèches et Home/End déplacent le focus ; Espace/Entrée sélectionnent l’option et conservent le focus.</td></tr>
+					<tr><th scope="row">Échap</th><td>Ferme le calendrier et rend le focus au champ.</td></tr>
+				</tbody>
+			</table>
+		</section>
+
+		<CriteriaSection>
+			<CriteriaCard title="Structure sémantique">
 				<ul>
-					<li><em>Incompatibilité avec le rôle natif</em> : Un <code>&lt;input type="text"&gt;</code> possède le rôle implicite <code>textbox</code>. Selon le W3C/WAI-ARIA, l'usage de <code>aria-expanded</code> et <code>aria-haspopup</code> sur ce rôle est invalide et lève des erreurs critiques lors des audits (Axe, Tanaguru).</li>
-					<li><em>Rejet du rôle combobox</em> : Forcer un <code>role="combobox"</code> sur l'input rendrait les attributs valides, mais serait sémantiquement inexact. Notre champ est en <code>readonly</code> et ouvre un véritable panneau de dialogue complexe (calendrier), pas une simple liste d'options de saisie.</li>
-					<li><em>Alternative robuste</em> : L'accessibilité de l'ouverture est garantie contextuellement. L'ouverture du calendrier déplace immédiatement le focus dans une modale avec un <em>focus trap</em>. Le lecteur d'écran comprend le changement de contexte et l'annonce via les régions <code>aria-live</code>, rendant l'expérience fluide et conforme aux standards.</li>
+					<li><strong>Champ</strong> : <code>&lt;input&gt;</code> readonly (texte) sans <code>role="combobox"</code> forcé ; l’ouverture se fait via clic ou clavier.</li>
+					<li>
+						<strong>Attributs ARIA de l’input (aria-expanded / aria-haspopup)</strong> : ces attributs sont volontairement retirés pour les raisons suivantes :
+						<ul>
+							<li><em>Incompatibilité avec le rôle natif</em> : un <code>&lt;input type="text"&gt;</code> possède le rôle implicite <code>textbox</code>. Selon le W3C/WAI-ARIA, l’usage de <code>aria-expanded</code> et <code>aria-haspopup</code> sur ce rôle est invalide et lève des erreurs critiques lors des audits (axe, Tanaguru).</li>
+							<li><em>Rejet du rôle combobox</em> : forcer un <code>role="combobox"</code> sur l’input rendrait les attributs valides, mais serait sémantiquement inexact. Notre champ est en <code>readonly</code> et ouvre un véritable panneau de dialogue complexe (calendrier), pas une simple liste d’options de saisie.</li>
+							<li><em>Alternative robuste</em> : l’accessibilité de l’ouverture est garantie contextuellement. L’ouverture du calendrier déplace immédiatement le focus dans une modale avec un <em>focus trap</em>. Le lecteur d’écran comprend le changement de contexte et l’annonce via les régions <code>aria-live</code>, rendant l’expérience fluide et conforme aux standards.</li>
+						</ul>
+					</li>
+					<li><strong>Panneau</strong> : calendrier exposé dans un vrai <code>dialog</code> modal, contenant la grille de jours et ses contrôles.</li>
+					<li><strong>Relations</strong> : <code>aria-controls</code> relie l’enveloppe activatrice du champ readonly au <code>dialog</code> lorsqu’il est ouvert ; le <code>dialog</code> est nommé par un titre stable « Calendrier » via <code>aria-labelledby</code> ; <code>aria-owns/expanded/haspopup</code> ne sont pas surchargés sur l’input natif.</li>
+					<li><strong>États</strong> : <code>aria-disabled</code> / <code>aria-readonly</code> alignés sur les props, messages d’erreur/avertissement/succès annoncés via la zone de messages du champ.</li>
 				</ul>
-			</li>
-			<li><strong>Panneau</strong> : calendrier exposé dans un vrai <code>dialog</code> modal, contenant la grille de jours et ses contrôles.</li>
-			<li><strong>Relations</strong> : <code>aria-controls</code> relie l’enveloppe activatrice du champ readonly au <code>dialog</code> lorsqu’il est ouvert; le <code>dialog</code> est nommé par un titre stable « Calendrier » via <code>aria-labelledby</code>; <code>aria-owns/expanded/haspopup</code> ne sont pas surchargés sur l’input natif.</li>
-			<li><strong>États</strong> : <code>aria-disabled</code> / <code>aria-readonly</code> alignés sur les props, messages d’erreur/avertissement/succès annoncés via la zone de messages du champ.</li>
-		</ul>
-	</CriteriaCard>
+			</CriteriaCard>
 
-	<CriteriaCard title="Ouverture et focus" icon="">
-		<ul>
-			<li><strong>Ouverture clavier</strong> : <kbd>Entrée</kbd> ou <kbd>Espace</kbd> sur le champ ouvre le calendrier; l’icône déclenche l’ouverture avec la souris.</li>
-			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme et valide; un clic extérieur ferme aussi le panneau; le focus est ensuite rendu au champ.</li>
-			<li><strong>Piège de focus</strong> : <kbd>Tab</kbd>/<kbd>Shift+Tab</kbd> restent dans le panneau ouvert (boutons d’entête, grille de jours, bouton « Aujourd’hui »).</li>
-		</ul>
-	</CriteriaCard>
+			<CriteriaCard title="Ouverture, fermeture et focus">
+				<ul>
+					<li><strong>Ouverture clavier</strong> : <kbd>Entrée</kbd> ou <kbd>Espace</kbd> sur le champ ouvre le calendrier ; l’icône déclenche l’ouverture avec la souris.</li>
+					<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme et valide ; un clic extérieur ferme aussi le panneau ; le focus est ensuite rendu au champ.</li>
+					<li><strong>Piège de focus</strong> : <kbd>Tab</kbd>/<kbd>Shift+Tab</kbd> restent dans le panneau ouvert (boutons d’entête, grille de jours, bouton « Aujourd’hui »).</li>
+				</ul>
+			</CriteriaCard>
 
-	<CriteriaCard title="Navigation clavier dans le calendrier" icon="">
-		<ul>
-			<li><strong>Jours</strong> : flèches déplacent le focus jour par jour; <code>PageUp/PageDown</code> changent de mois (<kbd>Shift</kbd> + touche change d’année).</li>
-			<li><strong>Home/End</strong> : vont au premier/dernier jour de la semaine affichée.</li>
-			<li><strong>Activation</strong> : <kbd>Espace</kbd>/<kbd>Entrée</kbd> sur un jour déclenchent le bouton du jour; même logique sur les boutons d’entête (mois/année et flèches).</li>
-			<li><strong>Dialogue mois/années</strong> : navigation par flèches et <kbd>Home</kbd>/<kbd>End</kbd>; <kbd>Espace</kbd>/<kbd>Entrée</kbd> sélectionnent l’option et conservent le focus.</li>
-		</ul>
-	</CriteriaCard>
+			<CriteriaCard title="Messages et annonces">
+				<ul>
+					<li><strong>Live region</strong> : le mois/année affichés sont annoncés via une unique région de statut dédiée, pour éviter les annonces en double.</li>
+					<li><strong>Statuts</strong> : erreurs/avertissements/succès sous le champ ; le bouton « Aujourd’hui » a un <code>title</code> explicite.</li>
+					<li><strong>Guidage</strong> : placeholder et libellé (ou <code>aria-label</code>) décrivent l’action attendue.</li>
+				</ul>
+			</CriteriaCard>
+		</CriteriaSection>
 
-	<CriteriaCard title="Messages et annonces" icon="">
-		<ul>
-			<li><strong>Live region</strong> : le mois/année affichés sont annoncés via une unique région de statut dédiée, pour éviter les annonces en double.</li>
-			<li><strong>Statuts</strong> : erreurs/avertissements/succès sous le champ; le bouton « Aujourd’hui » a un <code>title</code> explicite.</li>
-			<li><strong>Guidage</strong> : placeholder et libellé (ou <code>aria-label</code>) décrivent l’action attendue.</li>
-		</ul>
-	</CriteriaCard>
-</CriteriaSection>
+		<BestPracticesSection>
+			<ul>
+				<li>Fournir un <code>label</code> explicite ; utiliser <code>placeholder</code> uniquement comme aide complémentaire, jamais comme seul libellé.</li>
+				<li>Garder un <code>label</code> court et distinct (ex. « Date de naissance »), sans y répéter le format : en mode calendrier seul, l’utilisateur ne saisit pas ; le format attendu n’a pas à être annoncé. <code>helpText</code> reste utile pour une précision métier ou pour indiquer que le champ ouvre un calendrier.</li>
+				<li>Le champ activateur avertit nativement l’utilisateur de l’affichage du calendrier (« Activation ouvre un calendrier » via <code>aria-describedby</code>, annonce désactivée quand le champ est <code>disabled</code>) : cette information n’est annoncée qu’aux technologies d’assistance ; l’indiquer dans le <code>helpText</code> la rend visible pour tous.</li>
+				<li>Conserver <code>format</code> et le texte d’aide cohérents avec la valeur attendue ; utiliser <code>helpText</code> pour expliquer le format métier (préférer <code>helpText</code> à <code>hint</code> : il reste visible en cas d’erreur).</li>
+				<li>Laisser <code>isValidateOnBlur</code> à <code>true</code> si les erreurs ne doivent apparaître qu’après la sortie du champ ; réserver <code>validateOnSubmit()</code> à la soumission.</li>
+				<li>En lecture seule, le champ n’est pas éditable et le calendrier ne doit pas être proposé ; pour un champ sélectionnable mais non saisissable, utiliser le mode calendrier normal, pas <code>readonly</code>.</li>
+				<li>En plage de dates, préciser l’ordre attendu dans le <code>helpText</code> et laisser la séparatrice visible.</li>
+				<li>Vérifier la cohérence des bornes <code>period</code> pour ne pas masquer les jours attendus.</li>
+				<li>Ne pas ajouter <code>role="combobox"</code> au mode calendrier seul : ce mode ne permet pas la saisie d’une valeur.</li>
+				<li>Éviter les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale. Préférer un champ actif accompagné d’un message expliquant la contrainte, ou indiquer visiblement pourquoi le champ est indisponible et comment l’activer.</li>
+			</ul>
+		</BestPracticesSection>
 
-<DemoSection title="Navigation clavier (rappel)">
-	<Story of={Stories.Default} />
-</DemoSection>
-
-<BestPracticesSection>
-- Fournir un <code>label</code> explicite; utiliser <code>placeholder</code> uniquement comme aide complémentaire, jamais comme seul libellé.
-- Garder un <code>label</code> court et distinct (ex. « Date de naissance »), sans y répéter le format : en mode calendrier seul l’utilisateur ne saisit pas, le format attendu n’a pas à être annoncé. <code>helpText</code> reste utile pour une précision métier (ex. « Dates sélectionnables du 01/01/1995 au 31/12/2005 ») ou pour indiquer que le champ ouvre un calendrier ; c’est en mode saisie (combiné ou <code>noCalendar</code>) qu’il doit porter le format attendu.
-- Le champ activateur avertit nativement l’utilisateur de l’affichage du calendrier (« Activation ouvre un calendrier » via <code>aria-describedby</code>, annonce désactivée quand le champ est <code>disabled</code>) : cette information n’est annoncée qu’aux technologies d’assistance, l’indiquer dans le <code>helpText</code> la rend visible pour tous.
-- Conserver <code>format</code> et le texte d’aide cohérents avec la valeur attendue; utiliser <code>helpText</code> pour expliquer le format métier (préférer <code>helpText</code> à <code>hint</code> : il reste visible en cas d’erreur).
-- Laisser <code>isValidateOnBlur</code> à <code>true</code> si les erreurs ne doivent apparaître qu’après la sortie du champ; réserver <code>validateOnSubmit()</code> à la soumission.
-- En lecture seule, le champ n’est pas éditable et le calendrier ne doit pas être proposé; pour un champ sélectionnable mais non saisissable, utiliser le mode calendrier normal, pas <code>readonly</code>.
-- En plage de dates, préciser l’ordre attendu dans le <code>helpText</code> et laisser la séparatrice visible.
-- Vérifier la cohérence des bornes <code>period</code> pour ne pas masquer les jours attendus.
-- Ne pas ajouter <code>role="combobox"</code> au mode calendrier seul : ce mode ne permet pas la saisie d’une valeur.
-- Éviter les champs désactivés : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférer un champ actif accompagné d'un message expliquant la contrainte, ou n'afficher le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquer par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.
-</BestPracticesSection>
-
-<ResourcesSection>
-- Stories DatePicker : cas standard, plage, lecture seule.
-- Tests : <code>CalendarMode/tests/DatePicker.spec.ts</code>, <code>CalendarMode/tests/DatePicker.a11y.spec.ts</code> et <code>composables/tests/useDatePickerFocusTrap.a11y.spec.ts</code> couvrent l’ouverture, la fermeture, le focus et la navigation clavier.
-- WAI-ARIA grid & boutons : référence pour les comportements clavier sur les grilles de dates.
-</ResourcesSection>
-
+		<ResourcesSection>
+			<ul>
+				<li>Stories DatePicker : cas standard, plage, lecture seule.</li>
+				<li>Tests : <code>CalendarMode/tests/DatePicker.spec.ts</code>, <code>CalendarMode/tests/DatePicker.a11y.spec.ts</code> et <code>composables/tests/useDatePickerFocusTrap.a11y.spec.ts</code> couvrent l’ouverture, la fermeture, le focus et la navigation clavier.</li>
+				<li>WAI-ARIA grid et boutons : référence pour les comportements clavier sur les grilles de dates.</li>
+			</ul>
+		</ResourcesSection>
+	</div>
 </AccessibilityGuideLayout>

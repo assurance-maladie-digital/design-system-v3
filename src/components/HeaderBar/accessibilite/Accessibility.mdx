@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks'
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
 import * as HeaderBarStories from '../HeaderBar.stories'
 import '@/stories/styles/shared.css'
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
@@ -7,6 +7,9 @@ import {
   AuditSection,
   CriteriaSection,
   CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
 
 <Meta of={HeaderBarStories}/>
@@ -15,13 +18,26 @@ import {
   componentName="HeaderBar"
   iconSrc={AccessibilityIcon}
 >
-  <AuditSection>
-    <div class="mt-6">
-      <p>Rapport d’audit manuel :<a href="/audits/HeaderBar.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></p>
+  <DemoSection componentName="HeaderBar">
+    <Canvas of={HeaderBarStories.Default} withToolbar={false} />
+  </DemoSection>
 
-      <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" style={{ color: '#0C41BD' }}>issue #643</a>)</p>
-    </div>
-  </AuditSection>
+  <section className="accessibility-keyboard">
+    <h2>Navigation au clavier</h2>
+    <p>HeaderBar conserve la navigation native des liens et des boutons. Les comportements des éléments ajoutés dans les slots restent sous la responsabilité de leur implémentation.</p>
+    <table>
+      <caption>Touches et résultats attendus pour HeaderBar</caption>
+      <thead>
+        <tr><th scope="col">Touche</th><th scope="col">Résultat attendu</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Tab / Shift+Tab</th><td>Déplace le focus entre les éléments interactifs de l’en-tête dans un ordre logique.</td></tr>
+        <tr><th scope="row">Entrée ou Espace</th><td>Active le lien ou le bouton focalisé, selon son élément natif.</td></tr>
+        <tr><th scope="row">Échap</th><td>Ferme le menu si le contenu fourni dans le slot <code>menu</code> implémente ce comportement.</td></tr>
+        <tr><th scope="row">Flèches</th><td>Ne sont pas imposées par <code>HeaderBar</code> ; elles dépendent du composant de navigation injecté dans les slots.</td></tr>
+      </tbody>
+    </table>
+  </section>
 
   <CriteriaSection>
     <CriteriaCard title="Niveau de titre configurable via la prop headingLevelTitle">
@@ -151,5 +167,29 @@ import {
     </ul>
   </CriteriaCard>
   </CriteriaSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li>Choisir le niveau de titre avec <code>headingLevelTitle</code> en fonction de la hiérarchie réelle de la page.</li>
+      <li>Fournir un nom accessible explicite avec <code>homeAriaLabel</code> lorsque le logo ou le lien d’accueil est personnalisé.</li>
+      <li>Utiliser des éléments natifs dans les slots : <code>&lt;a&gt;</code> pour une navigation et <code>&lt;button&gt;</code> pour une action.</li>
+      <li>Vérifier que le comportement sticky ou le masquage au défilement ne prive pas l’utilisateur d’un accès au contenu ou aux actions.</li>
+      <li>Tester chaque contenu injecté dans les slots au clavier, avec un lecteur d’écran et à fort niveau de zoom.</li>
+    </ul>
+  </BestPracticesSection>
+
+  <AuditSection>
+    <p>Rapport d’audit manuel : <a href="/audits/HeaderBar.xlsx">Consulter le rapport</a></p>
+    <p>Correctifs associés : <a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" rel="noopener noreferrer">issue #643</a></p>
+  </AuditSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices Guide</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html" target="_blank" rel="noopener noreferrer">WCAG — Titres et étiquettes</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA — Critères et tests</a></li>
+      <li>Stories HeaderBar : configurations par défaut et exemples de slots dans la documentation du composant.</li>
+    </ul>
+  </ResourcesSection>
 
 </AccessibilityGuideLayout>

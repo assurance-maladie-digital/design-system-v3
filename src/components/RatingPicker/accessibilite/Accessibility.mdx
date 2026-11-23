@@ -8,6 +8,7 @@ import {
     CriteriaCard,
     BestPracticesSection,
     ResourcesSection,
+	NoticeSection,
     DemoSection
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
@@ -18,7 +19,7 @@ import {
     iconSrc={AccessibilityIcon}
 >
 
-<div class="mt-2">
+<div className="audit-section">
     <p>
         Rapport d’audit manuel : <a href="/audits/RatingPicker.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a>
     </p>
@@ -108,7 +109,7 @@ import {
 </CriteriaSection>
 
 <DemoSection componentName="RatingPicker">
-    <Canvas of={Stories.AccessibilityBestPractices} />
+    <Canvas of={Stories.AccessibilityBestPractices} withToolbar={false} />
 </DemoSection>
 
 <BestPracticesSection>
@@ -125,16 +126,7 @@ import {
     </ul>
 </BestPracticesSection>
 
-<div
-    style={{
-        margin: '3rem 0',
-        padding: '1.5rem',
-        backgroundColor: '#fff3e0',
-        borderLeft: '4px solid #f57c00',
-        borderRadius: '4px'
-    }}
->
-    <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : Élément interactif non atteignable à la navigation clavier</h2>
+<NoticeSection title="Point de vigilance — gestion dynamique du focus">
 
     <ul>
         <li>L’audit automatisé signale les items <code>role="radio"</code> comme non atteignables à la navigation clavier, car ils possèdent <code>tabindex="-1"</code>.</li>
@@ -143,7 +135,7 @@ import {
         <li><strong>Vérification manuelle :</strong> <kbd>Tab</kbd> doit permettre d’atteindre la radio cochée (ou la première), puis les touches <kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd> et <kbd>↓</kbd> doivent permettre de déplacer le focus entre les items (avec bouclage), et <kbd>Entrée</kbd> ou <kbd>Espace</kbd> de cocher l’item ciblé.</li>
         <li>Si cette navigation fonctionne, le signal de l’outil peut être considéré comme un faux positif lié à la gestion dynamique du focus.</li>
     </ul>
-</div>
+</NoticeSection>
 
 <ResourcesSection>
     <ul>

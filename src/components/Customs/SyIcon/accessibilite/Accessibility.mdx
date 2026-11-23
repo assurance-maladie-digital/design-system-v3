@@ -1,97 +1,92 @@
-import { Meta, Title, Subtitle, Description, Primary, Controls, Stories, Canvas } from '@storybook/addon-docs/blocks'
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
 import * as SyIconStoriesAccessibility from './Accessibilite.stories'
-import SyIconAccessibility from '../SyIconAccessibility.vue'
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
+import '@/stories/styles/shared.css'
 
 <Meta of={SyIconStoriesAccessibility} />
-import '@/stories/styles/shared.css';
 
-<div className="header">
-  <h1>Accessibilité du composant SyIcon</h1>
-  <p>Le composant `SyIcon` est un wrapper autour du composant `v-icon` de Vuetify qui ajoute une gestion automatique de l'accessibilité selon les normes RGAA.</p>
-</div>
+<AccessibilityGuideLayout
+  componentName="SyIcon"
+  title="Accessibilité des icônes"
+>
+  <DemoSection componentName="SyIcon">
+    <Canvas of={SyIconStoriesAccessibility.AccessibilityDemo} withToolbar={false} />
+  </DemoSection>
 
-<div className="tip-wrapper" style={{ background: '#f8f9fa', padding: '20px', borderRadius: '5px', marginBottom: '20px' }}>
-  <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>💡 Pourquoi l'accessibilité des icônes est importante</div>
-  <p>
-    Les icônes améliorent l'expérience utilisateur, mais doivent être accessibles à tous, y compris aux personnes utilisant des technologies d'assistance.
-  </p>
-</div>
+  <section className="accessibility-keyboard">
+    <h2>Navigation au clavier</h2>
+    <p>
+      Une icône décorative ne reçoit pas le focus. Lorsqu’une icône porte une action, elle doit être placée dans un
+      contrôle natif, comme un bouton ou un lien, qui fournit le comportement clavier attendu.
+    </p>
+    <table>
+      <caption>Comportements à vérifier pour une icône</caption>
+      <thead>
+        <tr><th scope="col">Élément</th><th scope="col">Résultat attendu</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Icône décorative</th><td>Ne crée aucun arrêt de tabulation et reste masquée aux technologies d’assistance.</td></tr>
+        <tr><th scope="row">Icône informative</th><td>Son alternative textuelle est annoncée par le lecteur d’écran, sans dépendre uniquement de son apparence.</td></tr>
+        <tr><th scope="row">Icône dans un bouton ou un lien</th><td>Le contrôle parent est activable avec Entrée ou Espace selon son élément natif, et son nom accessible décrit l’action.</td></tr>
+      </tbody>
+    </table>
+  </section>
 
-##  Principes généraux
-
-Le composant `SyIcon` implémente automatiquement les bonnes pratiques d'accessibilité en fonction de la nature de l'icône :
-
-<div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
-  <div style={{ flex: 1, border: '1px solid #e0e0e0', borderRadius: '5px', padding: '15px' }}>
-    <h3> Icônes décoratives</h3>
-    <p><em>Invisibles pour les lecteurs d'écran</em></p>
-    
-    ```vue
-    <!-- Icône décorative (par défaut) -->
-    <SyIcon 
-    :icon="mdi-home" 
-    />
-    ```
-    
-    <div style={{ background: '#f5f5f5', padding: '10px', borderRadius: '4px', marginTop: '78px' }}>
-      <strong>Attributs ARIA générés :</strong>
+  <CriteriaSection>
+    <CriteriaCard title="Icônes décoratives">
+      <p><em>Invisibles pour les lecteurs d’écran</em></p>
+      <p>Pour une icône décorative, utilisée par défaut :</p>
+      <pre><code>{`<SyIcon :icon="mdi-home" />`}</code></pre>
       <ul>
         <li><code>role="presentation"</code></li>
         <li><code>aria-hidden="true"</code></li>
       </ul>
-    </div>
-  </div>
-  
-  <div style={{ flex: 1, border: '1px solid #e0e0e0', borderRadius: '5px', padding: '15px' }}>
-    <h3> Icônes informatives</h3>
-    <p><em>Annoncées par les lecteurs d'écran</em></p>
-    
-    ```vue
-    <!-- Icône informative avec label -->
-    <SyIcon 
-      :icon="mdi-information" 
-      :decorative="false" 
-      label="Information importante" 
-    />
-    ```
-    
-    <div style={{ background: '#f5f5f5', padding: '10px', borderRadius: '4px' }}>
-      <strong>Attributs ARIA générés :</strong>
+    </CriteriaCard>
+
+    <CriteriaCard title="Icônes informatives">
+      <p><em>Annoncées par les lecteurs d’écran</em></p>
+      <p>Pour une icône informative, fournir un label explicite :</p>
+      <pre><code>{`<SyIcon
+  :icon="mdi-information"
+  :decorative="false"
+  label="Information importante"
+/>`}</code></pre>
       <ul>
         <li><code>role="img"</code></li>
         <li><code>aria-label="Information importante"</code></li>
       </ul>
-    </div>
-  </div>
-</div>
+    </CriteriaCard>
 
-## Bonnes pratiques
+    <CriteriaCard title="Sémantique SVG et directive d’accessibilité">
+      <ul>
+        <li>Le composant utilise la directive <code>v-rgaa-svg-fix</code> pour appliquer les correctifs nécessaires aux SVG.</li>
+        <li>Les éléments SVG portent systématiquement <code>aria-hidden="true"</code> et ne portent jamais <code>role="img"</code>.</li>
+        <li>La sémantique d’accessibilité est portée par l’élément conteneur <code>&lt;i&gt;</code>.</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
 
-<div style={{ background: '#edf7ed', padding: '15px', borderRadius: '5px', borderLeft: '4px solid #4caf50', marginBottom: '20px' }}>
-  <h4 style={{ marginTop: '0' }}>📋 Recommandations</h4>
-  <ul style={{ paddingLeft: '20px' }}>
-    <li><strong>Toujours fournir un label</strong> lorsque l'icône est informative (<code>decorative="false"</code>)</li>
-    <li><strong>Utiliser des labels explicites</strong> qui décrivent clairement la fonction de l'icône</li>
-    <li><strong>Éviter les icônes seules</strong> pour les actions importantes - combinez-les avec du texte visible</li>
-    <li><strong>Maintenir un bon contraste</strong> entre l'icône et son arrière-plan</li>
-  </ul>
-</div>
+  <BestPracticesSection>
+    <ul>
+      <li><strong>Toujours fournir un label</strong> lorsque l’icône est informative avec <code>decorative="false"</code>.</li>
+      <li><strong>Utiliser des labels explicites</strong> qui décrivent clairement l’information ou la fonction de l’icône.</li>
+      <li><strong>Éviter les icônes seules</strong> pour les actions importantes : les associer à un texte visible lorsque cela est nécessaire.</li>
+      <li><strong>Maintenir un bon contraste</strong> entre l’icône et son arrière-plan.</li>
+    </ul>
+  </BestPracticesSection>
 
-## Conformité RGAA
-
-<div style={{ background: '#e8f4fd', padding: '15px', borderRadius: '5px', borderLeft: '4px solid #2196f3', marginBottom: '20px' }}>
-  <p style={{ margin: '0' }}>
-    Le composant <code>SyIcon</code> utilise la directive <code>v-rgaa-svg-fix</code> qui assure la compatibilité 
-    avec les lecteurs d'écran en appliquant les correctifs nécessaires aux SVG.
-  </p>
-  <p style={{ marginTop: '10px', marginBottom: '0' }}>
-    <strong>Important :</strong> Tous les éléments SVG ont systématiquement l'attribut <code>aria-hidden="true"</code> et 
-    n'ont jamais l'attribut <code>role="img"</code>, indépendamment du type d'icône. La sémantique d'accessibilité 
-    est gérée uniquement au niveau de l'élément conteneur (<code>&lt;i&gt;</code>).
-  </p>
-</div>
-
-## Ressources
-
-- [Guide d'accessibilité WAI-ARIA pour les images et icônes](https://www.w3.org/WAI/ARIA/apg/patterns/)
-- [RGAA - Référentiel Général d'Amélioration de l'Accessibilité](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/)
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html" target="_blank" rel="noopener noreferrer">WCAG — Contenu non textuel</a></li>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices Guide</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA — Critères et tests</a></li>
+    </ul>
+  </ResourcesSection>
+</AccessibilityGuideLayout>

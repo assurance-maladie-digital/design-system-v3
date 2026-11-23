@@ -8,6 +8,8 @@ import {
 	DemoSection,
 	BestPracticesSection,
 	ResourcesSection,
+	NoticeSection,
+	AuditSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={ToolbarContainerStories} />
@@ -56,8 +58,7 @@ import {
 		</ul>
 	</BestPracticesSection>
 
-	<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
-		<h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : roving tabindex</h2>
+	<NoticeSection title="Point de vigilance — roving tabindex">
 		<ul>
 			<li>Des audits automatisés peuvent signaler les éléments interactifs de la barre d'outils comme non atteignables au clavier, car ils portent tous <code>tabindex="-1"</code> à l'état initial.</li>
 			<li>Cause : le pattern <strong>roving tabindex</strong> fait de la barre un arrêt de tabulation unique. Seul le conteneur <code>role="toolbar"</code> reste dans l'ordre de tabulation ; le <code>tabindex</code> passe dynamiquement à <code>0</code> sur l'élément actif au fil de la navigation par flèches. Les scanners évaluent le DOM hors interaction et ne savent pas simuler ce déplacement de focus.</li>
@@ -65,7 +66,7 @@ import {
 			<li>Couverture automatisée : ce comportement est vérifié par les tests unitaires de <code>ToolbarContainer.spec.ts</code> (déplacement du focus aux flèches, bouclage, touches <code>Home</code>/<code>End</code>).</li>
 			<li>Ce n'est pas un bug du composant mais une limite des outils d'audit statiques face à un focus managé en JavaScript, conforme aux <a href="https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/" target="_blank" rel="noopener noreferrer">ARIA Authoring Practices</a>.</li>
 		</ul>
-</div>
+	</NoticeSection>
 
 	<ResourcesSection>
 		<ul>
@@ -73,8 +74,8 @@ import {
 		</ul>
 	</ResourcesSection>
 
-	<div class="mt-8">
+	<AuditSection>
 		<p>Rapport d’audit manuel : <a href="/audits/ToolbarContainer.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/927" target="_blank" style={{color:'#0C41BD'}}>issue #927</a>)</p>
-	</div>
+	</AuditSection>
 </AccessibilityGuideLayout>

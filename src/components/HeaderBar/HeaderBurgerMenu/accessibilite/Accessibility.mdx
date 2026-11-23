@@ -8,6 +8,7 @@ import {
   CriteriaSection,
   CriteriaCard,
   DemoSection,
+  BestPracticesSection,
   ResourcesSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
 
@@ -189,6 +190,14 @@ import {
       <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/link/" target="_blank" rel="noopener noreferrer">Modèle de lien — WAI-ARIA Authoring Practices</a></li>
     </ul>
   </ResourcesSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li>Utiliser des libellés explicites pour le bouton d’ouverture et les liens du menu.</li>
+      <li>Vérifier le retour du focus au bouton déclencheur après la fermeture.</li>
+      <li>Tester les sous-menus et les contenus injectés dans les slots au clavier et avec un lecteur d’écran.</li>
+    </ul>
+  </BestPracticesSection>
 
   <AuditSection>
     <p>Rapport d’audit manuel : <a href="/audits/HeaderBurgerMenu.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></p>

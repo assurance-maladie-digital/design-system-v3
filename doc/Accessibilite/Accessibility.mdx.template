@@ -1,0 +1,139 @@
+<!--
+  Template des pages d'accessibilité Synapse.
+
+  Conserver toutes les données de la page d'origine : constats, scénarios,
+  résultats d'audit, dates, versions, tickets, faux positifs, limites et liens.
+  Les sections facultatives peuvent être supprimées uniquement après vérification
+  qu'elles ne contiennent aucune donnée à préserver.
+-->
+
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as Stories from '../NomComposant.stories.ts';
+import {
+  AccessibilityGuideLayout,
+  AuditSection,
+  BestPracticesSection,
+  CriteriaCard,
+  CriteriaSection,
+  NoticeSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={Stories} />
+
+<AccessibilityGuideLayout
+  componentName="NomComposant"
+  title="Accessibilité de NomComposant"
+  a11yVersion="Dernière mise à jour accessibilité : Vx.x.x"
+  apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/..."
+  apgLabel="Modèle WAI-ARIA ..."
+>
+  {/* 1. Démonstration : montrer un scénario réel avant les détails techniques. */}
+  <section id="accessibility-demo">
+    <div className="accessibility-demo-section">
+      <h2>Démonstration interactive</h2>
+      <p className="accessibility-demo-intro">
+        Décrire ici ce que l'utilisateur doit tester, avec la souris et au clavier,
+        ainsi que les états importants à vérifier.
+      </p>
+      <div className="accessibility-demo-canvas">
+        {/* Adapter le nom de la story si elle ne s'appelle pas Default. */}
+        <Canvas of={Stories.Default} withToolbar={false} />
+      </div>
+    </div>
+  </section>
+
+  {/* 2. Clavier : utiliser cette section si le composant est interactif. */}
+  <section id="accessibility-keyboard" className="accessibility-keyboard">
+    <h2>Navigation au clavier</h2>
+    <p>Décrire le protocole de test et comparer le comportement observé avec le comportement attendu.</p>
+    <table>
+      <caption>Touches et résultats attendus</caption>
+      <thead>
+        <tr><th scope="col">Touche</th><th scope="col">Résultat attendu</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Tab</th><td>...</td></tr>
+        <tr><th scope="row">Entrée ou Espace</th><td>...</td></tr>
+        <tr><th scope="row">Flèches</th><td>...</td></tr>
+        <tr><th scope="row">Échap</th><td>...</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  {/* 3. Critères : une carte = une idée vérifiable. */}
+  {/* Ajouter criteria-section--grid uniquement si les cartes restent courtes. */}
+  <CriteriaSection>
+    <CriteriaCard title="Structure sémantique">
+      <ul>
+        <li><strong>Expérience attendue :</strong> ce que la technologie d'assistance annonce.</li>
+        <li><strong>Implémentation :</strong> balises, rôles, noms et relations utilisés.</li>
+        <li><strong>Vérification :</strong> scénario et résultat observé dans le DOM ou l'arbre d'accessibilité.</li>
+        <li><strong>Référence :</strong> critère RGAA, WCAG ou pattern WAI-ARIA applicable.</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Navigation au clavier">
+      <ul>
+        <li><strong>Entrée dans le composant :</strong> ...</li>
+        <li><strong>Déplacement :</strong> ...</li>
+        <li><strong>Activation :</strong> ...</li>
+        <li><strong>Focus visible :</strong> ...</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="États et messages">
+      <ul>
+        <li><strong>États :</strong> défaut, désactivé, chargement, vide, erreur et succès selon le composant.</li>
+        <li><strong>Feedback :</strong> message visible, nom accessible et annonce adaptée.</li>
+        <li><strong>Changement de contexte :</strong> ...</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Présentation et personnalisation">
+      <ul>
+        <li><strong>Contraste et focus :</strong> ...</li>
+        <li><strong>Zoom, reflow et responsive :</strong> ...</li>
+        <li><strong>API accessible :</strong> props, slots et libellés utiles à l'intégration.</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  {/* 4. Conseils destinés à l'intégrateur. */}
+  <BestPracticesSection>
+    <ul>
+      <li>À faire : ...</li>
+      <li>À éviter : ...</li>
+      <li>Exemple d'intégration accessible : ...</li>
+    </ul>
+  </BestPracticesSection>
+
+  {/* 5. Faux positifs, limites ou écarts : conserver les preuves et la décision prise. */}
+  <NoticeSection>
+    <ul>
+      <li><strong>Point observé :</strong> ...</li>
+      <li><strong>Cause :</strong> ...</li>
+      <li><strong>Vérification manuelle :</strong> ...</li>
+      <li><strong>Décision :</strong> correction requise, exception justifiée ou faux positif.</li>
+    </ul>
+  </NoticeSection>
+
+  {/* 6. Preuves et suivi : rapports, dates, tickets et statut. */}
+  <AuditSection>
+    <ul>
+      <li><strong>Rapport :</strong> <a href="/audits/NomComposant.xlsx">Voir le rapport manuel</a></li>
+      <li><strong>Statut :</strong> ...</li>
+      <li><strong>Correctifs associés :</strong> ...</li>
+    </ul>
+  </AuditSection>
+
+  {/* 7. Sources officielles d'abord, documentation interne ensuite. */}
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/">WAI-ARIA Authoring Practices</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/rgaa/">RGAA 4.1.2</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG22/quickref/">WCAG — Quick Reference</a></li>
+      <li>Documentation Synapse ou ticket associé : ...</li>
+    </ul>
+  </ResourcesSection>
+</AccessibilityGuideLayout>

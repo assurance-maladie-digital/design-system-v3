@@ -8,6 +8,7 @@ import {
 	DemoSection,
 	BestPracticesSection,
 	ResourcesSection,
+	AuditSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={PageContainerStories} />
@@ -16,11 +17,6 @@ import {
 	componentName="PageContainer"
 	iconSrc={AccessibilityIcon}
 >
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/PageContainer.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4011" target="_blank" style={{color:'#0C41BD'}}>issue #4011</a>)</p>
-	</div>
 
 	<CriteriaSection>
 		<CriteriaCard title="Structure sémantique">
@@ -64,4 +60,16 @@ import {
 			<li>Fournir un <code>uniqueId</code> explicite et descriptif pour garantir l'unicité des identifiants générés</li>
 		</ul>
 	</BestPracticesSection>
+
+	<AuditSection>
+		<p>Rapport d’audit manuel : <a href="/audits/PageContainer.xlsx">Consulter le rapport</a></p>
+		<p>Correctifs associés : <a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4011" target="_blank" rel="noopener noreferrer">issue #4011</a></p>
+	</AuditSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/appropriately-named-group.html" target="_blank" rel="noopener noreferrer">WCAG — Regroupements nommés</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA — Critères et tests</a></li>
+		</ul>
+	</ResourcesSection>
 </AccessibilityGuideLayout>

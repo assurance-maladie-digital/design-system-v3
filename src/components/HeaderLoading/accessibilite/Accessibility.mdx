@@ -2,27 +2,18 @@ import { Meta, Title, Subtitle, Description, Primary, Controls, Stories, Canvas,
 import * as HeaderLoadingStories from '../HeaderLoading.stories.ts';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '../../../stories/styles/shared.css';
+import { AccessibilityGuideLayout } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={HeaderLoadingStories} />
 
-<div className="accessibility-guide">
-  <Title>Guide d'Accessibilité du Composant HeaderLoading</Title>
-  
-  <div className="intro-section">
-    <img 
-      src={AccessibilityIcon} 
-      alt="Icône d'accessibilité" 
-      className="accessibility-icon"
-    />
-    <p className="intro-text">
-      Le composant HeaderLoading affiche un squelette de chargement destiné à indiquer qu'un contenu est en cours de chargement. 
-      Ce composant a été conçu en tenant compte des normes d'accessibilité RGAA et des recommandations pour les loaders visuels.
-      Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
-    </p>
-</div>
+<AccessibilityGuideLayout
+  componentName="HeaderLoading"
+  title="Accessibilité du chargement d’en-tête"
+  iconSrc={AccessibilityIcon}
+>
 
   <div className="criteria-section">
-    <h2>Critères d'accessibilité respectés</h2>
+    <h2>Critères d’accessibilité</h2>
     
     <div className="criteria-card">
       <div className="criteria-header">
@@ -61,7 +52,7 @@ import '../../../stories/styles/shared.css';
     </div>
   </div>
 
-  <div className="demo-section">
+  <div className="api-section">
     <h2>API du composant</h2>
     <p>
       Le composant HeaderLoading prend en charge les propriétés suivantes pour personnaliser son apparence et son comportement d'accessibilité.
@@ -139,6 +130,22 @@ import '../../../stories/styles/shared.css';
       </table>
     </div>
   </div>
+
+  <section className="accessibility-keyboard">
+    <h2>Navigation au clavier</h2>
+    <p>HeaderLoading n’est pas interactif. La navigation clavier concerne le contenu affiché après le chargement et le conteneur qui porte l’état d’attente.</p>
+    <table>
+      <caption>Comportements à vérifier pendant le chargement</caption>
+      <thead>
+        <tr><th scope="col">Élément</th><th scope="col">Résultat attendu</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Tab / Shift+Tab</th><td>Les éléments interactifs restent atteignables dans un ordre logique ; le squelette ne crée aucun arrêt de tabulation.</td></tr>
+        <tr><th scope="row">Lecteur d’écran</th><td>Un message de chargement unique est annoncé en mode autonome ou par le conteneur parent en mode multiple.</td></tr>
+        <tr><th scope="row">Fin du chargement</th><td>Le contenu réel remplace le squelette sans déplacer le focus de manière inattendue.</td></tr>
+      </tbody>
+    </table>
+  </section>
 
   <div className="implementation-section">
     <h2>Modes d'implémentation</h2>
@@ -220,7 +227,7 @@ import '../../../stories/styles/shared.css';
   </header>
 
   <!-- Message de statut unique pour éviter la surcharge -->
-  <div role="alert" aria-live="polite" class="sr-only">
+  <div role="alert" aria-live="polite" className="sr-only">
     Chargement en cours des informations pour le header...
   </div>
 </template>`}
@@ -231,7 +238,7 @@ import '../../../stories/styles/shared.css';
   </div>
   
   <div className="best-practices">
-    <h2>Bonnes pratiques d'utilisation</h2>
+    <h2>Bonnes pratiques</h2>
     <ul>
       <li><strong>Ne pas multiplier les messages de statut</strong>: La multiplication des messages de statuts complexifie la compréhension du site par les utilisateurs de technologies d'assistance.</li>
       <li><strong>Utiliser le mode approprié</strong>: Choisir entre le mode autonome ou multiple selon le contexte d'utilisation.</li>
@@ -241,7 +248,7 @@ import '../../../stories/styles/shared.css';
   </div>
 
   <div className="resources-section">
-    <h2>Ressources et références</h2>
+    <h2>Ressources</h2>
     <ul>
       <li><a href="https://adrianroselli.com/2020/11/more-accessible-skeletons.html#Warning" target="_blank" rel="noopener noreferrer">More Accessible Skeletons</a> - Article critique sur l'approche de Vuetify concernant les skeleton loaders</li>
       <li><a href="https://github.com/vuetifyjs/vuetify/issues/19622" target="_blank" rel="noopener noreferrer">Issue Vuetify #19622</a> - Concernant le support de <code>prefers-reduced-motion</code></li>
@@ -257,16 +264,16 @@ import '../../../stories/styles/shared.css';
       Essayez de modifier les propriétés pour voir comment le composant s'adapte.
     </p>
     <div className="demo-container">
-      <Canvas of={HeaderLoadingStories.Default} />
+      <Canvas of={HeaderLoadingStories.Default} withToolbar={false} />
       <Controls of={HeaderLoadingStories.Default} exclude={['heading', 'itemsNumber', 'row']} />  
     </div>
   </div>
 
-  <div className="compliance-section">
-    <h2>Conformité RGAA</h2>
+  <div className="audit-section">
+    <h2>Audit et conformité</h2>
     <div className="legend-container">
 
-<div class="mt-2">
+<div className="audit-section">
 <p>Rapport d’audit manuel : <a href="/audits/HeaderLoading.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/639" target="_blank" style={{color:'#0C41BD'}}>issue #639</a>)</p>
 	</div>
@@ -274,163 +281,4 @@ import '../../../stories/styles/shared.css';
     </div>
     
   </div>
-</div>
-
-<style>
-{`
-  .accessibility-guide {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-  }
-
-  .intro-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 5px solid #0077cc;
-  }
-
-  .accessibility-icon {
-    width: 60px;
-    height: 60px;
-    margin-right: 20px;
-    flex-shrink: 0;
-  }
-
-  .intro-text {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .criteria-section {
-    margin-bottom: 40px;
-  }
-
-  .criteria-section h2,
-  .demo-section h2,
-  .implementation-section h2,
-  .best-practices h2,
-  .resources-section h2,
-  .compliance-section h2 {
-    border-bottom: 2px solid #eaecef;
-    padding-bottom: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    color: #0077cc;
-  }
-
-  .criteria-card, .implementation-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .criteria-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .criteria-icon {
-    font-size: 1.8em;
-    margin-right: 15px;
-  }
-
-  .criteria-header h3, .implementation-card h3 {
-    margin: 0;
-    font-size: 1.3em;
-    color: #0077cc;
-  }
-
-  .criteria-card ul, .implementation-card ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-
-  .criteria-card li, .implementation-card li, .best-practices li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-
-  .code-example {
-    margin-top: 20px;
-  }
-
-  .preview-container {
-    margin-bottom: 15px;
-  }
-
-  .api-group {
-    margin-bottom: 30px;
-  }
-
-  .api-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-
-  .api-table th {
-    text-align: left;
-    padding: 10px;
-    background-color: #f0f7ff;
-    border-bottom: 2px solid #d1e5f9;
-  }
-
-  .api-table td {
-    padding: 10px;
-    border-bottom: 1px solid #eaecef;
-    vertical-align: top;
-  }
-
-  .best-practices {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .resources-section {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .resources-section ul, .best-practices ul {
-    padding-left: 20px;
-  }
-
-  .resources-section a {
-    color: #0077cc;
-    text-decoration: none;
-  }
-
-  .resources-section a:hover {
-    text-decoration: underline;
-  }
-
-  .demo-container {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 15px;
-  }
-
-  code {
-    background-color: #f0f0f0;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 0.9em;
-  }
-`}
-</style>
+</AccessibilityGuideLayout>

@@ -19,7 +19,7 @@ import {
   apgHref="https://www.w3.org/WAI/tutorials/images/"
 >
   <AuditSection>
-    <div class="mt-2">
+    <div className="audit-details">
       <p>Rapport d'audit manuel : <a href="/audits/FilePreview.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
       <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/922" target="_blank" style={{color:'#0C41BD'}}>issue #922</a>)</p>
     </div>
@@ -46,7 +46,7 @@ import {
       </ul>
     </CriteriaCard>
 
-    <CriteriaCard title="⚠️ Aperçu pdf.js (readonly / suivi de consultation) — non accessible">
+    <CriteriaCard title="Aperçu pdf.js (readonly / suivi de consultation) — non accessible">
       <ul>
         <li><strong>Rendu visuel uniquement</strong> : avec <code>readonly</code> ou <code>track-consultation</code>, le PDF est rendu via <strong>pdf.js</strong> dans des <code>&lt;canvas&gt;</code>, <strong>sans couche de texte</strong> (le conteneur des pages est <code>aria-hidden="true"</code>).</li>
         <li><strong>Non restitué par les lecteurs d'écran</strong> : le contenu du document n'est pas lisible par les technologies d'assistance ; pas de sélection ni de recherche de texte.</li>

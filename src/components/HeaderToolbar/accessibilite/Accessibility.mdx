@@ -8,6 +8,7 @@ import {
   DemoSection,
   BestPracticesSection,
   ResourcesSection,
+  AuditSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={HeaderToolbarStories}/>
@@ -17,11 +18,6 @@ import {
   iconSrc={AccessibilityIcon}
   apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/menu/"
 >
-
-  <div class="mt-8">
-    <p>Rapport d’audit manuel : <a href="/audits/Accordion.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/640" target="_blank" style={{color:'#0C41BD'}}>issue #640</a>)</p>
-  </div>
 
   <CriteriaSection>
 
@@ -100,6 +96,23 @@ import {
     <Primary />
   </DemoSection>
 
+  <section className="accessibility-keyboard">
+    <h2>Navigation au clavier</h2>
+    <p>Testez le menu avec le clavier et vérifiez que le focus reste visible et prévisible à chaque changement d’état.</p>
+    <table>
+      <caption>Touches et résultats attendus pour HeaderToolbar</caption>
+      <thead>
+        <tr><th scope="col">Touche</th><th scope="col">Résultat attendu</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Entrée, Espace ou Flèche bas</th><td>Ouvre le menu associé au bouton focalisé.</td></tr>
+        <tr><th scope="row">Flèches haut et bas</th><td>Déplace le focus entre les éléments du menu.</td></tr>
+        <tr><th scope="row">Home / End</th><td>Place le focus sur le premier ou le dernier élément du menu.</td></tr>
+        <tr><th scope="row">Échap</th><td>Ferme le menu et restitue le focus au bouton qui l’a ouvert.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
   <BestPracticesSection>
     <ul>
       <li><strong>Labels explicites</strong> : utilisez<code>ariaLeftLabel</code> et <code>ariaRightLabel</code> avec des intitulés permettant d'identifier clairement chaque zone de navigation.</li>
@@ -121,5 +134,10 @@ import {
       <li><a href="https://developer.mozilla.org/fr/docs/Web/Accessibility/ARIA/Roles/menu_role" target="_blank" rel="noopener noreferrer">MDN : rôle ARIA menu</a></li>
     </ul>
   </ResourcesSection>
+
+  <AuditSection>
+    <p>Rapport d’audit manuel : <a href="/audits/HeaderToolbar.xlsx">Consulter le rapport</a></p>
+    <p>Correctifs associés : <a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/640" target="_blank" rel="noopener noreferrer">issue #640</a></p>
+  </AuditSection>
 
 </AccessibilityGuideLayout>

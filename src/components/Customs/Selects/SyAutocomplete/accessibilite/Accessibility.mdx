@@ -3,27 +3,29 @@ import * as AutocompleteStories from '../SyAutocomplete.stories';
 import * as AccessStories from './Accessibilite.stories';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+  AccessibilityGuideLayout,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={AutocompleteStories} name="Accessibility" />
 
-<div className="accessibility-guide">
-  <h1>Guide d'Accessibilité du Composant SyAutocomplete</h1>
-  
-  <div className="intro-section">
-    <img 
-      src={AccessibilityIcon} 
-      alt="Icône d'accessibilité" 
-      className="accessibility-icon"
-    />
-    <p className="intro-text">
-      Le composant SyAutocomplete a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
-      notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les combobox avec auto-complétion</a>. 
-      Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
-    </p>
-</div>
+<AccessibilityGuideLayout
+  componentName="SyAutocomplete"
+  title="Accessibilité de l’autocomplétion"
+  iconSrc={AccessibilityIcon}
+  apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/"
+  apgLabel="Modèle WAI-ARIA pour les combobox avec auto-complétion"
+>
+
+  <DemoSection componentName="SyAutocomplete">
+    <Story of={AutocompleteStories.Default} />
+  </DemoSection>
 
   <div className="criteria-section">
-    <h2>Critères d'accessibilité respectés</h2>
+    <h2>Critères d’accessibilité</h2>
     
     <div className="criteria-card">
       <div className="criteria-header">
@@ -42,7 +44,7 @@ import '@/stories/styles/shared.css';
     <div className="criteria-card">
       <div className="criteria-header">
         <span className="criteria-icon"></span>
-        <h3>Navigation clavier complète</h3>
+        <h3>Sélection et filtrage</h3>
       </div>
       <ul>
         <li><strong>Flèches haut/bas</strong> : Navigation entre les options sans modifier la sélection</li>
@@ -68,17 +70,17 @@ import '@/stories/styles/shared.css';
     </div>
   </div>
 
-  <div className="keyboard-section">
-    <h2>Détail de la navigation clavier</h2>
+  <section className="accessibility-keyboard">
+    <h2>Navigation au clavier</h2>
     <Story of={AccessStories.ComboboxKeyboardNavigation} />
-  </div>
+  </section>
 
-  <div className="loading-section">
+  <div className="notice-section">
     <h2>État de chargement</h2>
     <Story of={AccessStories.LoadingAccessibility} />
   </div>
 
-  <div className="implementation-section">
+  <div className="criteria-section">
     <h2>Spécificités d'implémentation</h2>
     <p>
       Conformément aux recommandations WAI-ARIA pour les combobox avec auto-complétion, notre implémentation :
@@ -93,128 +95,18 @@ import '@/stories/styles/shared.css';
     </ul>
   </div>
 
-  <div className="implementation-section">
-    <h2>Bonnes pratiques d'utilisation</h2>
+  <BestPracticesSection>
     <ul>
       <li><strong>Éviter les champs désactivés</strong> : même lorsque son contraste est conforme (critère RGAA 3.2), un champ désactivé via la prop <code>disabled</code> crée une charge mentale : l'utilisateur doit chercher comment l'activer. Préférez un champ actif accompagné d'un message expliquant la contrainte, ou n'affichez le champ que lorsqu'il devient utilisable. Si la désactivation est inévitable, indiquez par un texte visible à proximité pourquoi le champ est indisponible et comment l'activer.</li>
+      <li>Fournir un libellé explicite et conserver une relation claire entre le champ, la liste de résultats et les messages d’état.</li>
+      <li>Tester la saisie, la navigation, la sélection et la fermeture du menu avec un clavier et un lecteur d’écran.</li>
     </ul>
-  </div>
-</div>
+  </BestPracticesSection>
 
-<style>
-{
-`
-  .accessibility-guide {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-  }
-
-  .intro-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 5px solid #0077cc;
-  }
-
-  .accessibility-icon {
-    width: 60px;
-    height: 60px;
-    margin-right: 20px;
-    flex-shrink: 0;
-  }
-
-  .intro-text {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .criteria-section {
-    margin-bottom: 40px;
-  }
-
-  .criteria-section h2,
-  .keyboard-section h2,
-  .implementation-section h2 {
-    border-bottom: 2px solid #eaecef;
-    padding-bottom: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    color: #0077cc;
-  }
-
-  .criteria-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .criteria-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .criteria-icon {
-    font-size: 1.8em;
-    margin-right: 15px;
-  }
-
-  .criteria-header h3 {
-    margin: 0;
-    font-size: 1.3em;
-    color: #0077cc;
-  }
-
-  .criteria-card ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-
-  .criteria-card li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-
-  .keyboard-section,
-  .loading-section {
-    background-color: #f0f7ff;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .implementation-section {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .implementation-section ul {
-    padding-left: 20px;
-  }
-
-  .implementation-section li {
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  code {
-    background-color: #f0f0f0;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 0.9em;
-  }
-`
-}
-</style>
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener noreferrer">WAI-ARIA — Combobox</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA — Critères et tests</a></li>
+    </ul>
+  </ResourcesSection>
+</AccessibilityGuideLayout>
