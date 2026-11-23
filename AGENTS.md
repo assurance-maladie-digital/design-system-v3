@@ -19,7 +19,7 @@ Les règles génériques sont déléguées aux skills installés (dans `.agents/
 Les charger avant toute tâche relevant de leur domaine :
 
 - `vue-best-practices` et `vue` pour Vue 3, les composants, la réactivité et le SSR ;
-- `vite` (compatible **Vite 6.4.2**) pour Vite, la configuration et les builds ;
+- `vite` (compatible **Vite 6.4**, ignorer la partie Vite 8 / Rolldown) pour Vite, la configuration et les builds ;
 - `vitest` (compatible **Vitest 4.1.0**) pour les tests unitaires ;
 - `pnpm` pour la gestion des dépendances et des workspaces ;
 - `antfu` pour l'outillage TypeScript et JavaScript (**les conventions de tests et de hooks Git du dépôt priment** : voir §4 et §11) ;
