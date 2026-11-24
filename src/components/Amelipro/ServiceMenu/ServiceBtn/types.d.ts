@@ -1,8 +1,10 @@
+import type { RouteLocationRaw } from 'vue-router'
+
 export interface Service {
 	icon?: string
 	imgSrc?: string
 	label: string
-	to?: string
+	to?: RouteLocationRaw
 	href?: string
 	click?: CallableFunction
 }
