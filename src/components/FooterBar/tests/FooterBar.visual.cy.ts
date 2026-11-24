@@ -1,5 +1,6 @@
 import FooterBar from '../FooterBar.vue'
-import { h } from 'vue'
+import { defineComponent, h } from 'vue'
+import imgUrl from '@/assets/amelipro/img/numero_3608.svg'
 
 describe('FooterBar - Visual regression tests', () => {
 	it('displays the footer bar by default', () => {
@@ -59,6 +60,35 @@ describe('FooterBar - Visual regression tests', () => {
 
 		cy.get('.v-footer').should('be.visible')
 		cy.matchImageSnapshot('footer-bar-version', cy.get('.v-footer'))
+	})
+
+	it('displays the footer bar with phone number in the ap theme', () => {
+		// Le fond du footer dépend de la classe theme-ap (--footer-background)
+		// et des couleurs du thème Vuetify ap (classe v-theme--ap).
+		cy.mountWithVuetify(defineComponent({
+			setup() {
+				return () => h('div', { class: 'v-theme--ap theme-ap' },
+					h(FooterBar, null, {
+						prepend: () => h('li', { class: 'd-flex mx-4' }, h('img', {
+							src: imgUrl,
+							alt: 'au 3608 : Service gratuit + prix appel',
+						})),
+					}),
+				)
+			},
+		}))
+
+		cy.get('.v-footer')
+			.should('be.visible')
+			.and('have.css', 'background-color', 'rgb(0, 66, 89)')
+		cy.get('.v-footer img')
+			.should('be.visible')
+			.and('have.attr', 'alt', 'au 3608 : Service gratuit + prix appel')
+
+		cy.matchImageSnapshot(
+			'footer-bar-with-phone-number',
+			cy.get('.v-footer'),
+		)
 	})
 })
 

@@ -1,0 +1,53 @@
+/**
+ * Extraits de code des stories connus comme cassés lors de l'ajout du test générique.
+ * Format : `<chemin depuis src/>:<story>`.
+ *
+ * Cette liste ne doit que diminuer : corriger l'extrait, puis retirer sa ligne.
+ * Le test échoue si un extrait de la liste est corrigé sans que la ligne soit retirée.
+ */
+export const knownBrokenSnippets: readonly string[] = [
+	'components/Amelipro/AmeliproAccordionList/AmeliproAccordionList.stories.ts:Default',
+	'components/Amelipro/AmeliproAccordionList/AmeliproAccordionList.stories.ts:PaginationAndSort',
+	'components/Amelipro/AmeliproAutoCompleteField/AmeliproAutoCompleteField.stories.ts:Validation',
+	'components/Amelipro/AmeliproCallback/AmeliproCallback.stories.ts:AvecImage',
+	'components/Amelipro/AmeliproClickableTile/AmeliproClickableTile.stories.ts:Default',
+	'components/Amelipro/AmeliproDialog/AmeliproDialog.stories.ts:Default',
+	'components/Amelipro/AmeliproFirstLogin/AmeliproFirstLogin.stories.ts:Default',
+	'components/Amelipro/AmeliproFirstLogin/AmeliproFirstLogin.stories.ts:HauteurContenuPersonnalisee',
+	'components/Amelipro/AmeliproOnboarding/AmeliproOnboarding.stories.ts:Default',
+	'components/Amelipro/AmeliproPatientLogin/AmeliproPatientLogin.stories.ts:Default',
+	'components/Amelipro/AmeliproStateTile/AmeliproStateTile.stories.ts:AvecRouteInterne',
+	'components/Amelipro/AmeliproTextArea/AmeliproTextArea.stories.ts:Validation',
+	'components/Amelipro/StructureMenu/StructureMenu.stories.ts:Default',
+	'components/Amelipro/StructureMenu/StructureMenu.stories.ts:HasStructureAccess',
+	'components/ChipList/ChipList.stories.ts:CustomResetText',
+	'components/ChipList/ChipList.stories.ts:Warning',
+	'components/ContextualMenu/ContextualMenu.stories.ts:Default',
+	'components/CookieBanner/CookieBanner.stories.ts:BannerDescriptionSlot',
+	'components/CookieBanner/CookieBanner.stories.ts:CookiesDescriptionSlots',
+	'components/CookieBanner/CookieBanner.stories.ts:Customization',
+	'components/CookieBanner/CookieBanner.stories.ts:WithoutCookiesItems',
+	'components/DataList/DataList.stories.ts:SlotTitle',
+	'components/DownloadBtn/DownloadBtn.stories.ts:Loading',
+	'components/FilterInline/FilterInline.stories.ts:Boolean',
+	'components/FilterInline/FilterInline.stories.ts:Default',
+	'components/FilterInline/FilterInline.stories.ts:ManyFields',
+	'components/HeaderBar/HeaderBar.stories.ts:WithRightMenu',
+	'components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.stories.ts:Default',
+	'components/HeaderNavigationBar/HeaderNavigationBar.stories.ts:WithTabConfirmation',
+	'components/HeaderToolbar/HeaderToolbar.stories.ts:CustomLinks',
+	'components/LogoBrandSection/LogoBrandSection.stories.ts:Default',
+	'components/NirField/NirField.stories.ts:ComplexNirType',
+	'components/SubHeader/SubHeader.stories.ts:Loading',
+	'components/SubHeader/SubHeader.stories.ts:SlotRightContent',
+	'components/SyBtnMenu/SyBtnMenu.stories.ts:WithCustomKeys',
+	'components/Tables/SyServerTable/Filtres.stories.ts:ServerFilterByExacteDate',
+	'components/Tables/SyServerTable/Filtres.stories.ts:ServerFilterByPeriod',
+	'components/Tables/SyServerTable/Tri.stories.ts:ServerMultiSort',
+	'components/Tables/SyTable/Filtres.stories.ts:FilterByExactDate',
+	'components/Tables/SyTable/Filtres.stories.ts:FilterByPeriod',
+	'components/Tables/SyTable/SyTable.stories.ts:ManyTables',
+	'components/UploadWorkflow/UploadWorkflow.stories.ts:ManuallySetStates',
+	'components/UserMenuBtn/UserMenuBtn.stories.ts:CustomLogoutText',
+	'utils/rules/isHolidayDay/IsHolidayDay.stories.ts:Default',
+]

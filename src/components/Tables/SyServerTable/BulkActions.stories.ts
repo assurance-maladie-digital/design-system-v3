@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed, ref } from 'vue'
 import { mdiChevronLeft, mdiChevronRight, mdiDelete, mdiPencil } from '@mdi/js'
-import type { VDataTable } from 'vuetify/components'
+import { VBtn, type VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -23,9 +23,25 @@ const meta = {
 	},
 	argTypes: {
 		...commonTableArgTypes,
+		'items': {
+			description: 'Lignes gérées par la story, qui simule le chargement serveur et applique les modifications.',
+			control: false,
+		},
+		'serverItemsLength': {
+			description: 'Prop obligatoire : la story la recalcule à partir des lignes chargées.',
+			control: false,
+		},
+		'loading': {
+			description: 'Piloté par la story pendant le chargement simulé.',
+			control: false,
+		},
+		'modelValue': {
+			description: 'Sélection pilotée par les cases à cocher du tableau.',
+			control: false,
+		},
 		'bulk-actions': {
 			description: 'Barre affichée quand des lignes sont sélectionnées. Le composant ne fournit que la sélection ; **le projet rend ses propres actions** (éditer, supprimer, exporter…) et pilote leur UX (DialogBox, drawer, page…).',
-			control: undefined,
+			control: false,
 			table: {
 				category: 'slots',
 				type: { summary: 'slot', detail: '{ selected: Record<string, unknown>[], count: number, clearSelection: () => void }' },
@@ -88,6 +104,7 @@ export const Default: Story = {
 	args: {
 		suffix: 'server-bulk-actions',
 		caption: 'Liste des patients',
+		headers,
 		serverItemsLength: manyItems.length,
 		showSelect: true,
 		selectionKey: 'id',
@@ -95,7 +112,7 @@ export const Default: Story = {
 		...commonTableEventArgs(),
 	},
 	render: args => ({
-		components: { SyServerTable, DialogBox, SySelect },
+		components: { SyServerTable, DialogBox, SySelect, VBtn },
 		setup() {
 			const { items, state, StateEnum } = useServerEditingDemo(manyItems)
 			const selected = ref<number[]>([])
@@ -133,13 +150,13 @@ export const Default: Story = {
 				clearAfter()
 			}
 
-			return { args, headers, items, state, StateEnum, selected, statutOptions, statut, editOpen, deleteOpen, openEdit, applyEdit, openDelete, applyDelete, mdiPencil, mdiDelete }
+			return { args, items, state, StateEnum, selected, statutOptions, statut, editOpen, deleteOpen, openEdit, applyEdit, openDelete, applyDelete, mdiPencil, mdiDelete }
 		},
 		template: `
 			<div>
 				<!-- Conteneur scrollable : la barre d'actions reste « sticky » en haut -->
 				<div style="max-height: 360px; overflow: auto; border-radius: 4px;">
-					<SyServerTable v-bind="args" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
+					<SyServerTable v-bind="args" v-model="selected" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 						<template #bulk-actions="{ selected, count, clearSelection }">
 							<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
 								Modifier le statut ({{ count }})
@@ -169,7 +186,7 @@ export const Default: Story = {
 <template>
 	<!-- La barre d'actions groupées est « sticky » par défaut : elle reste visible
 	     en haut quand on fait défiler le tableau (désactivable via :sticky-bulk-actions="false"). -->
-	<SyServerTable suffix="server-bulk-actions" show-select selection-key="id" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
+	<SyServerTable suffix="server-bulk-actions" caption="Liste des patients" show-select selection-key="id" hide-default-footer v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 		<!-- Le projet rend ses propres actions ; le tableau ne fournit que la sélection -->
 		<template #bulk-actions="{ selected, count, clearSelection }">
 			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
@@ -199,7 +216,8 @@ export const Default: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyServerTable, DialogBox, SySelect } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+	import { VBtn } from 'vuetify/components'
+	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
 	import { mdiDelete, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -274,6 +292,7 @@ export const SequentialEdit: Story = {
 	args: {
 		suffix: 'server-bulk-actions-sequential',
 		caption: 'Liste des patients',
+		headers,
 		serverItemsLength: baseItems.length,
 		showSelect: true,
 		selectionKey: 'id',
@@ -281,7 +300,7 @@ export const SequentialEdit: Story = {
 		...commonTableEventArgs(),
 	},
 	render: args => ({
-		components: { SyServerTable, DialogBox, SyTextField, SySelect },
+		components: { SyServerTable, DialogBox, SyTextField, SySelect, VBtn },
 		setup() {
 			const { items, state, StateEnum } = useServerEditingDemo(baseItems)
 			const selected = ref<number[]>([])
@@ -312,11 +331,11 @@ export const SequentialEdit: Story = {
 				clearAfter()
 			}
 
-			return { args, headers, items, state, StateEnum, selected, open, drafts, index, current, position, statutOptions, openEdit, prev, next, apply, mdiPencil, mdiChevronLeft, mdiChevronRight }
+			return { args, items, state, StateEnum, selected, open, drafts, index, current, position, statutOptions, openEdit, prev, next, apply, mdiPencil, mdiChevronLeft, mdiChevronRight }
 		},
 		template: `
 			<div>
-				<SyServerTable v-bind="args" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
+				<SyServerTable v-bind="args" v-model="selected" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 					<template #bulk-actions="{ selected, count, clearSelection }">
 						<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
 							Modifier {{ count }} ligne(s)
@@ -346,7 +365,7 @@ export const SequentialEdit: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<SyServerTable suffix="server-bulk-actions-sequential" caption="Liste des patients" show-select selection-key="id" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
+	<SyServerTable suffix="server-bulk-actions-sequential" caption="Liste des patients" show-select selection-key="id" hide-default-footer v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 		<template #bulk-actions="{ selected, count, clearSelection }">
 			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
 				Modifier {{ count }} ligne(s)
@@ -377,7 +396,8 @@ export const SequentialEdit: Story = {
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
 	import { SyServerTable, DialogBox, SyTextField, SySelect } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+	import { VBtn } from 'vuetify/components'
+	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
 	import { mdiChevronLeft, mdiChevronRight, mdiPencil } from '@mdi/js'
 
 	const headers = [

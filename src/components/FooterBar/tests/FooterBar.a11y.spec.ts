@@ -28,4 +28,22 @@ describe('FooterBar – accessibility (axe)', () => {
 
 		wrapper.unmount()
 	})
+
+	// Les slots prepend et append sont rendus dans la liste des liens :
+	// leur contenu doit être un <li> (règle axe « list »).
+	it('has no axe violations with an image in the prepend slot', async () => {
+		const wrapper = mount(FooterBar, {
+			slots: {
+				prepend: '<li class="d-flex mx-4"><img src="numero_3608.svg" alt="au 3608 : Service gratuit + prix appel"></li>',
+			},
+			attachTo: document.body,
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'FooterBar – prepend slot', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })

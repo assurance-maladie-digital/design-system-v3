@@ -21,6 +21,10 @@ const meta = {
 	},
 	argTypes: {
 		...commonTableArgTypes,
+		items: {
+			description: 'Lignes gérées par la story pour appliquer les modifications et suppressions.',
+			control: false,
+		},
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
@@ -52,6 +56,7 @@ export const Default: Story = {
 	args: {
 		suffix: 'row-editing',
 		editable: true,
+		headers,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
 		...commonTableEventArgs(),
@@ -72,12 +77,11 @@ export const Default: Story = {
 				items.value = items.value.filter(i => i.id !== item.id)
 			}
 
-			return { args, headers, items, onSave, onDelete, mdiPencil, mdiDelete, mdiCheck, mdiClose }
+			return { args, items, onSave, onDelete, mdiPencil, mdiDelete, mdiCheck, mdiClose }
 		},
 		template: `
 			<SyTable
 				v-bind="args"
-				:headers="headers"
 				:items="items"
 				@save="onSave"
 				@delete="onDelete"
@@ -139,7 +143,7 @@ export const Default: Story = {
 		{ title: 'Nom', key: 'lastname', editable: true },
 		{ title: 'Prénom', key: 'firstname', editable: true },
 		{ title: 'Email', key: 'email', editable: true },
-		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' },
+		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' as const },
 	]
 
 	const items = ref([
@@ -148,14 +152,14 @@ export const Default: Story = {
 	])
 
 	// SyTable ne mute jamais \`items\` : on persiste nous-mêmes l'item modifié
-	function onSave(updated) {
+	function onSave(updated: Record<string, unknown>) {
 		const index = items.value.findIndex(i => i.id === updated.id)
 		if (index !== -1) {
 			items.value[index] = { ...items.value[index], ...updated }
 		}
 	}
 
-	function onDelete(item) {
+	function onDelete(item: Record<string, unknown>) {
 		items.value = items.value.filter(i => i.id !== item.id)
 	}
 </script>
@@ -173,6 +177,7 @@ export const CustomEditor: Story = {
 	args: {
 		suffix: 'row-editing-custom',
 		editable: true,
+		headers,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
 		...commonTableEventArgs(),
@@ -189,12 +194,17 @@ export const CustomEditor: Story = {
 				}
 			}
 
-			return { args, headers, items, onSave, mdiPencil, mdiDelete, mdiCheck, mdiClose }
+			function updateLastName(event: Event, update: (value: string) => void) {
+				if (event.target instanceof HTMLInputElement) {
+					update(event.target.value)
+				}
+			}
+
+			return { args, items, onSave, updateLastName, mdiPencil, mdiCheck, mdiClose }
 		},
 		template: `
 			<SyTable
 				v-bind="args"
-				:headers="headers"
 				:items="items"
 				@save="onSave"
 			>
@@ -203,7 +213,7 @@ export const CustomEditor: Story = {
 						:value="value"
 						:aria-label="column.title"
 						style="width:100%;padding:4px;border:1px solid #767676;border-radius:4px;background:#fff"
-						@input="update($event.target.value)"
+						@input="updateLastName($event, update)"
 					>
 				</template>
 				<template #item.actions="{ isEditing, edit, save, cancel }">
@@ -239,7 +249,7 @@ export const CustomEditor: Story = {
 				:value="value"
 				:aria-label="column.title"
 				style="width:100%;padding:4px;border:1px solid #767676;border-radius:4px;background:#fff"
-				@input="update($event.target.value)"
+				@input="updateLastName($event, update)"
 			>
 		</template>
 		<template #item.actions="{ isEditing, edit, save, cancel }">
@@ -267,7 +277,7 @@ export const CustomEditor: Story = {
 		{ title: 'Nom', key: 'lastname', editable: true },
 		{ title: 'Prénom', key: 'firstname', editable: true },
 		{ title: 'Email', key: 'email', editable: true },
-		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' },
+		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' as const },
 	]
 
 	const items = ref([
@@ -275,10 +285,16 @@ export const CustomEditor: Story = {
 		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
 	])
 
-	function onSave(updated) {
+	function onSave(updated: Record<string, unknown>) {
 		const index = items.value.findIndex(i => i.id === updated.id)
 		if (index !== -1) {
 			items.value[index] = { ...items.value[index], ...updated }
+		}
+	}
+
+	function updateLastName(event: Event, update: (value: string) => void) {
+		if (event.target instanceof HTMLInputElement) {
+			update(event.target.value)
 		}
 	}
 </script>
@@ -287,6 +303,12 @@ export const CustomEditor: Story = {
 		],
 	},
 }
+
+const editHeaders = [
+	{ title: 'Prénom', key: 'firstname', editable: true },
+	{ title: 'Naissance', key: 'birthdate', editable: true },
+	{ title: 'Actions', key: 'actions', sortable: false, align: 'end' as const },
+]
 
 /**
  * Éditer une colonne dont la valeur est **non primitive** (ici une `Date`), via
@@ -301,6 +323,7 @@ export const CustomEditor: Story = {
 export const NonPrimitiveEditor: Story = {
 	args: {
 		suffix: 'row-editing-nonprimitive',
+		headers: editHeaders,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
@@ -314,11 +337,6 @@ export const NonPrimitiveEditor: Story = {
 				{ id: 2, firstname: 'Étienne', birthdate: new Date('1990-11-30') },
 			]
 			const items = ref([...rows])
-			const editHeaders = [
-				{ title: 'Prénom', key: 'firstname', editable: true },
-				{ title: 'Naissance', key: 'birthdate', editable: true },
-				{ title: 'Actions', key: 'actions', sortable: false, align: 'end' as const },
-			]
 			function onSave(updated: Record<string, unknown>) {
 				const index = items.value.findIndex(i => i.id === updated.id)
 				if (index !== -1) {
@@ -337,10 +355,10 @@ export const NonPrimitiveEditor: Story = {
 				return new Date(yyyy, mm - 1, dd)
 			}
 
-			return { args, editHeaders, items, onSave, dateToStr, strToDate, mdiCheck, mdiClose, mdiPencil }
+			return { args, items, onSave, dateToStr, strToDate, mdiCheck, mdiClose, mdiPencil }
 		},
 		template: `
-			<SyTable v-bind="args" :headers="editHeaders" :items="items" @save="onSave">
+			<SyTable v-bind="args" :items="items" @save="onSave">
 				<!-- Rendu hors édition d'une valeur objet : via #item.<colonne> -->
 				<template #item.birthdate="{ item }">
 					{{ item.birthdate.toLocaleDateString('fr-FR') }}
@@ -400,7 +418,7 @@ export const NonPrimitiveEditor: Story = {
 	const headers = [
 		{ title: 'Prénom', key: 'firstname', editable: true },
 		{ title: 'Naissance', key: 'birthdate', editable: true },
-		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' },
+		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' as const },
 	]
 
 	const items = ref([
@@ -410,17 +428,17 @@ export const NonPrimitiveEditor: Story = {
 
 	// La valeur est une Date (non primitive) : DatePicker du DS via le slot #edit,
 	// avec conversion Date <-> chaîne « DD/MM/YYYY »
-	const dateToStr = (d) => d instanceof Date
+	const dateToStr = (d: unknown) => d instanceof Date
 		? [String(d.getDate()).padStart(2, '0'), String(d.getMonth() + 1).padStart(2, '0'), d.getFullYear()].join('/')
 		: ''
-	const strToDate = (s) => {
+	const strToDate = (s: unknown) => {
 		if (typeof s !== 'string') return null
 		const [dd, mm, yyyy] = s.split('/').map(Number)
 		if (!dd || !mm || !yyyy) return null
 		return new Date(yyyy, mm - 1, dd)
 	}
 
-	function onSave(updated) {
+	function onSave(updated: Record<string, unknown>) {
 		const index = items.value.findIndex(i => i.id === updated.id)
 		if (index !== -1) {
 			items.value[index] = { ...items.value[index], ...updated }
