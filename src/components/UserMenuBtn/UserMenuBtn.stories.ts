@@ -729,108 +729,124 @@ export const WithPsInfo: Story = {
 			{
 				name: 'Template',
 				code: `<template>
+  <div style="display: flex; justify-content: center; height: 500px;">
     <UserMenuBtn
-        v-model="selected"
-        :hide-user-icon="false"
-        :hide-logout-btn="true"
-        :is-mobile-view="true"
+      v-model="selected"
+      :full-name="userDetails.userName"
+      :hide-user-icon="false"
+      :hide-logout-btn="true"
+      :additional-information="secondaryInfo"
     >
-        <template #default>
-            <div class="pa-4">
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Nom</div>
-                    <div class="text-body-2">{{ userName }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Profil</div>
-                    <div class="text-body-2">{{ profil }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">RPPS</div>
-                    <div class="text-body-2">{{ rpps }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">ADELI</div>
-                    <div class="text-body-2">{{ adeli }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Email</div>
-                    <div class="text-body-2">{{ email }}</div>
-                </div>
-                <p class="mt-6 mb-0 text-caption">
-                    Dernière connexion : {{ lastConnexion }}
-                </p>
-            </div>
+      <template #default>
+        <div style="width: 330px">
+          <div class="ma-6">
+            <p><strong>{{ userDetails.userName }}</strong></p>
+            <p>N° RPPS : {{ userDetails.rpps }}</p>
+            <p>N° ADELI : {{ userDetails.adeli }}</p>
+            <p>Adresse email : {{ userDetails.email }}</p>
+            <p class="last-connection text-caption">
+              Dernière connexion : {{ userDetails.lastConnexion }}
+            </p>
+          </div>
 
-            <div class="d-flex bg-primary-lighten-3" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
-                <v-btn
-                    class="text-none font-weight-bold flex-grow-1"
-                    color="primary"
-                    variant="text"
-                    rounded="0"
-                    @click="handleAccount"
-                >
-                    Mon Compte
-                </v-btn>
+          <div class="buttons d-flex ma-6">
+            <v-btn
+              class="flex-grow-1"
+              color="primary"
+              variant="text"
+              @click="handleAccount"
+            >
+              Mon compte
+            </v-btn>
 
-                <v-btn
-                    class="text-none font-weight-bold flex-grow-1"
-                    color="primary"
-                    variant="text"
-                    rounded="0"
-                    @click="handleLogout"
-                >
-                    Déconnexion
-                </v-btn>
-            </div>
-        </template>
+            <v-btn
+              class="flex-grow-1"
+              color="primary"
+              variant="text"
+              @click="handleLogout"
+            >
+              Déconnexion
+            </v-btn>
+          </div>
+        </div>
+      </template>
     </UserMenuBtn>
+  </div>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-    import { ref } from 'vue'
-    import { UserMenuBtn } from '@cnamts/synapse'
+import { ref } from 'vue'
+import { UserMenuBtn } from '@cnamts/synapse'
 
-    const selected = ref(null)
-    const userName = ref('userName')
-    const profil = ref('profil')
-    const rpps = ref('RPPS')
-    const adeli = ref('ADELI')
-    const email = ref('email')
-    const lastConnexion = ref('01/01/2024')
+const selected = ref(null)
 
-    const handleAccount = () => {
-        // Navigation vers le compte utilisateur
-    }
+const userDetails = {
+  userName: 'Georges Duval',
+  profil: 'Médecin généraliste',
+  rpps: '12345678910',
+  adeli: '123456789',
+  email: 'georges.duval@aphp.fr',
+  adresse: {
+    numero: '3',
+    type: 'rue',
+    nom: 'Victor-Hugo',
+    codePostal: '78470',
+    commune: 'Saint-Rémy-lès-Chevreuse',
+  },
+  lastConnexion: '01/06/2024 à 10:00',
+}
 
-    const handleLogout = () => {
-        // Déconnexion de l'utilisateur
-    }
+const secondaryInfo = [
+  userDetails.profil,
+  \`\${userDetails.adresse.numero} \${userDetails.adresse.type} \${userDetails.adresse.nom}\`,
+  \`\${userDetails.adresse.codePostal} \${userDetails.adresse.commune}\`,
+].join('\\n')
+
+const handleAccount = () => {
+  // Navigation vers le compte utilisateur
+}
+
+const handleLogout = () => {
+  // Déconnexion de l'utilisateur
+}
 </script>`,
 			},
 		],
 	},
+
 	args: {
 		modelValue: null,
-		hideLogoutBtn: true,
-		hideUserIcon: false,
-		isMobileView: true,
 		vuetifyOptions: undefined,
 	},
+
 	render: (args) => {
 		return {
 			components: { UserMenuBtn },
+
 			setup() {
 				const userDetails = {
-					userName: 'John Doe',
+					userName: 'Georges Duval',
 					profil: 'Médecin généraliste',
-					rpps: 'RPPS',
-					adeli: 'ADELI',
-					email: 'johndoe@gmail.com',
-					lastConnexion: '01/01/2024',
+					rpps: '12345678910',
+					adeli: '123456789',
+					email: 'georges.duval@aphp.fr',
+					adresse: {
+						numero: '3',
+						type: 'rue',
+						nom: 'Victor-Hugo',
+						codePostal: '78470',
+						commune: 'Saint-Rémy-lès-Chevreuse',
+					},
+					lastConnexion: '01/06/2024 à 10:00',
 				}
+
+				const secondaryInfo = [
+					userDetails.profil,
+					`${userDetails.adresse.numero} ${userDetails.adresse.type} ${userDetails.adresse.nom}`,
+					`${userDetails.adresse.codePostal} ${userDetails.adresse.commune}`,
+				].join('\n')
 
 				const handleAccount = () => {
 					// Navigation vers le compte utilisateur
@@ -840,62 +856,59 @@ export const WithPsInfo: Story = {
 					// Déconnexion de l'utilisateur
 				}
 
-				return { args, userDetails, handleAccount, handleLogout }
+				return {
+					args: {
+						...args,
+						fullName: userDetails.userName,
+						hideUserIcon: false,
+						hideLogoutBtn: true,
+					},
+					userDetails,
+					secondaryInfo,
+					handleAccount,
+					handleLogout,
+				}
 			},
+
 			template: `
-<div style="display: flex; justify-content: center; height: 500px;">
-    <UserMenuBtn v-bind="args">
-        <template #default>
-            <div class="pa-4">
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Nom</div>
-                    <div class="text-body-2">{{ userDetails.userName }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Profil</div>
-                    <div class="text-body-2">{{ userDetails.profil }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">RPPS</div>
-                    <div class="text-body-2">{{ userDetails.rpps }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">ADELI</div>
-                    <div class="text-body-2">{{ userDetails.adeli }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Email</div>
-                    <div class="text-body-2">{{ userDetails.email }}</div>
-                </div>
-                <p class="mt-6 mb-0 text-caption">
-                    Dernière connexion : {{ userDetails.lastConnexion }}
-                </p>
-            </div>
+              <div style="display: flex; justify-content: center; height: 500px;">
+                <UserMenuBtn v-bind="args" :additional-information="secondaryInfo">
+                  <template #default>
+                    <div style="width: 330px">
+                      <div class="ma-6">
+                        <p><strong>{{ userDetails.userName }}</strong></p>
+                        <p>N° RPPS : {{ userDetails.rpps }}</p>
+                        <p>N° ADELI : {{ userDetails.adeli }}</p>
+                        <p>Adresse email : {{ userDetails.email }}</p>
+                        <p class="last-connection text-caption">
+                          Dernière connexion : {{ userDetails.lastConnexion }}
+                        </p>
+                      </div>
 
-            <div class="d-flex bg-primary-lighten-3" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
-                <VBtn
-                    class="text-none font-weight-bold flex-grow-1"
-                    color="primary"
-                    variant="text"
-                    rounded="0"
-                    @click="handleAccount"
-                >
-                    Mon Compte
-                </VBtn>
+                      <div class="buttons d-flex ma-6">
+                        <VBtn
+                            class="flex-grow-1"
+                            color="primary"
+                            variant="text"
+                            @click="handleAccount"
+                        >
+                          Mon compte
+                        </VBtn>
 
-                <VBtn
-                    class="text-none font-weight-bold flex-grow-1"
-                    color="primary"
-                    variant="text"
-                    rounded="0"
-                    @click="handleLogout"
-                >
-                    Déconnexion
-                </VBtn>
-            </div>
-        </template>
-    </UserMenuBtn>
-</div>`,
+                        <VBtn
+                            class="flex-grow-1"
+                            color="primary"
+                            variant="text"
+                            @click="handleLogout"
+                        >
+                          Déconnexion
+                        </VBtn>
+                      </div>
+                    </div>
+                  </template>
+                </UserMenuBtn>
+              </div>
+            `,
 		}
 	},
 }

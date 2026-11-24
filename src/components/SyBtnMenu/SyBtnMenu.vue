@@ -228,7 +228,7 @@
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="subtitle text-grey-darken-2 font-weight-regular"
+								class="subtitle text-grey-darken-2 font-weight-regular text-right"
 							>
 								{{ props.secondaryInfo }}
 							</span>
@@ -336,6 +336,7 @@
 .subtitle {
 	font-size: 0.875rem;
 	line-height: 1.5;
+	white-space: pre-line;
 }
 
 .item-title {
