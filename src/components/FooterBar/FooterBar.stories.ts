@@ -1380,17 +1380,16 @@ export const WithPhoneNumber: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-<template>
-   <FooterBar :link-items="args.items" prepend>
-      <template #prepend>
-          <img
-              :src="imgUrl"
-              alt="au 3608 : Service gratuit + prix appel"
-              style="cursor: pointer;"
-          />
-       </template>
-   </FooterBar>
+				code: `<template>
+	<FooterBar :link-items="items">
+		<template #prepend>
+			<img
+				:src="imgUrl"
+				alt="au 3608 : Service gratuit + prix appel"
+				class="mx-4"
+			/>
+		</template>
+	</FooterBar>
 </template>
 				`,
 			},
@@ -1399,7 +1398,25 @@ export const WithPhoneNumber: Story = {
 				code: `<script setup lang="ts">
 	import { FooterBar } from '@cnamts/synapse'
 	import imgUrl from '@cnamts/synapse/assets/amelipro/img/numero_3608.svg'
-	
+
+	const items = [
+		{
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
 </script>
 				`,
 			},
@@ -1422,7 +1439,6 @@ export const WithPhoneNumber: Story = {
                       class="mx-4"
                       :src="imgUrl"
                       alt="au 3608 : Service gratuit + prix appel"
-                      style="cursor: pointer;"
                   />
                 </template>
               </FooterBar>

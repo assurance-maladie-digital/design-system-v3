@@ -1,27 +1,27 @@
-# FooterBar — correction du thème Amelipro et mise à jour du visuel téléphonique
+# FooterBar — correction du thème Amelipro et nouveau visuel du numéro de téléphone
 
-Le composant `FooterBar` bénéficie d'une correction graphique pour le thème Amelipro (`ap`).
+## Couleur de fond en thème `ap`
 
-La couleur de fond du footer a été modifiée pour utiliser le token `cyan-darken60`, afin de correspondre à la couleur attendue (`#004259`) et d'améliorer le contraste avec le texte blanc.
+En thème `ap`, le fond de `FooterBar` utilise désormais le token `cyan-darken60` (`#004259`), au lieu de la couleur `primary` (`#006386`). Le contraste du texte blanc passe de 6,71:1 à 10,92:1.
 
-Le visuel du numéro de téléphone Amelipro a également été remplacé. Le nouvel asset `numero_3608.svg` est un véritable SVG vectoriel, offrant un rendu plus net et une nouvelle mise en page. Ses dimensions passent de 229 × 30 px à 107 × 37 px.
+Les thèmes `cnam`, `pa` et `ap2026` ne changent pas.
 
-**Changement de contrat :**
+## Nouveau visuel du numéro de téléphone
 
-- Le changement de couleur du footer en thème `ap` est non cassant : il est visible par les consommateurs, sans modification de l'API du composant.
-- Les thèmes `cnam`, `pa` et `ap2026` ne sont pas impactés.
-- L'ancien asset `cartouche_nouveauTEL.svg` est supprimé et remplacé par `numero_3608.svg`. Ce changement est cassant pour les projets qui importent directement l'ancien fichier depuis `@cnamts/synapse`.
+Un nouveau visuel, `numero_3608.svg`, est disponible pour afficher le numéro 3608 dans le slot `prepend`. C'est un SVG vectoriel, plus net que l'ancien `cartouche_nouveauTEL.svg`, qui contenait une image PNG. Ses dimensions passent de 229 × 30 px à 107 × 33 px.
+
+L'ancien visuel `cartouche_nouveauTEL.svg` est conservé : les imports existants continuent de fonctionner.
+
+**Changement de contrat :** changement visuel, non cassant. L'API de `FooterBar` ne change pas.
 
 ## Conduite à tenir
 
-Aucune action n'est nécessaire si votre projet utilise uniquement le composant `FooterBar` sans importer directement l'ancien visuel téléphonique.
+Aucune action n'est nécessaire.
 
-En revanche, si votre projet importe `cartouche_nouveauTEL.svg`, vous devez mettre à jour cet import pour utiliser le nouvel asset :
+Pour utiliser le nouveau visuel, remplacez l'import de l'ancien fichier :
 
 ```ts
 import imgUrl from '@cnamts/synapse/assets/amelipro/img/numero_3608.svg'
 ```
 
-Si vous utilisez le slot `prepend` de `FooterBar` pour afficher le numéro de téléphone, pensez également à vérifier le rendu et les dimensions du visuel après cette mise à jour.
-
-Relisez les notes de version à chaque mise à jour afin d'identifier les éventuelles adaptations nécessaires dans votre projet.
+Le nouveau visuel est plus étroit et plus haut que l'ancien : vérifiez le rendu du slot `prepend` et ajustez l'espacement si besoin (la story « WithPhoneNumber » utilise la classe `mx-4`).
