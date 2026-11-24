@@ -32,7 +32,6 @@ export const knownBrokenSnippets: readonly string[] = [
 	'components/FilterInline/FilterInline.stories.ts:Boolean',
 	'components/FilterInline/FilterInline.stories.ts:Default',
 	'components/FilterInline/FilterInline.stories.ts:ManyFields',
-	'components/FooterBar/FooterBar.stories.ts:WithPhoneNumber',
 	'components/HeaderBar/HeaderBar.stories.ts:WithRightMenu',
 	'components/HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.stories.ts:Default',
 	'components/HeaderNavigationBar/HeaderNavigationBar.stories.ts:WithTabConfirmation',

@@ -4,7 +4,7 @@ import CollapsibleListComponent from '../CollapsibleList/CollapsibleList.vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { fn } from 'storybook/test'
 import { mdiLinkedin, mdiFacebook, mdiYoutube } from '@mdi/js'
-import imgUrl from '@/assets/amelipro/img/cartouche_nouveauTEL.svg'
+import imgUrl from '@/assets/amelipro/img/numero_3608.svg'
 import ameliProLogo from '@/assets/amelipro/img/logo-amelipro.svg'
 import { useTheme } from 'vuetify'
 import { addons } from 'storybook/manager-api'
@@ -235,13 +235,13 @@ const meta = {
 			control: {
 				type: 'text',
 			},
-			description: 'Slot pour ajouter du contenu avant les liens du pied de page.',
+			description: 'Slot pour ajouter du contenu avant les liens du pied de page. Le slot est rendu dans la liste des liens (`<ul>`) : son contenu doit être un ou plusieurs éléments `<li>`.',
 		},
 		append: {
 			control: {
 				type: 'text',
 			},
-			description: 'Slot pour ajouter du contenu après les liens du pied de page.',
+			description: 'Slot pour ajouter du contenu après les liens du pied de page. Le slot est rendu dans la liste des liens (`<ul>`) : son contenu doit être un ou plusieurs éléments `<li>`.',
 		},
 		logo: {
 			control: {
@@ -1381,15 +1381,15 @@ export const WithPhoneNumber: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-      <FooterBar :link-items="args.items" prepend>
-                <template #prepend>
-                  <img
-                      :src="imgUrl"
-                      alt="au 3608 : Service gratuit + prix appel"
-                      style="cursor: pointer;"
-                  />
-                </template>
-              </FooterBar>
+	<FooterBar :link-items="items">
+		<template #prepend>
+			<li class="d-flex mx-4">
+				<img
+					:src="imgUrl"
+					alt="au 3608 : Service gratuit + prix appel"
+				/>
+			</li>
+		</template>
 	</FooterBar>
 </template>
 				`,
@@ -1398,9 +1398,10 @@ export const WithPhoneNumber: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 	import { FooterBar } from '@cnamts/synapse'
-	
+	import imgUrl from '@cnamts/synapse/assets/amelipro/img/numero_3608.svg'
+
 	const items = [
-        {
+		{
 			text: 'Plan du site',
 			href: '/sitemap',
 		},
@@ -1435,11 +1436,12 @@ export const WithPhoneNumber: Story = {
 			template: `
               <FooterBar :link-items="args.items" prepend>
                 <template #prepend>
-                  <img
-                      :src="imgUrl"
-                      alt="au 3608 : Service gratuit + prix appel"
-                      style="cursor: pointer;"
-                  />
+                  <li class="d-flex mx-4">
+                    <img
+                        :src="imgUrl"
+                        alt="au 3608 : Service gratuit + prix appel"
+                    />
+                  </li>
                 </template>
               </FooterBar>
             `,

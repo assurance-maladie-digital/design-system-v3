@@ -1,5 +1,5 @@
 import { A11yComplianceEnum } from './A11yComplianceEnum'
-import imgUrl from '@/assets/amelipro/img/cartouche_nouveauTEL.svg'
+import imgUrl from '@/assets/amelipro/img/numero_3608.svg'
 export const locales = {
 	a11yLabel: (complianceLabel: string): string => `Accessibilité\xa0: ${complianceLabel}`,
 	aboutLabel: 'À propos',
