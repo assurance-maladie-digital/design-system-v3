@@ -5,7 +5,7 @@
 	import useHeaderResponsiveMode from '@/components/HeaderBar/useHeaderResponsiveMode'
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { computed, ref } from 'vue'
-	import { type RouteLocationRaw } from 'vue-router'
+	import type { RouteLocationRaw } from 'vue-router'
 	import HorizontalNavbar from './HorizontalNavbar/HorizontalNavbar.vue'
 	import type { NavigationItem } from './types'
 
