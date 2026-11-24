@@ -21,6 +21,18 @@ const meta = {
 	},
 	argTypes: {
 		...commonTableArgTypes,
+		items: {
+			description: 'Lignes gérées par la story, qui simule le chargement serveur et applique les modifications.',
+			control: false,
+		},
+		serverItemsLength: {
+			description: 'Calculé par la story à partir des lignes chargées.',
+			control: false,
+		},
+		loading: {
+			description: 'Piloté par la story pendant le chargement simulé.',
+			control: false,
+		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
@@ -53,7 +65,7 @@ export const Default: Story = {
 		caption: 'Utilisateurs modifiables ligne par ligne',
 		hideCaption: true,
 		suffix: 'server-row-editing',
-		serverItemsLength: baseItems.length,
+		headers,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
@@ -75,12 +87,11 @@ export const Default: Story = {
 				items.value = items.value.filter(i => i.id !== item.id)
 			}
 
-			return { args, headers, items, state, StateEnum, onSave, onDelete, mdiPencil, mdiDelete, mdiCheck, mdiClose }
+			return { args, items, state, StateEnum, onSave, onDelete, mdiPencil, mdiDelete, mdiCheck, mdiClose }
 		},
 		template: `
 			<SyServerTable
 				v-bind="args"
-				:headers="headers"
 				:items="items"
 				:server-items-length="items.length"
 				:loading="state === StateEnum.PENDING"
@@ -194,7 +205,7 @@ export const CustomEditor: Story = {
 		caption: 'Utilisateurs modifiables avec éditeur personnalisé',
 		hideCaption: true,
 		suffix: 'server-row-editing-custom',
-		serverItemsLength: baseItems.length,
+		headers,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
@@ -212,12 +223,11 @@ export const CustomEditor: Story = {
 				}
 			}
 
-			return { args, headers, items, state, StateEnum, onSave, mdiPencil, mdiDelete, mdiCheck, mdiClose }
+			return { args, items, state, StateEnum, onSave, mdiPencil, mdiDelete, mdiCheck, mdiClose }
 		},
 		template: `
 			<SyServerTable
 				v-bind="args"
-				:headers="headers"
 				:items="items"
 				:server-items-length="items.length"
 				:loading="state === StateEnum.PENDING"
@@ -340,12 +350,18 @@ export const CustomEditor: Story = {
  * Le `DatePicker` travaille avec une **chaîne formatée** (`format`) : on convertit
  * donc `Date` ↔ chaîne dans le slot pour conserver une `Date` en donnée.
  */
+const editHeaders = [
+	{ title: 'Prénom', key: 'firstname', editable: true },
+	{ title: 'Naissance', key: 'birthdate', editable: true },
+	{ title: 'Actions', key: 'actions', sortable: false, align: 'end' as const },
+]
+
 export const NonPrimitiveEditor: Story = {
 	args: {
 		caption: 'Utilisateurs modifiables avec valeurs non primitives',
 		hideCaption: true,
 		suffix: 'server-row-editing-nonprimitive',
-		serverItemsLength: 2,
+		headers: editHeaders,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
@@ -359,11 +375,6 @@ export const NonPrimitiveEditor: Story = {
 				{ id: 2, firstname: 'Étienne', birthdate: new Date('1990-11-30') },
 			]
 			const { items, state, StateEnum } = useServerEditingDemo(rows)
-			const editHeaders = [
-				{ title: 'Prénom', key: 'firstname', editable: true },
-				{ title: 'Naissance', key: 'birthdate', editable: true },
-				{ title: 'Actions', key: 'actions', sortable: false, align: 'end' as const },
-			]
 			function onSave(updated: Record<string, unknown>) {
 				const index = items.value.findIndex(i => i.id === updated.id)
 				if (index !== -1) {
@@ -382,12 +393,11 @@ export const NonPrimitiveEditor: Story = {
 				return new Date(yyyy, mm - 1, dd)
 			}
 
-			return { args, editHeaders, items, state, StateEnum, onSave, dateToStr, strToDate, mdiCheck, mdiClose, mdiPencil }
+			return { args, items, state, StateEnum, onSave, dateToStr, strToDate, mdiCheck, mdiClose, mdiPencil }
 		},
 		template: `
 			<SyServerTable
 				v-bind="args"
-				:headers="editHeaders"
 				:items="items"
 				:server-items-length="items.length"
 				:loading="state === StateEnum.PENDING"
