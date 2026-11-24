@@ -207,7 +207,7 @@
 					v-model="phoneNumber"
 					v-maska="internalDialCode.mask"
 					:counter="internalDialCode.phoneLength"
-					:counter-value="(value?: string) => (value ? value.replace(/\D/g, '').length : 0)"
+					:counter-value="(value: string | number | null | undefined | string[]) => (value ? String(value).replace(/\D/g, '').length : 0)"
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="props.required"
 					:aria-required="props.required"
