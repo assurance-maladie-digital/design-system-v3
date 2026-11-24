@@ -69,11 +69,10 @@ describe('FooterBar - Visual regression tests', () => {
 			setup() {
 				return () => h('div', { class: 'v-theme--ap theme-ap' },
 					h(FooterBar, null, {
-						prepend: () => h('img', {
+						prepend: () => h('li', { class: 'd-flex mx-4' }, h('img', {
 							src: imgUrl,
 							alt: 'au 3608 : Service gratuit + prix appel',
-							class: 'mx-4',
-						}),
+						})),
 					}),
 				)
 			},

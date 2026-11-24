@@ -235,13 +235,13 @@ const meta = {
 			control: {
 				type: 'text',
 			},
-			description: 'Slot pour ajouter du contenu avant les liens du pied de page.',
+			description: 'Slot pour ajouter du contenu avant les liens du pied de page. Le slot est rendu dans la liste des liens (`<ul>`) : son contenu doit être un ou plusieurs éléments `<li>`.',
 		},
 		append: {
 			control: {
 				type: 'text',
 			},
-			description: 'Slot pour ajouter du contenu après les liens du pied de page.',
+			description: 'Slot pour ajouter du contenu après les liens du pied de page. Le slot est rendu dans la liste des liens (`<ul>`) : son contenu doit être un ou plusieurs éléments `<li>`.',
 		},
 		logo: {
 			control: {
@@ -1383,11 +1383,12 @@ export const WithPhoneNumber: Story = {
 				code: `<template>
 	<FooterBar :link-items="items">
 		<template #prepend>
-			<img
-				:src="imgUrl"
-				alt="au 3608 : Service gratuit + prix appel"
-				class="mx-4"
-			/>
+			<li class="d-flex mx-4">
+				<img
+					:src="imgUrl"
+					alt="au 3608 : Service gratuit + prix appel"
+				/>
+			</li>
 		</template>
 	</FooterBar>
 </template>
@@ -1435,11 +1436,12 @@ export const WithPhoneNumber: Story = {
 			template: `
               <FooterBar :link-items="args.items" prepend>
                 <template #prepend>
-                  <img
-                      class="mx-4"
-                      :src="imgUrl"
-                      alt="au 3608 : Service gratuit + prix appel"
-                  />
+                  <li class="d-flex mx-4">
+                    <img
+                        :src="imgUrl"
+                        alt="au 3608 : Service gratuit + prix appel"
+                    />
+                  </li>
                 </template>
               </FooterBar>
             `,
