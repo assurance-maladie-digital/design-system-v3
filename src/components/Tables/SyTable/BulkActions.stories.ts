@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import { computed, ref } from 'vue'
 import { mdiChevronLeft, mdiChevronRight, mdiDelete, mdiPencil } from '@mdi/js'
-import type { VDataTable } from 'vuetify/components'
+import { VBtn, type VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -23,9 +23,17 @@ const meta = {
 	},
 	argTypes: {
 		...commonTableArgTypes,
+		'items': {
+			description: 'Lignes gérées par la story pour appliquer les modifications et suppressions.',
+			control: false,
+		},
+		'modelValue': {
+			description: 'Sélection pilotée par les cases à cocher du tableau.',
+			control: false,
+		},
 		'bulk-actions': {
 			description: 'Barre affichée quand des lignes sont sélectionnées. Le composant ne fournit que la sélection ; **le projet rend ses propres actions** (éditer, supprimer, exporter…) et pilote leur UX (DialogBox, drawer, page…).',
-			control: undefined,
+			control: false,
 			table: {
 				category: 'slots',
 				type: { summary: 'slot', detail: '{ selected: Record<string, unknown>[], count: number, clearSelection: () => void }' },
@@ -88,13 +96,21 @@ export const Default: Story = {
 	args: {
 		suffix: 'bulk-actions',
 		caption: 'Liste des patients',
+		headers,
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
 		...commonTableEventArgs(),
 	},
+	argTypes: {
+		options: {
+			...commonTableArgTypes.options,
+			description: 'La story pilote les options pour afficher toutes les lignes dans le conteneur défilant.',
+			control: false,
+		},
+	},
 	render: args => ({
-		components: { SyTable, DialogBox, SySelect },
+		components: { SyTable, DialogBox, SySelect, VBtn },
 		setup() {
 			const items = ref([...manyItems])
 			const options = ref({ itemsPerPage: -1 })
@@ -133,13 +149,13 @@ export const Default: Story = {
 				clearAfter()
 			}
 
-			return { args, headers, items, options, selected, statutOptions, statut, editOpen, deleteOpen, openEdit, applyEdit, openDelete, applyDelete, mdiPencil, mdiDelete }
+			return { args, items, options, selected, statutOptions, statut, editOpen, deleteOpen, openEdit, applyEdit, openDelete, applyDelete, mdiPencil, mdiDelete }
 		},
 		template: `
 			<div>
 				<!-- Conteneur scrollable : la barre d'actions reste « sticky » en haut -->
 				<div style="max-height: 360px; overflow: auto; border-radius: 4px;">
-					<SyTable v-bind="args" v-model="selected" v-model:options="options" :headers="headers" :items="items">
+					<SyTable v-bind="args" v-model="selected" v-model:options="options" :items="items">
 						<template #bulk-actions="{ selected, count, clearSelection }">
 							<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
 								Modifier le statut ({{ count }})
@@ -169,7 +185,7 @@ export const Default: Story = {
 <template>
 	<!-- La barre d'actions groupées est « sticky » par défaut : elle reste visible
 	     en haut quand on fait défiler le tableau (désactivable via :sticky-bulk-actions="false"). -->
-	<SyTable suffix="bulk-actions" show-select selection-key="id" v-model="selected" :headers="headers" :items="items">
+	<SyTable suffix="bulk-actions" caption="Liste des patients" show-select selection-key="id" hide-default-footer v-model="selected" :headers="headers" :items="items">
 		<!-- Le projet rend ses propres actions ; le tableau ne fournit que la sélection -->
 		<template #bulk-actions="{ selected, count, clearSelection }">
 			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
@@ -199,6 +215,7 @@ export const Default: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyTable, DialogBox, SySelect } from '@cnamts/synapse'
+	import { VBtn } from 'vuetify/components'
 	import { mdiDelete, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -211,7 +228,7 @@ export const Default: Story = {
 		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com', statut: 'Actif' },
 		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com', statut: 'Inactif' },
 	])
-	const selected = ref([])
+	const selected = ref<number[]>([])
 	const statutOptions = [
 		{ text: 'Actif', value: 'Actif' },
 		{ text: 'Inactif', value: 'Inactif' },
@@ -223,8 +240,8 @@ export const Default: Story = {
 	// Édition : appliquer un statut commun à toute la sélection
 	const editOpen = ref(false)
 	const statut = ref('Actif')
-	const toEdit = ref([])
-	function openEdit(rows, clearSelection) {
+	const toEdit = ref<Record<string, unknown>[]>([])
+	function openEdit(rows: Record<string, unknown>[], clearSelection: () => void) {
 		toEdit.value = rows; clearAfter = clearSelection; statut.value = 'Actif'; editOpen.value = true
 	}
 	function applyEdit() {
@@ -235,8 +252,8 @@ export const Default: Story = {
 
 	// Suppression
 	const deleteOpen = ref(false)
-	const toDelete = ref([])
-	function openDelete(rows, clearSelection) {
+	const toDelete = ref<Record<string, unknown>[]>([])
+	function openDelete(rows: Record<string, unknown>[], clearSelection: () => void) {
 		toDelete.value = rows; clearAfter = clearSelection; deleteOpen.value = true
 	}
 	function applyDelete() {
@@ -261,13 +278,14 @@ export const SequentialEdit: Story = {
 	args: {
 		suffix: 'bulk-actions-sequential',
 		caption: 'Liste des patients',
+		headers,
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
 		...commonTableEventArgs(),
 	},
 	render: args => ({
-		components: { SyTable, DialogBox, SyTextField, SySelect },
+		components: { SyTable, DialogBox, SyTextField, SySelect, VBtn },
 		setup() {
 			const items = ref([...baseItems])
 			const selected = ref<number[]>([])
@@ -298,11 +316,11 @@ export const SequentialEdit: Story = {
 				clearAfter()
 			}
 
-			return { args, headers, items, selected, open, drafts, index, current, position, statutOptions, openEdit, prev, next, apply, mdiPencil, mdiChevronLeft, mdiChevronRight }
+			return { args, items, selected, open, drafts, index, current, position, statutOptions, openEdit, prev, next, apply, mdiPencil, mdiChevronLeft, mdiChevronRight }
 		},
 		template: `
 			<div>
-				<SyTable v-bind="args" v-model="selected" :headers="headers" :items="items">
+				<SyTable v-bind="args" v-model="selected" :items="items">
 					<template #bulk-actions="{ selected, count, clearSelection }">
 						<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
 							Modifier {{ count }} ligne(s)
@@ -363,6 +381,7 @@ export const SequentialEdit: Story = {
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
 	import { SyTable, DialogBox, SyTextField, SySelect } from '@cnamts/synapse'
+	import { VBtn } from 'vuetify/components'
 	import { mdiChevronLeft, mdiChevronRight, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -375,7 +394,7 @@ export const SequentialEdit: Story = {
 		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com', statut: 'Actif' },
 		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com', statut: 'Inactif' },
 	])
-	const selected = ref([])
+	const selected = ref<number[]>([])
 	const statutOptions = [
 		{ text: 'Actif', value: 'Actif' },
 		{ text: 'Inactif', value: 'Inactif' },
@@ -384,13 +403,19 @@ export const SequentialEdit: Story = {
 
 	let clearAfter = () => {}
 	const open = ref(false)
-	const drafts = ref([])
+	const drafts = ref<typeof items.value>([])
 	const index = ref(0)
 	const current = computed(() => drafts.value[index.value])
 	const position = computed(() => 'Ligne ' + (index.value + 1) + ' sur ' + drafts.value.length)
 
-	function openEdit(rows, clearSelection) {
-		drafts.value = rows.map(r => ({ ...r })); index.value = 0; clearAfter = clearSelection; open.value = true
+	function openEdit(rows: Record<string, unknown>[], clearSelection: () => void) {
+		drafts.value = rows.flatMap((row) => {
+			const item = items.value.find(item => item.id === row.id)
+			return item ? [{ ...item }] : []
+		})
+		index.value = 0
+		clearAfter = clearSelection
+		open.value = drafts.value.length > 0
 	}
 	function prev() { if (index.value > 0) index.value-- }
 	function next() { if (index.value < drafts.value.length - 1) index.value++ }
