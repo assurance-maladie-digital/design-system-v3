@@ -12,6 +12,39 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('UserMenuBtn - Visual regression tests', () => {
+	it('displays secondary information and menu item labels on multiple lines', () => {
+		cy.viewport(1280, 720)
+
+		cy.mountWithVuetify(UserMenuBtn, {
+			props: {
+				fullName: 'Georges Duval',
+				additionalInformation: 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse',
+				menuItems: [{ text: 'Informations détaillées sur le compte professionnel', value: 'professional-account' }],
+				hideLogoutBtn: true,
+				vuetifyOptions: {
+					menu: { width: '220px', minWidth: '220px', maxWidth: '220px' },
+				},
+			},
+		})
+
+		cy.get('.subtitle').should(($subtitle) => {
+			const subtitle = $subtitle[0]!
+			const lineHeight = Number.parseFloat(getComputedStyle(subtitle).lineHeight)
+
+			expect(getComputedStyle(subtitle).whiteSpace).to.equal('pre-line')
+			expect(subtitle.getBoundingClientRect().height).to.be.greaterThan(lineHeight * 2)
+		})
+
+		cy.get('.sy-user-menu-btn').click()
+		cy.get('.item-title').should(($title) => {
+			const title = $title[0]!
+			const lineHeight = Number.parseFloat(getComputedStyle(title).lineHeight)
+
+			expect(['normal', 'wrap']).to.include(getComputedStyle(title).whiteSpace)
+			expect(title.getBoundingClientRect().height).to.be.greaterThan(lineHeight)
+		})
+	})
+
 	it('displays the user menu button by default', () => {
 		cy.mountWithVuetify(UserMenuBtn, {
 			props: { menuItems: defaultMenuItems },
