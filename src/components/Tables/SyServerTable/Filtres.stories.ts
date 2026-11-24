@@ -136,8 +136,8 @@ export const ServerFilterByText: Story = {
 		<script setup lang="ts">
 		  import { ref } from 'vue'
 		  import { SyServerTable } from '@cnamts/synapse'
-		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-		  import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+		  import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+		  import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
 
 		  interface User {
 			firstname: string
@@ -342,8 +342,8 @@ export const ServerFilterByNumber: Story = {
 		<script setup lang="ts">
 		  import { ref } from 'vue'
 		  import { SyServerTable } from '@cnamts/synapse'
-		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-		  import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+		  import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+		  import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
 
 		  interface User {
 			name: string
@@ -557,8 +557,8 @@ export const ServerFilterBySelect: Story = {
 		<script setup lang="ts">
 		  import { ref } from 'vue'
 		  import { SyServerTable } from '@cnamts/synapse'
-		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-		  import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+		  import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+		  import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
 
 		  interface User {
 			name: string
@@ -1237,8 +1237,8 @@ export const ServerFilterByExacteDate: Story = {
 		<script setup lang="ts">
 		  import { ref } from 'vue'
 		  import { SyServerTable } from '@cnamts/synapse'
-		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-		  import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+		  import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+		  import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
 
 		  interface User {
 			name: string
@@ -1425,8 +1425,8 @@ export const ServerFilterByPeriod: Story = {
 		<script setup lang="ts">
 		  import { ref } from 'vue'
 		  import { SyServerTable } from '@cnamts/synapse'
-		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-		  import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+		  import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+		  import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
 
 		  interface User {
 			name: string
@@ -1651,8 +1651,8 @@ export const CustomFilterSlot: Story = {
 				<script setup lang="ts">
 					import { ref, watch } from 'vue'
 					import { SyServerTable, SySelect } from '@cnamts/synapse'
-					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-					import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+					import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+					import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
 					
 					const options = ref<Partial<DataOptions>>({
 						itemsPerPage: 4,
@@ -1944,8 +1944,8 @@ export const CustomFilterInputs: Story = {
 		<script setup lang="ts">
 		  import { ref } from 'vue'
 		  import { SyServerTable } from '@cnamts/synapse'
-		  import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-		  import type { DataOptions, FilterOption } from '@cnamts/synapse/src/components/Tables/common/types'
+		  import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+		  import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
 
 		  interface User {
 			firstname: string

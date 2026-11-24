@@ -430,8 +430,8 @@ export const TableServer: Story = {
 				<script setup lang="ts">
 					import { ref } from 'vue'
 					import { PaginatedTable } from '@cnamts/synapse'
-					import { StateEnum } from '@cnamts/synapse/src/components/PaginatedTable/constants/StateEnum'
-					import type { DataOptions } from '@cnamts/synapse/src/components/PaginatedTable/types'
+					import { StateEnum } from '@cnamts/synapse/components/PaginatedTable/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/components/PaginatedTable/types'
 				
 					interface User {
 						[key: string]: string

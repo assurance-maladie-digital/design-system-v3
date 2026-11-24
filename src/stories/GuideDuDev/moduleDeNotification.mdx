@@ -129,8 +129,8 @@ Utilisation dans un composant Vue
 <script setup lang="ts">
 	import { VBtn } from 'vuetify/components'
 	import { NotificationBar } from '@cnamts/synapse'
-	import { useNotificationService } from '@cnamts/synapse/src/services/NotificationService'
-	import type { Notification } from '@cnamts/synapse/src/components/NotificationBar/types'
+	import { useNotificationService } from '@cnamts/synapse/services/NotificationService'
+	import type { Notification } from '@cnamts/synapse/components/NotificationBar/types'
 
 	const { addNotification } = useNotificationService()
 
