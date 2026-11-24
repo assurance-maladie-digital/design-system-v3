@@ -29,6 +29,37 @@ describe('UserMenuBtn', () => {
 		expect(wrapper.text()).toContain('John Doe')
 	})
 
+	it('preserves line breaks in additionalInformation', () => {
+		const additionalInformation = 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse'
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				fullName: 'Georges Duval',
+				additionalInformation,
+				isMobileView: false,
+			},
+		})
+
+		expect(wrapper.get('.subtitle').element.textContent).toBe(additionalInformation)
+	})
+
+	it('renders the complete text of long menu item labels', async () => {
+		const label = 'Informations détaillées sur le compte professionnel'
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				fullName: 'Georges Duval',
+				menuItems: [{ text: label, value: 'professional-account' }],
+				hideLogoutBtn: true,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.get('.sy-user-menu-btn').trigger('click')
+
+		expect(document.body.querySelector('.item-title')?.textContent).toBe(label)
+
+		wrapper.unmount()
+	})
+
 	it('does not render logout button when hidden', () => {
 		const wrapper = mount(UserMenuBtn, {
 			props: {
