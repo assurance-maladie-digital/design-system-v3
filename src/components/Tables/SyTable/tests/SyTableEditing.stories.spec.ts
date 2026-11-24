@@ -4,7 +4,10 @@ import { afterEach, describe, expect, it } from 'vitest'
 import * as bulkActions from '../BulkActions.stories'
 import * as rowEditing from '../RowEditing.stories'
 
-const stories = [...Object.entries(composeStories(bulkActions)), ...Object.entries(composeStories(rowEditing))]
+const stories = [
+	...Object.entries(composeStories(bulkActions)).map(([name, story]) => [`BulkActions/${name}`, story] as const),
+	...Object.entries(composeStories(rowEditing)).map(([name, story]) => [`RowEditing/${name}`, story] as const),
+]
 
 enableAutoUnmount(afterEach)
 

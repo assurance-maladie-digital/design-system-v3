@@ -18,7 +18,6 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
-		docs: { description: { component: 'Les libellés des actions sont définis sur les boutons dans le slot des exemples.' } },
 	},
 	argTypes: {
 		...commonTableArgTypes,

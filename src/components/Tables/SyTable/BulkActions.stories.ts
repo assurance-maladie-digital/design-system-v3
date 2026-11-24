@@ -20,7 +20,6 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
-		docs: { description: { component: 'Les libellés des boutons et des champs des dialogues sont définis dans les templates des exemples.' } },
 	},
 	argTypes: {
 		...commonTableArgTypes,
@@ -186,7 +185,7 @@ export const Default: Story = {
 <template>
 	<!-- La barre d'actions groupées est « sticky » par défaut : elle reste visible
 	     en haut quand on fait défiler le tableau (désactivable via :sticky-bulk-actions="false"). -->
-	<SyTable suffix="bulk-actions" show-select selection-key="id" v-model="selected" :headers="headers" :items="items">
+	<SyTable suffix="bulk-actions" caption="Liste des patients" show-select selection-key="id" hide-default-footer v-model="selected" :headers="headers" :items="items">
 		<!-- Le projet rend ses propres actions ; le tableau ne fournit que la sélection -->
 		<template #bulk-actions="{ selected, count, clearSelection }">
 			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
