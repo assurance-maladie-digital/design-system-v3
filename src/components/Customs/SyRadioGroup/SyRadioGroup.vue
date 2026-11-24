@@ -211,10 +211,11 @@
 						:active="hasWarning || (hasSuccess && successes.length > 0)"
 						:messages="hasWarning ? warnings : successes"
 					/>
+					<!-- No disabled class here: Vuetify already dims the surrounding
+						.v-input__details block when the field is disabled. -->
 					<div
 						v-if="showHelpTextAsMessage"
 						class="sy-radio-group__help-text"
-						:class="{ 'text-disabled': props.disabled }"
 					>
 						{{ props.helpText }}
 					</div>
@@ -253,11 +254,27 @@
 	margin-top: -22px !important;
 }
 
+/* This block reuses the .v-input__details class while being rendered inside
+   the native .v-input__details (via the #details slot): Vuetify's disabled
+   rule (opacity: var(--v-disabled-opacity) on .v-input__details) would apply
+   to both containers and compound. Reset it here so the disabled opacity is
+   applied only once, by the native container. */
+.v-input--disabled .sy-radio-group__messages {
+	opacity: 1;
+}
+
 .sy-radio-group__help-text {
 	margin-top: 10px;
 	font-size: var(--v-fontSize-liensEtLibelles);
 	color: rgb(var(--v-theme-on-surface));
 	opacity: var(--v-medium-emphasis-opacity);
+}
+
+/* Disabled field: the help text lives inside .v-input__details, which Vuetify
+   already dims (--v-disabled-opacity); neutralize its own opacity so they
+   don't compound (0.38 x 0.75). */
+.v-input--disabled .sy-radio-group__help-text {
+	opacity: 1;
 }
 
 .help-text-below {

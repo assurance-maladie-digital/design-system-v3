@@ -39,6 +39,31 @@ describe('SyTextField', () => {
 		expect(textField.props('variant')).toBe('filled')
 	})
 
+	// Regression (opacity stacking): the help text of a disabled field used to
+	// carry the text-disabled utility class while Vuetify already dims the
+	// .v-input__details block that contains it, compounding to ~5 % opacity.
+	// The disabled dimming must come from the parent block only.
+	it('does not stack disabled dimming on the help text of a disabled field', async () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Test Field',
+				helpText: 'Texte d\'aide',
+				errorMessages: ['Erreur de test'],
+				disabled: true,
+			},
+		})
+		await flushPromises()
+
+		const helpText = wrapper.find('.help-text-below')
+		expect(helpText.exists()).toBe(true)
+		expect(helpText.classes()).not.toContain('text-disabled')
+		// The help text sits in the details block of the disabled input:
+		// that block carries the disabled opacity.
+		expect(wrapper.find('.v-input--disabled .v-input__details .help-text-below').exists()).toBe(true)
+
+		wrapper.unmount()
+	})
+
 	// Régression RGAA 8.2 : `direction` (prop supprimée, sans effet) finissait en attribut
 	// HTML invalide sur l'<input>, y compris passée en attribut par un consommateur.
 	it.each([undefined, 'horizontal', 'vertical'] as const)('does not render an invalid direction attribute on the input (direction: %s)', (direction) => {

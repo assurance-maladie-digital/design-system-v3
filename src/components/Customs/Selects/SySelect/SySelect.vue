@@ -1127,15 +1127,12 @@
 								width="24"
 							/>
 						</template>
-						<!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages -->
+						<!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages. -->
 						<template
 							v-if="showHelpTextBelow"
 							#details
 						>
-							<div
-								class="help-text-below mt-1"
-								:class="{ 'text-disabled': props.disabled }"
-							>
+							<div class="help-text-below mt-1">
 								{{ props.helpText }}
 							</div>
 						</template>
@@ -1380,6 +1377,10 @@
 			opacity: var(--v-medium-emphasis-opacity) !important;
 		}
 	}
+
+	&.v-input--disabled :deep(.v-messages .v-messages__message) {
+		opacity: 1 !important;
+	}
 }
 
 .v-field {
@@ -1420,9 +1421,8 @@
 	flex-wrap: wrap;
 }
 
-.help-text-below.text-disabled {
-	color: rgb(var(--v-theme-on-surface));
-	opacity: var(--v-disabled-opacity);
+.v-input--disabled .help-text-below {
+	opacity: 1;
 }
 
 /* Focus = anneau seul (pas de fond) ; le fond gris reste réservé au survol (:hover) et à la
