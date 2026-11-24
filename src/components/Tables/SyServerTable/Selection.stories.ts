@@ -74,9 +74,8 @@ export const RowSelection: Story = {
 				code: `
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyServerTable } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
-	import type { DataOptions } from '@cnamts/synapse/components/Tables/common/types'
+	import { SyServerTable, StateEnum } from '@cnamts/synapse'
+	import type { DataOptions } from '@cnamts/synapse'
 
 	const selection = ref([])
 	const users = ref([])
@@ -190,9 +189,8 @@ export const SingleRowSelection: Story = {
 				code: `
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyServerTable } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
-	import type { DataOptions } from '@cnamts/synapse/components/Tables/common/types'
+	import { SyServerTable, StateEnum } from '@cnamts/synapse'
+	import type { DataOptions } from '@cnamts/synapse'
 
 	const selection = ref([])
 	const users = ref([])

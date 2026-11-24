@@ -128,9 +128,8 @@ Utilisation dans un composant Vue
 <Source dark code={`
 <script setup lang="ts">
 	import { VBtn } from 'vuetify/components'
-	import { NotificationBar } from '@cnamts/synapse'
-	import { useNotificationService } from '@cnamts/synapse/services/NotificationService'
-	import type { Notification } from '@cnamts/synapse/components/NotificationBar/types'
+	import { NotificationBar, useNotificationService } from '@cnamts/synapse'
+	import type { Notification } from '@cnamts/synapse'
 
 	const { addNotification } = useNotificationService()
 

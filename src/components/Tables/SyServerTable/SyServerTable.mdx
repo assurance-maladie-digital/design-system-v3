@@ -269,9 +269,8 @@ Pour les lignes dépliables personnalisées, relier le bouton au panneau avec `a
 
 <script setup lang="ts">
   import { ref, watch } from 'vue'
-  import { SyServerTable } from '@cnamts/synapse'
-  import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
-  import type { DataOptions } from '@cnamts/synapse/components/Tables/common/types'
+  import { SyServerTable, StateEnum } from '@cnamts/synapse'
+  import type { DataOptions } from '@cnamts/synapse'
   
   interface User {
     [key: string]: string

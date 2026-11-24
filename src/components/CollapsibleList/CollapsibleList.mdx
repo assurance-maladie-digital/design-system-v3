@@ -25,7 +25,7 @@ import * as CollapsibleListStories from './CollapsibleList.stories';
 <Source dark code={`
 <script setup lang="ts">
 	import { CollapsibleList } from '@cnamts/synapse'
-	import type { ListItem } from '@cnamts/synapse/components/CollapsibleList/types'
+	import type { CollapsibleListItem } from '@cnamts/synapse'
 
 	const remboursementItems = [
 		{
@@ -44,7 +44,7 @@ import * as CollapsibleListStories from './CollapsibleList.stories';
 			text: 'Remboursement',
 			href: '/remboursement',
 		},
-	] as ListItem[]
+	] as CollapsibleListItem[]
 </script>
 
 <template>

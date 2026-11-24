@@ -429,9 +429,8 @@ export const TableServer: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { PaginatedTable } from '@cnamts/synapse'
-					import { StateEnum } from '@cnamts/synapse/components/PaginatedTable/constants/StateEnum'
-					import type { DataOptions } from '@cnamts/synapse/components/PaginatedTable/types'
+					import { PaginatedTable, StateEnum } from '@cnamts/synapse'
+					import type { PaginatedTableDataOptions } from '@cnamts/synapse'
 				
 					interface User {
 						[key: string]: string
@@ -471,7 +470,7 @@ export const TableServer: Story = {
 						return new Promise(resolve => setTimeout(resolve, ms))
 					}
 				
-					const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
+					const getDataFromApi = async ({ sortBy, page, itemsPerPage }: PaginatedTableDataOptions): Promise<DataObj> => {
 						state.value = StateEnum.PENDING
 						await wait(1000)
 				
