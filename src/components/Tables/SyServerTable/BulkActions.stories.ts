@@ -28,7 +28,7 @@ const meta = {
 			control: false,
 		},
 		'serverItemsLength': {
-			description: 'Calculé par la story à partir des lignes chargées.',
+			description: 'Prop obligatoire : la story la recalcule à partir des lignes chargées.',
 			control: false,
 		},
 		'loading': {
@@ -105,6 +105,7 @@ export const Default: Story = {
 		suffix: 'server-bulk-actions',
 		caption: 'Liste des patients',
 		headers,
+		serverItemsLength: manyItems.length,
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
@@ -292,6 +293,7 @@ export const SequentialEdit: Story = {
 		suffix: 'server-bulk-actions-sequential',
 		caption: 'Liste des patients',
 		headers,
+		serverItemsLength: baseItems.length,
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,

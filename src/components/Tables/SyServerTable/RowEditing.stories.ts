@@ -26,7 +26,7 @@ const meta = {
 			control: false,
 		},
 		serverItemsLength: {
-			description: 'Calculé par la story à partir des lignes chargées.',
+			description: 'Prop obligatoire : la story la recalcule à partir des lignes chargées.',
 			control: false,
 		},
 		loading: {
@@ -66,6 +66,7 @@ export const Default: Story = {
 		hideCaption: true,
 		suffix: 'server-row-editing',
 		headers,
+		serverItemsLength: baseItems.length,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
@@ -206,6 +207,7 @@ export const CustomEditor: Story = {
 		hideCaption: true,
 		suffix: 'server-row-editing-custom',
 		headers,
+		serverItemsLength: baseItems.length,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
@@ -362,6 +364,7 @@ export const NonPrimitiveEditor: Story = {
 		hideCaption: true,
 		suffix: 'server-row-editing-nonprimitive',
 		headers: editHeaders,
+		serverItemsLength: 2,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
