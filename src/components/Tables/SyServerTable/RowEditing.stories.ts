@@ -151,7 +151,7 @@ export const Default: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyServerTable, SyIconButton } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
 	import { mdiCheck, mdiClose, mdiDelete, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -300,7 +300,7 @@ export const CustomEditor: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyServerTable, SyIconButton } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
 	import { mdiCheck, mdiClose, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -469,7 +469,7 @@ export const NonPrimitiveEditor: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyServerTable, SyIconButton, DatePicker } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
 	import { mdiCheck, mdiClose, mdiPencil } from '@mdi/js'
 
 	const headers = [
