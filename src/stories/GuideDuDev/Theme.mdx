@@ -39,20 +39,28 @@ La configuration de Vuetify fournie par Synapse contient les trois thèmes : voi
   </tbody>
 </table>
 
-## Appliquer le thème dans le composant racine
+## Choisir le thème de l'application
 
-<Source dark code={`
-<template>
-  <VApp theme="pa">
-    <!-- votre application -->
-  </VApp>
-</template>
+Le thème se choisit pour toute l'application, dans la configuration de Vuetify.
+
+### Dans le Starter Kit
+
+Le Starter Kit crée l'instance Vuetify dans `src/main.ts` avec `createVuetifyInstance`. Changez le thème juste après sa création&nbsp;:
+
+<Source dark language="ts" code={`
+// src/main.ts
+import { createVuetifyInstance } from '@cnamts/synapse/vuetifyConfig'
+
+const vuetify = createVuetifyInstance()
+vuetify.theme.change('pa')
 `}
 />
 
-## Appliquer le thème à toute l'application
+> Utilisez `theme.change()`&nbsp;: l'affectation `vuetify.theme.global.name.value = 'pa'` fonctionne encore, mais Vuetify la signale comme dépréciée.
 
-Pour appliquer le thème sans modifier le composant racine, passez-le en `defaultTheme` dans la configuration Vuetify&nbsp;:
+### Avec `createVuetifyOptions`
+
+Si votre projet utilise la configuration décrite dans [Configurer Vuetify](/docs/guide-du-dev-démarrage-installation--docs#configurer-vuetify) (disponible depuis Synapse 1.2.2), passez le thème en `defaultTheme`&nbsp;:
 
 <Source dark language="ts" code={`
 // src/plugins/vuetify.ts
@@ -71,9 +79,24 @@ export const vuetify = createVuetify({
 `}
 />
 
-Après avoir modifié le thème, relancez le serveur de développement :
+## Ajouter la classe du thème sur la page
 
-<Source dark code={`
-pnpm dev
+Une partie des styles de Synapse (élévations, typographie, champs de formulaire) dépend d'une classe `theme-<identifiant>` (`theme-cnam`, `theme-pa` ou `theme-ap`) posée sur un élément parent, en général `body`.
+
+Le Starter Kit l'ajoute déjà dans `src/App.vue`, à partir du thème global de Vuetify. Dans un autre projet, ajoutez-la dans le composant racine&nbsp;:
+
+<Source dark language="ts" code={`
+// src/App.vue
+import { watchEffect } from 'vue'
+import { useTheme } from 'vuetify'
+
+const theme = useTheme()
+
+watchEffect(() => {
+  document.body.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
+  document.body.classList.add(\`theme-\${theme.global.name.value}\`)
+})
 `}
 />
+
+> Le prop `theme` de `VApp` ou d'un composant (`<VApp theme="pa">`) ne change que les couleurs de son contenu. Il ne change ni le thème global ni la classe `theme-<identifiant>`&nbsp;: les styles qui en dépendent restent ceux du thème global. Pour choisir le thème de l'application, passez par la configuration de Vuetify.
