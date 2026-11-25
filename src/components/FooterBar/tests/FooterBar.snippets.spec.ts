@@ -11,11 +11,10 @@ import documentation from '../FooterBar.mdx?raw'
 
 const allStories = Object.entries(composeStories(stories)).map(([name, story]) => ({ name, story }))
 
-const usageExample = {
-	parameters: {
-		sourceCode: [{ code: documentation.match(/<Source dark code=\{`([\s\S]*?)`\} \/>/)?.[1] ?? '' }],
-	},
-}
+const usageExamples = [...documentation.matchAll(/<Source\b[^>]*?\bcode=\{`([\s\S]*?)`\}/g)].map(([, code], index) => ({
+	index: index + 1,
+	example: { parameters: { sourceCode: [{ code: code! }] } },
+}))
 
 const modules = {
 	'@cnamts/synapse': synapse,
@@ -41,8 +40,12 @@ describe('FooterBar snippets', () => {
 		expect(findUnknownSnippetImports(story, modules)).toEqual([])
 	})
 
-	it('l\'exemple d\'utilisation de la documentation est un SFC autonome et copiable', () => {
-		expect(analyzeSnippet(usageExample)).toEqual({
+	it('trouve les exemples de code de la documentation', () => {
+		expect(usageExamples.length).toBeGreaterThan(0)
+	})
+
+	it.each(usageExamples)('l\'exemple n°$index de la documentation est un SFC autonome et copiable', ({ example }) => {
+		expect(analyzeSnippet(example)).toEqual({
 			parseErrors: [],
 			hasScriptSetup: true,
 			undeclaredIdentifiers: [],
@@ -52,7 +55,7 @@ describe('FooterBar snippets', () => {
 		})
 	})
 
-	it('l\'exemple d\'utilisation de la documentation n\'importe que des exports réellement disponibles', () => {
-		expect(findUnknownSnippetImports(usageExample, modules)).toEqual([])
+	it.each(usageExamples)('l\'exemple n°$index de la documentation n\'importe que des exports réellement disponibles', ({ example }) => {
+		expect(findUnknownSnippetImports(example, modules)).toEqual([])
 	})
 })
