@@ -503,8 +503,9 @@ export const ActionBtn: Story = {
 					])
 
 					const updateInfo = (eventValue: { dataListIndex: number, itemIndex: number }) => {
-                        if (items) {
-							items[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
+						const item = items.value[eventValue.dataListIndex]?.items[eventValue.itemIndex]
+						if (item) {
+							item.value = '25/09/1970'
 						}
 					}
 				</script>
@@ -551,7 +552,7 @@ export const ActionBtn: Story = {
 			setup() {
 				const updateInfo = (eventValue: { dataListIndex: number, itemIndex: number }) => {
 					if (args.dataListGroupItems) {
-						args.dataListGroupItems[eventValue.dataListIndex]!.items[eventValue.itemIndex]!.value = '12/01/2003'
+						args.dataListGroupItems[eventValue.dataListIndex]!.items[eventValue.itemIndex]!.value = '25/09/1970'
 					}
 				}
 				return { args, updateInfo }
@@ -600,9 +601,8 @@ export const HtmlValue: Story = {
 				code: `
 <script setup lang="ts">
 	import { SubHeader } from '@cnamts/synapse'
-	import type { DataListGroupItems } from '@cnamts/synapse'
 
-	const items: DataListGroupItems = [
+	const items = [
 		{
 			title: 'Informations patient',
 			items: [
@@ -693,7 +693,7 @@ export const Loading: Story = {
 						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 						loading
-					>
+					/>
 				</template>
 				`,
 			},
@@ -819,6 +819,7 @@ export const SlotAdditionalInformations: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
+					import { VBadge, VSpacer } from 'vuetify/components'
 				</script>
 				`,
 			},
@@ -929,6 +930,7 @@ export const SlotBackBtn: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 				</script>
 				`,
 			},
@@ -1004,6 +1006,8 @@ export const SlotBackBtnIcon: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
+					import { ref } from 'vue'
+					import { VIcon } from 'vuetify/components'
 					import { mdiStepBackward } from '@mdi/js'
 
 					const backArrowIcon = ref(mdiStepBackward)
@@ -1219,8 +1223,12 @@ export const SlotRightContent: Story = {
 				code: `
 				<script setup lang="ts">
 					import { SubHeader } from '@cnamts/synapse'
-
+					import { ref } from 'vue'
+					import { VBtn, VIcon } from 'vuetify/components'
 					import { mdiClose, mdiContentCopy } from '@mdi/js'
+
+					const cancelIcon = ref(mdiClose)
+					const copyIcon = ref(mdiContentCopy)
 				</script>
 				`,
 			},
