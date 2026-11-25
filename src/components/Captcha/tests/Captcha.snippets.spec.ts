@@ -41,4 +41,12 @@ describe('Captcha validation snippets', () => {
 		expect(snippetRequired || snippetOptional).toBe(true)
 		expect(story.args.required).toBe(snippetRequired && !snippetOptional)
 	})
+
+	// DisableErrorHandling compare deux champs pilotés par la démo, sans lien avec args.modelValue.
+	it.each(allStories.filter(({ name }) => name !== 'DisableErrorHandling'))('l\'extrait de $name initialise la valeur comme la story', ({ story, ownArgs }) => {
+		const initialValue = getSnippetTab(story, 'Script').match(/const value = ref\('([^']*)'\)|const modelValue = ref\('([^']*)'\)/)
+
+		expect(initialValue).not.toBeNull()
+		expect(ownArgs).toHaveProperty('modelValue', initialValue![1] ?? initialValue![2])
+	})
 })

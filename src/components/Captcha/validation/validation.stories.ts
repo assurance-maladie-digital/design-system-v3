@@ -8,11 +8,24 @@ import { getValidationDocumentation } from '@/composables/unifyValidation/docume
 
 const metaControlsExclude = ['onUpdate:modelValue', 'onUpdate:type', 'onImageError', 'onAudioError', 'onCreationError']
 
+const validationDoc = getValidationDocumentation('string')
+
+// Le Control `object` s'édite en JSON, qui ne conserve pas les fonctions `validate` :
+// une modification dans le panneau supprimerait la logique des règles de la démo.
+const ruleArgTypes = Object.fromEntries(
+	(['rules', 'customRules', 'customWarningRules', 'customSuccessRules'] as const).map(prop => [prop, {
+		...validationDoc[prop],
+		control: { disable: true },
+		description: `${validationDoc[prop].description} Dans ces démos, les règles contiennent des fonctions que le Control ne sait pas éditer : il est désactivé.`,
+	}]),
+)
+
 const meta: Meta<typeof Captcha> = {
 	title: 'Composants/Formulaires/Captcha/Validation',
 	component: Captcha,
 	argTypes: {
-		...getValidationDocumentation('string'),
+		...validationDoc,
+		...ruleArgTypes,
 	},
 	parameters: {
 		layout: 'centered',
@@ -74,7 +87,6 @@ const lengthRule = {
 	options: {
 		validate: (value: string | null) => String(value || '').length >= 6,
 		message: 'Le captcha doit contenir au moins 6 caractères.',
-		fieldIdentifier: 'captcha',
 	},
 }
 
@@ -91,7 +103,6 @@ const verificationRule = {
 			}
 		},
 		message: 'Le captcha est incorrect',
-		fieldIdentifier: 'captcha',
 		successMessage: 'Le captcha est correct',
 	},
 }
@@ -319,6 +330,7 @@ const modelValue = ref('ytqZNq')
 	},
 	args: {
 		...WithError.args,
+		modelValue: 'ytqZNq',
 		customRules: [
 			{
 				type: 'custom',
@@ -415,6 +427,7 @@ const verifyCaptcha = (answer: string | null) => {
 		],
 	},
 	args: {
+		modelValue: 'abc',
 		required: true,
 		showSuccessMessages: true,
 		isValidateOnBlur: false,
@@ -668,7 +681,6 @@ const customRules = [
 				options: {
 					validate: (value: string | null) => typeof value === 'string' && value.trim().length > 0,
 					message: 'Ce champ est requis.',
-					fieldIdentifier: 'captcha',
 				},
 			},
 			{
@@ -785,7 +797,6 @@ const customRules = [
 		options: {
 			validate: (value: string | null) => String(value || '').length >= 6,
 			message: 'Le captcha doit contenir au moins 6 caractères.',
-			fieldIdentifier: 'captcha',
 		},
 	},
 	{
@@ -801,7 +812,6 @@ const customRules = [
 				}
 			},
 			message: 'Le captcha est incorrect',
-			fieldIdentifier: 'captcha',
 			successMessage: 'Le captcha est correct',
 		},
 	},
@@ -903,7 +913,6 @@ const customRules = [
 		options: {
 			validate: (value: string | null) => String(value || '').length >= 6,
 			message: 'Le captcha doit contenir au moins 6 caractères.',
-			fieldIdentifier: 'captcha',
 		},
 	},
 	{

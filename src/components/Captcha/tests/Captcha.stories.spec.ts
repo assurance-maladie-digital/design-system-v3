@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
 import * as validationStories from '../validation/validation.stories'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const {
 	DisableErrorHandling,
@@ -166,5 +167,13 @@ describe('Captcha validation stories', () => {
 		await flushPromises()
 
 		expect(wrapper.text()).toContain('Règle définie dans le Control.')
+	})
+
+	it('désactive les Controls de règles, dont les fonctions ne survivent pas à l\'édition JSON', () => {
+		const validationDoc = getValidationDocumentation('string')
+		for (const prop of ['rules', 'customRules', 'customWarningRules', 'customSuccessRules'] as const) {
+			expect(validationStories.default.argTypes?.[prop]?.control, prop).toMatchObject({ disable: true })
+			expect(validationStories.default.argTypes?.[prop]?.description, prop).toContain(validationDoc[prop].description)
+		}
 	})
 })
