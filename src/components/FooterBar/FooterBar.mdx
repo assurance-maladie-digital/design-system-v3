@@ -26,10 +26,10 @@ import * as FooterBarStories from './FooterBar.stories.ts';
 
 <Source dark code={`
     <script setup lang="ts">
-	import { FooterBar } from '@cnamts/synapse'
-	import { CollapsibleList } from '@cnamts/synapse'
+	import { CollapsibleList, FooterBar } from '@cnamts/synapse'
 	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
+	import { VCol, VRow } from 'vuetify/components'
 
 	const docProps = {
 		sitemapRoute: '/',
