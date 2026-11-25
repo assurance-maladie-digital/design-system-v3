@@ -29,7 +29,7 @@ describe('UserMenuBtn', () => {
 		expect(wrapper.text()).toContain('John Doe')
 	})
 
-	it('preserves line breaks in additionalInformation', () => {
+	it('passes additionalInformation unchanged to the desktop subtitle', () => {
 		const additionalInformation = 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse'
 		const wrapper = mount(UserMenuBtn, {
 			props: {
@@ -42,7 +42,7 @@ describe('UserMenuBtn', () => {
 		expect(wrapper.get('.subtitle').element.textContent).toBe(additionalInformation)
 	})
 
-	it('renders the complete text of long menu item labels', async () => {
+	it('keeps the complete label text in the menu item DOM', async () => {
 		const label = 'Informations détaillées sur le compte professionnel'
 		const wrapper = mount(UserMenuBtn, {
 			props: {
@@ -188,6 +188,24 @@ describe('UserMenuBtn - responsive identity', () => {
 		expect(identity).not.toBeNull()
 		expect(identity?.textContent).toContain('Jean Dupont')
 		expect(identity?.textContent).toContain('Administrateur')
+
+		wrapper.unmount()
+	})
+
+	it('renders custom menu header content in the popin outside the options list', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: { menuItems },
+			slots: {
+				'menu-header': '<div class="custom-menu-header">Informations professionnelles</div>',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+		const header = document.body.querySelector('.custom-menu-header')
+		expect(header?.textContent).toBe('Informations professionnelles')
+		expect(header?.closest('[role="menu"]')).toBeNull()
 
 		wrapper.unmount()
 	})

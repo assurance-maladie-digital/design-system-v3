@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { mdiAccount, mdiCog, mdiShieldAccount } from '@mdi/js'
+import { VBtn } from 'vuetify/components'
 import UserMenuBtn from './UserMenuBtn.vue'
 
 const meta = {
@@ -120,6 +121,11 @@ const meta = {
 			table: {
 				category: 'slots',
 			},
+		},
+		'menu-header': {
+			control: false,
+			description: 'Ajoute un bloc de contenu personnalisé au-dessus des options dans le popin',
+			table: { category: 'slots' },
 		},
 		'onLogout': {
 			action: 'logout',
@@ -725,62 +731,48 @@ export const Slot: Story = {
 
 export const WithPsInfo: Story = {
 	parameters: {
+		controls: { exclude: ['logout', 'menuItems'] },
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-  <div style="display: flex; justify-content: center; height: 500px;">
-    <UserMenuBtn
-      v-model="selected"
-      :full-name="userDetails.userName"
-      :hide-user-icon="false"
-      :hide-logout-btn="true"
-      :additional-information="secondaryInfo"
-    >
-      <template #default>
-        <div style="width: 330px">
-          <div class="ma-6">
-            <p><strong>{{ userDetails.userName }}</strong></p>
-            <p>N° RPPS : {{ userDetails.rpps }}</p>
-            <p>N° ADELI : {{ userDetails.adeli }}</p>
-            <p>Adresse email : {{ userDetails.email }}</p>
-            <p class="last-connection text-caption">
-              Dernière connexion : {{ userDetails.lastConnexion }}
-            </p>
-          </div>
-
-          <div class="buttons d-flex ma-6">
-            <v-btn
-              class="flex-grow-1"
-              color="primary"
-              variant="text"
-              @click="handleAccount"
-            >
-              Mon compte
-            </v-btn>
-
-            <v-btn
-              class="flex-grow-1"
-              color="primary"
-              variant="text"
-              @click="handleLogout"
-            >
-              Déconnexion
-            </v-btn>
-          </div>
+  <UserMenuBtn
+    :full-name="fullName"
+    :additional-information="secondaryInfo"
+    :hide-logout-btn="true"
+    :vuetify-options="{ menu: { minWidth: '320px' } }"
+  >
+    <template #menu-header>
+      <div>
+        <div class="ma-6">
+          <p><strong>{{ fullName }}</strong></p>
+          <p>{{ userDetails.profil }}</p>
+          <p>N° RPPS : {{ userDetails.rpps }}</p>
+          <p>N° ADELI : {{ userDetails.adeli }}</p>
+          <p>Adresse email : {{ userDetails.email }}</p>
+          <p class="last-connection text-caption">Dernière connexion : {{ userDetails.lastConnexion }}</p>
         </div>
-      </template>
-    </UserMenuBtn>
-  </div>
+
+        <div class="buttons d-flex ma-6">
+          <VBtn class="flex-grow-1" color="primary" variant="text" @click="handleAccount">
+            Mon compte
+          </VBtn>
+          <VBtn class="flex-grow-1" color="primary" variant="text" @click="handleLogout">
+            Déconnexion
+          </VBtn>
+        </div>
+      </div>
+    </template>
+  </UserMenuBtn>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import { UserMenuBtn } from '@cnamts/synapse'
 
-const selected = ref(null)
+const fullName = 'Georges Duval'
 
 const userDetails = {
   userName: 'Georges Duval',
@@ -805,110 +797,81 @@ const secondaryInfo = [
 ].join('\\n')
 
 const handleAccount = () => {
-  // Navigation vers le compte utilisateur
+  // Ouvrir le compte utilisateur
 }
 
 const handleLogout = () => {
-  // Déconnexion de l'utilisateur
+  // Déclencher la déconnexion de l'utilisateur
 }
 </script>`,
 			},
 		],
 	},
-
 	args: {
 		modelValue: null,
-		vuetifyOptions: undefined,
+		menuItems: [],
+		hideUserIcon: false,
+		hideLogoutBtn: true,
+		fullName: 'Georges Duval',
+		additionalInformation: 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse',
+		vuetifyOptions: { menu: { minWidth: '320px' } },
 	},
 
 	render: (args) => {
 		return {
-			components: { UserMenuBtn },
+			components: { UserMenuBtn, VBtn },
 
 			setup() {
 				const userDetails = {
-					userName: 'Georges Duval',
 					profil: 'Médecin généraliste',
 					rpps: '12345678910',
 					adeli: '123456789',
 					email: 'georges.duval@aphp.fr',
-					adresse: {
-						numero: '3',
-						type: 'rue',
-						nom: 'Victor-Hugo',
-						codePostal: '78470',
-						commune: 'Saint-Rémy-lès-Chevreuse',
-					},
 					lastConnexion: '01/06/2024 à 10:00',
 				}
 
-				const secondaryInfo = [
-					userDetails.profil,
-					`${userDetails.adresse.numero} ${userDetails.adresse.type} ${userDetails.adresse.nom}`,
-					`${userDetails.adresse.codePostal} ${userDetails.adresse.commune}`,
-				].join('\n')
-
-				const handleAccount = () => {
-					// Navigation vers le compte utilisateur
+				const handleLogout = () => {
+					// Déclencher la déconnexion de l'utilisateur
 				}
 
-				const handleLogout = () => {
-					// Déconnexion de l'utilisateur
+				const handleAccount = () => {
+					// Ouvrir le compte utilisateur
 				}
 
 				return {
-					args: {
-						...args,
-						fullName: userDetails.userName,
-						hideUserIcon: false,
-						hideLogoutBtn: true,
-					},
+					args,
 					userDetails,
-					secondaryInfo,
 					handleAccount,
 					handleLogout,
 				}
 			},
 
 			template: `
-              <div style="display: flex; justify-content: center; height: 500px;">
-                <UserMenuBtn v-bind="args" :additional-information="secondaryInfo">
-                  <template #default>
-                    <div style="width: 330px">
-                      <div class="ma-6">
-                        <p><strong>{{ userDetails.userName }}</strong></p>
-                        <p>N° RPPS : {{ userDetails.rpps }}</p>
-                        <p>N° ADELI : {{ userDetails.adeli }}</p>
-                        <p>Adresse email : {{ userDetails.email }}</p>
-                        <p class="last-connection text-caption">
-                          Dernière connexion : {{ userDetails.lastConnexion }}
-                        </p>
-                      </div>
+<div class="pa-4">
+  <UserMenuBtn v-bind="args" @logout="handleLogout">
+  <template #menu-header>
+    <div>
+      <div class="ma-6">
+        <p><strong>{{ args.fullName }}</strong></p>
+        <p>{{ userDetails.profil }}</p>
+        <p>N° RPPS : {{ userDetails.rpps }}</p>
+        <p>N° ADELI : {{ userDetails.adeli }}</p>
+        <p>Adresse email : {{ userDetails.email }}</p>
+        <p class="last-connection text-caption">Dernière connexion : {{ userDetails.lastConnexion }}</p>
+      </div>
 
-                      <div class="buttons d-flex ma-6">
-                        <VBtn
-                            class="flex-grow-1"
-                            color="primary"
-                            variant="text"
-                            @click="handleAccount"
-                        >
-                          Mon compte
-                        </VBtn>
-
-                        <VBtn
-                            class="flex-grow-1"
-                            color="primary"
-                            variant="text"
-                            @click="handleLogout"
-                        >
-                          Déconnexion
-                        </VBtn>
-                      </div>
-                    </div>
-                  </template>
-                </UserMenuBtn>
-              </div>
-            `,
+      <div class="buttons d-flex ma-6">
+        <VBtn class="flex-grow-1" color="primary" variant="text" @click="handleAccount">
+          Mon compte
+        </VBtn>
+        <VBtn v-if="args.hideLogoutBtn" class="flex-grow-1" color="primary" variant="text" @click="handleLogout">
+          Déconnexion
+        </VBtn>
+      </div>
+    </div>
+  </template>
+  </UserMenuBtn>
+</div>`,
 		}
 	},
 }

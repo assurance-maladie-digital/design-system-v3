@@ -43,10 +43,10 @@
 		return props.isMobileView || smAndDown.value
 	})
 
-	// Le slot par défaut permet au consommateur de remplacer entièrement le contenu du
-	// menu (cf. story "Slot") : dans ce cas, le bloc d'identité auto-généré ne doit pas
-	// s'ajouter par-dessus ce contenu personnalisé en version mobile.
-	const hasCustomContent = computed(() => Boolean(slots.default))
+	// Le slot par défaut remplace le contenu du menu ; `menu-header` ajoute un contenu
+	// personnalisé dans le popin. Dans les deux cas, l'identité mobile automatique ne
+	// doit pas être dupliquée.
+	const hasCustomContent = computed(() => Boolean(slots.default || slots['menu-header']))
 </script>
 
 <template>
@@ -96,6 +96,12 @@
 					</div>
 				</VListItem>
 			</slot>
+		</template>
+		<template
+			v-if="slots['menu-header']"
+			#menu-header
+		>
+			<slot name="menu-header" />
 		</template>
 	</SyBtnMenu>
 </template>

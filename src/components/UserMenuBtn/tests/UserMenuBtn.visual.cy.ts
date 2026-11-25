@@ -1,3 +1,4 @@
+import { h } from 'vue'
 import UserMenuBtn from '../UserMenuBtn.vue'
 
 const defaultMenuItems = [
@@ -12,6 +13,20 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('UserMenuBtn - Visual regression tests', () => {
+	it('keeps a surface background when the popin contains only custom content', () => {
+		cy.mountWithVuetify(UserMenuBtn, {
+			props: { menuItems: [], hideLogoutBtn: true },
+			slots: {
+				'menu-header': () => h('div', 'Contenu personnalisé'),
+			},
+		})
+
+		cy.get('.sy-user-menu-btn').click()
+		cy.get('.sy-user-menu-content').should(($content) => {
+			expect(getComputedStyle($content[0]!).backgroundColor).not.to.equal('rgba(0, 0, 0, 0)')
+		})
+	})
+
 	it('displays secondary information and menu item labels on multiple lines', () => {
 		cy.viewport(1280, 720)
 
@@ -86,6 +101,26 @@ describe('UserMenuBtn - Visual regression tests', () => {
 // cette capture, qui fige d'un coup le bouton circulaire, le disque de l'avatar, l'encart teinté
 // avec son arrondi et ses marges, et le décalage du menu sous l'activateur.
 describe('UserMenuBtn - Mobile visual regression tests', () => {
+	it('preserves line breaks in the identity block', () => {
+		cy.viewport(390, 700)
+		cy.mountWithVuetify(UserMenuBtn, {
+			props: {
+				menuItems: defaultMenuItems,
+				fullName: 'Jean Dupont',
+				additionalInformation: 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse',
+			},
+		})
+
+		cy.get('.sy-user-menu-btn').click()
+		cy.get('.identity-secondary-info').should(($info) => {
+			const info = $info[0]!
+			const lineHeight = Number.parseFloat(getComputedStyle(info).lineHeight)
+
+			expect(getComputedStyle(info).whiteSpace).to.equal('pre-line')
+			expect(info.getBoundingClientRect().height).to.be.greaterThan(lineHeight * 2)
+		})
+	})
+
 	it('displays the icon-only activator with the identity block in the open menu', () => {
 		// Largeur mobile : `smAndDown` bascule le composant en icône seule, comme en usage réel.
 		cy.viewport(390, 700)
