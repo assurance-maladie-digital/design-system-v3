@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, useSlots } from 'vue'
-	import { type RouteLocationRaw } from 'vue-router'
+	import type { RouteLocationRaw } from 'vue-router'
 	import { useTheme, useDisplay } from 'vuetify'
 
 	import SocialMediaLinks from '@/components/SocialMediaLinks/SocialMediaLinks.vue'

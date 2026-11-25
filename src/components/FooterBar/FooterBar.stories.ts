@@ -767,8 +767,8 @@ export const CollapsibleList: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	import { FooterBar } from '@cnamts/synapse'
-	import { CollapsibleList } from '@cnamts/synapse'
+	import { CollapsibleList, FooterBar } from '@cnamts/synapse'
+	import { VCol, VRow } from 'vuetify/components'
 	
 	const items = [
         {

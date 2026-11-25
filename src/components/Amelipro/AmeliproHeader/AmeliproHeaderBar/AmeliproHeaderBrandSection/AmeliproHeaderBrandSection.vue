@@ -3,7 +3,7 @@
 	import AmeliproLogoAm from '../AmeliproLogoAm/AmeliproLogoAm.vue'
 	import type { LogoInfo } from './types'
 	import { LogoSizeEnum } from '../AmeliproLogoAm/LogoSizeEnum'
-	import { type RouteLocationRaw } from 'vue-router'
+	import type { RouteLocationRaw } from 'vue-router'
 	import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
 	import { locales } from './locales'

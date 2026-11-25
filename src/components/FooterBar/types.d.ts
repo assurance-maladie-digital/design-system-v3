@@ -1,9 +1,9 @@
-import { RawLocation } from 'vue-router'
+import type { RouteLocationRaw } from 'vue-router'
 
 export interface LinkItem {
 	hidden?: unknown
 	text: string
-	to?: RawLocation
+	to?: RouteLocationRaw
 	href?: string
 	ariaLabel?: string
 	openInNewTab?: boolean
