@@ -114,7 +114,7 @@
 	// lorsque le bouton est en mode icône seule (iconOnly) : l'identité, masquée dans
 	// l'activateur, est alors reportée dans le menu pour rester accessible.
 	const hasIdentityInList = computed(() => {
-		return props.showIdentityInList && props.iconOnly && Boolean(props.primaryInfo)
+		return props.showIdentityInList && props.iconOnly && !slots['menu-header'] && Boolean(props.primaryInfo)
 	})
 
 	const activatorLabel = computed(() => {
