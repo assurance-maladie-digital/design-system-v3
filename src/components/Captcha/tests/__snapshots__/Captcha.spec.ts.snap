@@ -138,11 +138,9 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               </div>
               <!---->
               <div class="v-field__append-inner">
-                <!-- Keyboard-focusable clear button -->
                 <!-- v-if -->
                 <!-- v-if -->
                 <!-- v-if -->
-                <!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
                 <!-- v-if -->
               </div>
               <div class="v-field__outline">
@@ -467,11 +465,9 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               </div>
               <!---->
               <div class="v-field__append-inner">
-                <!-- Keyboard-focusable clear button -->
                 <!-- v-if -->
                 <!-- v-if -->
                 <!-- v-if -->
-                <!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
                 <!-- v-if -->
               </div>
               <div class="v-field__outline">

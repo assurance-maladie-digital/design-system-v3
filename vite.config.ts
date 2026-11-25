@@ -41,6 +41,9 @@ export default defineConfig({
 		vue({
 			template: {
 				transformAssetUrls,
+				compilerOptions: {
+					comments: false,
+				},
 			},
 		}),
 		vuetify({

@@ -2463,11 +2463,9 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
           </div>
           <!---->
           <div class="v-field__append-inner">
-            <!-- Keyboard-focusable clear button -->
             <!-- v-if -->
             <!-- v-if -->
             <!-- v-if -->
-            <!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
             <!-- v-if -->
           </div>
           <div class="v-field__outline">
@@ -2539,7 +2537,6 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
             Format MM/AAAA
           </div>
         </transition-group-stub>
-        <!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages -->
         <!-- v-if -->
         <!---->
       </div>
