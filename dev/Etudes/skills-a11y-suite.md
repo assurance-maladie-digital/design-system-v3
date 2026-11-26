@@ -34,12 +34,12 @@ Lister, par priorité, les travaux révélés par la réalisation et les bancs d
 
 ### 3. Écarts entre motifs APG et composants de référence
 
-| Composant | Écart | Décision à prendre |
+| Composant | Écart | Décision |
 |---|---|---|
-| `Accordion` | `div role="button"` sans titre, là où l'APG attend un `<button>` dans un titre | Corriger le composant ou documenter l'écart dans `a11y-aria-patterns` |
-| `RatingPicker` | Les flèches déplacent le focus sans changer la sélection | Idem |
+| `Accordion` | `<div role="button">` qui **contient** le titre `<hN>`, là où l'APG attend `<hN><button>`. Les enfants d'un `role="button"` étant présentationnels, le titre n'est pas exposé (RGAA 9.1, 7.1) | Écart documenté dans `a11y-aria-patterns` (⚠️). Corriger le composant dans une PR dédiée : changement de markup observable, note `ReleasesAlerts` |
+| `RatingPicker` | Les flèches déplacent le focus sans changer la sélection (`Entrée` / `Espace` cochent) | Écart documenté dans `a11y-aria-patterns` (⚠️). Corriger dans une PR dédiée : changement de comportement clavier, note `ReleasesAlerts` |
 
-Tant que l'écart existe, `a11y-aria-patterns` ne doit pas présenter ces composants comme modèles sans réserve.
+Écarts documentés : `a11y-aria-patterns` marque ces composants ⚠️, précise que l'APG fait foi pour tout nouveau code, et liste le comportement réel dans `references/patterns.md` (section « Écarts connus »). Priorité remontée : à traiter juste après la piste 1a.
 
 ### 4. Valider les autres outils
 
@@ -72,10 +72,11 @@ PR `feat/skills-a11y` → `dev`, avec en description le bilan de [skills-a11y-ve
 
 1. Piste 7 (PR de la branche actuelle).
 2. Piste 1a (`SySelect`) : bug réel, diagnostic et correctif déjà validés.
-3. Piste 2 (mineurs), en un commit.
-4. Piste 1b, puis 3.
-5. Pistes 4, 5 et 6, avant toute nouvelle évolution des skills.
-6. Piste 1c, en continu, par lots.
+3. Piste 3 (`Accordion`, `RatingPicker`) : écarts déjà documentés dans le skill, correction des composants.
+4. Piste 2 (mineurs), en un commit.
+5. Piste 1b.
+6. Pistes 4, 5 et 6, avant toute nouvelle évolution des skills.
+7. Piste 1c, en continu, par lots.
 
 ## Changement de contrat
 
