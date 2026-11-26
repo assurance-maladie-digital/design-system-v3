@@ -86,9 +86,8 @@ export const ClickableRow: Story = {
 				code: `
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyServerTable } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-	import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+	import { SyServerTable, StateEnum } from '@cnamts/synapse'
+	import type { DataOptions } from '@cnamts/synapse'
 
 	const options = ref({ itemsPerPage: 5, filters: [] })
 	const selectedRow = ref(null)
@@ -296,9 +295,8 @@ export const ExpandableRows: Story = {
 				code: `
 <script setup lang="ts">
 	import { ref, useId } from 'vue'
-	import { SyServerTable } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-	import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+	import { SyServerTable, StateEnum } from '@cnamts/synapse'
+	import type { DataOptions } from '@cnamts/synapse'
 	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 
 	const detailsId = useId()

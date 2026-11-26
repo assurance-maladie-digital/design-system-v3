@@ -77,6 +77,7 @@ export { indicatifs } from './PhoneField/indicatifs'
 export { default as PhoneField } from './PhoneField/PhoneField.vue'
 export { default as RangeField } from './RangeField/RangeField.vue'
 export { default as SearchListField } from './SearchListField/SearchListField.vue'
+export type { SearchListItem } from './SearchListField/types'
 export const SyTextArea = SyTextAreaComponent as typeof SyTextAreaComponent & {
 	new (): {
 		$props: SyTextAreaPublicProps
@@ -91,6 +92,9 @@ export { default as PaginatedTable } from './PaginatedTable/PaginatedTable.vue'
 export { default as SyServerTable } from './Tables/SyServerTable/SyServerTable.vue'
 export { default as SyTable } from './Tables/SyTable/SyTable.vue'
 export { default as TableToolbar } from './TableToolbar/TableToolbar.vue'
+export { StateEnum } from './Tables/common/constants/StateEnum'
+export type { DataOptions, FilterOption } from './Tables/common/types'
+export type { DataOptions as PaginatedTableDataOptions } from './PaginatedTable/types'
 
 // ===========================
 // Filtres
@@ -105,6 +109,7 @@ export { default as Accordion } from './Accordion/Accordion.vue'
 export { default as ChipList } from './ChipList/ChipList.vue'
 export * from './ChipList/types'
 export { default as CollapsibleList } from './CollapsibleList/CollapsibleList.vue'
+export type { ListItem as CollapsibleListItem } from './CollapsibleList/types'
 export { default as SyIcon } from './Customs/SyIcon/SyIcon.vue'
 export { default as SyIconButton } from './Customs/SyIconButton/SyIconButton.vue'
 export { default as DataList } from './DataList/DataList.vue'
