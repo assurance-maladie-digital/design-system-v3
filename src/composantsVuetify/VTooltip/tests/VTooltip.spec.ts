@@ -1,5 +1,5 @@
 import { resolve } from 'node:path'
-import { compile } from 'sass'
+import { compile } from 'sass-embedded'
 import { afterEach, describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { defineComponent, h, nextTick } from 'vue'
