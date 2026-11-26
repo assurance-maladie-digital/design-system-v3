@@ -1,5 +1,7 @@
 # RGAA — Thème 11 : Formulaires (13 critères)
 
+> **Exemples génériques.** Les extraits illustrent le critère RGAA en HTML / template minimal. Dans le code Synapse, les règles des skills `a11y-*` priment : ids générés par `useId()` (jamais en dur), libellés dans `locales.ts`, icônes via `SyIcon`, composants DS de `a11y-aria-patterns`. Un écart à ces règles est un constat, même si l'extrait ci-dessous l'écrit autrement.
+
 ## 11.1 Chaque champ a une étiquette
 
 Chaque champ de formulaire doit avoir une étiquette associée via (ordre de priorité) :

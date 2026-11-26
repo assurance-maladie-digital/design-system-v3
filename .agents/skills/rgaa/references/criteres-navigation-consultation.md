@@ -1,5 +1,7 @@
 # RGAA — Thèmes 12–13 : Navigation, Consultation
 
+> **Exemples génériques.** Les extraits illustrent le critère RGAA en HTML / template minimal. Dans le code Synapse, les règles des skills `a11y-*` priment : ids générés par `useId()` (jamais en dur), libellés dans `locales.ts`, icônes via `SyIcon`, composants DS de `a11y-aria-patterns`. Un écart à ces règles est un constat, même si l'extrait ci-dessous l'écrit autrement.
+
 ## Thème 12 — Navigation (11 critères)
 
 ### 12.1 Deux systèmes de navigation minimum
