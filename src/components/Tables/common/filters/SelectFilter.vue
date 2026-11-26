@@ -3,7 +3,7 @@
 	import { computed, ref } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-	import { locales } from './locales'
+	import { locales } from '../locales'
 
 	const props = defineProps({
 		header: {
@@ -202,7 +202,7 @@
 			:multiple="props.header.multiple === true"
 			:chips="props.header.chips"
 			class="filter-input"
-			:aria-label="props.header.title || 'Filtre'"
+			:aria-label="props.header.title || locales.filterLabel"
 			@click:clear="handleClear"
 			@focus="onFocus"
 			@blur="onBlur"
