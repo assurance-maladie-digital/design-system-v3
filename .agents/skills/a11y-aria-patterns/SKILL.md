@@ -13,7 +13,7 @@ Un motif interactif se **réutilise** avant de se réimplémenter. Le DS couvre 
 ## Démarche
 
 1. Identifier le motif APG (tableau ci-dessous, détail clavier dans [references/patterns.md](references/patterns.md)).
-2. Si un composant DS le couvre, l'utiliser ou l'étendre. Sinon, lire son implémentation de référence avant d'écrire.
+2. Si un composant DS le couvre, l'utiliser ou l'étendre. Sinon, lire son implémentation de référence avant d'écrire. **Si le tableau signale un écart (⚠️), l'APG fait foi pour tout nouveau code** : réutiliser le composant tel quel, ne pas recopier son implémentation (détail : [references/patterns.md, « Écarts connus »](references/patterns.md#écarts-connus-des-composants-ds)).
 3. Pour la gestion du focus, utiliser les directives du DS : `vLockFocus`, `vToolbar` ([doc/Directives/README.md](../../../doc/Directives/README.md)).
 4. Couvrir le motif selon le skill `a11y-testing`.
 
@@ -26,8 +26,8 @@ Un motif interactif se **réutilise** avant de se réimplémenter. Le DS couvre 
 | Bouton + listbox | `SyInputSelect`, `LangBtn` | `aria-haspopup="listbox"`, `aria-expanded`, `aria-controls` (si ouvert) |
 | Combobox | `SyAutocomplete` | VAutocomplete + `role="status"` pour le nombre de résultats |
 | Tabs | `SyTabs` | `tablist`/`tab`, `tabindex` mobile, flèches, `Home`/`End` |
-| Accordéon | `Accordion` | bouton `aria-expanded` + `aria-controls` |
-| Radio group | `RatingPicker` (Stars/Number/Emotion) | `radiogroup`, `aria-checked`, flèches |
+| Accordéon | `Accordion` ⚠️ | bouton `aria-expanded` + `aria-controls` ; écart sur la structure titre / bouton |
+| Radio group | `RatingPicker` (Stars/Number/Emotion) ⚠️ | `radiogroup`, `aria-checked` ; écart : les flèches ne sélectionnent pas |
 | Menu bouton | `SyBtnMenu` | `role="menu"`, `menuitem`, `<li role="presentation">` |
 | Toolbar | `ExternalLinks` | `v-toolbar` |
 | Slider | `RangeField` (`RangeSlider`) | `role="slider"`, `aria-valuenow/min/max` |
