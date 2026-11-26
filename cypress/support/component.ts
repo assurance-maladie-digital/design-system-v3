@@ -82,7 +82,7 @@ declare global {
  * Commande de comparaison de snapshots visuels
  * Reproduit la logique de addMatchImageSnapshotCommand sans import CJS top-level
  */
-Cypress.Commands.add('matchImageSnapshot', (name?: string, elem?: Cypress.Chainable<JQuery<HTMLElement>> = cy.get('body')) => {
+Cypress.Commands.add('matchImageSnapshot', (name?: string, elem: Cypress.Chainable<JQuery<HTMLElement>> = cy.get('body')) => {
 	const screenshotName = name || Cypress.currentTest.titlePath.join(' -- ')
 	const specRelative = Cypress.spec.relative
 	const snapshotPaths = getVisualSnapshotPaths(specRelative)
