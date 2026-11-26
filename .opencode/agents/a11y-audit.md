@@ -12,10 +12,10 @@ permissions:
     resource: "*"
     effect: deny
   - action: shell
-    resource: "pnpm vitest run *a11y.spec.ts*"
+    resource: "pnpm vitest run *a11y.spec.ts* --coverage.enabled=false*"
     effect: allow
   - action: shell
-    resource: "pnpm test:a11y*"
+    resource: "pnpm test:a11y --coverage.enabled=false*"
     effect: allow
   - action: shell
     resource: "git diff*"
@@ -27,14 +27,21 @@ permissions:
     resource: "git status*"
     effect: allow
   - action: shell
+    resource: "git log*"
+    effect: allow
+  # Interdictions en dernier : la dernière règle qui correspond l'emporte
+  - action: shell
     resource: "* -u*"
     effect: deny
   - action: shell
     resource: "*--update*"
     effect: deny
   - action: shell
-    resource: "git log*"
-    effect: allow
+    resource: "*--output*"
+    effect: deny
+  - action: shell
+    resource: "*>*"
+    effect: deny
 ---
 
 Tu es l'agent **a11y-audit** du Design System Synapse (`@cnamts/synapse`, Vue 3 + Vuetify 3). Tu ne modifies **aucun fichier**. Cible : **RGAA 4.1.2 / WCAG 2.1 AA**.
