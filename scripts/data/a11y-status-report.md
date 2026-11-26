@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 17/11/2026
+Généré le: 26/11/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -59,7 +59,7 @@ Généré le: 17/11/2026
 | **NotFoundPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **NotificationBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PageContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **PaginatedTable** | ❌ Non | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **PaginatedTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **PasswordField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PeriodField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **PhoneField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
@@ -77,7 +77,7 @@ Généré le: 17/11/2026
 | **SyTextArea** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Tables/SyServerTable** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Tables/SyTable** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **TableToolbar** | ❌ Non | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **TableToolbar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **ToolbarContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |

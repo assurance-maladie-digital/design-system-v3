@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-17T10:44:27.171Z",
+  "date": "2026-11-26T15:12:49.662Z",
   "compliantCount": 74,
   "totalCount": 77,
   "percentage": "96.10",
@@ -666,7 +666,7 @@
     },
     {
       "componentName": "PaginatedTable",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
       "isFullyCompliant": false,
@@ -882,7 +882,7 @@
     },
     {
       "componentName": "TableToolbar",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
       "isFullyCompliant": false,
