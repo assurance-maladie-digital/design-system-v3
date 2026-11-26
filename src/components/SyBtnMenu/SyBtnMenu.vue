@@ -254,16 +254,19 @@
 						v-if="hasIdentityInList"
 						:id="`${generatedId}-identity`"
 						class="sy-user-menu-identity px-4 py-3"
+						v-bind="props.options['identityListItem']"
 					>
-						<p class="text-body-2 font-weight-bold mb-0">
-							{{ props.primaryInfo }}
-						</p>
-						<p
-							v-if="secondaryInfo"
-							class="identity-secondary-info text-caption text-grey-darken-3 font-weight-regular mb-0"
-						>
-							{{ props.secondaryInfo }}
-						</p>
+						<slot name="header-list-item">
+							<p class="text-body-2 font-weight-bold mb-0">
+								{{ props.primaryInfo }}
+							</p>
+							<p
+								v-if="secondaryInfo"
+								class="identity-secondary-info text-caption text-grey-darken-3 font-weight-regular mb-0"
+							>
+								{{ props.secondaryInfo }}
+							</p>
+						</slot>
 					</div>
 					<VList
 						v-if="hasMenuListContent"
@@ -350,11 +353,11 @@
 // Le contenu du VMenu est téléporté hors du composant, mais ce bloc est rendu par son propre
 // template : il porte l'attribut de scope, les styles scopés l'atteignent donc sans passer par
 // un override global.
-// L'encart est détaché des bords de la liste — le padding vertical de `.v-list` fournit l'espace en haut, la
-// marge celui des côtés et du bas.
+// L'encart garde un espace autour de lui, y compris au-dessus maintenant qu'il est hors de la liste.
 .sy-user-menu-identity {
-	margin: 0 8px 8px;
+	margin: 8px 8px 8px;
 	background: rgba(var(--v-theme-interaction-dark), 0.2);
+	color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity, 0.87));
 
 	// Même arrondi que la liste : Vuetify pose 4px sur `.v-menu > .v-overlay__content` et la
 	// `.v-list` en hérite. `inherit` reprend donc la valeur calculée du parent et suivra

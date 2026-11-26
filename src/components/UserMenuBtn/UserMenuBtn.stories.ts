@@ -117,7 +117,7 @@ const meta = {
 		},
 		'default': {
 			control: false,
-			description: 'Ecrase le contenu du menu utilisateur',
+			description: 'Remplace le bouton de déconnexion par un élément de menu personnalisé',
 			table: {
 				category: 'slots',
 			},
@@ -125,6 +125,11 @@ const meta = {
 		'menu-header': {
 			control: false,
 			description: 'Ajoute un bloc de contenu personnalisé au-dessus des options dans le popin',
+			table: { category: 'slots' },
+		},
+		'header-list-item': {
+			control: false,
+			description: 'Remplace le contenu du bloc d’identité du menu mobile',
 			table: { category: 'slots' },
 		},
 		'onLogout': {
@@ -860,14 +865,14 @@ const handleLogout = () => {
         <p class="last-connection text-caption">Dernière connexion : {{ userDetails.lastConnexion }}</p>
       </div>
 
-      <div class="buttons d-flex ma-6">
-        <VBtn class="flex-grow-1" color="primary" variant="text" @click="handleAccount">
-          Mon compte
-        </VBtn>
-        <VBtn v-if="args.hideLogoutBtn" class="flex-grow-1" color="primary" variant="text" @click="handleLogout">
-          Déconnexion
-        </VBtn>
-      </div>
+        <div class="buttons d-flex ma-6">
+          <VBtn class="flex-grow-1" color="primary" variant="text" @click="handleAccount">
+            Mon compte
+          </VBtn>
+          <VBtn v-if="args.hideLogoutBtn" class="flex-grow-1" color="primary" variant="text" @click="handleLogout">
+            Déconnexion
+          </VBtn>
+        </div>
     </div>
   </template>
   </UserMenuBtn>

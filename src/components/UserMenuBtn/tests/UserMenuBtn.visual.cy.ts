@@ -137,13 +137,13 @@ describe('UserMenuBtn - Mobile visual regression tests', () => {
 		cy.get('.v-overlay__content').should('be.visible')
 		cy.get('.sy-user-menu-identity').should('be.visible')
 
-		// Le focus part sur le premier item à l'ouverture : on le retire pour que la capture ne
-		// dépende pas du ring, déjà couvert par les tests de focus.
+		// La capture garde le ring de l'activateur visible pour éviter une régression du focus.
 		cy.document().then((doc) => {
 			if (doc.activeElement instanceof HTMLElement) {
 				doc.activeElement.blur()
 			}
 		})
+		focusVisible('.sy-user-menu-btn')
 
 		cy.wait(150)
 		cy.matchImageSnapshot('user-menu-btn-mobile-menu-open')
