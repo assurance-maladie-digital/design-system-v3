@@ -44,7 +44,7 @@ Review changes from a factual, user-impact perspective. Report findings first, o
 
 - Each bug fix has a regression test that reproduces the failure through public behavior.
 - Tests exercise props, slots, user interactions, rendered DOM, and emitted events rather than internal component state.
-- Visual changes are manually checked before baseline updates; visual baselines generated under WSL must not be committed.
+- Visual changes are manually checked before baseline updates. Visual baselines are produced only by the Linux CI workflow `update-visual-snapshots.yml`; any `*.snap.png` generated locally (macOS, WSL) and committed is a finding.
 
 ### Accessibility
 

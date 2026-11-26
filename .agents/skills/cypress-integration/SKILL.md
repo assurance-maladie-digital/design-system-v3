@@ -53,15 +53,25 @@ describe('MonComposant – visuel', () => {
 - **Rendu** du focus (anneau visible, contraste) : `cy.get(sel).focus()` puis `cy.matchImageSnapshot('<nom>-focus')`.
 - **Comportement** clavier (ordre, flèches, `Escape`, retour du focus) : en Vitest, selon le skill `a11y-testing`. `cy.type('{esc}')` reste possible pour un overlay qui n'existe qu'en navigateur réel.
 
-## Baselines et WSL
+## Baselines
 
-Les baselines générées sous **WSL** diffèrent de Linux natif : ne jamais les committer. Les générer en CI (Ubuntu) ou sur Linux natif ; sous WSL, `pnpm test:visual:open` sert seulement à inspecter. Valider manuellement le rendu avant toute mise à jour.
+Les baselines officielles sont produites **uniquement par la CI Linux**, via le workflow `.github/workflows/update-visual-snapshots.yml` (Ubuntu), qui les commite lui-même. Ne jamais committer de baselines générées en local : **macOS et WSL** donnent un rendu différent (polices, anticrénelage, taille d'image) et cassent la CI.
+
+Mettre à jour les baselines :
+
+- GitHub → Actions → *Update Visual Test Snapshots* → *Run workflow*, avec `branch` (vide = branche courante) et `spec` (ex. `ChipList` ou `Accordion,ChipList`, vide = tout) ;
+- ou pousser un tag `update-snapshots` / `update-snapshots-<suffixe>` sur la branche.
+
+Valider manuellement le rendu (diff dans `cypress/snapshots/diff/`) avant de lancer la mise à jour.
+
+En local, uniquement pour inspecter, sans committer les PNG produits :
 
 ```bash
-pnpm test:visual --spec "src/components/<Nom>/**/*.cy.ts"         # ciblé
-pnpm test:visual:update --spec "src/components/<Nom>/**/*.cy.ts"  # mise à jour ciblée
-pnpm test:visual:open                                               # interactif
+pnpm test:visual --spec "src/components/<Nom>/**/*.cy.ts"   # ciblé
+pnpm test:visual:open                                         # interactif
 ```
+
+Un échec « Taille d'image différente » en local sur macOS, y compris sur un test que le changement ne touche pas, vient de la machine et pas du code.
 
 ## Anti-patterns
 
