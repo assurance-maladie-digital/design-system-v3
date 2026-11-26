@@ -501,12 +501,12 @@
 .sy-nav-list-panel__row:not(.sy-nav-list-panel__row--disabled):hover,
 .sy-nav-list-panel__row--open {
 	// Survol de la maquette PA (Colors/Interaction/Dark/Hover : primaire à 8 %)
-	background-color: rgba(var(--v-theme-primary), 0.08);
+	background-color: rgb(var(--v-theme-primary), 0.08);
 }
 
 // Page en cours : fond en plus du texte en gras et en couleur primaire (pas seulement la couleur).
 .sy-nav-list-panel__row:has([aria-current='page']):not(:has(.sy-nav-list-panel__flyout [aria-current='page'])) {
-	background-color: rgba(var(--v-theme-primary), var(--v-activated-opacity, 0.12));
+	background-color: rgb(var(--v-theme-primary), var(--v-activated-opacity, 0.12));
 }
 
 // Entrée dont le sous-niveau contient la page en cours : libellé en gras, pour se repérer menu fermé.
@@ -538,7 +538,7 @@
 
 // Entrée désactivée : libellé atténué (texte d'un composant désactivé, exempté du contraste minimal, RGAA 3.2).
 .sy-nav-list-panel__link--disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity, 0.38));
+	color: rgb(var(--v-theme-on-surface), var(--v-disabled-opacity, 0.38));
 	cursor: default;
 }
 

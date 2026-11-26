@@ -56,10 +56,10 @@
 		background-image:
 			linear-gradient(
 				0deg,
-				rgba(var(--v-theme-primary), 0.06),
-				rgba(var(--v-theme-primary), 0.06)
+				rgb(var(--v-theme-primary), 0.06),
+				rgb(var(--v-theme-primary), 0.06)
 			);
-		border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+		border-bottom: 1px solid rgb(var(--v-border-color), var(--v-border-opacity));
 	}
 
 	// La barre reste visible en haut lors du défilement : l'utilisateur ne « passe »

@@ -332,7 +332,7 @@
 pre {
 	margin: 0;
 	white-space: pre-wrap;
-	word-break: break-word;
+	overflow-wrap: break-word;
 }
 
 :deep(.v-input__control > .v-label) {

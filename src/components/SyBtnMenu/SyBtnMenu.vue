@@ -353,7 +353,7 @@
 // marge celui des côtés et du bas.
 .sy-user-menu-identity {
 	margin: 0 8px 8px;
-	background: rgba(var(--v-theme-interaction-dark), 0.2);
+	background: rgb(var(--v-theme-interaction-dark), 0.2);
 
 	// Même arrondi que la liste : Vuetify pose 4px sur `.v-menu > .v-overlay__content` et la
 	// `.v-list` en hérite. `inherit` reprend donc la valeur calculée du parent et suivra

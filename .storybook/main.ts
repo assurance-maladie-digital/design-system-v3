@@ -71,20 +71,10 @@ const config: StorybookConfig = {
 			// tsconfig.json n'a que des références : le checker a besoin de celui qui inclut src/.
 			docgen: { plugin: 'vue-component-meta', tsconfig: 'tsconfig.app.json' },
 		},
-	},
+	},875492
 	async viteFinal(baseConfig) {
 		return mergeConfig(baseConfig, {
-			esbuild: {
-				supported: {
-					destructuring: true,
-				},
-			},
 			optimizeDeps: {
-				esbuildOptions: {
-					supported: {
-						destructuring: true,
-					},
-				},
 				exclude: [
 					'@storybook/addon-docs',
 					'@storybook/addon-docs/preview',

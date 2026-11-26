@@ -22,7 +22,7 @@ async function createCypressViteConfig() {
 			},
 		},
 		build: {
-			rollupOptions: {
+			rolldownOptions: {
 				external: ['vue', /^vuetify/],
 				output: {
 					globals: {
@@ -32,24 +32,8 @@ async function createCypressViteConfig() {
 				},
 			},
 		},
-		esbuild: {
-			supported: {
-				destructuring: true,
-			},
-		},
-		css: {
-			preprocessorOptions: {
-				scss: { api: 'modern' },
-				sass: { api: 'modern' },
-			},
-		},
 		optimizeDeps: {
 			include: ['vuetify', 'vuetify/components', 'vuetify/directives', 'vuetify/iconsets/mdi-svg', 'vuetify/locale'],
-			esbuildOptions: {
-				supported: {
-					destructuring: true,
-				},
-			},
 		},
 	}
 }

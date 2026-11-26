@@ -335,7 +335,6 @@
 .col-title--wrap {
 	white-space: normal;
 	overflow-wrap: anywhere;
-	word-break: break-word;
 	line-height: 1.25;
 }
 

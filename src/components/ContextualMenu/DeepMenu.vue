@@ -88,7 +88,7 @@ a {
 
 .v-theme--dark {
 	a {
-		color: rgba(var(--v-theme-on-primary), 0.7) !important;
+		color: rgb(var(--v-theme-on-primary), 0.7) !important;
 	}
 
 	a.active {
@@ -96,7 +96,7 @@ a {
 	}
 
 	a::before {
-		background: rgba(var(--v-theme-on-primary), 0.6);
+		background: rgb(var(--v-theme-on-primary), 0.6);
 	}
 
 	a:focus-visible {

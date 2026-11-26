@@ -224,7 +224,7 @@
 
 .roadmap-board__card {
 	--rb-accent: rgb(var(--v-theme-primary));
-	--rb-soft: rgba(var(--v-theme-primary), 0.1);
+	--rb-soft: rgb(var(--v-theme-primary), 0.1);
 
 	margin: 0 !important;
 	padding: 10px 12px;

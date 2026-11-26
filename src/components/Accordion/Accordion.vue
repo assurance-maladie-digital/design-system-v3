@@ -311,7 +311,7 @@
 .sy-accordion-button:hover,
 .sy-accordion-content--open + .sy-accordion-button,
 .sy-accordion-item:has(.sy-accordion-content--open) .sy-accordion-button {
-	background-color: rgba(var(--accordion-active-color), 0.15);
+	background-color: rgb(var(--accordion-active-color), 0.15);
 
 	.sy-accordion-title {
 		/* La couleur sera appliquée via la classe text-{color} dans le template */

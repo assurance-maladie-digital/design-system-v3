@@ -425,12 +425,12 @@
 
 	&:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-interaction-dark), 0.2);
+		background-color: rgb(var(--v-theme-interaction-dark), 0.2);
 	}
 
 	&--selected:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-interaction-lighten), 0.2);
+		background-color: rgb(var(--v-theme-interaction-lighten), 0.2);
 	}
 }
 
@@ -502,7 +502,7 @@
 }
 
 .select-btn-field__help-text {
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgb(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }

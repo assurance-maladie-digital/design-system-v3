@@ -103,7 +103,7 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	max-height: 288px;
-	grid-gap: 0 24px;
+	gap: 0 24px;
 	padding-inline: 32px;
 	overflow: auto;
 }

@@ -81,10 +81,6 @@ export default defineConfig({
 			},
 		},
 	},
-	optimizeDeps: {
-		// Rolldown options are not needed for basic destructuring support
-		// Remove unsupported 'supported' property
-	},
 	test: {
 		include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)', '**/*.a11y.spec.ts'],
 		environment: 'happy-dom',

@@ -77,7 +77,6 @@
 
 @media screen and (max-width: ($header-breakpoint + 1)) {
 	.header-menu-btn__label {
-		clip: rect(0 0 0 0);
 		clip-path: inset(50%);
 		height: 1px;
 		overflow: hidden;

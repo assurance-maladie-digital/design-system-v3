@@ -242,7 +242,7 @@
 </template>
 <style lang="scss" scoped>
 .v-list-item:hover {
-	background-color: rgba(var(--v-theme-colors-overlay), 0.005);
+	background-color: rgb(var(--v-theme-colors-overlay), 0.005);
 }
 
 .v-list-item:focus-visible {

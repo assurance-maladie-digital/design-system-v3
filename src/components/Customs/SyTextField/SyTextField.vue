@@ -1094,6 +1094,6 @@
 }
 
 .help-text-below.text-disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+	color: rgb(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
 </style>

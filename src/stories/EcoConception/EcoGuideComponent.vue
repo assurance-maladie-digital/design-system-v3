@@ -567,7 +567,6 @@
 
 .card-text-wrap {
 	white-space: normal;
-	word-wrap: break-word;
 	overflow-wrap: break-word;
 	display: block;
 	width: 100%;

@@ -139,11 +139,11 @@
 	}
 
 	:deep(.v-btn--variant-outlined:hover) {
-		background: rgba(var(--v-theme-interaction-lighten), 0.12) !important;
+		background: rgb(var(--v-theme-interaction-lighten), 0.12) !important;
 	}
 
 	:deep(.v-btn--variant-outlined:active) {
-		background: rgba(var(--v-theme-interaction-lighten), 0.18) !important;
+		background: rgb(var(--v-theme-interaction-lighten), 0.18) !important;
 	}
 }
 
@@ -157,11 +157,11 @@
 	}
 
 	:where(.v-theme--ap).v-btn--variant-outlined:hover {
-		background: rgba(var(--v-theme-interaction-lighten), 0.12) !important;
+		background: rgb(var(--v-theme-interaction-lighten), 0.12) !important;
 	}
 
 	:where(.v-theme--ap).v-btn--variant-outlined:active {
-		background: rgba(var(--v-theme-interaction-lighten), 0.18) !important;
+		background: rgb(var(--v-theme-interaction-lighten), 0.18) !important;
 	}
 }
 
@@ -185,11 +185,11 @@
 	}
 
 	:deep(.v-btn--variant-outlined:hover) {
-		background: rgba(var(--v-theme-interaction-lighten), 0.14) !important;
+		background: rgb(var(--v-theme-interaction-lighten), 0.14) !important;
 	}
 
 	:deep(.v-btn--variant-outlined:active) {
-		background: rgba(var(--v-theme-interaction-lighten), 0.18) !important;
+		background: rgb(var(--v-theme-interaction-lighten), 0.18) !important;
 	}
 }
 

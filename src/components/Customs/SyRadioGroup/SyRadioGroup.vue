@@ -256,7 +256,7 @@
 .sy-radio-group__help-text {
 	margin-top: 10px;
 	font-size: var(--v-fontSize-liensEtLibelles);
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgb(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 
 .sb-show-main.sb-main-centered #storybook-root {

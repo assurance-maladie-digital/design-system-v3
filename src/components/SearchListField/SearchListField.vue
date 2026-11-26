@@ -206,13 +206,13 @@
 	display: grid;
 	align-items: center;
 	grid-template-columns: auto 1fr;
-	grid-gap: 8px;
+	gap: 8px;
 	min-height: 34px;
 	cursor: pointer;
 	transition: background-color 0.2s ease-in-out;
 
 	&:hover {
-		background-color: rgba(var(--v-theme-primary), 0.08);
+		background-color: rgb(var(--v-theme-primary), 0.08);
 	}
 
 	// La ligne entière (`<label>`) est la cible cliquable : le ring DS épouse donc toute la
@@ -235,7 +235,7 @@
 }
 
 .suggestion-item--selected .label {
-	background-color: rgba(var(--v-theme-primary), 0.12);
+	background-color: rgb(var(--v-theme-primary), 0.12);
 }
 
 </style>

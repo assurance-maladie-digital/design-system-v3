@@ -393,11 +393,11 @@ a {
 
 	p,
 	.text--primary {
-		color: rgba(var(--v-theme-on-primary));
+		color: rgb(var(--v-theme-on-primary));
 	}
 
 	.text--secondary {
-		color: rgba(var(--v-theme-on-primary));
+		color: rgb(var(--v-theme-on-primary));
 	}
 
 	a.text--primary {
@@ -405,7 +405,7 @@ a {
 	}
 
 	.v-divider {
-		border-color: rgba(var(--v-theme-disabled), 1);
+		border-color: rgb(var(--v-theme-disabled), 1);
 	}
 
 	svg {
@@ -458,7 +458,7 @@ a {
 }
 
 .v-theme--dark button.v-btn:hover :deep() {
-	background: rgba(white, 0.1);
+	background: rgb(white, 0.1);
 }
 
 @media #{bp.$up-sm} {
