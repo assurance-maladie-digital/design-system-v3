@@ -355,7 +355,7 @@
 // un override global.
 // L'encart garde un espace autour de lui, y compris au-dessus maintenant qu'il est hors de la liste.
 .sy-user-menu-identity {
-	margin: 8px 8px 8px;
+	margin: 8px;
 	background: rgba(var(--v-theme-interaction-dark), 0.2);
 	color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity, 0.87));
 
