@@ -20,11 +20,13 @@
 			type="image"
 			height="64"
 			width="311"
+			max-width="100%"
 			tile
 		/>
 
 		<img
 			v-else
+			class="captcha-img"
 			height="64"
 			width="311"
 			:alt="locales.captchaImgAlt"
@@ -35,6 +37,11 @@
 </template>
 
 <style lang="scss" scoped>
+.captcha-img {
+	max-width: 100%;
+	height: auto;
+}
+
 :deep(.v-skeleton-loader__image) {
 	height: 100%;
 }

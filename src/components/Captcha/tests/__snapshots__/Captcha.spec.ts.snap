@@ -393,6 +393,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
     <div class="mt-4">
       <img
         alt="Le captcha à saisir"
+        class="captcha-img"
         height="64"
         src="/captcha/captcha.png"
         width="311"
