@@ -22,6 +22,8 @@ describe('HeaderMenuBtn – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'HeaderMenuBtn – closed', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations in open state', async () => {
@@ -35,6 +37,8 @@ describe('HeaderMenuBtn – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'HeaderMenuBtn – open', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 
 	it('exposes a distinct accessible name per state', () => {
@@ -51,5 +55,8 @@ describe('HeaderMenuBtn – accessibility (axe)', () => {
 		expect(closedLabel).toBeTruthy()
 		expect(openLabel).toBeTruthy()
 		expect(closedLabel).not.toBe(openLabel)
+
+		closed.unmount()
+		open.unmount()
 	})
 })

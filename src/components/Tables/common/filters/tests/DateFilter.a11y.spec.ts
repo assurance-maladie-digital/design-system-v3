@@ -19,9 +19,10 @@ const accessibleDatePickerStub = {
 	`,
 	props: ['modelValue', 'label', 'clearable', 'density', 'hideDetails', 'hideMessages',
 		'disableErrorHandling', 'variant', 'bgColor', 'placeholder', 'useCombinedMode',
-		'showWeekNumber', 'textFieldClasses', 'isValidateOnBlur', 'disableErrorHandling',
+		'showWeekNumber', 'textFieldClasses', 'isValidateOnBlur',
 		'displayIcon', 'displayAppendIcon', 'noIcon', 'period', 'dateFormatReturn',
-		'formats', 'customRules', 'customWarningRules', 'customRulesSuccessMessage',
+		'format', 'headingLevel', 'formats', 'customRules', 'customWarningRules',
+		'customRulesSuccessMessage',
 		'showSuccessMessages', 'readOnly', 'disabled', 'required', 'displayError',
 		'displayPersistentErrorMessage', 'width', 'displayTodayButton',
 		'displayWeekendDays', 'displayHolidayDays', 'useTextFieldActivator'],
@@ -55,6 +56,8 @@ describe('DateFilter – accessibilité (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'DateFilter – empty', { ignoreRules: ['region'] })
+
+		wrapper.unmount()
 	})
 
 	it('has no axe violations with a filled date', async () => {
@@ -70,5 +73,7 @@ describe('DateFilter – accessibilité (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'DateFilter – with value', { ignoreRules: ['region'] })
+
+		wrapper.unmount()
 	})
 })

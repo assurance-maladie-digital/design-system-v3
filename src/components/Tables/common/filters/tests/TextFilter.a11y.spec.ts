@@ -50,6 +50,8 @@ describe('TextFilter – accessibilité (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'TextFilter – empty', { ignoreRules: ['region'] })
+
+		wrapper.unmount()
 	})
 
 	it('has no axe violations with a filled value', async () => {
@@ -66,5 +68,7 @@ describe('TextFilter – accessibilité (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'TextFilter – with value', { ignoreRules: ['region'] })
+
+		wrapper.unmount()
 	})
 })

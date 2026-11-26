@@ -28,6 +28,8 @@ describe('TableToolbar – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'TableToolbar – row count only', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations with search field and add button', async () => {
@@ -45,6 +47,8 @@ describe('TableToolbar – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'TableToolbar – search + add button', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations while loading', async () => {
@@ -60,5 +64,7 @@ describe('TableToolbar – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'TableToolbar – loading', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 })

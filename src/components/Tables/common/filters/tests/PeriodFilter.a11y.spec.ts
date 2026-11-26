@@ -21,7 +21,7 @@ const accessiblePeriodFieldStub = {
 		</fieldset>
 	`,
 	props: ['modelValue', 'label', 'clearable', 'density', 'hideDetails', 'hideMessages',
-		'disableErrorHandling', 'variant', 'bgColor'],
+		'disableErrorHandling', 'variant', 'bgColor', 'format'],
 	emits: ['update:modelValue'],
 	setup() {
 		const fromId = `period-from-${useId()}`
@@ -53,6 +53,8 @@ describe('PeriodFilter – accessibilité (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'PeriodFilter – empty', { ignoreRules: ['region'] })
+
+		wrapper.unmount()
 	})
 
 	it('has no axe violations with a filled period', async () => {
@@ -68,5 +70,7 @@ describe('PeriodFilter – accessibilité (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'PeriodFilter – with value', { ignoreRules: ['region'] })
+
+		wrapper.unmount()
 	})
 })

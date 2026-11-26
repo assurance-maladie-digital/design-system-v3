@@ -30,6 +30,8 @@ describe('TableBulkActions – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'TableBulkActions – selection with actions', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations without project actions', async () => {
@@ -44,5 +46,7 @@ describe('TableBulkActions – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'TableBulkActions – count only', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 })

@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { beforeAll, beforeEach, describe, it } from 'vitest'
+import { beforeEach, describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -21,23 +21,6 @@ const headers = [
 ]
 
 describe('PaginatedTable – accessibility (axe)', () => {
-	beforeAll(() => {
-		global.visualViewport = {
-			width: 1024,
-			height: 768,
-			scale: 1,
-			offsetLeft: 0,
-			offsetTop: 0,
-			pageLeft: 0,
-			pageTop: 0,
-			onresize: null,
-			onscroll: null,
-			addEventListener: () => {},
-			removeEventListener: () => {},
-			dispatchEvent: () => true,
-		}
-	})
-
 	// Les tests montent avec `attachTo: document.body` : sans ce nettoyage, le DOM
 	// d'un test fuit dans le suivant.
 	beforeEach(() => {
@@ -62,6 +45,8 @@ describe('PaginatedTable – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'PaginatedTable – local mode with caption', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations in server mode with pagination', async () => {
@@ -89,6 +74,8 @@ describe('PaginatedTable – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'PaginatedTable – server mode with pagination', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations with an empty dataset', async () => {
@@ -109,5 +96,7 @@ describe('PaginatedTable – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'PaginatedTable – empty dataset', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 })

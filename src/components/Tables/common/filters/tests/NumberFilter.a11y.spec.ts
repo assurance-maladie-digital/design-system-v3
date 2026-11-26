@@ -50,6 +50,8 @@ describe('NumberFilter – accessibilité (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'NumberFilter – empty', { ignoreRules: ['region'] })
+
+		wrapper.unmount()
 	})
 
 	it('has no axe violations with a filled value', async () => {
@@ -66,5 +68,7 @@ describe('NumberFilter – accessibilité (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'NumberFilter – with value', { ignoreRules: ['region'] })
+
+		wrapper.unmount()
 	})
 })

@@ -54,6 +54,8 @@ describe('TableHeader – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'TableHeader – sortable column', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations for a non-sortable column header', async () => {
@@ -71,5 +73,7 @@ describe('TableHeader – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'TableHeader – non-sortable column', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
 	})
 })

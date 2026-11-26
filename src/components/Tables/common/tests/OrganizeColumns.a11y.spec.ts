@@ -1,10 +1,9 @@
 // @vitest-environment jsdom
 
-import { beforeEach, describe, it } from 'vitest'
+import { beforeEach, describe, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
-import { nextTick } from 'vue'
 import type { DataTableHeaders } from '../types'
 
 import OrganizeColumns from '../organizeColumns/OrganizeColumns.vue'
@@ -45,7 +44,13 @@ describe('OrganizeColumns – accessibility (axe)', () => {
 		})
 
 		await wrapper.find('button').trigger('click')
-		await nextTick()
+		// Le contenu du VMenu est téléporté dans body : attendre son montage réel
+		// plutôt qu'un tick fixe, fragile sur CI lente.
+		await vi.waitFor(() => {
+			if (!document.body.querySelector('[role="dialog"]')) {
+				throw new Error('columns dialog not mounted yet')
+			}
+		})
 
 		const results = await axe(document.body as HTMLElement)
 		assertNoA11yViolations(results, 'OrganizeColumns – open dialog', {
