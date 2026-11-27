@@ -1,0 +1,101 @@
+# Archive la documentation Storybook de chaque version sur une branche Netlify (branch deploy) :
+#   branche `archive-vX-Y-Z` -> https://archive-vX-Y-Z--cnam-design-system.netlify.app/
+# Netlify ne supprime jamais automatiquement le dernier déploiement d'une branche,
+# et ces branches ne reçoivent jamais de nouveau commit : l'archive reste en ligne.
+#
+# Une version n'est ajoutée à l'index (versions.json, branche `docs-archive-index`, lu par le menu
+# « Version » de Storybook) qu'une fois son archive en ligne. Si le déploiement échoue,
+# la branche est supprimée et le workflow échoue : le menu n'affiche jamais de lien mort.
+#
+# Prérequis Netlify (une fois) : sur le site cnam-design-system, activer les branch deploys
+# pour le motif `archive-v*` (Site configuration > Build & deploy > Branches and deploy contexts).
+name: 'Archive de la documentation'
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag à archiver (ex. v1.2.0)'
+        required: true
+
+permissions:
+  contents: write
+
+# Une archive à la fois : les mises à jour de l'index ne doivent pas se croiser
+concurrency:
+  group: docs-archive
+  cancel-in-progress: false
+
+env:
+  NETLIFY_SITE: cnam-design-system
+  INDEX_BRANCH: docs-archive-index
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || github.event.release.tag_name }}
+    steps:
+      - name: Vérifier le tag
+        run: |
+          if ! [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Tag invalide : '$TAG' (attendu : vX.Y.Z)"
+            exit 1
+          fi
+          VERSION="${TAG#v}"
+          BRANCH="archive-v${VERSION//./-}"
+          {
+            echo "VERSION=$VERSION"
+            echo "BRANCH=$BRANCH"
+            echo "ARCHIVE_URL=https://$BRANCH--$NETLIFY_SITE.netlify.app/"
+          } >> "$GITHUB_ENV"
+
+      - uses: actions/checkout@v7
+
+      # Une poussée faite avec le GITHUB_TOKEN ne déclenche pas les autres workflows ; Netlify, lui, la reçoit
+      - name: Créer la branche d'archive
+        run: |
+          git fetch --depth 1 origin "refs/tags/$TAG:refs/tags/$TAG"
+          git push origin "refs/tags/$TAG^{commit}:refs/heads/$BRANCH"
+
+      - name: Attendre le déploiement Netlify
+        run: |
+          for attempt in $(seq 1 60); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$ARCHIVE_URL" || true)
+            if [ "$code" = "200" ]; then
+              echo "Archive en ligne : $ARCHIVE_URL"
+              exit 0
+            fi
+            echo "Tentative $attempt/60 : HTTP $code, nouvel essai dans 30 s"
+            sleep 30
+          done
+          echo "::error::Archive injoignable après 30 min : $ARCHIVE_URL. Vérifiez le build Netlify de la branche $BRANCH et que les branch deploys sont activés pour archive-v*. La branche est supprimée."
+          git push origin --delete "$BRANCH"
+          exit 1
+
+      - name: Récupérer l'index
+        run: |
+          if git ls-remote --exit-code --heads origin "$INDEX_BRANCH" > /dev/null; then
+            git fetch --depth 1 origin "$INDEX_BRANCH"
+            git worktree add -B "$INDEX_BRANCH" "$RUNNER_TEMP/index" FETCH_HEAD
+          else
+            git worktree add --orphan -b "$INDEX_BRANCH" "$RUNNER_TEMP/index"
+          fi
+
+      - name: Ajouter la version à l'index
+        run: node scripts/docs-archive-index.mjs "$RUNNER_TEMP/index/versions.json" "$VERSION"
+
+      - name: Publier l'index
+        working-directory: ${{ runner.temp }}/index
+        run: |
+          git add versions.json
+          if git diff --cached --quiet; then
+            echo "Index déjà à jour pour $VERSION"
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m "Archive de la documentation $TAG"
+          git push origin "$INDEX_BRANCH"
