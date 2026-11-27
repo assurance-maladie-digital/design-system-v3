@@ -287,18 +287,7 @@
 
 .file-item__message {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-on-surface-variant));
-}
-
-.file-item__message-success,
-.file-item__message-error {
-	margin-top: var(--v-gap-3);
-}
-
-.file-item__message-error {
-	display: flex;
-	align-items: center;
-	gap: var(--v-gap-4);
+	color: rgb(var(--v-theme-on-surface));
 }
 
 </style>
