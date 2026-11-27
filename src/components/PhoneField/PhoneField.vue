@@ -365,10 +365,10 @@
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.25rem;
 	color: rgb(var(--v-theme-on-surface));
-	opacity: 0.6;
+	opacity: var(--v-medium-emphasis-opacity);
 
 	&.text-disabled {
-		opacity: 0.38;
+		opacity: var(--v-disabled-opacity);
 	}
 }
 

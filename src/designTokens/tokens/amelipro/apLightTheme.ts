@@ -34,6 +34,7 @@ export const apLightTheme = {
 	surface: baseTokens.color.white.base,
 	surfaceBright: baseTokens.color.cyan.lighten97,
 	surfaceDim: baseTokens.color.cyan.lighten90,
+	surfaceVariant: baseTokens.color.grey.darken20,
 	onSurface: baseTokens.color.grey.darken60,
 	onSurfaceVariant: baseTokens.color.grey.lighten90,
 

@@ -859,12 +859,11 @@
 
 			<template #details>
 				<slot name="details" />
-				<!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages -->
+				<!-- Zone de détails de Vuetify : le texte d'aide s'aligne sous le champ, comme les messages. -->
 				<div
 					v-if="showHelpTextBelow"
 					:id="helpTextId"
 					class="help-text-below mt-1"
-					:class="{ 'text-disabled': props.disabled }"
 				>
 					{{ props.helpText }}
 				</div>
@@ -1076,7 +1075,12 @@
 
 		.v-messages__message {
 			color: rgb(var(--v-theme-on-surface)) !important;
+			opacity: var(--v-medium-emphasis-opacity) !important;
 		}
+	}
+
+	&.v-input--disabled :deep(.v-messages .v-messages__message) {
+		opacity: 1 !important;
 	}
 }
 
@@ -1085,6 +1089,7 @@
 	flex-basis: 100%;
 	order: 1;
 	color: rgb(var(--v-theme-on-surface));
+	opacity: var(--v-medium-emphasis-opacity);
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
@@ -1093,7 +1098,7 @@
 	flex-wrap: wrap;
 }
 
-.help-text-below.text-disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+.v-input--disabled .help-text-below {
+	opacity: 1;
 }
 </style>

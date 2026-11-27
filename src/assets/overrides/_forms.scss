@@ -1,3 +1,7 @@
+.v-input:not(.error-field, .warning-field, .success-field) .v-label.v-field-label {
+	color: rgb(var(--v-theme-on-surface));
+}
+
 .v-messages {
 	font-size: var(--v-fontSize-liensEtLibelles) !important;
 

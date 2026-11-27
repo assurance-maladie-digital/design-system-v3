@@ -235,6 +235,30 @@ describe('SySelect.vue', () => {
 
 			wrapper.unmount()
 		})
+
+		// Regression (opacity stacking): the help text of a disabled field used to
+		// carry the text-disabled utility class while Vuetify already dims the
+		// .v-input__details block that contains it (compounding down to ~5 %).
+		// The disabled dimming must come from the parent block only.
+		it('does not stack disabled dimming on the help text of a disabled field', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					helpText: 'Texte d\'aide',
+					errorMessages: ['Erreur de test'],
+					disabled: true,
+				},
+				attachTo: document.body,
+			})
+
+			const helpText = wrapper.find('.help-text-below')
+			expect(helpText.exists()).toBe(true)
+			expect(helpText.classes()).not.toContain('text-disabled')
+			// The help text stays in the details block of the disabled input:
+			// that block carries the disabled opacity.
+			expect(wrapper.find('.v-input--disabled .v-input__details .help-text-below').exists()).toBe(true)
+
+			wrapper.unmount()
+		})
 	})
 
 	// Comme les autres champs, un SySelect vide garde son libellé dans le champ quand une
