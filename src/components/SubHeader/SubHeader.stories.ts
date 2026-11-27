@@ -576,8 +576,8 @@ export const HtmlValue: Story = {
 				code: `
 <template>
 	<SubHeader
-						:heading-level="2"
-						:data-list-title-level="3"
+		:heading-level="2"
+		:data-list-title-level="3"
 		title-text="Paul Dupont"
 		sub-title-text="1 69 08 75 125 456 75"
 		:data-list-group-items="items"
@@ -637,7 +637,7 @@ export const HtmlValue: Story = {
 					title: 'Informations patient',
 					items: [
 						{ key: 'Date de naissance', value: '24/09/1970' },
-						{ key: 'Adresse', value: '50 Avenue du Professeur André Lemierre, 75020 Paris' },
+						{ key: 'Adresse', value: '50 Avenue du Professeur André Lemierre' },
 					],
 				},
 				{
@@ -659,8 +659,8 @@ export const HtmlValue: Story = {
 		},
 		template: `
 			<SubHeader
-						:heading-level="2"
-						:data-list-title-level="3"
+				:heading-level="2"
+				:data-list-title-level="3"
 				title-text="Paul Dupont"
 				sub-title-text="1 69 08 75 125 456 75"
 				:data-list-group-items="items"
@@ -668,6 +668,7 @@ export const HtmlValue: Story = {
 				<template #item="{ item, itemValue }">
 					<span v-if="item.key === 'Adresse'">
 						<b>{{ itemValue }}</b><br>
+						75020 Paris
 					</span>
 
 					<span v-else>
@@ -1213,7 +1214,7 @@ export const SlotRightContent: Story = {
 									Dupliquer le dossier
 								</VBtn>
 							</div>
-					</template>
+						</template>
 					</SubHeader>
 				</template>
 				`,
