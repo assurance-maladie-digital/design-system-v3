@@ -7,6 +7,14 @@ const focusVisible = (selector: string) =>
 		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
 	})
 
+const expectThemeColor = (selector: string, token: string) => {
+	cy.get(selector).should(($element) => {
+		const style = getComputedStyle($element[0]!)
+		const channels = style.getPropertyValue(`--v-theme-${token}`).trim().split(/,\s*/).join(', ')
+		expect(style.color).to.equal(`rgb(${channels})`)
+	})
+}
+
 describe('SyTextField - Visual regression tests', () => {
 	it('displays the text field by default', () => {
 		cy.mountWithVuetify(SyTextField, {
@@ -53,6 +61,31 @@ describe('SyTextField - Visual regression tests', () => {
 
 		cy.get('.v-text-field').should('be.visible')
 		cy.matchImageSnapshot('sy-text-field-readonly', cy.get('.v-text-field'))
+	})
+
+	it('preserves the readonly focus color and restores the resting border on blur', () => {
+		cy.mountWithVuetify(SyTextField, {
+			props: { label: 'Prénom', modelValue: 'Jean', readonly: true },
+		})
+
+		expectThemeColor('.v-field__outline', 'on-disabled')
+		cy.get('input').focus().should('be.focused').and('have.attr', 'readonly')
+		expectThemeColor('.v-field__outline', 'primary')
+		cy.get('input').blur()
+		expectThemeColor('.v-field__outline', 'on-disabled')
+	})
+
+	it('preserves readonly error colors at rest and on focus', () => {
+		cy.mountWithVuetify(SyTextField, {
+			props: { label: 'Prénom', modelValue: 'Jean', readonly: true, errorMessages: ['Valeur incorrecte'] },
+		})
+
+		cy.contains('Valeur incorrecte').should('be.visible')
+		expectThemeColor('.v-field__outline', 'error')
+		expectThemeColor('.v-field-label--floating', 'error')
+		cy.get('input').focus().should('be.focused').and('have.attr', 'aria-invalid', 'true')
+		expectThemeColor('.v-field__outline', 'error')
+		expectThemeColor('.v-field-label--floating', 'error')
 	})
 
 	it('displays the text field with clearable', () => {
