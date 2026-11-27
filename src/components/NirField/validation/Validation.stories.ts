@@ -82,7 +82,7 @@ const nirFormatRules: ValidationRule[] = [
 
 				return true
 			},
-			message: 'Le numéro de sécurité sociale est invalide.',
+			message: 'Le numéro de sécurité sociale est invalide, ce sont les 13 premiers caractères sur la carte Vitale.',
 			successMessage: 'Le numéro de sécurité sociale est valide.',
 			fieldIdentifier: 'Numéro de sécurité sociale',
 		},
@@ -453,7 +453,7 @@ const customNumberRules = [
 
         return true
       },
-      message: 'Le numéro de sécurité sociale est invalide.',
+      message: 'Le numéro de sécurité sociale est invalide, ce sont les 13 premiers caractères sur la carte Vitale.',
       successMessage: 'Le numéro de sécurité sociale est valide.',
       fieldIdentifier: 'Numéro de sécurité sociale',
     },

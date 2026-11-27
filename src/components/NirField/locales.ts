@@ -1,8 +1,8 @@
 export const locales = {
-	errorRequiredNumber: 'Le numéro de sécurité sociale est requis, ce sont les 13 premiers chiffres sur votre carte vitale.',
-	errorInvalidNumber: 'Le numéro de sécurité sociale est invalide.',
-	errorRequiredKey: 'La clé de contrôle est requise, ce sont les 2 derniers chiffres sur votre carte vitale.',
-	errorInvalidKey: 'La clé de contrôle est invalide.',
+	errorRequiredNumber: 'Le numéro de sécurité sociale est requis, ce sont les 13 premiers caractères sur la carte Vitale.',
+	errorInvalidNumber: 'Le numéro de sécurité sociale est invalide, ce sont les 13 premiers caractères sur la carte Vitale.',
+	errorRequiredKey: 'La clé de contrôle est requise, ce sont les 2 derniers chiffres sur la carte Vitale.',
+	errorInvalidKey: 'La clé de contrôle ne correspond pas au numéro de sécurité sociale, ce sont les 2 derniers chiffres sur la carte Vitale.',
 	successNumberValid: 'Le numéro de sécurité sociale est valide.',
 	successKeyValid: 'La clé de contrôle est valide.',
 	numberLabel: 'Numéro de sécurité sociale',
