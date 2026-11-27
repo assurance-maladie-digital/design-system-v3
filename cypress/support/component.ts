@@ -78,7 +78,7 @@ declare global {
 			rgaaAssertAccessibleName(selector: string): Chainable<JQuery<HTMLElement>>
 			rgaaAssertNoHorizontalOverflow(selector?: string): Chainable<JQuery<HTMLElement>>
 			rgaaAssertHiddenNotFocusable(selector: string): Chainable<JQuery<HTMLElement>>
-			rgaaSetAuditViewport(width: number, height: number): Chainable<void>
+			rgaaSetAuditViewport(width: number, height: number): Chainable<undefined>
 		}
 	}
 }
@@ -219,8 +219,13 @@ Cypress.Commands.add('rgaaAssertAccessibleName', (selector: string) => {
 			const associatedLabel = element.id
 				? element.ownerDocument?.querySelector(`label[for="${CSS.escape(element.id)}"]`)?.textContent?.trim()
 				: undefined
-			const content = element.textContent?.trim()
-			if (!(explicit || referencedText || associatedLabel || content)) throw new Error(`Nom accessible absent pour ${element.outerHTML}`)
+			const title = element.getAttribute('title')?.trim()
+			const alternative = element.getAttribute('alt')?.trim()
+			const role = element.getAttribute('role')
+			const canUseVisibleText = ['BUTTON', 'A', 'SUMMARY', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(element.tagName)
+				|| ['button', 'link', 'heading', 'tab', 'option', 'menuitem'].includes(role ?? '')
+			const content = canUseVisibleText ? element.textContent?.trim() : undefined
+			if (!(explicit || referencedText || associatedLabel || title || alternative || content)) throw new Error(`Nom accessible absent pour ${element.outerHTML}`)
 		})
 	})
 })
@@ -242,8 +247,5 @@ Cypress.Commands.add('rgaaAssertHiddenNotFocusable', (selector: string) => {
 })
 
 Cypress.Commands.add('rgaaSetAuditViewport', (width: number, height: number) => {
-	cy.viewport(width, height)
-	return cy.document().then((document) => {
-		document.documentElement.style.overflowX = 'auto'
-	})
+	return cy.viewport(width, height)
 })
