@@ -121,3 +121,7 @@
 	color: rgb(var(--v-theme-on-primary));
 	font-weight: 700;
 }
+
+.releases .releases__doc-link {
+	margin: 0 0 0.5rem;
+}
