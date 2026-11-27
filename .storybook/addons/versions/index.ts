@@ -31,10 +31,15 @@ const useDocVersions = () => {
 
 const VersionsPopover = () => {
 	const theme = useTheme()
+	// Nouvel onglet : la doc de la version en cours reste ouverte.
+	// Le nom accessible reprend le texte visible et signale l'ouverture (RGAA 13.2).
 	const links = getArchivedVersions(currentVersion, useDocVersions()).map(({ version, url }) => ({
-		id: version,
-		title: `v${version}`,
-		href: url,
+		'id': version,
+		'title': `v${version}`,
+		'href': url,
+		'target': '_blank',
+		'rel': 'noopener noreferrer',
+		'aria-label': `v${version} (nouvel onglet)`,
 	}))
 
 	return React.createElement(
@@ -50,6 +55,11 @@ const VersionsPopover = () => {
 			'p',
 			{ style: { margin: '8px 12px 0', fontSize: 12, fontWeight: 700 } },
 			'Versions archivées',
+			React.createElement(
+				'span',
+				{ style: { display: 'block', fontWeight: 400 } },
+				'S\'ouvrent dans un nouvel onglet',
+			),
 		),
 		links.length > 0 && React.createElement(
 			'div',
