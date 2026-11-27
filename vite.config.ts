@@ -34,7 +34,7 @@ export default defineConfig({
 			tsconfigPath: 'tsconfig.dts.json',
 			rollupTypes: false,
 			insertTypesEntry: false,
-			copyDtsFiles: false,
+			copyDtsFiles: true,
 			cleanVueFileName: true,
 			aliasesExclude: [/vuetify/],
 		}),
