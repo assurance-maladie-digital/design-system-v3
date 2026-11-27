@@ -2381,7 +2381,7 @@ exports[`mounthpicker > should open the menu when clicking on the input 1`] = `
           mdi
           notranslate
           v-icon
-          v-icon--size-default
+          v-icon--size-x-small
           v-theme--light
         "
       ></i>
