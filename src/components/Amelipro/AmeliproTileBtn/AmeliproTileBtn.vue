@@ -421,7 +421,7 @@
 
 .amelipro-tile-btn__label {
 	display: inline-block;
-	word-break: break-word;
+	overflow-wrap: anywhere;
 	width: 100%;
 	box-sizing: border-box;
 	text-align: center;

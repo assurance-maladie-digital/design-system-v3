@@ -316,7 +316,6 @@
 	:deep(.sy-autocomplete__selection-text) {
 		white-space: normal;
 		overflow-wrap: anywhere;
-		word-break: break-word;
 		line-height: 1.25;
 		flex-shrink: 1;
 	}

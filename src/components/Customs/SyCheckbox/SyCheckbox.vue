@@ -282,13 +282,13 @@
 
 <style scoped>
 .help-text-below {
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgb(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
 .help-text-below.text-disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+	color: rgb(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
 
 .error-field :deep(.v-messages),

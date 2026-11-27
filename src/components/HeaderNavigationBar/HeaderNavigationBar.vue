@@ -258,7 +258,7 @@
 
 .disabled-item {
 	opacity: 0.38;
-	color: rgba(var(--v-theme-on-surface), 0.38);
+	color: rgb(var(--v-theme-on-surface), 0.38);
 	cursor: not-allowed;
 }
 

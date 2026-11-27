@@ -98,7 +98,7 @@
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	align-items: center;
-	grid-gap: 0 24px;
+	gap: 0 24px;
 	padding-inline: 32px;
 }
 

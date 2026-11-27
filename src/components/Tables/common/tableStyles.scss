@@ -4,7 +4,7 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 // Valeurs par défaut des variables de personnalisation. Elles ne sont pas redéfinies sur `.v-table` :
 // le projet peut ainsi les poser sur n'importe quel ancêtre du tableau.
 $sy-table-pinned-cell-bg: var(--sy-table-pinned-cell-bg, rgb(var(--v-theme-surface)));
-$sy-table-pinned-shadow-color: rgba(var(--v-theme-grey-base), 0.6);
+$sy-table-pinned-shadow-color: rgb(var(--v-theme-grey-base), 0.6);
 $sy-table-pinned-left-shadow: var(--sy-table-pinned-left-shadow, 2px 0 6px -4px #{$sy-table-pinned-shadow-color});
 $sy-table-pinned-right-shadow: var(--sy-table-pinned-right-shadow, -2px 0 6px -4px #{$sy-table-pinned-shadow-color});
 $sy-table-checkbox-color: var(--sy-table-checkbox-color, rgb(var(--v-theme-primary)));
@@ -76,7 +76,7 @@ $sy-table-checkbox-color: var(--sy-table-checkbox-color, rgb(var(--v-theme-prima
 
 	table thead tr.headers,
 	table thead tr.reset {
-		background-color: rgba(var(--v-theme-info-variant), 0.2);
+		background-color: rgb(var(--v-theme-info-variant), 0.2);
 	}
 
 	&.fixed-min-height {
@@ -196,7 +196,7 @@ $sy-table-checkbox-color: var(--sy-table-checkbox-color, rgb(var(--v-theme-prima
 	.v-table tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:hover > td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:hover > .v-data-table__td {
-		background-color: rgba(var(--v-theme-primary), 0.08) !important;
+		background-color: rgb(var(--v-theme-primary), 0.08) !important;
 	}
 }
 

@@ -1104,7 +1104,7 @@
 	padding: 0;
 	margin: -1px;
 	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
+	clip-path: inset(50%);
 	white-space: nowrap;
 	border: 0;
 }
@@ -1120,7 +1120,7 @@
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	background-color: rgb(var(--v-theme-background)) 0.12;
+	background-color: rgb(var(--v-theme-background), 0.12);
 	color: rgb(var(--v-theme-on-background));
 }
 </style>

@@ -70,16 +70,17 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with all 
     required="true"
     role="combobox"
     rules="() => "modified-rules",(value) => {
-    let valid;
-    if (Array.isArray(value)) {
-      valid = value.length !== 0;
-    } else if (typeof value === "string") {
-      valid = value.trim() !== "";
-    } else {
-      valid = value !== null && value !== void 0;
-    };
-    return valid || (0,__vite_ssr_import_0__.ruleMessage)(errorMessages, "default");
-  }"
+		let valid;
+		if (Array.isArray(value)) {
+			valid = value.length !== 0;
+		} else if (typeof value === "string") {
+			valid = value.trim() !== "";
+		} else {
+			// Pour les nombres (y compris 0), null, undefined, etc.
+			valid = value !== null && value !== undefined;
+		};
+		return valid || (0,__vite_ssr_import_0__.ruleMessage)(errorMessages, "default");
+	}"
     style="
       max-width: modified-input-max-width;
       min-width: modified-input-min-width;

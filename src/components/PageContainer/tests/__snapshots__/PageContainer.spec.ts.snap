@@ -6,7 +6,6 @@ exports[`PageContainer > render correctly 1`] = `
   flex-column
   vd-page-container
 ">
-  <!-- Slot prepend avec wrapper de largeur fixe -->
   <!-- v-if -->
   <div class="
     px-14
@@ -22,7 +21,6 @@ exports[`PageContainer > render correctly 1`] = `
       style="width: 800px;"
     ></div>
   </div>
-  <!-- Slot append avec wrapper de largeur fixe -->
   <!-- v-if -->
 </div>
 `;

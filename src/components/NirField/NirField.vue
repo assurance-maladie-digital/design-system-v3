@@ -707,7 +707,7 @@
 	letter-spacing: 0.0333em;
 	line-height: 16px;
 	padding-inline: 16px;
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgb(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 
 .sy-number-errors,

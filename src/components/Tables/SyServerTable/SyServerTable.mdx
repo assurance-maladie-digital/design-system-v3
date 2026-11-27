@@ -204,8 +204,8 @@ Les colonnes épinglées (`pinned-columns`, `pinned-column-key`), la colonne de 
 |---|---|---|
 | `--sy-table-pinned-cell-bg` | Fond des cellules épinglées et de la colonne de sélection épinglée | `rgb(var(--v-theme-surface))` |
 | `--sy-table-row-bg` | Couleur d'une ligne, superposée au fond des cellules épinglées | `transparent` (lignes paires teintées avec `striped`) |
-| `--sy-table-pinned-left-shadow` | Ombre signalant du contenu masqué à gauche : colonnes épinglées à gauche, ou bord gauche du tableau | `2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6)` |
-| `--sy-table-pinned-right-shadow` | Ombre signalant du contenu masqué à droite : colonnes épinglées à droite, ou bord droit du tableau | `-2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6)` |
+| `--sy-table-pinned-left-shadow` | Ombre signalant du contenu masqué à gauche : colonnes épinglées à gauche, ou bord gauche du tableau | `2px 0 6px -4px rgb(var(--v-theme-grey-base), 0.6)` |
+| `--sy-table-pinned-right-shadow` | Ombre signalant du contenu masqué à droite : colonnes épinglées à droite, ou bord droit du tableau | `-2px 0 6px -4px rgb(var(--v-theme-grey-base), 0.6)` |
 | `--sy-table-checkbox-color` | Couleur des cases à cocher du tableau | `rgb(var(--v-theme-primary))` |
 
 Pour colorer une ligne, cellules épinglées comprises, définissez `--sy-table-row-bg` sur la ligne via `row-props`. Une couleur posée directement en `background-color` sur la ligne ne s'étend pas aux cellules épinglées, dont le fond reste opaque pour masquer le contenu qui défile dessous.

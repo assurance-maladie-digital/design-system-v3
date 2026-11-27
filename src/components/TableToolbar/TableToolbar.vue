@@ -186,7 +186,7 @@
 
 	p,
 	.text-primary {
-		color: rgba(var(--v-theme-on-primary), 0.6) !important;
+		color: rgb(var(--v-theme-on-primary), 0.6) !important;
 	}
 
 	svg {
@@ -194,7 +194,7 @@
 	}
 
 	.v-label {
-		color: rgba(var(--v-theme-on-primary), 0.6) !important;
+		color: rgb(var(--v-theme-on-primary), 0.6) !important;
 	}
 
 	.v-field__input {
@@ -203,6 +203,6 @@
 }
 
 .v-theme--dark button.v-btn:hover :deep() {
-	background: rgba(var(--v-theme-on-primary), 0.1);
+	background: rgb(var(--v-theme-on-primary), 0.1);
 }
 </style>

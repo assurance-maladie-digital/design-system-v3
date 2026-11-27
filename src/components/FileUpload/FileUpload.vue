@@ -231,6 +231,6 @@
 	height: 1px;
 	white-space: nowrap;
 	overflow: hidden;
-	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
 }
 </style>

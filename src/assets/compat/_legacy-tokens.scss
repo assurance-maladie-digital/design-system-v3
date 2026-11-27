@@ -84,7 +84,7 @@ $spacing-horizontal-huge: 80px !default;
 // --- Couleurs ----------------------------------------------------------------
 // Les couleurs de thème sont des triplets RVB : utilisez-les directement via
 //   color: rgb(var(--v-theme-primary));
-//   background: rgba(var(--v-theme-primary), 0.08);
+//   background: rgb(var(--v-theme-primary), 0.08);
 // Palette : rgb(var(--v-theme-<couleur>-<variante>)), ex. var(--v-theme-blue-base).
 // Le shim ne ré-expose volontairement pas l'ancienne palette en dur (> 100 valeurs)
 // pour rester aligné sur le thème actif. Si besoin ponctuel, aliasez côté projet :

@@ -238,7 +238,7 @@
 }
 
 .sy-number-picker__item:hover {
-	background-color: rgba(var(--v-theme-primary), 0.1);
+	background-color: rgb(var(--v-theme-primary), 0.1);
 }
 
 .sy-number-picker__item[aria-checked='true'] {

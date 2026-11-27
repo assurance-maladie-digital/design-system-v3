@@ -24,7 +24,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
       </span>
     </span>
   </p>
-  <!-- first line group -->
   <div class="
     address-field
     address-field__address
@@ -163,7 +162,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
     </div>
   </div>
   <!-- v-if -->
-  <!-- second line group -->
   <div
     class="
       amelipro-postal-address__city-row
@@ -442,7 +440,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
     </div>
     <!-- v-if -->
   </div>
-  <!-- third line group -->
   <div class="
     address-field
     address-field__additional-info

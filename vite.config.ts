@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
+import { dirname } from 'node:path'
 import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
@@ -32,7 +33,7 @@ export default defineConfig({
 			outDir: 'dist',
 			tsconfigPath: 'tsconfig.dts.json',
 			rollupTypes: false,
-			insertTypesEntry: true,
+			insertTypesEntry: false,
 			copyDtsFiles: true,
 			cleanVueFileName: true,
 			aliasesExclude: [/vuetify/],
@@ -40,6 +41,9 @@ export default defineConfig({
 		vue({
 			template: {
 				transformAssetUrls,
+				compilerOptions: {
+					comments: false,
+				},
 			},
 		}),
 		vuetify({
@@ -56,9 +60,9 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: {
-				'design-system-v3': resolve(__dirname, 'src/main.ts'),
-				'vuetifyConfig': resolve(__dirname, 'src/vuetifyConfig.ts'),
-				'vuetifyOptions': resolve(__dirname, 'src/vuetifyOptions.ts'),
+				'design-system-v3': resolve(dirname(fileURLToPath(import.meta.url)), 'src/main.ts'),
+				'vuetifyConfig': resolve(dirname(fileURLToPath(import.meta.url)), 'src/vuetifyConfig.ts'),
+				'vuetifyOptions': resolve(dirname(fileURLToPath(import.meta.url)), 'src/vuetifyOptions.ts'),
 			},
 			name: 'DesignSystemV3',
 			cssFileName: 'synapse',
@@ -66,7 +70,7 @@ export default defineConfig({
 			fileName: (format, entryAlias) => `${entryAlias}.js`,
 		},
 		chunkSizeWarningLimit: 4000,
-		rollupOptions: {
+		rolldownOptions: {
 			external: ['vue', 'vue-router', /^vuetify/, '@mdi/js'],
 			output: {
 				globals: {
@@ -74,28 +78,6 @@ export default defineConfig({
 					'vuetify': 'Vuetify',
 					'@mdi/js': 'mdi',
 				},
-			},
-		},
-	},
-	esbuild: {
-		supported: {
-			destructuring: true,
-		},
-	},
-	optimizeDeps: {
-		esbuildOptions: {
-			supported: {
-				destructuring: true,
-			},
-		},
-	},
-	css: {
-		preprocessorOptions: {
-			scss: {
-				api: 'modern-compiler',
-			},
-			sass: {
-				api: 'modern-compiler',
 			},
 		},
 	},

@@ -10,7 +10,6 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
   "
   id="v-0-container"
 >
-  <!-- Slot prepend avec wrapper de largeur fixe -->
   <!-- v-if -->
   <div class="
     px-14
@@ -156,7 +155,6 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
       </div>
     </div>
   </div>
-  <!-- Slot append avec wrapper de largeur fixe -->
   <!-- v-if -->
 </div>
 `;
@@ -171,7 +169,6 @@ exports[`NotFoundPage > renders correctly 1`] = `
   "
   id="v-0-container"
 >
-  <!-- Slot prepend avec wrapper de largeur fixe -->
   <!-- v-if -->
   <div class="
     px-14
@@ -310,7 +307,6 @@ exports[`NotFoundPage > renders correctly 1`] = `
       </div>
     </div>
   </div>
-  <!-- Slot append avec wrapper de largeur fixe -->
   <!-- v-if -->
 </div>
 `;
