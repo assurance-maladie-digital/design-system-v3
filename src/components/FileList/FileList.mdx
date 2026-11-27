@@ -58,7 +58,7 @@ Il est possible de personnaliser les icônes de fichier en utilisant le slot dyn
 
 <Canvas
 	of={FileListStories.Customization}
-		source={{
+	source={{
 		language: 'html',
 		format: 'dedent',
 		code: `
@@ -66,6 +66,7 @@ Il est possible de personnaliser les icônes de fichier en utilisant le slot dyn
 			import { FileList } from '@cnamts/synapse'
 			import { mdiCardAccountDetailsOutline, mdiCertificateOutline } from '@mdi/js'
 			import { ref } from 'vue'
+			import { VIcon } from 'vuetify/components'
 
 			const uploadList = ref([
 				{
@@ -78,34 +79,35 @@ Il est possible de personnaliser les icônes de fichier en utilisant le slot dyn
 					title: 'Carte d\\'identité',
 					state: 'initial',
 				},
-				{
-					id: 'paySlip',
-					title: 'Fiche de paie',
-					state: 'initial',
-				},
 			])
+
+			const onUpload = () => {}
+			const onDelete = () => {}
+			const onPreview = () => {}
 		</script>
 
-		<FileList
-			:uploadList="args.uploadList"
-			:maxWidth="600"
-			:minWidth="400"
-			:width="'50%'"
-			@upload="console.log"
-			@delete="console.log"
-			@preview="console.log"
-		>
-			<template #file-icon-residenceCertificate>
-				<VIcon
-					color="primary"
-				>{{ mdiCertificateOutline }}</VIcon>
-			</template>
-			<template #file-icon-identityCard>
-				<VIcon
-					color="primary"
-				>{{ mdiCardAccountDetailsOutline }}</VIcon>
-			</template>
-		</FileList>
+		<template>
+			<FileList
+				:uploadList="uploadList"
+				:maxWidth="600"
+				:minWidth="400"
+				:width="'50%'"
+				@upload="onUpload"
+				@delete="onDelete"
+				@preview="onPreview"
+			>
+				<template #file-icon-residenceCertificate>
+					<VIcon
+						color="primary"
+					>{{ mdiCertificateOutline }}</VIcon>
+				</template>
+				<template #file-icon-identityCard>
+					<VIcon
+						color="primary"
+					>{{ mdiCardAccountDetailsOutline }}</VIcon>
+				</template>
+			</FileList>
+		</template>
 		`
 	}}
 />
