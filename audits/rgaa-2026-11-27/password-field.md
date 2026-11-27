@@ -1,3 +1,5 @@
-# Audit RGAA 4.1.2 — PasswordField
+# PasswordField
 
-Critères : 1.2, 7.1, 11.10, 11.11 et 11.13. Le contrat ajouté vérifie le type password et le nom du champ. Le bouton d’affichage/masquage, les messages et l’autocomplete doivent être audités dans le navigateur.
+Critères ciblés : RGAA 7.1, 8.2, 10.7, 11.1 et 11.10.
+
+Les tests vérifient le nom du champ, le type password et le bouton de visibilité nommé et relié au champ. Les messages de validation et les exigences de sécurité/autocomplétion restent dépendants de l’intégration.

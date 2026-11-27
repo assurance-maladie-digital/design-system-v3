@@ -1,3 +1,5 @@
-# Audit RGAA 4.1.2 — RangeField
+# RangeField
 
-Critères : 3.3, 7.1, 8.2, 10.1 et 10.7. Le contrat ajouté vérifie le fieldset, la légende et les valeurs. Le focus des curseurs et champs min/max doit être vérifié dans Cypress.
+Critères ciblés : RGAA 7.1, 8.2, 9.1, 10.7 et 11.1.
+
+Les tests vérifient le fieldset nommé, les deux champs min/max et leur accès clavier. Les bornes, le slider et les messages d’erreur nécessitent des scénarios complémentaires selon les valeurs métier.

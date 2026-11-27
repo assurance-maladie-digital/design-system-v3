@@ -1,3 +1,5 @@
-# Audit RGAA 4.1.2 — SearchListField
+# SearchListField
 
-Critères : 7.1, 7.5, 8.2, 10.11, 11.2, 11.5, 11.6, 11.7 et 11.10. Le contrat ajouté vérifie le nom de recherche et la liste de résultats. L’autocomplétion, les annonces, le clavier et le reflow doivent être vérifiés dans le navigateur.
+Critères ciblés : RGAA 7.1, 8.2, 9.1, 11.1 et 11.10.
+
+Les tests vérifient le nom de la recherche, la structure fieldset/legend et la zone de statut. La navigation dans les résultats, les états sélectionnés et les annonces de filtrage doivent être testés avec des listes réelles.
