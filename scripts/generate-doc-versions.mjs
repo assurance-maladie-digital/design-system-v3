@@ -7,6 +7,7 @@
  * Ne fait jamais échouer le build : en cas d'erreur (réseau, limite de l'API GitHub),
  * le fichier n'est pas écrit et le menu utilise sa liste de secours.
  * Un jeton GITHUB_TOKEN (lecture seule) évite la limite de l'API sans authentification.
+ * S'il est expiré ou invalide, le script prévient et réessaie sans jeton.
  *
  * Usage : node scripts/generate-doc-versions.mjs
  */
@@ -21,7 +22,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const outputPath = path.resolve(__dirname, '../.storybook/public/doc-versions.json')
 
 try {
-	const versions = await generateDocVersions({ token: process.env.GITHUB_TOKEN })
+	const versions = await generateDocVersions({
+		token: process.env.GITHUB_TOKEN,
+		onWarning: message => process.stderr.write(`[doc-versions] ${message}\n`),
+	})
 	fs.writeFileSync(outputPath, `${JSON.stringify(versions, null, '\t')}\n`)
 	process.stdout.write(`[doc-versions] ${versions.length} versions archivées écrites dans ${path.relative(process.cwd(), outputPath)}\n`)
 }

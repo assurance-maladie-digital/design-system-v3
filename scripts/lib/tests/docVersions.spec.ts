@@ -85,6 +85,46 @@ describe('generateDocVersions', () => {
 		)
 	})
 
+	it('réessaie sans jeton et prévient quand le jeton est expiré', async () => {
+		const onWarning = vi.fn()
+		const fetchImpl = vi.fn(async (url: string, init?: RequestInit) => {
+			if (url.startsWith('https://api.github.com/')) {
+				const headers = init?.headers as Record<string, string>
+				return headers.Authorization
+					? jsonResponse({ message: 'Bad credentials' }, 401)
+					: jsonResponse({ items: [{ number: 2801, title: 'release 1.2.2' }] })
+			}
+			return new Response(null, { status: 200 })
+		})
+
+		await expect(generateDocVersions({ fetchImpl, token: 'expire', onWarning })).resolves.toEqual([
+			{ version: '1.2.2', url: previewUrl(2801) },
+		])
+		expect(onWarning).toHaveBeenCalledOnce()
+		expect(onWarning).toHaveBeenCalledWith(expect.stringContaining('GITHUB_TOKEN expiré ou invalide'))
+	})
+
+	it('ne réessaie pas sans jeton pour une autre erreur que 401', async () => {
+		const onWarning = vi.fn()
+		const fetchImpl = vi.fn(async () => jsonResponse({ message: 'API rate limit exceeded' }, 403))
+
+		await expect(generateDocVersions({ fetchImpl, token: 'jeton', onWarning })).rejects.toThrow('HTTP 403')
+		expect(fetchImpl).toHaveBeenCalledOnce()
+		expect(onWarning).not.toHaveBeenCalled()
+	})
+
+	it('lève une erreur si la recherche sans jeton échoue aussi', async () => {
+		const fetchImpl = vi.fn(async (_url: string, init?: RequestInit) => {
+			const headers = init?.headers as Record<string, string>
+			return headers.Authorization
+				? jsonResponse({ message: 'Bad credentials' }, 401)
+				: jsonResponse({ message: 'API rate limit exceeded' }, 403)
+		})
+
+		await expect(generateDocVersions({ fetchImpl, token: 'expire' })).rejects.toThrow('HTTP 403')
+		expect(fetchImpl).toHaveBeenCalledTimes(2)
+	})
+
 	it('lève une erreur si la recherche GitHub échoue (limite de l\'API)', async () => {
 		const fetchImpl = vi.fn(async () => jsonResponse({ message: 'API rate limit exceeded' }, 403))
 

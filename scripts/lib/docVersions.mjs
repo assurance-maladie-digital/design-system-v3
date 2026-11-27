@@ -52,7 +52,7 @@ const fetchReleasePullRequests = async (fetchImpl, token) => {
 		})
 
 		if (!response.ok) {
-			throw new Error(`recherche GitHub en échec (HTTP ${response.status})`)
+			throw Object.assign(new Error(`recherche GitHub en échec (HTTP ${response.status})`), { status: response.status })
 		}
 
 		const { items } = await response.json()
@@ -76,9 +76,24 @@ const isOnline = async (fetchImpl, url) => {
 	}
 }
 
+// Un jeton expiré ou révoqué (HTTP 401) ne doit pas faire pire que pas de jeton :
+// on prévient, puis on réessaie sans jeton.
+const fetchWithTokenFallback = async (fetchImpl, token, onWarning) => {
+	try {
+		return await fetchReleasePullRequests(fetchImpl, token)
+	}
+	catch (error) {
+		if (!token || error?.status !== 401) {
+			throw error
+		}
+		onWarning('GITHUB_TOKEN expiré ou invalide (HTTP 401) : recherche sans jeton. Renouvelez la variable GITHUB_TOKEN dans Netlify.')
+		return fetchReleasePullRequests(fetchImpl, undefined)
+	}
+}
+
 // Versions dont la preview est encore en ligne. Lève une erreur si GitHub ne répond pas.
-export const generateDocVersions = async ({ fetchImpl = fetch, token } = {}) => {
-	const candidates = toDocVersions(await fetchReleasePullRequests(fetchImpl, token))
+export const generateDocVersions = async ({ fetchImpl = fetch, token, onWarning = () => {} } = {}) => {
+	const candidates = toDocVersions(await fetchWithTokenFallback(fetchImpl, token, onWarning))
 	const online = await Promise.all(candidates.map(({ url }) => isOnline(fetchImpl, url)))
 
 	return candidates.filter((_, index) => online[index])
