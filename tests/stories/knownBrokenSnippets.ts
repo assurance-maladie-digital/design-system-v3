@@ -38,8 +38,6 @@ export const knownBrokenSnippets: readonly string[] = [
 	'components/HeaderToolbar/HeaderToolbar.stories.ts:CustomLinks',
 	'components/LogoBrandSection/LogoBrandSection.stories.ts:Default',
 	'components/NirField/NirField.stories.ts:ComplexNirType',
-	'components/SubHeader/SubHeader.stories.ts:Loading',
-	'components/SubHeader/SubHeader.stories.ts:SlotRightContent',
 	'components/SyBtnMenu/SyBtnMenu.stories.ts:WithCustomKeys',
 	'components/Tables/SyServerTable/Filtres.stories.ts:ServerFilterByExacteDate',
 	'components/Tables/SyServerTable/Filtres.stories.ts:ServerFilterByPeriod',
