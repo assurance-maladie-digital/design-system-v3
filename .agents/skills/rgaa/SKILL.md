@@ -14,9 +14,9 @@ Source : https://accessibilite.numerique.gouv.fr/
 
 ## Workflow d'audit
 
-1. **Délimiter le périmètre** : composant(s) `src/components/<Nom>/` (SFC `.vue`, props, slots, `locales.ts`, stories) ou diff.
+1. **Délimiter le périmètre** : composant(s) sous `src/components/` (éventuellement imbriqué : `Customs/`, `Tables/`…) (SFC `.vue`, props, slots, `locales.ts`, stories) ou diff.
 2. **Collecter les preuves automatiques** si possible :
-   - `pnpm vitest run src/components/<Nom>/tests/<Nom>.a11y.spec.ts --coverage.enabled=false`
+   - `pnpm vitest run /<Nom>.a11y.spec.ts --coverage.enabled=false` (filtre par sous-chaîne, sans glob ; vérifier `Test Files 1 passed`)
    - lire la section du composant dans `scripts/data/a11y-report.md` (régénéré par `pnpm a11y:report`, qui réécrit ce fichier suivi par git : ne le lancer que si l'on est autorisé à modifier le dépôt)
    - Rattacher chaque violation axe à son critère : `a11y-testing` → `references/axe-rgaa.md`.
 3. **Appliquer les « Critères vérifiables »** des skills `a11y-aria-patterns`, `a11y-fixes`, `a11y-testing`, `a11y-contrast` : chaque case non cochée est une NC candidate.

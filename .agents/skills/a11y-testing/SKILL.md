@@ -14,14 +14,16 @@ Ce skill dit **quoi** tester. Le **comment** axe (patron, `assertNoA11yViolation
 
 ```bash
 # Une seule spec a11y (rapide) — à utiliser pendant le dev
-pnpm vitest run src/components/<Nom>/tests/<Nom>.a11y.spec.ts --coverage.enabled=false
+pnpm vitest run /<Nom>.a11y.spec.ts --coverage.enabled=false
 # Toutes les specs du composant (unitaires + a11y)
-pnpm vitest run src/components/<Nom> --coverage.enabled=false
+pnpm vitest run /<Nom>/ --coverage.enabled=false
 # Suite a11y complète
 pnpm test:a11y
 # Ou : suite a11y + rapport scripts/data/a11y-report.md (relance déjà toute la suite)
 pnpm a11y:report
 ```
+
+Vitest filtre par **sous-chaîne du chemin**, sans glob : `src/components/**/…` ne trouve rien. Le `/` initial évite les correspondances partielles (`/DatePicker.a11y.spec.ts` n'attrape pas `ComplexDatePicker`). Ça marche quel que soit le dossier (`Customs/`, `Tables/`, `HeaderBar/`, `DatePicker/`…) ; le chemin complet reste possible (`pnpm vitest run src/components/Customs/Selects/SySelect/tests/SySelect.a11y.spec.ts`). Vérifier que la sortie indique au moins `Test Files 1 passed`, pas `No test files found`.
 
 `pnpm test:a11y <chemin>` **ne filtre pas** : il lance toujours toute la suite a11y. Il n'existe pas de config `vitest.a11y.config.ts`.
 

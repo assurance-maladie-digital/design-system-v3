@@ -26,7 +26,7 @@ Lister, par priorité, les travaux révélés par la réalisation et les bancs d
 
 - `a11y-contrast` : seuil du grand texte à 18,5 px (valeur RGAA) au lieu de 18,66 px.
 - Références `rgaa` : `class="sr-only"` → `d-sr-only` (classe Vuetify disponible).
-- `a11y-testing`, `rgaa`, agents : chemin de spec `src/components/**/<Nom>/tests/…` pour couvrir `Customs/`, `Tables/`, `HeaderBar/`.
+- ~~`a11y-testing`, `rgaa`, agents : chemin de spec pour couvrir `Customs/`, `Tables/`, `HeaderBar/`.~~ **Fait** : filtre par sous-chaîne `pnpm vitest run /<Nom>.a11y.spec.ts` (Vitest n'accepte pas de glob en filtre, `src/components/**/…` renvoie « No test files found »).
 - `rgaa/README.md` : « 4 étapes » → 7 ; avertir que `npx skills add etalab-ia/skills` écrase l'adaptation Synapse.
 - Agent Copilot `a11y-dev` : ajouter la consigne « ne jamais committer ni pousser sans accord ».
 - `SKILL.md` au-delà de ~500 mots (`a11y-fixes`, `a11y-aria-patterns`, `rgaa`) : déplacer exemples et tableaux dans `references/`.
