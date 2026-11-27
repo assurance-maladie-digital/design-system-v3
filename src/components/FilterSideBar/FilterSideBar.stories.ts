@@ -159,7 +159,16 @@ export default meta
 
 type Story = StoryObj<typeof FilterSideBar>
 
+const localFiltersArgType = {
+	...meta.argTypes.modelValue,
+	description: 'Les filtres de cet exemple sont définis dans la story et mis à jour via les champs du formulaire.',
+	control: false,
+} as const
+
 export const Default: Story = {
+	argTypes: {
+		modelValue: localFiltersArgType,
+	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
@@ -417,6 +426,12 @@ const professionList = [
 }
 
 export const ChipFormat: Story = {
+	argTypes: {
+		modelValue: {
+			...localFiltersArgType,
+			description: 'Le champ Intervalle met à jour le filtre local, dont le format de pastille est défini dans la story.',
+		},
+	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
@@ -452,8 +467,8 @@ export const ChipFormat: Story = {
 		},
 		template: `
 			<FilterSideBar
-				v-model="filters"
 				v-bind="args"
+				v-model="filters"
 			>
 				<template #range-slider="{ props }">
 					<RangeField
@@ -507,6 +522,12 @@ const filters = ref([
 }
 
 export const FilterCombination: Story = {
+	argTypes: {
+		modelValue: {
+			...localFiltersArgType,
+			description: 'Les deux présentations partagent la liste de filtres définie dans la story. Les champs des deux formulaires mettent à jour cette liste.',
+		},
+	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
@@ -590,8 +611,8 @@ export const FilterCombination: Story = {
 		template: `
 		<div>
 			<FilterSideBar
-				v-model="filters"
 				v-bind="args"
+				v-model="filters"
 			>
 				<template #name="{ props }">
 					<SyTextField
@@ -637,8 +658,8 @@ export const FilterCombination: Story = {
 			</FilterSideBar>
 			<VDivider class="my-4" />
 			<FilterInline
-				v-model="filters"
 				v-bind="args"
+				v-model="filters"
 			>
 				<template #name="{ props }">
 					<SyTextField
@@ -863,6 +884,12 @@ const professionList = [
 }
 
 export const Title: Story = {
+	argTypes: {
+		modelValue: {
+			...localFiltersArgType,
+			description: 'Les champs Nom et Type de dossier mettent à jour les filtres définis dans cet exemple de titre personnalisé.',
+		},
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -965,6 +992,12 @@ const filters = ref([
 }
 
 export const ZIndex: Story = {
+	argTypes: {
+		modelValue: {
+			...localFiltersArgType,
+			description: 'Chaque panneau gère sa propre liste de filtres, mise à jour via son champ Type de dossier.',
+		},
+	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
