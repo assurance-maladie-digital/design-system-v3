@@ -426,6 +426,12 @@ const professionList = [
 }
 
 export const ChipFormat: Story = {
+	argTypes: {
+		modelValue: {
+			...localFiltersArgType,
+			description: 'Le champ Intervalle met à jour le filtre local, dont le format de pastille est défini dans la story.',
+		},
+	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
@@ -461,8 +467,8 @@ export const ChipFormat: Story = {
 		},
 		template: `
 			<FilterSideBar
-				v-model="filters"
 				v-bind="args"
+				v-model="filters"
 			>
 				<template #range-slider="{ props }">
 					<RangeField
@@ -878,6 +884,12 @@ const professionList = [
 }
 
 export const Title: Story = {
+	argTypes: {
+		modelValue: {
+			...localFiltersArgType,
+			description: 'Les champs Nom et Type de dossier mettent à jour les filtres définis dans cet exemple de titre personnalisé.',
+		},
+	},
 	parameters: {
 		sourceCode: [
 			{
@@ -980,6 +992,12 @@ const filters = ref([
 }
 
 export const ZIndex: Story = {
+	argTypes: {
+		modelValue: {
+			...localFiltersArgType,
+			description: 'Chaque panneau gère sa propre liste de filtres, mise à jour via son champ Type de dossier.',
+		},
+	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
