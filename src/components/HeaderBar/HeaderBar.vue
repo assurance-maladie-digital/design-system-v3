@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import throttleDisplayFn from '@/utils/functions/throttleDisplayFn/throttleDisplayFn'
 	import { computed, onMounted, onUnmounted, provide, ref, watch, type CSSProperties, type DeepReadonly, type Ref } from 'vue'
-	import type { RouteLocationRaw } from 'vue-router'
+	import type { HomeLink } from '@/composables/useHomeLinkFallback'
 	import HeaderLogo from './HeaderLogo/HeaderLogo.vue'
 	import { registerHeaderMenuKey } from './consts'
 	import { locales } from './locales'
@@ -18,11 +18,7 @@
 		homeAriaLabel?: string
 		serviceTitle?: string
 		serviceSubtitle?: string
-		homeLink?: {
-			'to'?: RouteLocationRaw
-			'href'?: string
-			'aria-label'?: string
-		}
+		homeLink?: HomeLink
 		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 	}
 
@@ -43,11 +39,7 @@
 			 * Need 'sticky' at true,
 			 */
 			hideWhenDown?: boolean
-			homeLink?: {
-				'aria-label'?: string
-				'to'?: RouteLocationRaw
-				'href'?: string
-			}
+			homeLink?: HomeLink
 			width?: string | number
 		} & LogoProps>(),
 		{

@@ -2,7 +2,6 @@
 	import { LogoSize } from '@/components/Logo/LogoSize'
 	import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
 	import { computed } from 'vue'
-	import type { RouteLocationRaw } from 'vue-router'
 	import Logo from '../Logo/Logo.vue'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
 	import { locales as defaultLocales } from './locales'
@@ -10,7 +9,7 @@
 	import type { Theme } from './types'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { useLocales } from '@/composables/useLocales'
-	import { useHomeLinkFallback } from '@/composables/useHomeLinkFallback'
+	import { useHomeLinkFallback, type HomeLink } from '@/composables/useHomeLinkFallback'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(
@@ -20,11 +19,7 @@
 			serviceSubTitle?: string
 			mobileVersion?: boolean
 			reduceLogo?: boolean
-			homeLink?: {
-				ariaLabel?: string
-				to?: RouteLocationRaw
-				href?: string
-			}
+			homeLink?: HomeLink
 			headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 			headingLevelSubtitle?: 1 | 2 | 3 | 4
 			locales?: DeepPartial<typeof defaultLocales>
@@ -117,25 +112,21 @@
 
 	const { containerComponent: logoContainerComponent, linkAttrs: homeLinkAttrs } = useHomeLinkFallback(() => props.homeLink)
 
-	// Le libellé du lien d'accueil : sans `ariaLabel`, on n'annonce que le libellé générique
+	// Le nom accessible du lien d'accueil est porté par le lien (aria-label), pas par l'image.
+	// Sans `ariaLabel`, on n'annonce que le libellé générique
 	// (une concaténation naïve produisait « undefined Retour vers accueil du site »).
 	const homeLinkLabel = computed(() => {
-		return [props.homeLink?.ariaLabel, locales.value.homeLinkLabel]
+		return [props.homeLink?.ariaLabel ?? props.homeLink?.['aria-label'], locales.value.homeLinkLabel]
 			.filter(Boolean)
 			.join(' ')
 	})
 
-	const secondaryLogoCtnComponent = computed(() => {
-		return hasSecondaryLogoLink.value
-			? logoContainerComponent.value
-			: 'div'
-	})
+	// Le conteneur est un vrai lien (`a`/`router-link`) ou un simple `<div>` quand il n'y a pas de lien.
+	const isHomeLink = computed(() => logoContainerComponent.value !== 'div')
 
-	const secondaryLogoLabel = computed(() => {
-		return hasSecondaryLogoLink.value && secondaryLogo.value
-			? `${locales.value.homeLinkPrefix} ${secondaryLogo.value.alt}`
-			: null
-	})
+	// Les logos de marque secondaire liés (ameli, ameli-pro) partagent le lien d'accueil :
+	// un seul lien évite deux tabulations et deux annonces « retour accueil » consécutives.
+	const secondaryLogoInHomeLink = computed(() => hasSecondaryLogoLink.value && hasSecondaryLogo.value)
 
 	const avatar = computed(() => {
 		return props.reduceLogo ? hasSecondaryLogo.value : false
@@ -204,22 +195,44 @@
 		<component
 			:is="logoContainerComponent"
 			v-bind="homeLinkAttrs"
+			:aria-label="isHomeLink ? homeLinkLabel : undefined"
 			class="vd-home-link"
 		>
 			<Logo
+				:aria-label="isHomeLink ? '' : undefined"
 				:hide-signature="hideSignature"
 				:hide-organism="isCompteAmeliMobile"
 				:risque-pro="isRisquePro"
-				:aria-label="homeLinkLabel"
 				:avatar="avatar"
 				:size="logoSize"
 				:class="{ 'mr-2': avatar }"
 			/>
+
+			<!-- Logo de marque secondaire lié (ameli, ameli-pro) : fusionné dans le lien d'accueil -->
+			<template v-if="secondaryLogo && hasSecondaryLogoLink">
+				<svg
+					v-if="showDivider"
+					:width="dividerDimensions.width"
+					:style="{ height: dividerDimensions.height }"
+					:fill="dividerColor"
+					focusable="false"
+					aria-hidden="true"
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 22 64"
+					class="vd-divider"
+				>
+					<path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
+				</svg>
+				<img
+					:src="secondaryLogo.src"
+					:alt="isHomeLink ? '' : secondaryLogo.alt"
+				>
+			</template>
 		</component>
 
 		<slot>
 			<svg
-				v-if="showDivider"
+				v-if="showDivider && !secondaryLogoInHomeLink"
 				:width="dividerDimensions.width"
 				:style="{ height: dividerDimensions.height }"
 				:fill="dividerColor"
@@ -232,21 +245,18 @@
 				<path d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z" />
 			</svg>
 
-			<component
-				:is="secondaryLogoCtnComponent"
-				v-if="secondaryLogo"
-				v-bind="secondaryLogoCtnComponent === 'div' ? {} : homeLinkAttrs"
-				:aria-label="secondaryLogoLabel"
+			<div
+				v-if="secondaryLogo && !hasSecondaryLogoLink"
 				class="vd-home-link"
 			>
 				<img
 					:src="secondaryLogo.src"
 					:alt="secondaryLogo.alt"
 				>
-			</component>
+			</div>
 
 			<div
-				v-else-if="showBrandContent"
+				v-else-if="!secondaryLogo && showBrandContent"
 				class="vd-title-container d-flex justify-center flex-column text-primary"
 			>
 				<slot name="brand-content">
@@ -315,6 +325,13 @@
 	svg,
 	.vd-home-link {
 		flex: none;
+	}
+
+	// Le lien peut contenir le logo principal, le séparateur et le logo secondaire :
+	// flex pour les aligner verticalement comme le faisait le conteneur externe.
+	.vd-home-link {
+		display: flex;
+		align-items: center;
 	}
 
 	// cursor: pointer uniquement quand le conteneur est interactif (a, router-link)

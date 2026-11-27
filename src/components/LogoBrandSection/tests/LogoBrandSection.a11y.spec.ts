@@ -60,4 +60,31 @@ describe('LogoBrandSection – accessibility (axe)', () => {
 
 		wrapper.unmount()
 	})
+
+	// Thème ameli-pro : le logo de marque secondaire est fusionné dans le lien
+	// d'accueil — un seul lien nommé, image secondaire décorative (alt vide).
+	it('has no axe violations with a merged secondary logo link (ameli-pro)', async () => {
+		const wrapper = mount(LogoBrandSection, {
+			global: {
+				stubs: {
+					RouterLink: true,
+				},
+			},
+			props: {
+				theme: 'ameli-pro',
+				homeLink: {
+					href: '/',
+					ariaLabel: 'Accueil du site',
+				},
+			},
+			attachTo: document.body,
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'LogoBrandSection – ameli-pro merged link', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })

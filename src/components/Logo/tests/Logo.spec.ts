@@ -60,6 +60,16 @@ describe('Logo.vue', () => {
 		expect(wrapper.find('svg').attributes('aria-label')).toBe(customLabel)
 	})
 
+	// Un ariaLabel explicitement vide rend le logo décoratif : le svg sort de
+	// l'arbre d'accessibilité (utile dans un lien déjà nommé par aria-label).
+	it('renders the svg as decorative when ariaLabel is explicitly empty', () => {
+		const wrapper = mount(Logo, {
+			props: { ariaLabel: '' },
+		})
+		expect(wrapper.find('svg').attributes('aria-label')).toBe('')
+		expect(wrapper.find('svg').attributes('aria-hidden')).toBe('true')
+	})
+
 	it('renders correctly with size prop', () => {
 		const wrapper = mount(Logo, {
 			props: { size: LogoSize.SMALL },

@@ -71,7 +71,9 @@
 	})
 
 	const label = computed(() => {
-		if (props.ariaLabel) {
+		// Un libellé explicitement fourni (même vide) l'emporte : '' rend le logo
+		// décoratif, utile à l'intérieur d'un lien déjà nommé par aria-label.
+		if (props.ariaLabel !== undefined) {
 			return props.ariaLabel
 		}
 
@@ -112,7 +114,7 @@
 		role="img"
 		focusable="false"
 		xmlns="http://www.w3.org/2000/svg"
-		:aria-hidden="avatar ? 'true' : 'false'"
+		:aria-hidden="avatar || label === '' ? 'true' : 'false'"
 	>
 		<path
 			v-if="risquePro && !avatar"
