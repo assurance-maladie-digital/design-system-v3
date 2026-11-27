@@ -10,7 +10,6 @@ const meta = {
 			control: 'object',
 			table: {
 				type: { summary: 'object', detail: `{
-	homeLinkPrefix: string,
 	logoCnam: string,
 	logoAmeli: string,
 	logoAmeliPro: string,
@@ -75,10 +74,10 @@ const meta = {
 			description: 'Affiche la version Avatar du logo de l’Assurance Maladie s’il y a une marque secondaire. Sinon, masque la signature.<br> Déprécié, la ronde seule ne devrait plus être utilisée.',
 		},
 		'homeLink': {
-			description: 'Le lien vers la page d’accueil. <br>La valeur `false` permet de désactiver le lien..',
+			description: 'Le lien vers la page d’accueil. Renseigner soit `href` soit `to` pour un lien `<a>` ou `<router-link>` ; sans destination, le conteneur est un `<div>` non interactif.<br>La clé `ariaLabel` (ou `aria-label`) définit le préfixe du nom accessible du lien, concaténé avec « Retour vers accueil du site ».',
 			table: {
 				type: {
-					summary: '{ href?: string, to?: RouteLocationRaw, ariaLabel?: string }',
+					summary: '{ href?: string, to?: RouteLocationRaw, ariaLabel?: string, "aria-label"?: string }',
 				},
 				defaultValue: { summary: `{ href: '/'}` },
 			},

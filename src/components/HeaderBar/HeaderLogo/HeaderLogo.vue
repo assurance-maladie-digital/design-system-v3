@@ -1,20 +1,16 @@
 <script lang="ts" setup>
-	import type { RouteLocationRaw } from 'vue-router'
 	import { useTheme } from 'vuetify'
+	import { computed } from 'vue'
 	import { logoDesktop as logoDesktopUrl, logoMobile as logoMobileUrl } from '@/assets/logos'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
-	import { useHomeLinkFallback } from '@/composables/useHomeLinkFallback'
+	import { useHomeLinkFallback, type HomeLink } from '@/composables/useHomeLinkFallback'
 	import { headerBreakpoint } from '../consts'
 
 	type PropsType = {
 		logoAlt: string
 		serviceTitle?: string
 		serviceSubtitle?: string
-		homeLink?: {
-			'to'?: RouteLocationRaw
-			'href'?: string
-			'aria-label'?: string
-		}
+		homeLink?: HomeLink
 		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 	}
 
@@ -36,6 +32,15 @@
 	const desktopLogoMediaQuery = `(min-width: ${headerBreakpoint}px)`
 
 	const { containerComponent: routeType, linkAttrs: homeLinkAttrs } = useHomeLinkFallback(() => props.homeLink)
+
+	// Le nom accessible du lien est porté par le lien lui-même quand le consommateur
+	// fournit un libellé (`ariaLabel` ou `aria-label`). Dans ce cas l'image devient
+	// décorative (alt vide) : un alt renseigné serait de toute façon écrasé par le
+	// aria-label du lien. Sinon, l'image-lien conserve l'alt qui exprime la destination.
+	// Priorité `ariaLabel` puis `aria-label`, comme dans LogoBrandSection.
+	const linkAriaLabel = computed(() => props.homeLink?.ariaLabel ?? props.homeLink?.['aria-label'])
+	const isLink = computed(() => routeType.value !== 'div')
+	const imgAlt = computed(() => (isLink.value && linkAriaLabel.value) ? '' : props.logoAlt)
 </script>
 
 <template>
@@ -43,7 +48,7 @@
 		:is="routeType"
 		v-bind="{
 			...homeLinkAttrs,
-			'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
+			'aria-label': isLink ? (linkAriaLabel ?? undefined) : undefined,
 		}"
 		class="logo"
 	>
@@ -56,7 +61,7 @@
 			<img
 				class="logo-image"
 				:src="logoMobileUrl"
-				:alt="props.logoAlt"
+				:alt="imgAlt"
 				width="141"
 				height="42"
 			>

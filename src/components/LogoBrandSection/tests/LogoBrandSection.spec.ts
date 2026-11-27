@@ -316,7 +316,7 @@ describe('LogoBrandSection', () => {
 		expect(wrapper.find('.vd-home-link').element.tagName).toBe('DIV')
 	})
 
-	it('renders correctly with secondaryLogoCtnComponent', () => {
+	it('renders a single container when there is no secondary logo', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
@@ -330,7 +330,9 @@ describe('LogoBrandSection', () => {
 		expect(wrapper.findAll('.vd-home-link').length).toBe(1)
 	})
 
-	it('renders correctly with secondaryLogoCtnComponent', () => {
+	// Le logo secondaire lié (ameli, ameli-pro) est fusionné dans le lien d'accueil :
+	// un seul `.vd-home-link`, et l'image devient décorative à l'intérieur du lien nommé.
+	it('renders a single home link containing the decorative secondary logo (ameli-pro)', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
@@ -341,10 +343,14 @@ describe('LogoBrandSection', () => {
 			},
 		})
 
-		expect(wrapper.findAll('.vd-home-link').length).toBe(2)
+		const links = wrapper.findAll('.vd-home-link')
+		expect(links.length).toBe(1)
+		expect(links[0]?.element.tagName).toBe('A')
+		expect(links[0]?.attributes('aria-label')).toBe('Retour vers accueil du site')
+		expect(links[0]?.find('img').attributes('alt')).toBe('')
 	})
 
-	it('renders correctly with secondaryLogoCtnComponent', () => {
+	it('renders a single non-interactive container keeping the secondary logo alt when there is no link', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
@@ -359,10 +365,14 @@ describe('LogoBrandSection', () => {
 			},
 		})
 
-		expect(wrapper.findAll('.vd-home-link')[1]?.element.tagName).toBe('DIV')
+		const containers = wrapper.findAll('.vd-home-link')
+		expect(containers.length).toBe(1)
+		expect(containers[0]?.element.tagName).toBe('DIV')
+		expect(containers[0]?.attributes('aria-label')).toBeUndefined()
+		expect(containers[0]?.find('img').attributes('alt')).toBe('ameli.fr')
 	})
 
-	it('uses only the generic label when ariaLabel is not provided', () => {
+	it('puts the generic label on the link when ariaLabel is not provided', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
 				stubs: ['RouterLink', 'Logo'],
@@ -372,10 +382,10 @@ describe('LogoBrandSection', () => {
 			},
 		})
 
-		expect(wrapper.find('logo-stub').attributes('arialabel')).toBe('Retour vers accueil du site')
+		expect(wrapper.find('.vd-home-link').attributes('aria-label')).toBe('Retour vers accueil du site')
 	})
 
-	it('concatenates ariaLabel with the generic label when provided', () => {
+	it('concatenates ariaLabel with the generic label on the link when provided', () => {
 		const wrapper = mount(LogoBrandSection, {
 			global: {
 				stubs: ['RouterLink', 'Logo'],
@@ -385,6 +395,49 @@ describe('LogoBrandSection', () => {
 			},
 		})
 
-		expect(wrapper.find('logo-stub').attributes('arialabel')).toBe('Accueil CNAM Retour vers accueil du site')
+		expect(wrapper.find('.vd-home-link').attributes('aria-label')).toBe('Accueil CNAM Retour vers accueil du site')
+	})
+
+	// La clé kebab-case 'aria-label' est acceptée en alternative à ariaLabel
+	// (priorité à ariaLabel si les deux sont fournies, comme dans HeaderLogo).
+	it('concatenates the kebab-case aria-label key with the generic label on the link', () => {
+		const wrapper = mount(LogoBrandSection, {
+			global: {
+				stubs: ['RouterLink', 'Logo'],
+			},
+			props: {
+				homeLink: { 'href': '/', 'aria-label': 'Accueil CNAM' },
+			},
+		})
+
+		expect(wrapper.find('.vd-home-link').attributes('aria-label')).toBe('Accueil CNAM Retour vers accueil du site')
+	})
+
+	// Le nom accessible est porté par le lien : le SVG du logo devient décoratif
+	// à l'intérieur du lien nommé, sinon il conserve son libellé de marque.
+	it('hides the logo svg inside the named home link', () => {
+		const wrapper = mount(LogoBrandSection, {
+			global: {
+				stubs: ['RouterLink'],
+			},
+		})
+
+		const svg = wrapper.find('.vd-home-link svg[role="img"]')
+		expect(svg.attributes('aria-hidden')).toBe('true')
+	})
+
+	it('keeps the logo svg labelled when the container is not a link', () => {
+		const wrapper = mount(LogoBrandSection, {
+			global: {
+				stubs: ['RouterLink'],
+			},
+			props: {
+				homeLink: {},
+			},
+		})
+
+		const svg = wrapper.find('.vd-home-link svg[role="img"]')
+		expect(svg.attributes('aria-hidden')).toBe('false')
+		expect(svg.attributes('aria-label')).toBeTruthy()
 	})
 })

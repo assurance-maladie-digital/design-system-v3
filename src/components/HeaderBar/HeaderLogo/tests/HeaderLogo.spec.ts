@@ -155,6 +155,48 @@ describe('HeaderLogo', () => {
 		expect(link.attributes('href')).toBe('/accueil')
 	})
 
+	// Quand le lien porte un nom accessible explicite, le alt de l'image serait
+	// écrasé par le aria-label du lien : l'image devient décorative (alt vide).
+	it('makes the logo image decorative when the home link has an accessible name', async () => {
+		const wrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Test aria label',
+				homeLink: { 'href': '/', 'aria-label': 'Accueil' },
+			},
+		})
+
+		expect(wrapper.find('a').attributes('aria-label')).toBe('Accueil')
+		expect(wrapper.find('img').attributes('alt')).toBe('')
+	})
+
+	it('keeps the logo alt when the home link has no accessible name', async () => {
+		const wrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Test aria label',
+				homeLink: { href: '/' },
+			},
+		})
+
+		expect(wrapper.find('a').attributes('aria-label')).toBeUndefined()
+		expect(wrapper.find('img').attributes('alt')).toBe('Test aria label')
+	})
+
+	// Un div générique ne doit pas porter d'aria-label : le libellé fourni sans
+	// destination (ni `to` ni `href`) n'est pas reporté sur le conteneur.
+	it('does not put an aria-label on a non-interactive container', async () => {
+		const wrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Test aria label',
+				homeLink: { ariaLabel: 'Accueil' },
+			},
+		})
+
+		const container = wrapper.find('.logo')
+		expect(container.element.tagName).toBe('DIV')
+		expect(container.attributes('aria-label')).toBeUndefined()
+		expect(wrapper.find('img').attributes('alt')).toBe('Test aria label')
+	})
+
 	it('resolves the fallback href from an object route location', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {

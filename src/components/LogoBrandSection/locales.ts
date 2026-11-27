@@ -1,5 +1,4 @@
 export const locales = {
-	homeLinkPrefix: 'Accueil,',
 	logoCnam: 'Caisse nationale',
 	logoAmeli: 'ameli.fr',
 	logoAmeliPro: 'AmeliPro',

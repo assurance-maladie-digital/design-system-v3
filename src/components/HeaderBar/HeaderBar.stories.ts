@@ -51,13 +51,14 @@ const meta = {
 		},
 		'homeLink': {
 			control: { type: 'object' },
-			description: 'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
+			description: 'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.<br>La clé `ariaLabel` (ou `aria-label`) nomme le lien : l’image devient alors décorative (`alt=""`).',
 			table: {
 				type: {
 					summary: `{
 						href?: string,
 						to?: RouteLocationRaw,
 						ariaLabel?: string,
+						'aria-label'?: string,
 					}`,
 				},
 				defaultValue: {

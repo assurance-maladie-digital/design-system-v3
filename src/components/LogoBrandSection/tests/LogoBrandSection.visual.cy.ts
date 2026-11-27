@@ -47,6 +47,17 @@ describe('LogoBrandSection - Visual regression tests', () => {
 		cy.matchImageSnapshot('logo-brand-section-reduced', cy.get('.v-application'))
 	})
 
+	// Thème ameli-pro : le logo de marque secondaire est fusionné dans le lien
+	// d'accueil unique (un seul .vd-home-link).
+	it('displays the merged secondary logo in the home link (ameli-pro)', () => {
+		cy.mountWithVuetify(LogoBrandSection, {
+			props: { theme: 'ameli-pro' },
+		})
+
+		cy.get('.v-application').should('be.visible')
+		cy.matchImageSnapshot('logo-brand-section-ameli-pro', cy.get('.v-application'))
+	})
+
 	// Le logo est enveloppé dans un lien d'accueil `<a>` (homeLink par défaut `{ href: '/' }`) →
 	// ring DS via l'override global `_links.scss` (2px primary, offset 2px). Aucun style scoped.
 	it('shows the global DS ring on the focused home link', () => {

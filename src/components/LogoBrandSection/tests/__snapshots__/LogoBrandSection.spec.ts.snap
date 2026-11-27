@@ -10,11 +10,12 @@ exports[`LogoBrandSection > renders correctly 1`] = `
   style="height: 64px;"
 >
   <a
+    aria-label="Retour vers accueil du site"
     class="vd-home-link"
     href="/"
   >
     <logo-stub
-    arialabel="Retour vers accueil du site"
+    arialabel=""
     avatar="false"
     class=""
     dark="false"
@@ -23,6 +24,9 @@ exports[`LogoBrandSection > renders correctly 1`] = `
     risquepro="false"
     size="normal"
   ></logo-stub>
+  <!-- Logo de marque secondaire lié (ameli, ameli-pro) : fusionné dans le lien d'accueil -->
+    
+  <!-- v-if -->
   </a>
   <svg
     aria-hidden="true"
