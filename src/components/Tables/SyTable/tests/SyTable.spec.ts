@@ -1078,7 +1078,6 @@ describe('SyTable selectionKey', () => {
 			expect(truncatedTd!.attributes('style')).toContain('max-width: 100px')
 			expect(truncatedTd!.attributes('style')).toContain('white-space: normal')
 			expect(truncatedTd!.attributes('style')).toContain('overflow-wrap: anywhere')
-			expect(truncatedTd!.attributes('style')).toContain('word-break: break-word')
 			expect(truncatedTd!.attributes('style')).not.toContain('overflow: hidden')
 			expect(truncatedTd!.attributes('title')).toBeUndefined()
 		})

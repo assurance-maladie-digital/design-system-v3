@@ -458,7 +458,7 @@ a {
 }
 
 .v-theme--dark button.v-btn:hover :deep() {
-	background: rgb(white, 0.1);
+	background: rgb(var(--v-theme-on-primary), 0.1);
 }
 
 @media #{bp.$up-sm} {

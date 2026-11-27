@@ -43,7 +43,6 @@ export function useTableHeaders({
 				maxWidth: mapped.maxWidth,
 				whiteSpace: 'normal',
 				overflowWrap: 'anywhere',
-				wordBreak: 'break-word',
 			}
 			const baseProps = { ...existingCellProps, style: multilineStyle }
 			mapped.cellProps = () => ({
