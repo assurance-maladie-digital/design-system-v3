@@ -1,6 +1,7 @@
 import { addons } from 'storybook/manager-api'
 import type { API } from 'storybook/manager-api'
 import { registerConformiteAddon } from './addons/conformite'
+import { registerVersionsAddon } from './addons/versions'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
@@ -9,6 +10,7 @@ import { renderSidebarLabel } from './sidebarIcons'
 
 const channel = addons.getChannel()
 registerConformiteAddon()
+registerVersionsAddon()
 
 addons.setConfig({
 	sidebar: { renderLabel: renderSidebarLabel },

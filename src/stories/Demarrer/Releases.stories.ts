@@ -446,16 +446,6 @@ const releaseAlerts: ReleaseAlert[] = [
 	},
 ]
 
-// Documentation archivée de chaque version : preview Netlify de sa PR de release.
-// À compléter à chaque release avec le lien du commentaire du bot Netlify.
-const releaseDocUrls: Record<string, string> = {
-	'v1.2.2': 'https://deploy-preview-2801--synapse-dev.netlify.app',
-	'v1.2.1': 'https://deploy-preview-2716--synapse-dev.netlify.app',
-	'v1.2.0': 'https://deploy-preview-2663--synapse-dev.netlify.app',
-	'v1.1.6': 'https://deploy-preview-2590--synapse-dev.netlify.app',
-	'v1.1.5': 'https://deploy-preview-2539--synapse-dev.netlify.app',
-}
-
 // Nombre de releases affichées par page
 const PAGE_SIZE = 3
 // Valeur du sélecteur pour afficher toutes les versions (une chaîne vide serait traitée comme une absence de valeur)
@@ -563,13 +553,6 @@ export const List = {
 					)
 				}
 
-				// Le tag (« v1.2.2 ») identifie la version, le nom de la release étant libre (« release 1.2.2 »)
-				const getReleaseDoc = (release: GitHubRelease) => {
-					const version = release.tag_name ?? ''
-					const url = releaseDocUrls[version]
-					return url ? { version, url } : undefined
-				}
-
 				onMounted(() => {
 					fetchReleases().then(r => r)
 				})
@@ -587,7 +570,6 @@ export const List = {
 					formatDate,
 					formatMarkdown,
 					getReleaseAlerts,
-					getReleaseDoc,
 				}
 			},
 			template: `
@@ -597,9 +579,6 @@ export const List = {
 					</SyAlert>
 					<SyAlert type="info" variant="tonal" :closable="false" class="mt-4">
 						<template #default>Version Amelipro : alpha</template>
-					</SyAlert>
-					<SyAlert type="info" variant="tonal" :closable="false" class="mt-4">
-						<template #default>Les versions récentes donnent accès à leur documentation archivée. Si votre projet est en cours de développement, nous vous recommandons de passer à la dernière version : c'est celle que nous maintenons, avec les derniers correctifs.</template>
 					</SyAlert>
 					<div v-if="errorMessage" class="error">{{ errorMessage }}</div>
 					<p v-else-if="loading" class="mt-4">Chargement des releases…</p>
@@ -619,9 +598,6 @@ export const List = {
 						</div>
 						<div v-for="release in visibleReleases" :key="release.id">
 							<h2>{{ release.name }} ({{ formatDate(release.published_at) }})</h2>
-							<p v-if="getReleaseDoc(release)" class="releases__doc-link">
-								<a :href="getReleaseDoc(release).url" target="_blank" rel="noopener noreferrer">Documentation de la {{ getReleaseDoc(release).version }} (nouvel onglet)</a>
-							</p>
 							<SyAlert
 								v-for="alert in getReleaseAlerts(release)"
 								:key="alert.id"
