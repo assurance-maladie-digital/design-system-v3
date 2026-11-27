@@ -1,3 +1,4 @@
+import { h } from 'vue'
 import UserMenuBtn from '../UserMenuBtn.vue'
 
 const defaultMenuItems = [
@@ -12,6 +13,53 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('UserMenuBtn - Visual regression tests', () => {
+	it('keeps a surface background when the popin contains only custom content', () => {
+		cy.mountWithVuetify(UserMenuBtn, {
+			props: { menuItems: [], hideLogoutBtn: true },
+			slots: {
+				'menu-header': () => h('div', 'Contenu personnalisé'),
+			},
+		})
+
+		cy.get('.sy-user-menu-btn').click()
+		cy.get('.sy-user-menu-content').should(($content) => {
+			expect(getComputedStyle($content[0]!).backgroundColor).not.to.equal('rgba(0, 0, 0, 0)')
+		})
+	})
+
+	it('displays secondary information and menu item labels on multiple lines', () => {
+		cy.viewport(1280, 720)
+
+		cy.mountWithVuetify(UserMenuBtn, {
+			props: {
+				fullName: 'Georges Duval',
+				additionalInformation: 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse',
+				menuItems: [{ text: 'Informations détaillées sur le compte professionnel', value: 'professional-account' }],
+				hideLogoutBtn: true,
+				vuetifyOptions: {
+					menu: { width: '220px', minWidth: '220px', maxWidth: '220px' },
+				},
+			},
+		})
+
+		cy.get('.subtitle').should(($subtitle) => {
+			const subtitle = $subtitle[0]!
+			const lineHeight = Number.parseFloat(getComputedStyle(subtitle).lineHeight)
+
+			expect(getComputedStyle(subtitle).whiteSpace).to.equal('pre-line')
+			expect(subtitle.getBoundingClientRect().height).to.be.greaterThan(lineHeight * 2)
+		})
+
+		cy.get('.sy-user-menu-btn').click()
+		cy.get('.item-title').should(($title) => {
+			const title = $title[0]!
+			const lineHeight = Number.parseFloat(getComputedStyle(title).lineHeight)
+
+			expect(['normal', 'wrap']).to.include(getComputedStyle(title).whiteSpace)
+			expect(title.getBoundingClientRect().height).to.be.greaterThan(lineHeight)
+		})
+	})
+
 	it('displays the user menu button by default', () => {
 		cy.mountWithVuetify(UserMenuBtn, {
 			props: { menuItems: defaultMenuItems },
@@ -53,6 +101,26 @@ describe('UserMenuBtn - Visual regression tests', () => {
 // cette capture, qui fige d'un coup le bouton circulaire, le disque de l'avatar, l'encart teinté
 // avec son arrondi et ses marges, et le décalage du menu sous l'activateur.
 describe('UserMenuBtn - Mobile visual regression tests', () => {
+	it('preserves line breaks in the identity block', () => {
+		cy.viewport(390, 700)
+		cy.mountWithVuetify(UserMenuBtn, {
+			props: {
+				menuItems: defaultMenuItems,
+				fullName: 'Jean Dupont',
+				additionalInformation: 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse',
+			},
+		})
+
+		cy.get('.sy-user-menu-btn').click()
+		cy.get('.identity-secondary-info').should(($info) => {
+			const info = $info[0]!
+			const lineHeight = Number.parseFloat(getComputedStyle(info).lineHeight)
+
+			expect(getComputedStyle(info).whiteSpace).to.equal('pre-line')
+			expect(info.getBoundingClientRect().height).to.be.greaterThan(lineHeight * 2)
+		})
+	})
+
 	it('displays the icon-only activator with the identity block in the open menu', () => {
 		// Largeur mobile : `smAndDown` bascule le composant en icône seule, comme en usage réel.
 		cy.viewport(390, 700)
@@ -69,13 +137,13 @@ describe('UserMenuBtn - Mobile visual regression tests', () => {
 		cy.get('.v-overlay__content').should('be.visible')
 		cy.get('.sy-user-menu-identity').should('be.visible')
 
-		// Le focus part sur le premier item à l'ouverture : on le retire pour que la capture ne
-		// dépende pas du ring, déjà couvert par les tests de focus.
+		// La capture garde le ring de l'activateur visible pour éviter une régression du focus.
 		cy.document().then((doc) => {
 			if (doc.activeElement instanceof HTMLElement) {
 				doc.activeElement.blur()
 			}
 		})
+		focusVisible('.sy-user-menu-btn')
 
 		cy.wait(150)
 		cy.matchImageSnapshot('user-menu-btn-mobile-menu-open')

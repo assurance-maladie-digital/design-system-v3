@@ -42,3 +42,9 @@ import * as UserMenuBtnStories from './UserMenuBtn.stories';
   </template>
 `}
 />
+
+# Slots
+
+- `menu-header` : affiche un bloc de contenu personnalisé dans le popin, au-dessus des options du menu. Le contenu est placé hors de la liste des options.
+- `header-list-item` : remplace le contenu du bloc d'identité affiché en tête du menu mobile. Le contenu est placé hors de la liste des options.
+- `default` : remplace uniquement le bouton de déconnexion. Son contenu est rendu dans la liste du menu et doit donc être une option de menu (`menuitem`).

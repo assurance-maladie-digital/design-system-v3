@@ -114,7 +114,7 @@
 	// lorsque le bouton est en mode icône seule (iconOnly) : l'identité, masquée dans
 	// l'activateur, est alors reportée dans le menu pour rester accessible.
 	const hasIdentityInList = computed(() => {
-		return props.showIdentityInList && props.iconOnly && Boolean(props.primaryInfo)
+		return props.showIdentityInList && props.iconOnly && !slots['menu-header'] && Boolean(props.primaryInfo)
 	})
 
 	const activatorLabel = computed(() => {
@@ -129,8 +129,12 @@
 		return props.label
 	})
 
+	const hasMenuListContent = computed(() => {
+		return Boolean(formattedItems.value.length || !props.hideLogoutBtn || slots.default || slots['footer-list-item'])
+	})
+
 	const hasListContent = computed(() => {
-		return Boolean(slots.default || !props.hideLogoutBtn || hasIdentityInList.value)
+		return Boolean(slots['menu-header'] || hasIdentityInList.value || hasMenuListContent.value)
 	})
 
 	const isMobileVersion = computed(() => {
@@ -142,7 +146,6 @@
 	})
 
 	const generatedId = ref(`custom-btn-select-${useId()}`)
-	const identityId = computed(() => `${generatedId.value}-identity`)
 
 	function getSelectedValue() {
 		if (!selectedItem.value) return undefined
@@ -150,14 +153,13 @@
 		return selectedItem.value[props.textKey] as string
 	}
 
-	const menu = ref<InstanceType<typeof import('vuetify/components').VList> | null>(null)
+	const content = ref<HTMLElement | null>(null)
+	const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 	watch(isOpen, async (newVal) => {
 		if (newVal) {
 			await nextTick()
-			if (menu.value?.$el) {
-				menu.value.$el.querySelector('[role="menuitem"]')?.focus()
-			}
+			content.value?.querySelector<HTMLElement>(focusableSelector)?.focus()
 		}
 		else {
 			await nextTick()
@@ -228,7 +230,7 @@
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="subtitle text-grey-darken-2 font-weight-regular"
+								class="subtitle text-grey-darken-2 font-weight-regular text-right"
 							>
 								{{ props.secondaryInfo }}
 							</span>
@@ -245,28 +247,15 @@
 				</VBtn>
 			</template>
 			<slot name="content">
-				<VList
-					v-if="hasListContent"
-					ref="menu"
-					tag="ul"
-					role="menu"
-					v-bind="props.options['list']"
-					:aria-labelledby="generatedId"
-					:aria-activedescendant="getSelectedValue() ? `item-${slugify(getSelectedValue()!)}` : undefined"
+				<div
+					ref="content"
+					class="sy-user-menu-content"
 				>
-					<!-- Encart d'identité visible :
-						il doit donc rester restituable — masquer un contenu affiché contrevient au
-						critère RGAA 10.8. C'est pourquoi l'identité est retirée du nom accessible de
-						l'activateur, pour ne pas être annoncée deux fois.
-						`role="presentation"` retire le `<li>` de l'arbre d'accessibilité **sans masquer
-						son contenu** (contrairement à `aria-hidden`) : le texte reste exposé, et le
-						`role="menu"` — qui n'admet que des `menuitem`, `group` et `separator` — ne
-						compte pas l'encart parmi ses options. -->
-					<li
+					<slot name="menu-header" />
+					<div
 						v-if="hasIdentityInList"
-						:id="identityId"
+						:id="`${generatedId}-identity`"
 						class="sy-user-menu-identity px-4 py-3"
-						role="presentation"
 						v-bind="props.options['identityListItem']"
 					>
 						<slot name="header-list-item">
@@ -275,45 +264,51 @@
 							</p>
 							<p
 								v-if="secondaryInfo"
-								class="text-caption text-grey-darken-3 font-weight-regular mb-0"
+								class="identity-secondary-info text-caption text-grey-darken-3 font-weight-regular mb-0"
 							>
 								{{ props.secondaryInfo }}
 							</p>
 						</slot>
-					</li>
-
-					<VListItem
-						v-for="(item, index) in formattedItems"
-						:id="`item-${slugify(item[props.textKey] as string)}`"
-						:key="index"
-						tag="li"
-						:class="`text-${props?.options['list']?.textColor}`"
+					</div>
+					<VList
+						v-if="hasMenuListContent"
+						tag="ul"
+						role="menu"
 						v-bind="props.options['list']"
-						:href="item.link"
-						:to="item.to"
-						:tabindex="0"
-						role="menuitem"
-						:aria-current="selectedItem === item ? 'page' : undefined"
-						@click="selectItem(item)"
+						:aria-labelledby="generatedId"
+						:aria-activedescendant="getSelectedValue() ? `item-${slugify(getSelectedValue()!)}` : undefined"
 					>
-						<template
-							v-if="item[props.iconKey]"
-							#prepend
+						<VListItem
+							v-for="(item, index) in formattedItems"
+							:id="`item-${slugify(item[props.textKey] as string)}`"
+							:key="index"
+							tag="li"
+							:class="`text-${props?.options['list']?.textColor}`"
+							v-bind="props.options['list']"
+							:href="item.link"
+							:to="item.to"
+							:tabindex="0"
+							role="menuitem"
+							:aria-current="selectedItem === item ? 'page' : undefined"
+							@click="selectItem(item)"
 						>
-							<SyIcon
-								:icon="item[props.iconKey] as string"
-								decorative
-							/>
-						</template>
-						<VListItemTitle
-							class="item-title"
-						>
-							{{ item[props.textKey] }}
-						</VListItemTitle>
-					</VListItem>
-					<slot />
-					<slot name="footer-list-item" />
-				</VList>
+							<template
+								v-if="item[props.iconKey]"
+								#prepend
+							>
+								<SyIcon
+									:icon="item[props.iconKey] as string"
+									decorative
+								/>
+							</template>
+							<VListItemTitle class="item-title">
+								{{ item[props.textKey] }}
+							</VListItemTitle>
+						</VListItem>
+						<slot />
+						<slot name="footer-list-item" />
+					</VList>
+				</div>
 			</slot>
 		</VMenu>
 	</div>
@@ -336,10 +331,20 @@
 .subtitle {
 	font-size: 0.875rem;
 	line-height: 1.5;
+	white-space: pre-line;
+}
+
+.sy-user-menu-content {
+	background-color: rgb(var(--v-theme-surface));
+	border-radius: inherit;
+}
+
+.identity-secondary-info {
+	white-space: pre-line;
 }
 
 .item-title {
-	white-space: wrap;
+	white-space: normal;
 }
 
 :deep(.v-list-item__prepend) {
@@ -349,11 +354,11 @@
 // Le contenu du VMenu est téléporté hors du composant, mais ce bloc est rendu par son propre
 // template : il porte l'attribut de scope, les styles scopés l'atteignent donc sans passer par
 // un override global.
-// L'encart est détaché des bords de la liste — le padding vertical de `.v-list` fournit l'espace en haut, la
-// marge celui des côtés et du bas.
+// L'encart garde un espace autour de lui, y compris au-dessus maintenant qu'il est hors de la liste.
 .sy-user-menu-identity {
-	margin: 0 8px 8px;
+	margin: 8px;
 	background: rgba(var(--v-theme-interaction-dark), 0.2);
+	color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity, 0.87));
 
 	// Même arrondi que la liste : Vuetify pose 4px sur `.v-menu > .v-overlay__content` et la
 	// `.v-list` en hérite. `inherit` reprend donc la valeur calculée du parent et suivra

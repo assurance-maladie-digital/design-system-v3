@@ -214,8 +214,8 @@ describe('SyBtnMenu', () => {
 		it('shows primaryInfo and secondaryInfo in the menu when iconOnly and showIdentityInList are true', async () => {
 			const wrapper = mount(SyBtnMenu, {
 				props: {
-					primaryInfo: 'Jean Dupont',
-					secondaryInfo: 'Administrateur',
+					primaryInfo: 'Identity positive test',
+					secondaryInfo: 'Secondary positive test',
 					iconOnly: true,
 					showIdentityInList: true,
 				},
@@ -224,10 +224,10 @@ describe('SyBtnMenu', () => {
 
 			await wrapper.find('.sy-user-menu-btn').trigger('click')
 
-			const identity = document.body.querySelector('.sy-user-menu-identity')
+			const identity = [...document.body.querySelectorAll('.sy-user-menu-identity')]
+				.find(element => element.textContent?.includes('Identity positive test'))
 			expect(identity).not.toBeNull()
-			expect(identity?.textContent).toContain('Jean Dupont')
-			expect(identity?.textContent).toContain('Administrateur')
+			expect(identity?.textContent).toContain('Secondary positive test')
 
 			wrapper.unmount()
 		})
@@ -294,7 +294,7 @@ describe('SyBtnMenu', () => {
 		it('does not show the identity block when showIdentityInList is false (default)', async () => {
 			const wrapper = mount(SyBtnMenu, {
 				props: {
-					primaryInfo: 'Jean Dupont',
+					primaryInfo: 'Identity disabled test',
 					secondaryInfo: 'Administrateur',
 					iconOnly: true,
 					hideLogoutBtn: true,
@@ -304,7 +304,8 @@ describe('SyBtnMenu', () => {
 
 			await wrapper.find('.sy-user-menu-btn').trigger('click')
 
-			expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
+			expect([...document.body.querySelectorAll('.sy-user-menu-identity')]
+				.some(element => element.textContent?.includes('Identity disabled test'))).toBe(false)
 
 			wrapper.unmount()
 		})
@@ -312,7 +313,7 @@ describe('SyBtnMenu', () => {
 		it('does not show the identity block when iconOnly is false, even if showIdentityInList is true', async () => {
 			const wrapper = mount(SyBtnMenu, {
 				props: {
-					primaryInfo: 'Jean Dupont',
+					primaryInfo: 'Desktop identity test',
 					showIdentityInList: true,
 				},
 				attachTo: document.body,
@@ -320,7 +321,8 @@ describe('SyBtnMenu', () => {
 
 			await wrapper.find('.sy-user-menu-btn').trigger('click')
 
-			expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
+			expect([...document.body.querySelectorAll('.sy-user-menu-identity')]
+				.some(element => element.textContent?.includes('Desktop identity test'))).toBe(false)
 
 			wrapper.unmount()
 		})
@@ -328,7 +330,7 @@ describe('SyBtnMenu', () => {
 		it('enables the menu (not disabled) when only the identity block would be shown', async () => {
 			const wrapper = mount(SyBtnMenu, {
 				props: {
-					primaryInfo: 'Jean Dupont',
+					primaryInfo: 'Identity only test',
 					iconOnly: true,
 					showIdentityInList: true,
 					hideLogoutBtn: true,
@@ -338,20 +340,17 @@ describe('SyBtnMenu', () => {
 
 			await wrapper.find('.sy-user-menu-btn').trigger('click')
 
-			expect(document.body.querySelector('.sy-user-menu-identity')).not.toBeNull()
+			expect([...document.body.querySelectorAll('.sy-user-menu-identity')]
+				.some(element => element.textContent?.includes('Identity only test'))).toBe(true)
 
 			wrapper.unmount()
 		})
 
-		// Contrat ARIA de l'encart. Il est visible : il doit rester restituable — masquer un contenu
-		// affiché contrevient au critère RGAA 10.8, et c'est pour ça que l'identité a été retirée du
-		// nom accessible de l'activateur. `role="presentation"` retire le `<li>` de l'arbre sans
-		// masquer son contenu, ce qui garde le `role="menu"` conforme (seuls `menuitem`, `group` et
-		// `separator` y sont admis) tout en laissant l'identité lisible.
-		it('keeps the identity block restituable inside the menu', async () => {
+		// Le bloc d'identité est visible dans le popin, mais reste hors de la liste des options.
+		it('keeps the identity block restituable outside the menu options', async () => {
 			const wrapper = mount(SyBtnMenu, {
 				props: {
-					primaryInfo: 'Jean Dupont',
+					primaryInfo: 'ARIA identity test',
 					secondaryInfo: 'Administrateur',
 					iconOnly: true,
 					showIdentityInList: true,
@@ -361,118 +360,74 @@ describe('SyBtnMenu', () => {
 
 			await wrapper.find('.sy-user-menu-btn').trigger('click')
 
-			const identity = document.body.querySelector('.sy-user-menu-identity')!
+			const identity = [...document.body.querySelectorAll('.sy-user-menu-identity')]
+				.find(element => element.textContent?.includes('ARIA identity test'))!
 			expect(identity.getAttribute('aria-hidden')).toBeNull()
-			expect(identity.getAttribute('role')).toBe('presentation')
-			// Dans la liste (maquette), mais pas exposé comme une option du menu.
-			expect(identity.closest('[role="menu"]')).not.toBeNull()
+			expect(identity.getAttribute('role')).toBeNull()
+			expect(identity.closest('[role="menu"]')).toBeNull()
 			expect(identity.matches('[role="menuitem"]')).toBe(false)
 
 			wrapper.unmount()
 		})
 
-		// Le slot remplit l'encart, il ne le remplace pas : le composant garde la main sur le `<li>`
-		// et son `role="presentation"`, sans quoi un contenu personnalisé casserait la structure du
-		// `role="menu"`.
-		it('lets the header-list-item slot fill the identity block', async () => {
+		// Le contenu personnalisé du popin ne fait pas partie de la liste des options.
+		it('renders the menu-header slot outside the menu options', async () => {
 			const wrapper = mount(SyBtnMenu, {
 				props: {
-					primaryInfo: 'Jean Dupont',
-					iconOnly: true,
-					showIdentityInList: true,
+					primaryInfo: 'Custom slot identity test',
+					hideLogoutBtn: true,
 				},
 				slots: {
-					'header-list-item': '<span class="custom-identity">Custom</span>',
+					'menu-header': '<div class="custom-menu-header">Custom details</div>',
 				},
 				attachTo: document.body,
 			})
 
 			await wrapper.find('.sy-user-menu-btn').trigger('click')
 
-			const identity = document.body.querySelector('.sy-user-menu-identity')!
-			expect(identity.querySelector('.custom-identity')).not.toBeNull()
-			expect(identity.textContent).not.toContain('Jean Dupont')
-			expect(identity.getAttribute('role')).toBe('presentation')
+			const customContent = document.body.querySelector('.custom-menu-header')!
+			expect(customContent.textContent).toBe('Custom details')
+			expect(customContent.closest('[role="menu"]')).toBeNull()
+			expect([...document.body.querySelectorAll('.sy-user-menu-identity')]
+				.some(element => element.textContent?.includes('Custom slot identity test'))).toBe(false)
 
 			wrapper.unmount()
 		})
 
-		it('does not show the identity block when showIdentityInList is false (default)', async () => {
+		it('focuses the first focusable item in menu-header before the menu options', async () => {
 			const wrapper = mount(SyBtnMenu, {
 				props: {
-					primaryInfo: 'Jean Dupont',
-					secondaryInfo: 'Administrateur',
-					iconOnly: true,
+					menuItems: [{ text: 'Mon compte', value: 'account' }],
+				},
+				slots: {
+					'menu-header': '<div><button class="header-action">Mon compte</button></div>',
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+			await nextTick()
+
+			expect(document.activeElement).toBe(document.body.querySelector('.header-action'))
+
+			wrapper.unmount()
+		})
+
+		it('renders footer-list-item when it is the only menu content', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					menuItems: [],
 					hideLogoutBtn: true,
 				},
-				attachTo: document.body,
-			})
-
-			await wrapper.find('.sy-user-menu-btn').trigger('click')
-
-			expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
-
-			wrapper.unmount()
-		})
-
-		it('does not show the identity block when iconOnly is false, even if showIdentityInList is true', async () => {
-			const wrapper = mount(SyBtnMenu, {
-				props: {
-					primaryInfo: 'Jean Dupont',
-					showIdentityInList: true,
+				slots: {
+					'footer-list-item': '<li role="menuitem" class="custom-footer-item">Aide</li>',
 				},
 				attachTo: document.body,
 			})
 
 			await wrapper.find('.sy-user-menu-btn').trigger('click')
 
-			expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
-
-			wrapper.unmount()
-		})
-
-		it('enables the menu (not disabled) when only the identity block would be shown', async () => {
-			const wrapper = mount(SyBtnMenu, {
-				props: {
-					primaryInfo: 'Jean Dupont',
-					iconOnly: true,
-					showIdentityInList: true,
-					hideLogoutBtn: true,
-				},
-				attachTo: document.body,
-			})
-
-			await wrapper.find('.sy-user-menu-btn').trigger('click')
-
-			expect(document.body.querySelector('.sy-user-menu-identity')).not.toBeNull()
-
-			wrapper.unmount()
-		})
-
-		// Contrat ARIA de l'encart. Il est visible : il doit rester restituable — masquer un contenu
-		// affiché contrevient au critère RGAA 10.8, et c'est pour ça que l'identité a été retirée du
-		// nom accessible de l'activateur. `role="presentation"` retire le `<li>` de l'arbre sans
-		// masquer son contenu, ce qui garde le `role="menu"` conforme (seuls `menuitem`, `group` et
-		// `separator` y sont admis) tout en laissant l'identité lisible.
-		it('keeps the identity block restituable inside the menu', async () => {
-			const wrapper = mount(SyBtnMenu, {
-				props: {
-					primaryInfo: 'Jean Dupont',
-					secondaryInfo: 'Administrateur',
-					iconOnly: true,
-					showIdentityInList: true,
-				},
-				attachTo: document.body,
-			})
-
-			await wrapper.find('.sy-user-menu-btn').trigger('click')
-
-			const identity = document.body.querySelector('.sy-user-menu-identity')!
-			expect(identity.getAttribute('aria-hidden')).toBeNull()
-			expect(identity.getAttribute('role')).toBe('presentation')
-			// Dans la liste (maquette), mais pas exposé comme une option du menu.
-			expect(identity.closest('[role="menu"]')).not.toBeNull()
-			expect(identity.matches('[role="menuitem"]')).toBe(false)
+			expect(document.body.querySelector('[role="menu"] .custom-footer-item')?.textContent).toBe('Aide')
 
 			wrapper.unmount()
 		})

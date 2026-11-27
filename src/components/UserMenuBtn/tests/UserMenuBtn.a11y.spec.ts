@@ -57,4 +57,28 @@ describe('UserMenuBtn – accessibility (axe)', () => {
 
 		wrapper.unmount()
 	})
+
+	it('keeps custom popin content outside the menu options', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				menuItems: [],
+				fullName: 'Georges Duval',
+				additionalInformation: 'Médecin généraliste',
+				hideLogoutBtn: true,
+			},
+			slots: {
+				'menu-header': '<div><strong>Georges Duval</strong><p>N° RPPS : 12345678910</p><button>Mon compte</button><button>Déconnexion</button></div>',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'UserMenuBtn – custom user information', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })

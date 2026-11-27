@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { mdiAccount, mdiCog, mdiShieldAccount } from '@mdi/js'
+import { VBtn } from 'vuetify/components'
 import UserMenuBtn from './UserMenuBtn.vue'
 
 const meta = {
@@ -116,10 +117,20 @@ const meta = {
 		},
 		'default': {
 			control: false,
-			description: 'Ecrase le contenu du menu utilisateur',
+			description: 'Remplace le bouton de déconnexion par un élément de menu personnalisé',
 			table: {
 				category: 'slots',
 			},
+		},
+		'menu-header': {
+			control: false,
+			description: 'Ajoute un bloc de contenu personnalisé au-dessus des options dans le popin',
+			table: { category: 'slots' },
+		},
+		'header-list-item': {
+			control: false,
+			description: 'Remplace le contenu du bloc d’identité du menu mobile',
+			table: { category: 'slots' },
 		},
 		'onLogout': {
 			action: 'logout',
@@ -725,176 +736,146 @@ export const Slot: Story = {
 
 export const WithPsInfo: Story = {
 	parameters: {
+		controls: { exclude: ['logout', 'menuItems'] },
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-    <UserMenuBtn
-        v-model="selected"
-        :hide-user-icon="false"
-        :hide-logout-btn="true"
-        :is-mobile-view="true"
-    >
-        <template #default>
-            <div class="pa-4">
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Nom</div>
-                    <div class="text-body-2">{{ userName }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Profil</div>
-                    <div class="text-body-2">{{ profil }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">RPPS</div>
-                    <div class="text-body-2">{{ rpps }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">ADELI</div>
-                    <div class="text-body-2">{{ adeli }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Email</div>
-                    <div class="text-body-2">{{ email }}</div>
-                </div>
-                <p class="mt-6 mb-0 text-caption">
-                    Dernière connexion : {{ lastConnexion }}
-                </p>
-            </div>
+  <UserMenuBtn
+    :full-name="fullName"
+    :additional-information="secondaryInfo"
+    :hide-logout-btn="true"
+    :vuetify-options="{ menu: { minWidth: '320px' } }"
+  >
+    <template #menu-header>
+      <div>
+        <div class="ma-6">
+          <p><strong>{{ fullName }}</strong></p>
+          <p>{{ userDetails.profil }}</p>
+          <p>N° RPPS : {{ userDetails.rpps }}</p>
+          <p>N° ADELI : {{ userDetails.adeli }}</p>
+          <p>Adresse email : {{ userDetails.email }}</p>
+          <p class="last-connection text-caption">Dernière connexion : {{ userDetails.lastConnexion }}</p>
+        </div>
 
-            <div class="d-flex bg-primary-lighten-3" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
-                <v-btn
-                    class="text-none font-weight-bold flex-grow-1"
-                    color="primary"
-                    variant="text"
-                    rounded="0"
-                    @click="handleAccount"
-                >
-                    Mon Compte
-                </v-btn>
-
-                <v-btn
-                    class="text-none font-weight-bold flex-grow-1"
-                    color="primary"
-                    variant="text"
-                    rounded="0"
-                    @click="handleLogout"
-                >
-                    Déconnexion
-                </v-btn>
-            </div>
-        </template>
-    </UserMenuBtn>
+        <div class="buttons d-flex ma-6">
+          <VBtn class="flex-grow-1" color="primary" variant="text" @click="handleAccount">
+            Mon compte
+          </VBtn>
+          <VBtn class="flex-grow-1" color="primary" variant="text" @click="handleLogout">
+            Déconnexion
+          </VBtn>
+        </div>
+      </div>
+    </template>
+  </UserMenuBtn>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-    import { ref } from 'vue'
-    import { UserMenuBtn } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+import { UserMenuBtn } from '@cnamts/synapse'
 
-    const selected = ref(null)
-    const userName = ref('userName')
-    const profil = ref('profil')
-    const rpps = ref('RPPS')
-    const adeli = ref('ADELI')
-    const email = ref('email')
-    const lastConnexion = ref('01/01/2024')
+const fullName = 'Georges Duval'
 
-    const handleAccount = () => {
-        // Navigation vers le compte utilisateur
-    }
+const userDetails = {
+  userName: 'Georges Duval',
+  profil: 'Médecin généraliste',
+  rpps: '12345678910',
+  adeli: '123456789',
+  email: 'georges.duval@aphp.fr',
+  adresse: {
+    numero: '3',
+    type: 'rue',
+    nom: 'Victor-Hugo',
+    codePostal: '78470',
+    commune: 'Saint-Rémy-lès-Chevreuse',
+  },
+  lastConnexion: '01/06/2024 à 10:00',
+}
 
-    const handleLogout = () => {
-        // Déconnexion de l'utilisateur
-    }
+const secondaryInfo = [
+  userDetails.profil,
+  \`\${userDetails.adresse.numero} \${userDetails.adresse.type} \${userDetails.adresse.nom}\`,
+  \`\${userDetails.adresse.codePostal} \${userDetails.adresse.commune}\`,
+].join('\\n')
+
+const handleAccount = () => {
+  // Ouvrir le compte utilisateur
+}
+
+const handleLogout = () => {
+  // Déclencher la déconnexion de l'utilisateur
+}
 </script>`,
 			},
 		],
 	},
 	args: {
 		modelValue: null,
-		hideLogoutBtn: true,
+		menuItems: [],
 		hideUserIcon: false,
-		isMobileView: true,
-		vuetifyOptions: undefined,
+		hideLogoutBtn: true,
+		fullName: 'Georges Duval',
+		additionalInformation: 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse',
+		vuetifyOptions: { menu: { minWidth: '320px' } },
 	},
+
 	render: (args) => {
 		return {
-			components: { UserMenuBtn },
+			components: { UserMenuBtn, VBtn },
+
 			setup() {
 				const userDetails = {
-					userName: 'John Doe',
 					profil: 'Médecin généraliste',
-					rpps: 'RPPS',
-					adeli: 'ADELI',
-					email: 'johndoe@gmail.com',
-					lastConnexion: '01/01/2024',
-				}
-
-				const handleAccount = () => {
-					// Navigation vers le compte utilisateur
+					rpps: '12345678910',
+					adeli: '123456789',
+					email: 'georges.duval@aphp.fr',
+					lastConnexion: '01/06/2024 à 10:00',
 				}
 
 				const handleLogout = () => {
-					// Déconnexion de l'utilisateur
+					// Déclencher la déconnexion de l'utilisateur
 				}
 
-				return { args, userDetails, handleAccount, handleLogout }
+				const handleAccount = () => {
+					// Ouvrir le compte utilisateur
+				}
+
+				return {
+					args,
+					userDetails,
+					handleAccount,
+					handleLogout,
+				}
 			},
+
 			template: `
-<div style="display: flex; justify-content: center; height: 500px;">
-    <UserMenuBtn v-bind="args">
-        <template #default>
-            <div class="pa-4">
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Nom</div>
-                    <div class="text-body-2">{{ userDetails.userName }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Profil</div>
-                    <div class="text-body-2">{{ userDetails.profil }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">RPPS</div>
-                    <div class="text-body-2">{{ userDetails.rpps }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">ADELI</div>
-                    <div class="text-body-2">{{ userDetails.adeli }}</div>
-                </div>
-                <div class="mb-2">
-                    <div class="text-subtitle-2 text-medium-emphasis">Email</div>
-                    <div class="text-body-2">{{ userDetails.email }}</div>
-                </div>
-                <p class="mt-6 mb-0 text-caption">
-                    Dernière connexion : {{ userDetails.lastConnexion }}
-                </p>
-            </div>
+<div class="pa-4">
+  <UserMenuBtn v-bind="args" @logout="handleLogout">
+  <template #menu-header>
+    <div>
+      <div class="ma-6">
+        <p><strong>{{ args.fullName }}</strong></p>
+        <p>{{ userDetails.profil }}</p>
+        <p>N° RPPS : {{ userDetails.rpps }}</p>
+        <p>N° ADELI : {{ userDetails.adeli }}</p>
+        <p>Adresse email : {{ userDetails.email }}</p>
+        <p class="last-connection text-caption">Dernière connexion : {{ userDetails.lastConnexion }}</p>
+      </div>
 
-            <div class="d-flex bg-primary-lighten-3" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
-                <VBtn
-                    class="text-none font-weight-bold flex-grow-1"
-                    color="primary"
-                    variant="text"
-                    rounded="0"
-                    @click="handleAccount"
-                >
-                    Mon Compte
-                </VBtn>
-
-                <VBtn
-                    class="text-none font-weight-bold flex-grow-1"
-                    color="primary"
-                    variant="text"
-                    rounded="0"
-                    @click="handleLogout"
-                >
-                    Déconnexion
-                </VBtn>
-            </div>
-        </template>
-    </UserMenuBtn>
+        <div class="buttons d-flex ma-6">
+          <VBtn class="flex-grow-1" color="primary" variant="text" @click="handleAccount">
+            Mon compte
+          </VBtn>
+          <VBtn v-if="args.hideLogoutBtn" class="flex-grow-1" color="primary" variant="text" @click="handleLogout">
+            Déconnexion
+          </VBtn>
+        </div>
+    </div>
+  </template>
+  </UserMenuBtn>
 </div>`,
 		}
 	},

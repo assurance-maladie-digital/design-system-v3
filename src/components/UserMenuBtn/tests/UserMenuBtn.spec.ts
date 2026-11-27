@@ -29,6 +29,37 @@ describe('UserMenuBtn', () => {
 		expect(wrapper.text()).toContain('John Doe')
 	})
 
+	it('passes additionalInformation unchanged to the desktop subtitle', () => {
+		const additionalInformation = 'Médecin généraliste\n3 rue Victor-Hugo\n78470 Saint-Rémy-lès-Chevreuse'
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				fullName: 'Georges Duval',
+				additionalInformation,
+				isMobileView: false,
+			},
+		})
+
+		expect(wrapper.get('.subtitle').element.textContent).toBe(additionalInformation)
+	})
+
+	it('keeps the complete label text in the menu item DOM', async () => {
+		const label = 'Informations détaillées sur le compte professionnel'
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				fullName: 'Georges Duval',
+				menuItems: [{ text: label, value: 'professional-account' }],
+				hideLogoutBtn: true,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.get('.sy-user-menu-btn').trigger('click')
+
+		expect(document.body.querySelector('.item-title')?.textContent).toBe(label)
+
+		wrapper.unmount()
+	})
+
 	it('does not render logout button when hidden', () => {
 		const wrapper = mount(UserMenuBtn, {
 			props: {
@@ -161,6 +192,77 @@ describe('UserMenuBtn - responsive identity', () => {
 		wrapper.unmount()
 	})
 
+	it('renders custom menu header content in the popin outside the options list', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: { menuItems },
+			slots: {
+				'menu-header': '<div class="custom-menu-header">Informations professionnelles</div>',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+		const header = document.body.querySelector('.custom-menu-header')
+		expect(header?.textContent).toBe('Informations professionnelles')
+		expect(header?.closest('[role="menu"]')).toBeNull()
+
+		wrapper.unmount()
+	})
+
+	it('preserves the header-list-item slot and identityListItem options', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				isMobileView: true,
+				vuetifyOptions: { identityListItem: { 'data-testid': 'identity-list-item' } },
+			},
+			slots: {
+				'header-list-item': '<span class="legacy-identity">Informations personnalisées</span>',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.get('.sy-user-menu-btn').trigger('click')
+
+		const identity = document.body.querySelector('[data-testid="identity-list-item"]')
+		expect(identity?.querySelector('.legacy-identity')?.textContent).toBe('Informations personnalisées')
+		expect(identity?.closest('[role="menu"]')).toBeNull()
+
+		wrapper.unmount()
+	})
+
+	it('does not render a focusable menu list when all menu content is hidden', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: { menuItems: [], hideLogoutBtn: true },
+			slots: {
+				'menu-header': '<div>Informations professionnelles</div>',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.get('.sy-user-menu-btn').trigger('click')
+
+		expect(document.body.querySelector('[role="menu"]')).toBeNull()
+
+		wrapper.unmount()
+	})
+
+	it('renders the default slot as a menu item while retaining the logout option setting', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: { menuItems: [], hideLogoutBtn: true },
+			slots: {
+				default: '<div role="menuitem" class="custom-logout">Quitter</div>',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.get('.sy-user-menu-btn').trigger('click')
+
+		expect(document.body.querySelector('[role="menu"] .custom-logout')?.textContent).toBe('Quitter')
+
+		wrapper.unmount()
+	})
+
 	it('does not duplicate the identity in the dropdown on desktop', async () => {
 		const wrapper = mount(UserMenuBtn, {
 			props: {
@@ -178,7 +280,7 @@ describe('UserMenuBtn - responsive identity', () => {
 		wrapper.unmount()
 	})
 
-	it('does not show the auto-generated identity block when the default slot is used', async () => {
+	it('keeps the identity block when the default slot replaces the logout menu item', async () => {
 		const wrapper = mount(UserMenuBtn, {
 			props: {
 				fullName: 'Jean Dupont',
@@ -192,8 +294,8 @@ describe('UserMenuBtn - responsive identity', () => {
 
 		await wrapper.find('.sy-user-menu-btn').trigger('click')
 
-		expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
-		expect(document.body.querySelector('.custom-content')).not.toBeNull()
+		expect(document.body.querySelector('.sy-user-menu-identity')).not.toBeNull()
+		expect(document.body.querySelector('[role="menu"] .custom-content')).not.toBeNull()
 
 		wrapper.unmount()
 	})

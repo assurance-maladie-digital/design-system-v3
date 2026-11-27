@@ -43,23 +43,23 @@
 		return props.isMobileView || smAndDown.value
 	})
 
-	// Le slot par défaut permet au consommateur de remplacer entièrement le contenu du
-	// menu (cf. story "Slot") : dans ce cas, le bloc d'identité auto-généré ne doit pas
-	// s'ajouter par-dessus ce contenu personnalisé en version mobile.
-	const hasCustomContent = computed(() => Boolean(slots.default))
+	// Seul `menu-header` remplace le bloc d'identité mobile. Le slot par défaut fournit
+	// une option de menu à la place du bouton de déconnexion.
+	const hasMenuHeader = computed(() => Boolean(slots['menu-header']))
 </script>
 
 <template>
 	<SyBtnMenu
 		v-model="modelValue"
 		:hide-icon="hideUserIcon"
+		:hide-logout-btn="hideLogoutBtn && !slots.default"
 		:icon-only="isMobileView"
 		:is-mobile-view="isMobileView"
 		:menu-items="menuItems"
 		:options="options"
 		:primary-info="fullName"
 		:secondary-info="additionalInformation"
-		:show-identity-in-list="!hasCustomContent"
+		:show-identity-in-list="!hasMenuHeader"
 		class="user-menu-btn"
 	>
 		<template #append-icon>
@@ -72,7 +72,10 @@
 				v-bind="options['icon']"
 			/>
 		</template>
-		<template #footer-list-item>
+		<template
+			v-if="!hideLogoutBtn || slots.default"
+			#footer-list-item
+		>
 			<slot>
 				<VListItem
 					v-if="!hideLogoutBtn"
@@ -96,6 +99,18 @@
 					</div>
 				</VListItem>
 			</slot>
+		</template>
+		<template
+			v-if="slots['header-list-item']"
+			#header-list-item
+		>
+			<slot name="header-list-item" />
+		</template>
+		<template
+			v-if="slots['menu-header']"
+			#menu-header
+		>
+			<slot name="menu-header" />
 		</template>
 	</SyBtnMenu>
 </template>
