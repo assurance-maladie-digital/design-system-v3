@@ -6,5 +6,5 @@ export const locales = {
 	hideExtraFilters: 'Réduire',
 	overflowAriaLabel: 'Afficher {count} filtres supplémentaires : {items}',
 	item: (item: string): string => `Filtre : ${item}`,
-	removeFilter: (item: string): string => `Supprimer le filtre '${item}'`,
+	removeFilter: (item: string): string => `Supprimer le filtre ${item}`,
 } as const
