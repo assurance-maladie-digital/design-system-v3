@@ -15,6 +15,15 @@ Le périmètre contient **45 classeurs**. L’analyse croisée, la traçabilité
 - **45/45** composants disposent d’un contrôle navigateur dédié `*.rgaa.cy.ts` ;
 - les contrôles de zoom 200 %, lecteur d’écran et restitution restent explicitement manuels.
 
+## Couverture globale hors Amelipro
+
+L’inventaire automatisé du dépôt couvre désormais **138/138 composants non-Amelipro** avec une paire de fichiers dédiée :
+
+- `*.rgaa.a11y.spec.ts` pour les contrats DOM RGAA exécutables en test ciblé ;
+- `*.rgaa.cy.ts` pour les contrôles navigateur d’audit sous thème CNAM.
+
+Les quatre exemples DatePicker sont comptés comme intégrations documentaires : leurs tests vérifient la structure et la présence des contrôles documentés, tandis que les contrats détaillés du DatePicker sont portés par les trois variantes réelles.
+
 ## Composants traités en détail
 
 ### Avec tests DOM et navigateur

@@ -13,9 +13,7 @@ describe('BackToTopBtn – RGAA browser checks – CNAM theme', () => {
 	it('3.3 and 10.7 – exposes a visible focus indicator', () => {
 		cy.mountWithVuetify(BackToTopBtn, { props: { threshold: -1 } })
 		cy.window().then(window => window.dispatchEvent(new Event('scroll')))
-		cy.get('.vd-back-to-top-btn').then(($button) => {
-			($button[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
-		}).should(($button) => {
+		cy.rgaaFocusVisible('.vd-back-to-top-btn').should(($button) => {
 			const style = window.getComputedStyle($button[0])
 			expect(style.outlineStyle).to.not.equal('none')
 			expect(Number.parseFloat(style.outlineWidth)).to.be.greaterThan(0)

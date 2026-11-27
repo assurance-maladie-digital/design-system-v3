@@ -43,13 +43,11 @@ describe('BackBtn – RGAA browser checks – CNAM theme', () => {
 	})
 
 	it('10.11 – does not create horizontal overflow with a long label at 320px', () => {
-		cy.viewport(320, 800)
+		cy.rgaaSetAuditViewport(320, 800)
 		cy.mountWithVuetify(BackBtn, { props: { locales: { label: longLabel } } })
 
 		cy.get('.sy-back-btn').should('be.visible').and('contain.text', longLabel)
-		cy.document().then((document) => {
-			expect(document.documentElement.scrollWidth).to.be.at.most(document.documentElement.clientWidth)
-		})
+		cy.rgaaAssertNoHorizontalOverflow('html')
 	})
 
 	it('10.12 – keeps the label available with increased text spacing', () => {
