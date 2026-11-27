@@ -36,6 +36,21 @@ Fichier: src/components/NomComposant/tests/NomComposant.a11y.spec.ts
 - Après avoir modifié un composant pour vérifier qu'aucune régression a11y n'est introduite
 - Pour obtenir une vue globale des violations actives sur tout le design system
 
+### Tests CI rapides et audit complet
+
+Les tests d’accessibilité sont séparés en deux niveaux :
+
+| Commande | Usage | Périmètre |
+|---|---|---|
+| `pnpm test:a11y:ci` | À chaque pull request | Tests axe et contrats a11y rapides ; exclut les fichiers `*.rgaa.a11y.spec.ts` |
+| `pnpm test:a11y:audit` | Audit ciblé ou exécution planifiée | Tests Vitest RGAA complets identifiés par `*.rgaa.a11y.spec.ts` |
+| `pnpm test:visual:audit` | Audit navigateur | Scénarios Cypress RGAA identifiés par `*.rgaa.cy.ts` |
+| `pnpm a11y:report` | Rapport global | Inclut les tests `*.a11y.spec.ts`, y compris les scénarios RGAA dédiés |
+
+La CI ne constitue pas un audit RGAA complet. Les tests d’audit peuvent être plus
+lents et doivent être complétés par les vérifications manuelles prévues dans la
+matrice [RGAA par composant](./Accessibilite/rgaa-component-coverage.md).
+
 ---
 
 ## 2. Détection de fuites mémoire
@@ -105,6 +120,9 @@ Utilisé en pré-commit ou en CI pour maintenir la cohérence de la structure de
 | Commande | Script | Description |
 |---|---|---|
 | `pnpm test:a11y` | vitest | Exécute tous les tests `*.a11y.spec.ts` |
+| `pnpm test:a11y:ci` | vitest | Exécute le périmètre a11y rapide pour la CI |
+| `pnpm test:a11y:audit` | vitest | Exécute les tests RGAA dédiés |
+| `pnpm test:visual:audit` | Cypress Electron | Exécute les scénarios navigateur RGAA dédiés |
 | `pnpm a11y:report` | `a11y-report.mjs` | Lance les tests a11y + génère le rapport Markdown |
 | `node scripts/detect-memory-leaks.js` | — | Détection ciblée de fuites mémoire |
 | `bash scripts/detect-all-memory-leaks.sh` | — | Détection globale (tous les specs) |

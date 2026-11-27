@@ -58,7 +58,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Accessibility tests (axe via vitest-axe)
-        run: pnpm test:a11y
+        run: pnpm test:a11y:ci
 
   # Extraits de code affichés dans la doc (`parameters.sourceCode`), séparés de `test:unit`.
   # Volontairement absent des `needs` du build : le job tourne en parallèle et n'allonge pas la CI.

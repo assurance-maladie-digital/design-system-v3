@@ -74,6 +74,11 @@ declare global {
 				options?: CyMountOptions<Record<string, unknown>>
 			): ReturnType<typeof mount>
 			matchImageSnapshot(name?: string, elem?: Cypress.Chainable<JQuery<HTMLElement>>): void
+			rgaaFocusVisible(selector: string): Chainable<JQuery<HTMLElement>>
+			rgaaAssertAccessibleName(selector: string): Chainable<JQuery<HTMLElement>>
+			rgaaAssertNoHorizontalOverflow(selector?: string): Chainable<JQuery<HTMLElement>>
+			rgaaAssertHiddenNotFocusable(selector: string): Chainable<JQuery<HTMLElement>>
+			rgaaSetAuditViewport(width: number, height: number): Chainable<undefined>
 		}
 	}
 }
@@ -193,3 +198,54 @@ function mountWithVuetify(component: Component, options: MountWithVuetifyOptions
 }
 
 Cypress.Commands.add('mountWithVuetify', mountWithVuetify)
+
+Cypress.Commands.add('rgaaFocusVisible', (selector: string) => {
+	return cy.get(selector).then(($element) => {
+		const element = $element[0]
+		if (!(element instanceof HTMLElement)) throw new Error(`${selector} ne cible pas un élément HTML`)
+		element.focus({ focusVisible: true } as FocusOptions)
+		return cy.wrap($element)
+	}).should('be.focused')
+})
+
+Cypress.Commands.add('rgaaAssertAccessibleName', (selector: string) => {
+	return cy.get(selector).should(($elements) => {
+		$elements.each((_, element) => {
+			const explicit = element.getAttribute('aria-label')?.trim()
+			const labelledBy = element.getAttribute('aria-labelledby')
+			const referencedText = labelledBy?.split(/\s+/)
+				.map(id => element.ownerDocument?.getElementById(id)?.textContent?.trim() ?? '')
+				.join(' ').trim()
+			const associatedLabel = element.id
+				? element.ownerDocument?.querySelector(`label[for="${CSS.escape(element.id)}"]`)?.textContent?.trim()
+				: undefined
+			const title = element.getAttribute('title')?.trim()
+			const alternative = element.getAttribute('alt')?.trim()
+			const role = element.getAttribute('role')
+			const canUseVisibleText = ['BUTTON', 'A', 'SUMMARY', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(element.tagName)
+				|| ['button', 'link', 'heading', 'tab', 'option', 'menuitem'].includes(role ?? '')
+			const content = canUseVisibleText ? element.textContent?.trim() : undefined
+			if (!(explicit || referencedText || associatedLabel || title || alternative || content)) throw new Error(`Nom accessible absent pour ${element.outerHTML}`)
+		})
+	})
+})
+
+Cypress.Commands.add('rgaaAssertNoHorizontalOverflow', (selector = 'body') => {
+	return cy.get(selector).should(($element) => {
+		const element = $element[0]
+		if (element.scrollWidth > element.clientWidth) throw new Error(`Débordement horizontal : ${element.scrollWidth}px > ${element.clientWidth}px`)
+	})
+})
+
+Cypress.Commands.add('rgaaAssertHiddenNotFocusable', (selector: string) => {
+	return cy.get(selector).should(($element) => {
+		const focusables = $element[0].querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, [tabindex]')
+		focusables.forEach((element) => {
+			if (element.getAttribute('tabindex') !== '-1' && !element.hasAttribute('disabled')) throw new Error(`Contrôle focusable dans un contenu masqué : ${element.outerHTML}`)
+		})
+	})
+})
+
+Cypress.Commands.add('rgaaSetAuditViewport', (width: number, height: number) => {
+	return cy.viewport(width, height)
+})
