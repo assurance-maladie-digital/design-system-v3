@@ -2,6 +2,8 @@ export const locales = {
 	// Table locales
 	resetFilters: 'Réinitialiser les filtres',
 	filterLabel: 'Filtre',
+	emptyValue: '(vide)',
+	selectDate: 'Sélectionner une date',
 	noData: 'Aucune donnée disponible',
 	columnOrder: (columnTitle: string) => `Ordonner par ${columnTitle}`,
 	ResizableColumn: 'Redimensionner la colonne',

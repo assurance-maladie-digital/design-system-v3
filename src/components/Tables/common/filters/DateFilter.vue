@@ -4,6 +4,7 @@
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+	import { locales } from '../locales'
 	const { parseDate } = useDateFormat()
 
 	const props = defineProps({
@@ -123,7 +124,7 @@
 <template>
 	<DatePicker
 		v-model="modelValue"
-		:label="header.title || 'Sélectionner une date'"
+		:label="header.title || locales.selectDate"
 		:heading-level="headingLevel"
 		:clearable="inputConfig?.clearable ?? clearable"
 		:density="inputConfig?.density ?? density"

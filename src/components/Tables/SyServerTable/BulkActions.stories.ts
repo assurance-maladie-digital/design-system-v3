@@ -215,9 +215,8 @@ export const Default: Story = {
 				code: `
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyServerTable, DialogBox, SySelect } from '@cnamts/synapse'
+	import { SyServerTable, DialogBox, SySelect, StateEnum } from '@cnamts/synapse'
 	import { VBtn } from 'vuetify/components'
-	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
 	import { mdiDelete, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -395,9 +394,8 @@ export const SequentialEdit: Story = {
 				code: `
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
-	import { SyServerTable, DialogBox, SyTextField, SySelect } from '@cnamts/synapse'
+	import { SyServerTable, DialogBox, SyTextField, SySelect, StateEnum } from '@cnamts/synapse'
 	import { VBtn } from 'vuetify/components'
-	import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
 	import { mdiChevronLeft, mdiChevronRight, mdiPencil } from '@mdi/js'
 
 	const headers = [

@@ -204,7 +204,7 @@ describe('ChipList', () => {
 
 		// Vérifie les labels ARIA des boutons
 		const removeButton = wrapper.find('.remove-chip')
-		expect(removeButton.attributes('aria-label')).toBeTruthy()
+		expect(removeButton.attributes('aria-label')).toBe('Supprimer le filtre Email')
 	})
 
 	// Test du rendu conditionnel

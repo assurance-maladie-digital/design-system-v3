@@ -68,9 +68,8 @@ export const ItemsPerPageOptions: Story = {
 				code: `
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyServerTable } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-	import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+	import { SyServerTable, StateEnum } from '@cnamts/synapse'
+	import type { DataOptions } from '@cnamts/synapse'
 
 	const users = ref([])
 	const totalUsers = ref(0)
@@ -169,9 +168,8 @@ export const HideDefaultFooter: Story = {
 				code: `
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyServerTable } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-	import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+	import { SyServerTable, StateEnum } from '@cnamts/synapse'
+	import type { DataOptions } from '@cnamts/synapse'
 
 	const users = ref([])
 	const totalUsers = ref(0)
@@ -260,9 +258,8 @@ export const PageInput: Story = {
 				code: `
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyServerTable } from '@cnamts/synapse'
-	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
-	import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+	import { SyServerTable, StateEnum } from '@cnamts/synapse'
+	import type { DataOptions } from '@cnamts/synapse'
 
 	const users = ref([])
 	const totalUsers = ref(0)
