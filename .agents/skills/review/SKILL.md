@@ -40,12 +40,26 @@ Review changes from a factual, user-impact perspective. Report findings first, o
 - New code does not introduce `any`; type assertions are limited to justified interoperability cases.
 - User-controlled content is not rendered with `v-html` unless it is static or demonstrably sanitized, and inputs are validated before entering component state.
 
-### Testing and accessibility
+### Testing
 
 - Each bug fix has a regression test that reproduces the failure through public behavior.
 - Tests exercise props, slots, user interactions, rendered DOM, and emitted events rather than internal component state.
-- Markup changes include relevant accessibility coverage and preserve semantic HTML, labels, contrast, and keyboard navigation.
-- Visual changes are manually checked before baseline updates; visual baselines generated under WSL must not be committed.
+- Visual changes are manually checked before baseline updates. Visual baselines are produced only by the Linux CI workflow `update-visual-snapshots.yml`; any `*.snap.png` generated locally (macOS, WSL) and committed is a finding.
+
+### Accessibility
+
+The review checks **the same checklists** the author had to satisfy. For any diff touching markup, styles, interactions or a11y tests, load the matching skills and verify each item of their « Critères vérifiables » section:
+
+| Diff touches | Skill |
+|---|---|
+| Interactive markup, ARIA, keyboard, focus, overlays | `a11y-aria-patterns` |
+| Icons, buttons, labels, error messages, `locales`, `ignoreRules` | `a11y-fixes` |
+| `*.a11y.spec.ts`, keyboard/focus tests, new or changed component | `a11y-testing` |
+| Colours, opacity, outlines, SCSS, theme tokens | `a11y-contrast` |
+
+- Each unmet criterion is a finding; tie it to its RGAA 4.1.2 criterion using the `rgaa` skill (e.g. `RGAA 11.10`).
+- A rule added to `ignoreRules` without a justifying comment, or a wait added before `axe` only to make it pass, is at least `high`.
+- Known Tanaguru false positives (`doc/Accessibilite/README.md` §5) are not findings.
 
 ## Findings Format
 

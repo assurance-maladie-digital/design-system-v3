@@ -1,5 +1,7 @@
 # RGAA — Thèmes 12–13 : Navigation, Consultation
 
+> **Exemples génériques.** Les extraits illustrent le critère RGAA en HTML / template minimal. Dans le code Synapse, les règles des skills `a11y-*` priment : ids générés par `useId()` (jamais en dur), libellés dans `locales.ts`, icônes via `SyIcon`, composants DS de `a11y-aria-patterns`. Un écart à ces règles est un constat, même si l'extrait ci-dessous l'écrit autrement.
+
 ## Thème 12 — Navigation (11 critères)
 
 ### 12.1 Deux systèmes de navigation minimum
@@ -43,7 +45,7 @@ Chaque zone principale doit être identifiable via landmark ARIA ou titre.
 **Non-conformité type :** Page sans landmark `<main>` ; deux `<nav>` sans `aria-label` pour les distinguer.
 **Priorité :** 🟠 Majeur
 
-```tsx
+```vue
 <header role="banner">...</header>
 <nav role="navigation" aria-label="Menu principal">...</nav>
 <main role="main">...</main>
@@ -52,7 +54,7 @@ Chaque zone principale doit être identifiable via landmark ARIA ou titre.
 ```
 
 **Plusieurs `<nav>` :** différencier avec `aria-label` :
-```tsx
+```vue
 <nav aria-label="Menu principal">...</nav>
 <nav aria-label="Menu secondaire">...</nav>
 <nav aria-label="Fil d'Ariane">...</nav>
@@ -66,9 +68,9 @@ Chaque zone principale doit être identifiable via landmark ARIA ou titre.
 **Non-conformité type :** Absence totale de lien d'évitement ; lien d'évitement présent mais pointant vers un `id` inexistant.
 **Priorité :** 🔴 Bloquant
 
-```tsx
+```vue
 <body>
-  <a href="#contenu" className="skip-link">Aller au contenu principal</a>
+  <a href="#contenu" class="skip-link">Aller au contenu principal</a>
   <header>...</header>
   <nav>...</nav>
   <main id="contenu">...</main>
@@ -135,10 +137,10 @@ Chaque zone principale doit être identifiable via landmark ARIA ou titre.
 **Non-conformité type :** Popup publicitaire ou d'alerte s'ouvrant au chargement ; lien `target="_blank"` sans indication "nouvelle fenêtre".
 **Priorité :** 🟡 Mineur
 
-```tsx
+```vue
 <a href="/doc.pdf" target="_blank" title="Télécharger le rapport (nouvelle fenêtre)">
   Rapport annuel (PDF, 2 Mo)
-  <span className="sr-only"> - nouvelle fenêtre</span>
+  <span class="sr-only"> - nouvelle fenêtre</span>
 </a>
 ```
 
@@ -158,9 +160,9 @@ Chaque zone principale doit être identifiable via landmark ARIA ou titre.
 **Non-conformité type :** Émoticône `:-)` sans alternative ; art ASCII sans description.
 **Priorité :** 🟡 Mineur
 
-```tsx
+```vue
 <span title="Content">:-)</span>
-// ou
+<!-- ou -->
 <span role="img" aria-label="Content">:-)</span>
 ```
 

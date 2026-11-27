@@ -19,11 +19,18 @@ Les règles génériques sont déléguées aux skills installés (dans `.agents/
 Les charger avant toute tâche relevant de leur domaine :
 
 - `vue-best-practices` et `vue` pour Vue 3, les composants, la réactivité et le SSR ;
-- `vite` (compatible **Vite 6.4.2**) pour Vite, la configuration et les builds ;
+- `vite` (compatible **Vite 6.4**, ignorer la partie Vite 8 / Rolldown) pour Vite, la configuration et les builds ;
 - `vitest` (compatible **Vitest 4.1.0**) pour les tests unitaires ;
 - `pnpm` pour la gestion des dépendances et des workspaces ;
 - `antfu` pour l'outillage TypeScript et JavaScript (**les conventions de tests et de hooks Git du dépôt priment** : voir §4 et §11) ;
-- `review` pour les revues de code, de pull requests et de diffs propres à Synapse.
+- `review` pour les revues de code, de pull requests et de diffs propres à Synapse ;
+- `a11y-aria-patterns` pour tout composant ou markup interactif (dialog, menu, listbox, onglets, focus, clavier) ;
+- `a11y-fixes` pour corriger un défaut d'accessibilité (règle axe en échec, nom accessible, icône, liaison d'erreur, focus) ;
+- `a11y-testing` pour écrire ou lancer des tests d'accessibilité (axe, clavier, focus, liaisons ARIA, lecteur d'écran) ;
+- `a11y-contrast` pour toute couleur, opacité, bordure ou indicateur de focus (contrastes, marques, thème sombre) ;
+- `rgaa` pour auditer la conformité RGAA 4.1.2 ou rattacher un constat à un critère.
+
+Les skills `a11y-*` se terminent par des **critères vérifiables** : l'agent qui écrit doit les satisfaire, la revue (`review`, agent `a11y-audit`) contrôle les mêmes. Agents dédiés : `a11y-dev` (édition) et `a11y-audit` (lecture seule), dans `.opencode/agents/`, `.claude/agents/` et `.github/agents/`.
 
 Les instructions ci-dessous ne précisent que les conventions et contraintes propres à Synapse.
 

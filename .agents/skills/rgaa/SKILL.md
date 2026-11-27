@@ -1,15 +1,12 @@
 ---
 name: rgaa
 description: >-
-  Outil d'audit de conformité RGAA 4.1.2 pour sites web et composants React/HTML.
-  Utiliser cette skill pour auditer la conformité RGAA d'un site ou d'un composant :
-  quand l'utilisateur demande un audit d'accessibilité, un rapport de conformité RGAA,
-  quand il veut savoir si son code/site respecte le RGAA, quand il mentionne "audit RGAA",
-  "conformité RGAA", "non-conformités", "déclaration d'accessibilité", ou quand il partage
-  du code HTML/React pour vérification a posteriori.
+  Use when auditing RGAA 4.1.2 conformance of Synapse Vue/Vuetify components, stories or markup,
+  when asked for an accessibility audit, a conformance report, a list of non-conformities or input
+  for an accessibility statement, or when an accessibility finding must be tied to an RGAA criterion.
 ---
 
-# RGAA 4.1.2 — Outil d'audit de conformité
+# RGAA 4.1.2 — Audit de conformité des composants Synapse
 
 Référentiel d'accessibilité numérique français. 106 critères répartis en 13 thématiques. Basé sur WCAG 2.1 niveau AA.
 
@@ -17,14 +14,19 @@ Source : https://accessibilite.numerique.gouv.fr/
 
 ## Workflow d'audit
 
-1. **Analyser le code fourni** (HTML, JSX, CSS)
-2. **Parcourir les 13 thèmes RGAA** en consultant les fichiers de référence détaillés
-3. **Pour chaque critère**, attribuer un statut :
+1. **Délimiter le périmètre** : composant(s) sous `src/components/` (éventuellement imbriqué : `Customs/`, `Tables/`…) (SFC `.vue`, props, slots, `locales.ts`, stories) ou diff.
+2. **Collecter les preuves automatiques** si possible :
+   - `pnpm vitest run /<Nom>.a11y.spec.ts --coverage.enabled=false` (filtre par sous-chaîne, sans glob ; vérifier `Test Files 1 passed`)
+   - lire la section du composant dans `scripts/data/a11y-report.md` (régénéré par `pnpm a11y:report`, qui réécrit ce fichier suivi par git : ne le lancer que si l'on est autorisé à modifier le dépôt)
+   - Rattacher chaque violation axe à son critère : `a11y-testing` → `references/axe-rgaa.md`.
+3. **Appliquer les « Critères vérifiables »** des skills `a11y-aria-patterns`, `a11y-fixes`, `a11y-testing`, `a11y-contrast` : chaque case non cochée est une NC candidate.
+4. **Parcourir les 13 thèmes RGAA** avec les fichiers de référence ci-dessous. Un composant de librairie rend la plupart des critères de page (titre, langue, liens d'évitement globaux) **NA** : les justifier en une ligne.
+5. **Écarter les faux positifs connus** (Tanaguru : `DialogBox`, `RatingPicker`, `SyTabs`) : [doc/Accessibilite/README.md §5](../../../doc/Accessibilite/README.md#5-faux-positifs-connus-tanaguru).
+6. **Attribuer un statut** à chaque critère :
    - **C** — Conforme : critère respecté
    - **NC** — Non conforme : critère violé (identifier l'élément et le problème)
    - **NA** — Non applicable : critère sans objet pour ce contenu (justifier)
-4. **Produire le rapport structuré** selon le format ci-dessous
-5. **Exporter le rapport** : écrire le rapport dans un fichier Markdown ET l'afficher dans la conversation
+7. **Produire le rapport** selon le format ci-dessous, dans la conversation.
 
 ## Format du rapport de conformité
 
@@ -78,17 +80,9 @@ Source : https://accessibilite.numerique.gouv.fr/
 - **{ID}** — {justification courte}
 ```
 
-## Export du rapport
+## Restitution du rapport
 
-Après avoir produit le rapport, **toujours** :
-
-1. Créer le dossier `audits/` à la racine du projet s'il n'existe pas
-2. Écrire le rapport complet dans `audits/rgaa-AAAA-MM-JJ.md` (date du jour, format ISO)
-3. Afficher également le rapport dans la conversation
-
-Si un fichier du même nom existe déjà, ajouter un suffixe incrémental : `rgaa-2026-03-26-2.md`.
-
-> Exemple : `audits/rgaa-2026-03-26.md`
+Afficher le rapport **dans la conversation**. N'écrire un fichier que si l'utilisateur le demande, au chemin qu'il indique (aucun dossier d'audit n'est prévu dans le dépôt). Ne jamais modifier `scripts/data/a11y-report.md` à la main : il est généré par `pnpm a11y:report`.
 
 ## Grille de priorités
 
