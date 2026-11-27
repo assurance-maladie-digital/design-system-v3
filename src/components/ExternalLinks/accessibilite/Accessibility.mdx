@@ -11,6 +11,7 @@ import {
 	BestPracticesSection,
 	ResourcesSection,
 	AuditSection,
+	NoticeSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
@@ -24,7 +25,7 @@ import {
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/808" target="_blank" style={{color:'#0C41BD'}}>issue #808</a>)</p>
 	</AuditSection>
 
-<CriteriaSection title="Critères d'accessibilité respectés">
+<CriteriaSection title="Critères d’accessibilité">
     <CriteriaCard title="Labels accessibles">
         <ul>
             <li>La prop <code>btnText</code> définit le texte visible du bouton. La prop <code>ariaLabel</code> définit son nom pour le lecteur d’écran.</li>
@@ -61,14 +62,20 @@ import {
     </ul>
 </BestPracticesSection>
 
-<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
-    <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls</h2>
+<NoticeSection title="Point de vigilance — signalement aria-controls">
     <ul>
         <li>L’addon d’accessibilité de Storybook peut signaler <code>aria-controls</code> dans l’onglet « Inconclusive » (élément référencé introuvable) lorsque le menu de <code>ExternalLinks</code> est ouvert.</li>
         <li>Cause : la version d’axe utilisée demande une vérification manuelle du lien en présence de <code>aria-haspopup="menu"</code>, même si l’élément référencé existe. Dans ce composant, <code>VMenu</code> utilise <code>attach</code> : le contenu n’est donc pas nécessairement téléporté sous <code>&lt;body&gt;</code>, en dehors de <code>#storybook-root</code>.</li>
         <li>Vérification manuelle (DevTools, menu ouvert) : sélectionner le bouton <code>.sy-external-links-btn</code> dans l’inspecteur, puis saisir <code>$0.ownerDocument.getElementById($0.getAttribute('aria-controls'))</code>. Le résultat doit être l’élément du menu dont l’identifiant commence par <code>sy-external-links-menu-</code>. Si cet élément correspond bien au menu ouvert, le composant est conforme sur ce point : la référence <code>aria-controls</code> est valide dans le DOM réel.</li>
         <li>Ce n'est pas un bug du composant mais une limite du scanner face au contenu téléporté hors de son conteneur d'origine. </li>
     </ul>
-</div>
+</NoticeSection>
+
+<ResourcesSection>
+    <ul>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener noreferrer">WAI-ARIA — Bouton de menu</a></li>
+        <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA — Critères et tests</a></li>
+    </ul>
+</ResourcesSection>
 
 </AccessibilityGuideLayout>

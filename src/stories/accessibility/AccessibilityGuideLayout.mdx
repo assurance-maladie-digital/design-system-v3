@@ -1,13 +1,46 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import { Children, isValidElement } from 'react';
+import { resolveA11yVersion } from './accessibilityVersion';
 import '../styles/shared.css';
 import '../styles/accessibility-guide.css';
 
 <Meta isTemplate />
 
-export const AccessibilityGuideLayout = ({ componentName, iconSrc, apgHref, apgLabel, children }) => (
-  <div className="accessibility-guide">
+export const sectionOrder = {
+  'accessibility-demo-section': 20,
+  'demo-section': 20,
+  'accessibility-keyboard': 30,
+  'criteria-section': 40,
+  'api-section': 40,
+  'implementation-section': 40,
+  'adaptive-mode-section': 40,
+  'automatic-section': 40,
+  'tab-panel-section': 40,
+  'best-practices': 50,
+  'notice-section': 60,
+  'warning-section': 60,
+  'audit-section': 70,
+  'resources-section': 80,
+};
+
+export const getSectionOrder = (node) => {
+  if (!isValidElement(node)) return 10;
+
+  const className = typeof node.props.className === 'string' ? node.props.className : '';
+  const sectionClass = Object.keys(sectionOrder).find((classNamePart) => className.includes(classNamePart));
+  if (sectionClass) return sectionOrder[sectionClass];
+
+  const nestedNode = Children.toArray(node.props.children).find((child) => getSectionOrder(child) !== 10);
+  return nestedNode ? getSectionOrder(nestedNode) : 10;
+};
+
+export const AccessibilityGuideLayout = ({ componentName, title = `Guide d'Accessibilité du Composant ${componentName}`, a11yVersion, iconSrc, apgHref, apgLabel, className = '', children }) => (
+  <div className={`accessibility-guide accessibility-page ${className}`}>
     <div className="header">
-      <h1>Guide d'Accessibilité du Composant {componentName}</h1>
+      <h1>{title}</h1>
+      {(a11yVersion || resolveA11yVersion(componentName)) && (
+        <span className="guide-meta">{a11yVersion || resolveA11yVersion(componentName)}</span>
+      )}
     </div>
 
     <div className="intro-section">
@@ -19,7 +52,7 @@ export const AccessibilityGuideLayout = ({ componentName, iconSrc, apgHref, apgL
         />
       )}
       <p className="intro-text">
-        Le composant {componentName} a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C
+        Le composant {componentName} s'appuie sur les recommandations d'accessibilité du W3C
         {apgHref && (
           <>
             , notamment le modèle{' '}
@@ -28,17 +61,20 @@ export const AccessibilityGuideLayout = ({ componentName, iconSrc, apgHref, apgL
             </a>
           </>
         )}
-        . Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience
-        utilisateur inclusive.
+        . Ce guide présente les choix d'implémentation, les comportements à vérifier et les bonnes pratiques
+        pour une intégration inclusive.
       </p>
     </div>
 
-    {children}
+    {Children.toArray(children)
+      .map((child, index) => ({ child, index, order: getSectionOrder(child) }))
+      .sort((first, second) => first.order - second.order || first.index - second.index)
+      .map(({ child }) => child)}
   </div>
 );
 
-export const CriteriaSection = ({ title = "Critères d'accessibilité respectés", children }) => (
-  <div className="criteria-section">
+export const CriteriaSection = ({ title = "Critères d’accessibilité", className = '', children }) => (
+  <div className={`criteria-section ${className}`}>
     <h2>{title}</h2>
     {children}
   </div>
@@ -65,23 +101,30 @@ export const DemoSection = ({ componentName, children }) => (
   </div>
 );
 
-export const BestPracticesSection = ({ title = "Bonnes pratiques d'utilisation", children }) => (
+export const BestPracticesSection = ({ title = "Bonnes pratiques", children }) => (
   <div className="best-practices">
     <h2>{title}</h2>
     {children}
   </div>
 );
 
-export const ResourcesSection = ({ title = 'Ressources supplémentaires', children }) => (
+export const ResourcesSection = ({ title = 'Ressources', children }) => (
   <div className="resources-section">
     <h2>{title}</h2>
     {children}
   </div>
 );
 
-export const AuditSection = ({ title = 'Rapports d\'audit', children }) => (
+export const AuditSection = ({ title = 'Audit et suivi', children }) => (
   <div className="audit-section">
     <h2>{title}</h2>
     {children}
   </div>
+);
+
+export const NoticeSection = ({ title = 'Points de vigilance', children }) => (
+  <aside className="notice-section" aria-label={title}>
+    <h2>{title}</h2>
+    {children}
+  </aside>
 );

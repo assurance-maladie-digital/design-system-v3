@@ -1,11 +1,10 @@
-import { Meta, Primary } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as AccordionStories from '../Accordion.stories.ts';
-import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import {
 	AccessibilityGuideLayout,
+	AuditSection,
 	CriteriaSection,
 	CriteriaCard,
-	DemoSection,
 	BestPracticesSection,
 	ResourcesSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
@@ -14,69 +13,126 @@ import {
 
 <AccessibilityGuideLayout
 	componentName="Accordion"
-	iconSrc={AccessibilityIcon}
+	title="Accessibilité de l’accordéon"
+	a11yVersion="Dernière mise à jour accessibilité : V1.1.3"
 	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/"
 >
-	<div class="mt-8">
-		<p>Rapport d’audit manuel : <a href="/audits/Accordion.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/926" target="_blank" style={{color:'#0C41BD'}}>issue #926</a>)</p>
+	<div className="accessibility-guide-content">
+		<section id="accordion-demo">
+			<div className="accessibility-demo-section">
+				<h2>Démonstration interactive</h2>
+				<p className="accessibility-demo-intro">
+					Testez l’ouverture et la fermeture des panneaux au clavier avec les touches Espace et Entrée,
+					puis parcourez les contrôles avec les flèches et les touches Home/End. Vérifiez que le focus reste visible
+					et que l’état ouvert ou fermé est annoncé par la technologie d’assistance.
+				</p>
+				<div className="accessibility-demo-canvas">
+					<Canvas of={AccordionStories.Default} withToolbar={false} />
+				</div>
+			</div>
+		</section>
+
+		<section id="accordion-clavier" className="accessibility-keyboard">
+			<h2>Navigation au clavier</h2>
+			<p>Utilisez uniquement le clavier sur la démo ci-dessus, puis comparez le résultat avec les comportements attendus :</p>
+			<table>
+				<caption>Touches prises en charge par l’accordéon</caption>
+				<thead>
+					<tr><th scope="col">Touche</th><th scope="col">Résultat attendu</th></tr>
+				</thead>
+				<tbody>
+					<tr><th scope="row">Tab</th><td>Atteint le contrôle d’expansion suivant dans l’ordre de tabulation.</td></tr>
+					<tr><th scope="row">Espace ou Entrée</th><td>Ouvre ou referme le panneau associé au contrôle focalisé.</td></tr>
+					<tr><th scope="row">Flèche bas</th><td>Déplace le focus vers le contrôle disponible suivant.</td></tr>
+					<tr><th scope="row">Flèche haut</th><td>Déplace le focus vers le contrôle disponible précédent.</td></tr>
+					<tr><th scope="row">Home</th><td>Place le focus sur le premier contrôle disponible.</td></tr>
+					<tr><th scope="row">End</th><td>Place le focus sur le dernier contrôle disponible.</td></tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section id="accordion-structure">
+			<CriteriaSection className="criteria-section--grid">
+			<CriteriaCard title="Structure sémantique">
+				<ul>
+					<li><strong>Contrôles identifiables</strong> : chaque en-tête interactif expose <code>role="button"</code> et possède un nom accessible basé sur son titre</li>
+					<li><strong>Panneaux structurés</strong> : le contenu déplié expose <code>role="region"</code> et reste associé à son contrôle</li>
+					<li><strong>Niveaux de titres personnalisables</strong> : utilisation dynamique des balises <code>h1</code> à <code>h6</code> selon le contexte</li>
+					<li><strong>Relations programmatiques</strong> : <code>aria-controls</code> et <code>aria-labelledby</code> relient chaque contrôle à son panneau</li>
+				</ul>
+			</CriteriaCard>
+
+			<CriteriaCard title="Navigation au clavier">
+				<ul>
+					<li><strong>Espace et Entrée</strong> : ouvrent ou referment le panneau ciblé</li>
+					<li><strong>Flèches haut et bas</strong> : déplacent le focus entre les contrôles disponibles</li>
+					<li><strong>Home et End</strong> : placent le focus sur le premier ou le dernier contrôle disponible</li>
+					<li><strong>Éléments désactivés</strong> : ne déclenchent aucune action et sont ignorés par la navigation gérée</li>
+					<li><strong>À noter</strong> : les flèches et Home/End sont des comportements optionnels du pattern WAI-ARIA, implémentés par ce composant</li>
+				</ul>
+			</CriteriaCard>
+
+			<CriteriaCard title="États et retours d'information">
+				<ul>
+					<li><strong>État d'expansion</strong> : <code>aria-expanded</code> indique si le panneau associé est ouvert ou fermé</li>
+					<li><strong>État désactivé</strong> : <code>aria-disabled="true"</code> signale un contrôle indisponible</li>
+					<li><strong>Retour visuel</strong> : la rotation de l'icône et la couleur distinguent l'état ouvert</li>
+					<li><strong>Focus visible</strong> : un contour identifie le contrôle actuellement focalisé</li>
+				</ul>
+			</CriteriaCard>
+
+			<CriteriaCard title="Personnalisation accessible">
+				<ul>
+					<li><strong>Contraste configurable</strong> : Options de couleurs pour garantir un contraste suffisant</li>
+					<li><strong>Taille et espacement</strong> : Dimensions adaptées pour faciliter l'interaction</li>
+					<li><strong>Cohérence visuelle</strong> : Comportement prévisible dans différents contextes</li>
+				</ul>
+			</CriteriaCard>
+			</CriteriaSection>
+		</section>
+
+		<BestPracticesSection>
+			<p className="best-practices-intro">
+				Ces recommandations concernent l’usage du composant dans une page. Elles complètent les garanties
+				techniques portées par l’implémentation.
+			</p>
+			<div className="best-practices-grid">
+				<div className="best-practice-item">
+					<h3>Nommer clairement</h3>
+					<p>Utilisez des titres concis, descriptifs et distincts pour chaque contrôle.</p>
+				</div>
+				<div className="best-practice-item">
+					<h3>Respecter la hiérarchie</h3>
+					<p>Choisissez le niveau de titre selon la structure de la page, et non selon le style visuel recherché.</p>
+				</div>
+				<div className="best-practice-item">
+					<h3>Préserver le parcours</h3>
+					<p>Évitez les interactions complexes dans un panneau lorsqu’elles rendent le parcours clavier difficile à comprendre.</p>
+				</div>
+				<div className="best-practice-item">
+					<h3>Limiter la charge cognitive</h3>
+					<p>Conservez un ordre logique et limitez le nombre de sections affichées dans une même page.</p>
+				</div>
+			</div>
+		</BestPracticesSection>
+
+		<section id="accordion-audit">
+			<AuditSection>
+				<ul>
+					<li>Rapport d’audit manuel : <a href="/audits/Accordion.xlsx">Voir le rapport</a></li>
+					<li>Correctifs associés : <a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/926" target="_blank" rel="noopener noreferrer">issue #926</a></li>
+				</ul>
+			</AuditSection>
+		</section>
+
+		<ResourcesSection>
+			<ul>
+				<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les accordéons</a></li>
+				<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+				<li><a href="https://inclusive-components.design/collapsible-sections/" target="_blank" rel="noopener noreferrer">Inclusive Components: Collapsible Sections</a></li>
+			</ul>
+		</ResourcesSection>
 	</div>
-	<CriteriaSection>
-		<CriteriaCard title="Structure sémantique">
-			<ul>
-				<li><strong>Rôles ARIA appropriés</strong> : <code>role="button"</code> pour les en-têtes et <code>role="region"</code> pour les panneaux de contenu</li>
-				<li><strong>Niveaux de titres personnalisables</strong> : Utilisation dynamique des balises <code>h1</code> à <code>h6</code> selon le contexte</li>
-				<li><strong>Relations entre éléments</strong> : Connexion entre en-têtes et panneaux via <code>aria-controls</code> et <code>aria-labelledby</code></li>
-			</ul>
-		</CriteriaCard>
-
-		<CriteriaCard title="Navigation clavier complète">
-			<ul>
-				<li><strong>Touches Espace et Entrée</strong> : Pour activer/désactiver les panneaux</li>
-				<li><strong>Touches fléchées</strong> : Navigation entre les en-têtes (↑ et ↓)</li>
-				<li><strong>Touches Home/End</strong> : Accès rapide au premier/dernier en-tête</li>
-				<li><strong>Gestion intelligente</strong> : Contournement automatique des éléments désactivés</li>
-			</ul>
-		</CriteriaCard>
-
-		<CriteriaCard title="États et retours d'information">
-			<ul>
-				<li><strong>État d'expansion</strong> : <code>aria-expanded</code> indique si un panneau est ouvert ou fermé</li>
-				<li><strong>État de désactivation</strong> : <code>aria-disabled</code> signale les éléments non disponibles</li>
-				<li><strong>Indication visuelle</strong> : Rotation de l'icône et changements de couleur pour indiquer l'état</li>
-				<li><strong>Focus visible</strong> : Indication claire de l'élément actuellement focalisé</li>
-			</ul>
-		</CriteriaCard>
-
-		<CriteriaCard title="Personnalisation accessible">
-			<ul>
-				<li><strong>Contraste configurable</strong> : Options de couleurs pour garantir un contraste suffisant</li>
-				<li><strong>Taille et espacement</strong> : Dimensions adaptées pour faciliter l'interaction</li>
-				<li><strong>Cohérence visuelle</strong> : Comportement prévisible dans différents contextes</li>
-			</ul>
-		</CriteriaCard>
-	</CriteriaSection>
-
-	<DemoSection componentName="Accordion">
-		<Primary />
-	</DemoSection>
-
-	<BestPracticesSection>
-		<ul>
-			<li>Utilisez des titres concis et descriptifs pour les en-têtes</li>
-			<li>Évitez de placer des éléments interactifs complexes à l'intérieur du contenu des panneaux</li>
-			<li>Maintenez une cohérence dans l'utilisation des niveaux de titres</li>
-			<li>Limitez le nombre d'accordéons sur une même page pour éviter la surcharge cognitive</li>
-		</ul>
-	</BestPracticesSection>
-
-	<ResourcesSection>
-		<ul>
-			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les accordéons</a></li>
-			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
-			<li><a href="https://inclusive-components.design/collapsible-sections/" target="_blank" rel="noopener noreferrer">Inclusive Components: Collapsible Sections</a></li>
-		</ul>
-	</ResourcesSection>
 
 
 </AccessibilityGuideLayout>

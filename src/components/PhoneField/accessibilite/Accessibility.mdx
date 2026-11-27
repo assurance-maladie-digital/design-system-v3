@@ -2,29 +2,20 @@ import { Meta, Primary } from '@storybook/addon-docs/blocks';
 import * as PhoneFieldStories from '../PhoneField.stories.ts';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import { AccessibilityGuideLayout } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={PhoneFieldStories} name="Accessibility" />
 
-<div className="accessibility-guide">
-	<div className="header">
-		<h1>Guide d'Accessibilité du Composant PhoneField</h1>
-	</div>
-
-	<div className="intro-section">
-		<img
-			src={AccessibilityIcon}
-			alt="Icône d'accessibilité"
-			className="accessibility-icon"
-		/>
-		<p className="intro-text">
-			Le composant PhoneField a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C,
-			notamment le modèle <a href="https://www.w3.org/WAI/tutorials/forms/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les champs de formulaire</a>.
-			Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
-		</p>
-	</div>
+<AccessibilityGuideLayout
+	componentName="PhoneField"
+	title="Accessibilité du champ téléphonique"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/tutorials/forms/"
+	apgLabel="WAI-ARIA pour les champs de formulaire"
+>
 
 	<div className="criteria-section">
-		<h2>Critères d'accessibilité respectés</h2>
+		<h2>Critères d’accessibilité</h2>
 
 		<div className="criteria-card">
 			<div className="criteria-header">
@@ -127,7 +118,7 @@ import '@/stories/styles/shared.css';
 	</div>
 
 	<div className="best-practices">
-		<h2>Bonnes pratiques d'utilisation</h2>
+		<h2>Bonnes pratiques</h2>
 		<ul>
 			<li>Utilisez un libellé explicite pour chaque champ téléphone afin d'informer clairement l'utilisateur du format attendu.</li>
 			<li>Les attributs <code>autocomplete</code> sont préconfigurés par défaut (<code>autocompleteCountryCode</code> : <code>"tel-country-code"</code>, <code>autocompletePhone</code> : <code>"tel-national"</code>) et couvrent la majorité des cas d'usage. Adaptez-les si nécessaire (ex. <code>"tel"</code> pour un numéro complet avec indicatif intégré).</li>
@@ -139,175 +130,11 @@ import '@/stories/styles/shared.css';
 	</div>
 
 	<div className="resources-section">
-		<h2>Ressources supplémentaires</h2>
+		<h2>Ressources</h2>
 		<ul>
 			<li><a href="https://www.w3.org/WAI/WCAG21/Techniques/html/H44" target="_blank" rel="noopener noreferrer">WCAG – Utilisation des labels pour les contrôles de formulaire (H44)</a></li>
 			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
 			<li><a href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill" target="_blank" rel="noopener noreferrer">Spécification HTML – Attribut autocomplete</a></li>
 		</ul>
 	</div>
-</div>
-
-<style>
-{`
-  .accessibility-guide {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-  }
-
-  .intro-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 5px solid #0077cc;
-  }
-
-  .accessibility-icon {
-    width: 60px;
-    height: 60px;
-    margin-right: 20px;
-    flex-shrink: 0;
-  }
-
-  .intro-text {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .criteria-section {
-    margin-bottom: 40px;
-  }
-
-  .criteria-section h2,
-  .demo-section h2,
-  .best-practices h2,
-  .resources-section h2 {
-    border-bottom: 2px solid #eaecef;
-    padding-bottom: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    color: #0077cc;
-  }
-
-  .criteria-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .criteria-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .criteria-icon {
-    font-size: 1.8em;
-    margin-right: 15px;
-  }
-
-  .criteria-header h3 {
-    margin: 0;
-    font-size: 1.3em;
-    color: #0077cc;
-  }
-
-  .criteria-card ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-
-  .criteria-card li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-
-  .demo-section {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 40px;
-  }
-
-  .best-practices {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .best-practices ul {
-    padding-left: 20px;
-  }
-
-  .best-practices li {
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  .resources-section {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-  }
-
-  .resources-section ul {
-    padding-left: 20px;
-  }
-
-  .resources-section li {
-    margin-bottom: 10px;
-  }
-
-  .resources-section a {
-    color: #0077cc;
-    text-decoration: none;
-  }
-
-  .resources-section a:hover {
-    text-decoration: underline;
-  }
-
-  .autocomplete-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 12px;
-    font-size: 0.9em;
-  }
-
-  .autocomplete-table th,
-  .autocomplete-table td {
-    border: 1px solid #ddd;
-    padding: 8px 12px;
-    text-align: left;
-    vertical-align: top;
-  }
-
-  .autocomplete-table th {
-    background-color: #f0f4f8;
-    color: #0077cc;
-    font-weight: 600;
-  }
-
-  .autocomplete-table tr:nth-child(even) td {
-    background-color: #f9f9f9;
-  }
-
-  code {
-    background-color: #f0f0f0;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 0.9em;
-  }
-`}
-</style>
+</AccessibilityGuideLayout>
