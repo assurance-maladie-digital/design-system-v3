@@ -40,6 +40,3 @@ cypress/snapshots
 
 # Change log
 CHANGELOG-TEMP.md
-
-# Généré au build par scripts/generate-doc-versions.mjs
-.storybook/public/doc-versions.json
