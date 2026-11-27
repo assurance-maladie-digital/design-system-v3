@@ -252,7 +252,7 @@
 }
 
 h2 {
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	text-wrap: balance;
 }
 

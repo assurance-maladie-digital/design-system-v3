@@ -1447,7 +1447,7 @@
 /* Permettre le passage à la ligne pour les textes longs dans la liste déroulante */
 .v-list-item-title {
 	white-space: normal;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	line-height: 1.2;
 	padding: 4px 0;
 }
