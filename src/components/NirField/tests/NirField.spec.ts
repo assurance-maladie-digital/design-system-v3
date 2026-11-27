@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import NirField from '../NirField.vue'
+import { locales } from '../locales'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { useValidation } from '@/composables/validation/useValidation'
 import { VForm } from 'vuetify/components'
@@ -97,7 +98,7 @@ describe('NirField.vue', () => {
 		await wrapper.find('.number-field input').trigger('blur')
 		await wrapper.vm.$nextTick()
 		await flushPromises()
-		expect(wrapper.vm.numberValidation.errors.value[0]).toBe('Le numéro de sécurité sociale est invalide, ce sont les 13 premiers caractères sur votre carte Vitale.')
+		expect(wrapper.vm.numberValidation.errors.value[0]).toBe(locales.errorInvalidNumber)
 	})
 
 	it('validates the NIR field successfully', async () => {
@@ -119,7 +120,7 @@ describe('NirField.vue', () => {
 		await wrapper.find('.key-field input').trigger('blur')
 		await wrapper.vm.$nextTick()
 		await flushPromises()
-		expect(wrapper.vm.keyValidation.errors.value[0]).toBe('La clé de contrôle ne correspond pas au numéro de sécurité sociale, ce sont les 2 derniers chiffres sur votre carte Vitale.')
+		expect(wrapper.vm.keyValidation.errors.value[0]).toBe(locales.errorInvalidKey)
 	})
 
 	it('validates the key field successfully', async () => {
@@ -1060,7 +1061,7 @@ describe('NirField.vue', () => {
 				await fillAndValidateNir(wrapper, '123')
 
 				expect(wrapper.vm.errors.number.value.length).toBeGreaterThan(0)
-				expect(wrapper.vm.errors.number.value[0]).toBe('Le numéro de sécurité sociale est invalide, ce sont les 13 premiers caractères sur votre carte Vitale.')
+				expect(wrapper.vm.errors.number.value[0]).toBe(locales.errorInvalidNumber)
 				expect(wrapper.vm.errors.key.value.length).toBe(0) // Pas d'erreur clé
 			})
 
@@ -1068,7 +1069,7 @@ describe('NirField.vue', () => {
 				await fillAndValidateNir(wrapper, '2940375120005', '1')
 
 				expect(wrapper.vm.errors.key.value.length).toBeGreaterThan(0)
-				expect(wrapper.vm.errors.key.value[0]).toBe('La clé de contrôle ne correspond pas au numéro de sécurité sociale, ce sont les 2 derniers chiffres sur votre carte Vitale.')
+				expect(wrapper.vm.errors.key.value[0]).toBe(locales.errorInvalidKey)
 				expect(wrapper.vm.errors.number.value.length).toBe(0) // Pas d'erreur NIR
 			})
 
