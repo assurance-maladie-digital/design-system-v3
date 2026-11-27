@@ -393,6 +393,44 @@ describe('SyBtnMenu', () => {
 
 			wrapper.unmount()
 		})
+
+		it('focuses the first focusable item in menu-header before the menu options', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					menuItems: [{ text: 'Mon compte', value: 'account' }],
+				},
+				slots: {
+					'menu-header': '<div><button class="header-action">Mon compte</button></div>',
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+			await nextTick()
+
+			expect(document.activeElement).toBe(document.body.querySelector('.header-action'))
+
+			wrapper.unmount()
+		})
+
+		it('renders footer-list-item when it is the only menu content', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					menuItems: [],
+					hideLogoutBtn: true,
+				},
+				slots: {
+					'footer-list-item': '<li role="menuitem" class="custom-footer-item">Aide</li>',
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			expect(document.body.querySelector('[role="menu"] .custom-footer-item')?.textContent).toBe('Aide')
+
+			wrapper.unmount()
+		})
 	})
 
 	// Le ring de focus est géré globalement (_btns.scss) sur le bouton natif ;

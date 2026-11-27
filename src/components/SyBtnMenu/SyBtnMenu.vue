@@ -130,7 +130,7 @@
 	})
 
 	const hasMenuListContent = computed(() => {
-		return Boolean(formattedItems.value.length || !props.hideLogoutBtn || slots.default)
+		return Boolean(formattedItems.value.length || !props.hideLogoutBtn || slots.default || slots['footer-list-item'])
 	})
 
 	const hasListContent = computed(() => {
@@ -153,14 +153,13 @@
 		return selectedItem.value[props.textKey] as string
 	}
 
-	const menu = ref<InstanceType<typeof import('vuetify/components').VList> | null>(null)
+	const content = ref<HTMLElement | null>(null)
+	const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 	watch(isOpen, async (newVal) => {
 		if (newVal) {
 			await nextTick()
-			if (menu.value?.$el) {
-				menu.value.$el.querySelector('[role="menuitem"]')?.focus()
-			}
+			content.value?.querySelector<HTMLElement>(focusableSelector)?.focus()
 		}
 		else {
 			await nextTick()
@@ -248,7 +247,10 @@
 				</VBtn>
 			</template>
 			<slot name="content">
-				<div class="sy-user-menu-content">
+				<div
+					ref="content"
+					class="sy-user-menu-content"
+				>
 					<slot name="menu-header" />
 					<div
 						v-if="hasIdentityInList"
@@ -270,7 +272,6 @@
 					</div>
 					<VList
 						v-if="hasMenuListContent"
-						ref="menu"
 						tag="ul"
 						role="menu"
 						v-bind="props.options['list']"
@@ -343,7 +344,7 @@
 }
 
 .item-title {
-	white-space: wrap;
+	white-space: normal;
 }
 
 :deep(.v-list-item__prepend) {

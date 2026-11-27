@@ -72,7 +72,10 @@
 				v-bind="options['icon']"
 			/>
 		</template>
-		<template #footer-list-item>
+		<template
+			v-if="!hideLogoutBtn || slots.default"
+			#footer-list-item
+		>
 			<slot>
 				<VListItem
 					v-if="!hideLogoutBtn"
