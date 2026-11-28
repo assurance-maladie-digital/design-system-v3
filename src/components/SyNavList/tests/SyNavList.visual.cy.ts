@@ -368,13 +368,11 @@ describe('SyNavList - Visual regression tests', () => {
 	})
 
 	describe('in Windows high contrast mode (forced colors)', () => {
-		const setForcedColors = (value: 'active' | 'none') => Cypress.automation('remote:debugger:protocol', {
-			command: 'Emulation.setEmulatedMedia',
-			params: { features: [{ name: 'forced-colors', value }] },
-		})
-
-		beforeEach(() => setForcedColors('active'))
-		afterEach(() => setForcedColors('none'))
+		// Via the shared `emulateMediaFeature` command: Emulation.setEmulatedMedia
+		// replaces the whole feature list, so the emulated features must be
+		// tracked centrally (mountWithVuetify re-sends them on every mount).
+		beforeEach(() => cy.emulateMediaFeature('forced-colors', 'active'))
+		afterEach(() => cy.emulateMediaFeature('forced-colors', 'none'))
 
 		it('outlines the list, the sub-levels and the open entry, underlines the current page and greys out a disabled entry', () => {
 			const contrastItems: SyNavListItem[] = [

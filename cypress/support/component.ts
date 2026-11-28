@@ -103,6 +103,7 @@ declare global {
 				component: Component,
 				options?: CyMountOptions<Record<string, unknown>>
 			): ReturnType<typeof mount>
+			emulateMediaFeature(name: string, value: string): Cypress.Chainable<unknown>
 			matchImageSnapshot(
 				name?: string,
 				elem?: Cypress.Chainable<JQuery<HTMLElement>>,
@@ -200,37 +201,73 @@ type MountWithVuetifyCommand = (component: Component, options?: MountWithVuetify
 
 const mountComponent = mount as MountWithVuetifyCommand
 
-function mountWithVuetify(component: Component, options: MountWithVuetifyOptions = {}) {
-	const vuetify = createVuetifyInstance()
+// Emulated media features in the AUT page, via the DevTools protocol
+// (Emulation.setEmulatedMedia). `prefers-reduced-motion: reduce` is emulated by
+// default for visual captures: JS-driven animations keyed on that media query
+// never start. Vuetify in particular skips its WAAPI label float, which is
+// scheduled from a rAF and could otherwise still be running during the
+// screenshot (CI observed a field label frozen at its centered pre-animation
+// position instead of floated). Rendered end states are unchanged, so existing
+// baselines stay valid.
+//
+// The protocol call REPLACES the whole feature list, so every active feature
+// must be sent together: tests emulate additional features (e.g. forced-colors)
+// through the `emulateMediaFeature` command, which updates this registry.
+const emulatedMediaFeatures = new Map<string, string>([
+	['prefers-reduced-motion', 'reduce'],
+])
 
-	// Extract slots from options: we handle them manually so mount()
-	// does not try to attach them to the wrapper component.
-	const { slots, ...mountOptions } = options
-
-	const testComponent = defineComponent({
-		inheritAttrs: false,
-		setup(_, { attrs }) {
-			return () => h(VApp, null, () =>
-				h(component as Parameters<typeof h>[0], { ...attrs }, slots),
-			)
-		},
+function applyEmulatedMediaFeatures(): Promise<unknown> {
+	return Cypress.automation('remote:debugger:protocol', {
+		command: 'Emulation.setEmulatedMedia',
+		params: { features: Array.from(emulatedMediaFeatures, ([name, value]) => ({ name, value })) },
 	})
+}
 
-	return mountComponent(testComponent, {
-		...mountOptions,
-		global: {
-			...mountOptions.global,
-			plugins: [
-				...(mountOptions.global?.plugins || []),
-				vuetify,
-			],
-			stubs: {
-				'transition': true,
-				'transition-group': true,
-				...mountOptions.global?.stubs,
+function mountWithVuetify(component: Component, options: MountWithVuetifyOptions = {}) {
+	// Re-applied on every mount, so emulated media survive AUT page reloads
+	// between spec files. cy.then queues the protocol call before mount() so no
+	// cy command is invoked from a raw promise.
+	return cy.then(() => applyEmulatedMediaFeatures()).then(() => {
+		const vuetify = createVuetifyInstance()
+
+		// Extract slots from options: we handle them manually so mount()
+		// does not try to attach them to the wrapper component.
+		const { slots, ...mountOptions } = options
+
+		const testComponent = defineComponent({
+			inheritAttrs: false,
+			setup(_, { attrs }) {
+				return () => h(VApp, null, () =>
+					h(component as Parameters<typeof h>[0], { ...attrs }, slots),
+				)
 			},
-		},
+		})
+
+		return mountComponent(testComponent, {
+			...mountOptions,
+			global: {
+				...mountOptions.global,
+				plugins: [
+					...(mountOptions.global?.plugins || []),
+					vuetify,
+				],
+				stubs: {
+					'transition': true,
+					'transition-group': true,
+					...mountOptions.global?.stubs,
+				},
+			},
+		})
 	})
 }
 
 Cypress.Commands.add('mountWithVuetify', mountWithVuetify)
+
+// Adds (or updates) an emulated media feature in the AUT page. Prefer this over
+// a raw `Cypress.automation('remote:debugger:protocol', ...)` call: features are
+// tracked centrally and re-sent together on every mount.
+Cypress.Commands.add('emulateMediaFeature', (name: string, value: string) => {
+	emulatedMediaFeatures.set(name, value)
+	return cy.then(() => applyEmulatedMediaFeatures())
+})
