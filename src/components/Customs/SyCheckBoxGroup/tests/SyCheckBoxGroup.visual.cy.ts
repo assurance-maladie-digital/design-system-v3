@@ -13,13 +13,18 @@ const defaultOptions = [
 ]
 
 describe('SyCheckBoxGroup - Visual regression tests', () => {
+	// Viewport réduit : le groupe prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 300)
+	})
+
 	it('displays the checkbox group by default', () => {
 		cy.mountWithVuetify(SyCheckBoxGroup, {
 			props: { options: defaultOptions },
 		})
 
 		cy.get('.sy-checkbox-group').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-group-default', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-default', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 
 	it('displays the checkbox group with some items selected', () => {
@@ -32,7 +37,7 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-checkbox-group').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-group-selected', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-selected', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 
 	it('displays the checkbox group with a label', () => {
@@ -44,7 +49,7 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-checkbox-group').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-group-with-label', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-with-label', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 
 	it('displays the checkbox group in disabled state', () => {
@@ -56,7 +61,7 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-checkbox-group').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-group-disabled', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-disabled', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 
 	// Aucun style de focus propre : le ring vient de SyCheckbox
@@ -67,8 +72,7 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-checkbox-group input[type="checkbox"]')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-checkbox-group-focus', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-focus', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 
 	// Régression : la bordure des cases non cochées doit être rouge en erreur
@@ -83,7 +87,7 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-checkbox-group').should('have.class', 'error-field')
-		cy.matchImageSnapshot('sy-checkbox-group-error', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-error', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 
 	it('displays the checkbox group in error state with a checked option', () => {
@@ -98,7 +102,7 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-checkbox-group').should('have.class', 'error-field')
-		cy.matchImageSnapshot('sy-checkbox-group-error-checked', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-error-checked', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 
 	it('displays the checkbox group in warning state', () => {
@@ -111,7 +115,7 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-checkbox-group').should('have.class', 'warning-field')
-		cy.matchImageSnapshot('sy-checkbox-group-warning', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-warning', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 
 	it('displays the checkbox group in success state', () => {
@@ -125,6 +129,6 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-checkbox-group').should('have.class', 'success-field')
-		cy.matchImageSnapshot('sy-checkbox-group-success', cy.get('.sy-checkbox-group'))
+		cy.matchImageSnapshot('sy-checkbox-group-success', cy.get('.sy-checkbox-group'), { padding: 10 })
 	})
 })

@@ -11,12 +11,13 @@ describe('HeaderMenuItem - Focus visual regression tests', () => {
 	// Item de menu pleine largeur : au focus, ring inset 2px en currentColor (mixin
 	// item-focused), visible sur les 4 côtés, non rogné, et contrasté quel que soit le fond.
 	it('shows the inset focus ring', () => {
+		// Viewport réduit : l'item prend toute la largeur (aucun breakpoint).
+		cy.viewport(400, 100)
 		cy.mountWithVuetify(HeaderMenuItem, {
 			slots: { default: () => h('a', { href: '#' }, 'Mon lien') },
 		})
 
 		focusVisible('.header-menu-item a')
-		cy.wait(100)
-		cy.matchImageSnapshot('header-menu-item-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('header-menu-item-focus', cy.get('.header-menu-item'))
 	})
 })

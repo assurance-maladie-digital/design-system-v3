@@ -22,7 +22,7 @@ describe('SyInputSelect - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-input-select').should('be.visible')
-		cy.matchImageSnapshot('sy-input-select-default', cy.get('.sy-input-select'))
+		cy.matchImageSnapshot('sy-input-select-default', cy.get('.sy-input-select'), { padding: 10 })
 	})
 
 	it('displays the input select with a value', () => {
@@ -35,7 +35,7 @@ describe('SyInputSelect - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-input-select').should('be.visible')
-		cy.matchImageSnapshot('sy-input-select-with-value', cy.get('.sy-input-select'))
+		cy.matchImageSnapshot('sy-input-select-with-value', cy.get('.sy-input-select'), { padding: 10 })
 	})
 
 	it('displays the input select as required', () => {
@@ -49,7 +49,7 @@ describe('SyInputSelect - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-input-select').should('be.visible')
-		cy.matchImageSnapshot('sy-input-select-required', cy.get('.sy-input-select'))
+		cy.matchImageSnapshot('sy-input-select-required', cy.get('.sy-input-select'), { padding: 10 })
 	})
 })
 
@@ -61,8 +61,7 @@ describe('SyInputSelect - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.sy-input-select')
-		cy.wait(100)
-		cy.matchImageSnapshot('sy-input-select-focus-trigger', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-input-select-focus-trigger', cy.get('.sy-input-select'), { padding: 10 })
 	})
 
 	// Option de la liste (custom, non couverte par _menus.scss) : ring 2px primary inset (-3px).
@@ -74,7 +73,6 @@ describe('SyInputSelect - Focus visual regression tests', () => {
 		cy.get('.sy-input-select').click()
 		cy.get('.v-list-item').should('be.visible')
 		focusVisible('.v-list-item')
-		cy.wait(100)
-		cy.matchImageSnapshot('sy-input-select-focus-option', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-input-select-focus-option', cy.get('.v-list-item').first())
 	})
 })

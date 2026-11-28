@@ -7,7 +7,7 @@ describe('SubHeader - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sub-header-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('sub-header-default', cy.get('.vd-sub-header'))
 	})
 
 	it('displays the sub header with subtitle', () => {
@@ -19,7 +19,7 @@ describe('SubHeader - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sub-header-with-subtitle', cy.get('.v-application'))
+		cy.matchImageSnapshot('sub-header-with-subtitle', cy.get('.vd-sub-header'))
 	})
 
 	it('displays the sub header without back button', () => {
@@ -31,7 +31,7 @@ describe('SubHeader - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sub-header-no-back-btn', cy.get('.v-application'))
+		cy.matchImageSnapshot('sub-header-no-back-btn', cy.get('.vd-sub-header'))
 	})
 
 	it('displays the sub header in loading state', () => {
@@ -43,7 +43,7 @@ describe('SubHeader - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sub-header-loading', cy.get('.v-application'))
+		cy.matchImageSnapshot('sub-header-loading', cy.get('.vd-sub-header'))
 	})
 })
 
@@ -61,7 +61,6 @@ describe('SubHeader - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.vd-sub-header-back-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('sub-header-focus-back-btn', cy.get('.v-application'))
+		cy.matchImageSnapshot('sub-header-focus-back-btn', cy.get('.vd-sub-header'))
 	})
 })

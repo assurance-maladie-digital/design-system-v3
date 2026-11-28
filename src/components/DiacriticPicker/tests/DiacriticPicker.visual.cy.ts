@@ -7,13 +7,18 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('DiacriticPicker - Visual regression tests', () => {
+	// Viewport réduit : le titre prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 80)
+	})
+
 	it('displays the diacritic picker button', () => {
 		cy.mountWithVuetify(DiacriticPicker, {
 			props: { modelValue: '' },
 		})
 
 		cy.get('.sy-diacritic-wrapper').should('be.visible')
-		cy.matchImageSnapshot('diacritic-picker-default', cy.get('.sy-diacritic-wrapper'))
+		cy.matchImageSnapshot('diacritic-picker-default', cy.get('.sy-diacritic-wrapper'), { padding: 10 })
 	})
 
 	it('displays the diacritic picker with custom button title', () => {
@@ -25,7 +30,7 @@ describe('DiacriticPicker - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-diacritic-wrapper').should('be.visible')
-		cy.matchImageSnapshot('diacritic-picker-custom-title', cy.get('.sy-diacritic-wrapper'))
+		cy.matchImageSnapshot('diacritic-picker-custom-title', cy.get('.sy-diacritic-wrapper'), { padding: 10 })
 	})
 
 	// Bouton d'ouverture : ring standard global (2px primary, offset 3px).
@@ -35,7 +40,6 @@ describe('DiacriticPicker - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-diacritic-btn')
-		cy.wait(150)
-		cy.matchImageSnapshot('diacritic-picker-button-focus', cy.get('.sy-diacritic-wrapper'))
+		cy.matchImageSnapshot('diacritic-picker-button-focus', cy.get('.sy-diacritic-wrapper'), { padding: 10 })
 	})
 })

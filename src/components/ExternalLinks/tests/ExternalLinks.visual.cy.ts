@@ -18,7 +18,7 @@ describe('ExternalLinks - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('external-links-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('external-links-default', cy.get('.sy-external-links-btn'))
 	})
 
 	it('displays the external links in fixed position', () => {
@@ -31,7 +31,24 @@ describe('ExternalLinks - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('external-links-fixed', cy.get('.v-application'))
+
+		// A tight crop of the button cannot show its placement: assert the fixed
+		// anchoring via geometry instead (viewport bottom-right, ~48px visible).
+		cy.get('.sy-external-links-btn').then(($btn) => {
+			const el = $btn[0]!
+			const rect = el.getBoundingClientRect()
+			// The containing block of `position: fixed` is the layout viewport:
+			// documentElement client dimensions, not window inner ones (which
+			// include the scrollbar).
+			const docEl = el.ownerDocument.documentElement
+
+			expect(getComputedStyle(el).position).to.equal('fixed')
+			// Anchored to the bottom edge of the viewport, not the document.
+			expect(rect.bottom).to.be.closeTo(docEl.clientHeight, 1)
+			// Only the ~48px handle sticks into the right viewport edge.
+			expect(docEl.clientWidth - rect.left).to.be.at.most(48)
+			expect(rect.right).to.be.greaterThan(docEl.clientWidth - 48)
+		})
 	})
 })
 
@@ -43,8 +60,7 @@ describe('ExternalLinks - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.sy-external-links-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('external-links-focus-btn', cy.get('.v-application'))
+		cy.matchImageSnapshot('external-links-focus-btn', cy.get('.sy-external-links-btn'), { padding: 10 })
 	})
 
 	// Item de liste : fond blanc → ring primary inset au focus.
@@ -58,7 +74,6 @@ describe('ExternalLinks - Focus visual regression tests', () => {
 		cy.get('.sy-external-links-btn').click({ force: true })
 		cy.get('.sy-external-links-list-item').should('be.visible')
 		focusVisible('.sy-external-links-list-item')
-		cy.wait(100)
-		cy.matchImageSnapshot('external-links-focus-item', cy.get('.v-application'))
+		cy.matchImageSnapshot('external-links-focus-item', cy.get('.sy-external-links-list-item').first(), { padding: 10 })
 	})
 })

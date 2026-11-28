@@ -69,29 +69,30 @@ describe('UserMenuBtn - Mobile visual regression tests', () => {
 		cy.get('.v-overlay__content').should('be.visible')
 		cy.get('.sy-user-menu-identity').should('be.visible')
 
-		// Le focus part sur le premier item à l'ouverture : on le retire pour que la capture ne
-		// dépende pas du ring, déjà couvert par les tests de focus.
+		// Le focus part sur le premier item à l'ouverture (assertion avant le blur :
+		// l'autofocus est one-shot, aucun vol de focus tardif possible ensuite) ; on le
+		// retire pour que la capture ne dépende pas du ring, déjà couvert par les tests
+		// de focus.
+		cy.get('.v-list-item').should('be.focused')
 		cy.document().then((doc) => {
 			if (doc.activeElement instanceof HTMLElement) {
 				doc.activeElement.blur()
 			}
 		})
 
-		cy.wait(150)
 		cy.matchImageSnapshot('user-menu-btn-mobile-menu-open')
 	})
 })
 
 describe('UserMenuBtn - Focus visual regression tests', () => {
-	// Activateur (SyBtnMenu) : ring standard global (2px primary, offset 3px). Capture
-	// `.v-application` pour ne pas rogner le ring outset.
+	// Activateur (SyBtnMenu) : ring standard global (2px primary, offset 3px), dessiné
+	// hors de la boîte du bouton : padding 10px autour de la capture élément.
 	it('shows the standard ring on the activator button', () => {
 		cy.mountWithVuetify(UserMenuBtn, {
 			props: { menuItems: defaultMenuItems, fullName: 'Jean Dupont' },
 		})
 
 		focusVisible('.sy-user-menu-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('user-menu-btn-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('user-menu-btn-focus', cy.get('.user-menu-btn'), { padding: 10 })
 	})
 })

@@ -18,6 +18,13 @@ const defaultItems = [
 ]
 
 describe('PaginatedTable - Visual regression tests', () => {
+	// Viewport réduit : la table et son conteneur prennent toute la largeur,
+	// un viewport plein grandeur diluerait le diff. Reste au-dessus de 600px
+	// (mobile-breakpoint de VDataTable) pour conserver le rendu desktop.
+	beforeEach(() => {
+		cy.viewport(700, 400)
+	})
+
 	it('displays the paginated table by default', () => {
 		cy.mountWithVuetify(PaginatedTable, {
 			props: {
@@ -28,7 +35,7 @@ describe('PaginatedTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-table').should('be.visible')
-		cy.matchImageSnapshot('paginated-table-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('paginated-table-default', cy.get('.sy-paginated-table'))
 	})
 
 	it('displays the paginated table with server items', () => {
@@ -42,7 +49,7 @@ describe('PaginatedTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-table').should('be.visible')
-		cy.matchImageSnapshot('paginated-table-server', cy.get('.v-application'))
+		cy.matchImageSnapshot('paginated-table-server', cy.get('.sy-paginated-table'))
 	})
 
 	// En-tête de colonne triable (`<th>` focusable) : ring DS primary inset.
@@ -53,8 +60,7 @@ describe('PaginatedTable - Visual regression tests', () => {
 
 		cy.get('.v-table thead th').first().should('have.attr', 'tabindex', '0')
 		focusVisible('.v-table thead th')
-		cy.wait(150)
-		cy.matchImageSnapshot('paginated-table-header-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('paginated-table-header-focus', cy.get('.v-table thead th').first())
 	})
 
 	// Bouton de pagination (`.v-pagination`) : ring DS primary inset (token réparé).
@@ -70,7 +76,6 @@ describe('PaginatedTable - Visual regression tests', () => {
 
 		cy.get('.v-pagination button[aria-disabled="false"]').first().should('be.visible')
 		focusVisible('.v-pagination button[aria-disabled="false"]')
-		cy.wait(150)
-		cy.matchImageSnapshot('paginated-table-pagination-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('paginated-table-pagination-focus', cy.get('.v-pagination button[aria-disabled="false"]').first())
 	})
 })

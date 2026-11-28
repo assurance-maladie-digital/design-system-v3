@@ -13,6 +13,11 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SelectBtnField - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 300)
+	})
+
 	it('displays the button select field by default', () => {
 		cy.mountWithVuetify(SelectBtnField, {
 			props: {
@@ -22,7 +27,7 @@ describe('SelectBtnField - Visual regression tests', () => {
 		})
 
 		cy.get('.select-btn-field').should('be.visible')
-		cy.matchImageSnapshot('select-btn-field-default', cy.get('.select-btn-field'))
+		cy.matchImageSnapshot('select-btn-field-default', cy.get('.select-btn-field'), { padding: 10 })
 	})
 
 	it('displays the button select field with a selected value', () => {
@@ -35,7 +40,7 @@ describe('SelectBtnField - Visual regression tests', () => {
 		})
 
 		cy.get('.select-btn-field').should('be.visible')
-		cy.matchImageSnapshot('select-btn-field-selected', cy.get('.select-btn-field'))
+		cy.matchImageSnapshot('select-btn-field-selected', cy.get('.select-btn-field'), { padding: 10 })
 	})
 
 	it('displays the button select field in inline mode', () => {
@@ -48,7 +53,7 @@ describe('SelectBtnField - Visual regression tests', () => {
 		})
 
 		cy.get('.select-btn-field').should('be.visible')
-		cy.matchImageSnapshot('select-btn-field-inline', cy.get('.select-btn-field'))
+		cy.matchImageSnapshot('select-btn-field-inline', cy.get('.select-btn-field'), { padding: 10 })
 	})
 
 	it('displays the button select field in readonly mode', () => {
@@ -62,11 +67,16 @@ describe('SelectBtnField - Visual regression tests', () => {
 		})
 
 		cy.get('.select-btn-field').should('be.visible')
-		cy.matchImageSnapshot('select-btn-field-readonly', cy.get('.select-btn-field'))
+		cy.matchImageSnapshot('select-btn-field-readonly', cy.get('.select-btn-field'), { padding: 10 })
 	})
 })
 
 describe('SelectBtnField - Focus visual regression tests', () => {
+	// Viewport réduit : cf. le describe ci-dessus (captures élément + padding).
+	beforeEach(() => {
+		cy.viewport(400, 300)
+	})
+
 	it('shows the enclosing ring on the group container (inline)', () => {
 		cy.mountWithVuetify(SelectBtnField, {
 			props: { items: defaultItems, label: 'Votre réponse', inline: true },
@@ -74,8 +84,7 @@ describe('SelectBtnField - Focus visual regression tests', () => {
 
 		// 1er focus : le conteneur listbox porte le ring englobant
 		focusVisible('[role="listbox"]')
-		cy.wait(100)
-		cy.matchImageSnapshot('select-btn-field-focus-container-inline', cy.get('.v-application'))
+		cy.matchImageSnapshot('select-btn-field-focus-container-inline', cy.get('[role="listbox"]'), { padding: 12 })
 	})
 
 	it('shows the ring on a focused option (inline)', () => {
@@ -84,8 +93,7 @@ describe('SelectBtnField - Focus visual regression tests', () => {
 		})
 
 		focusVisible('li[role="option"]')
-		cy.wait(100)
-		cy.matchImageSnapshot('select-btn-field-focus-option-inline', cy.get('.v-application'))
+		cy.matchImageSnapshot('select-btn-field-focus-option-inline', cy.get('li[role="option"]').first(), { padding: 12 })
 	})
 
 	it('shows the enclosing ring on the group container (column)', () => {
@@ -94,8 +102,7 @@ describe('SelectBtnField - Focus visual regression tests', () => {
 		})
 
 		focusVisible('[role="listbox"]')
-		cy.wait(100)
-		cy.matchImageSnapshot('select-btn-field-focus-container-column', cy.get('.v-application'))
+		cy.matchImageSnapshot('select-btn-field-focus-container-column', cy.get('[role="listbox"]'), { padding: 12 })
 	})
 
 	it('does not clip the focus ring inside an overflow:hidden container', () => {
@@ -115,7 +122,6 @@ describe('SelectBtnField - Focus visual regression tests', () => {
 		cy.mountWithVuetify(OverflowWrapper)
 
 		focusVisible('[role="listbox"]')
-		cy.wait(100)
-		cy.matchImageSnapshot('select-btn-field-focus-overflow-hidden', cy.get('.v-application'))
+		cy.matchImageSnapshot('select-btn-field-focus-overflow-hidden', cy.get('[role="listbox"]'), { padding: 12 })
 	})
 })

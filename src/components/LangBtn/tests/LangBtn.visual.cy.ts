@@ -46,8 +46,7 @@ describe('LangBtn - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.vd-lang-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('lang-btn-focus-btn', cy.get('.v-application'))
+		cy.matchImageSnapshot('lang-btn-focus-btn', cy.get('.vd-lang-btn'), { padding: 10 })
 	})
 
 	// Item de menu : ring inset (-3px). On attend que l'auto-focus du composant se pose
@@ -58,10 +57,10 @@ describe('LangBtn - Focus visual regression tests', () => {
 		})
 
 		cy.get('.vd-lang-btn').click()
-		cy.get('.v-list-item').should('be.visible')
-		cy.wait(200)
+		// Attendre que l'autofocus du menu se pose (one-shot) avant de re-forcer
+		// le :focus-visible sur l'item.
+		cy.get('.v-list-item').should('be.visible').should('be.focused')
 		focusVisible('.v-list-item')
-		cy.wait(100)
-		cy.matchImageSnapshot('lang-btn-focus-item', cy.get('.v-application'))
+		cy.matchImageSnapshot('lang-btn-focus-item', cy.get('.v-list-item').first())
 	})
 })

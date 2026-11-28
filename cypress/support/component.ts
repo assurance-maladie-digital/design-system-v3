@@ -32,6 +32,26 @@ function getVisualSnapshotPaths(specRelative: string) {
 	}
 }
 
+function settleAnimations(doc: Document): void {
+	// CSS animations cannot be neutralized by the injected `animation: none` style:
+	// component scoped rules (higher specificity, `!important`) win the cascade.
+	// Instead, fast-forward every finite animation to its end state (entrance
+	// animations on messages, etc.) so captures are deterministic. Infinite
+	// animations (spinners) are left untouched: finish() would throw on them.
+	for (const animation of doc.getAnimations({ subtree: true })) {
+		const iterations = animation.effect?.getComputedTiming().iterations ?? 1
+		if (iterations === Number.POSITIVE_INFINITY) {
+			continue
+		}
+		try {
+			animation.finish()
+		}
+		catch {
+			// Already finished or not finishable: nothing to settle.
+		}
+	}
+}
+
 function ensureVisualStability() {
 	return cy.document({ log: false }).then((doc) => {
 		if (!doc.getElementById(VISUAL_STABILITY_STYLE_ID)) {
@@ -44,7 +64,7 @@ function ensureVisualStability() {
 	caret-color: transparent !important;
 	scroll-behavior: auto !important;
 }
-	
+
 svg {
   shape-rendering: geometricPrecision;
   text-rendering: geometricPrecision;
@@ -58,13 +78,23 @@ svg {
 		}
 	})
 		.then(() => {
-			return cy.window({ log: false }).then(win => new Cypress.Promise<void>((resolve) => {
+			return cy.document({ log: false }).then(doc => cy.window({ log: false }).then(win => new Cypress.Promise<void>((resolve) => {
+				settleAnimations(doc)
 				win.requestAnimationFrame(() => win.requestAnimationFrame(() => resolve()))
-			}))
+			})))
 		})
 }
 
 // Déclarations de types pour les commandes Cypress personnalisées
+type MatchImageSnapshotOptions = {
+	/**
+	 * Extra margin in px around an element capture. Needed when the focus ring
+	 * (outline + offset) overflows the element bounding box and would be clipped
+	 * by a plain element screenshot.
+	 */
+	padding?: number
+}
+
 declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace Cypress {
@@ -73,7 +103,12 @@ declare global {
 				component: Component,
 				options?: CyMountOptions<Record<string, unknown>>
 			): ReturnType<typeof mount>
-			matchImageSnapshot(name?: string, elem?: Cypress.Chainable<JQuery<HTMLElement>>): void
+			emulateMediaFeature(name: string, value: string): Cypress.Chainable<unknown>
+			matchImageSnapshot(
+				name?: string,
+				elem?: Cypress.Chainable<JQuery<HTMLElement>>,
+				opts?: MatchImageSnapshotOptions
+			): void
 		}
 	}
 }
@@ -82,7 +117,7 @@ declare global {
  * Commande de comparaison de snapshots visuels
  * Reproduit la logique de addMatchImageSnapshotCommand sans import CJS top-level
  */
-Cypress.Commands.add('matchImageSnapshot', (name?: string, elem?: Cypress.Chainable<JQuery<HTMLElement>> = cy.get('body')) => {
+Cypress.Commands.add('matchImageSnapshot', (name?: string, elem: Cypress.Chainable<JQuery<HTMLElement>> = cy.get<HTMLElement>('body'), opts: MatchImageSnapshotOptions = {}) => {
 	const screenshotName = name || Cypress.currentTest.titlePath.join(' -- ')
 	const specRelative = Cypress.spec.relative
 	const snapshotPaths = getVisualSnapshotPaths(specRelative)
@@ -99,7 +134,10 @@ Cypress.Commands.add('matchImageSnapshot', (name?: string, elem?: Cypress.Chaina
 			specFileRelativeToRoot: '',
 			e2eSpecDir: specRelative,
 			currentTestTitle: Cypress.currentTest.title,
-			failureThreshold: 0.01,
+			// Small threshold: the capture area must stay tight around the component.
+			// A loose capture (full viewport) dilutes the diff ratio and lets real
+			// changes slip under the threshold.
+			failureThreshold: 0.002,
 			failureThresholdType: 'percent' as const,
 			snapFilenameExtension: '.snap',
 			diffFilenameExtension: '.diff',
@@ -119,6 +157,10 @@ Cypress.Commands.add('matchImageSnapshot', (name?: string, elem?: Cypress.Chaina
 			capture: 'viewport',
 			overwrite: true,
 			disableTimersAndAnimations: true,
+			// Expand the captured area around the element: focus rings are drawn
+			// outside the bounding box (outline-offset) and would be clipped
+			// by a plain element screenshot.
+			...(opts.padding ? { padding: opts.padding } : {}),
 		})
 	})
 
@@ -159,37 +201,73 @@ type MountWithVuetifyCommand = (component: Component, options?: MountWithVuetify
 
 const mountComponent = mount as MountWithVuetifyCommand
 
-function mountWithVuetify(component: Component, options: MountWithVuetifyOptions = {}) {
-	const vuetify = createVuetifyInstance()
+// Emulated media features in the AUT page, via the DevTools protocol
+// (Emulation.setEmulatedMedia). `prefers-reduced-motion: reduce` is emulated by
+// default for visual captures: JS-driven animations keyed on that media query
+// never start. Vuetify in particular skips its WAAPI label float, which is
+// scheduled from a rAF and could otherwise still be running during the
+// screenshot (CI observed a field label frozen at its centered pre-animation
+// position instead of floated). Rendered end states are unchanged, so existing
+// baselines stay valid.
+//
+// The protocol call REPLACES the whole feature list, so every active feature
+// must be sent together: tests emulate additional features (e.g. forced-colors)
+// through the `emulateMediaFeature` command, which updates this registry.
+const emulatedMediaFeatures = new Map<string, string>([
+	['prefers-reduced-motion', 'reduce'],
+])
 
-	// Extract slots from options: we handle them manually so mount()
-	// does not try to attach them to the wrapper component.
-	const { slots, ...mountOptions } = options
-
-	const testComponent = defineComponent({
-		inheritAttrs: false,
-		setup(_, { attrs }) {
-			return () => h(VApp, null, () =>
-				h(component as Parameters<typeof h>[0], { ...attrs }, slots),
-			)
-		},
+function applyEmulatedMediaFeatures(): Promise<unknown> {
+	return Cypress.automation('remote:debugger:protocol', {
+		command: 'Emulation.setEmulatedMedia',
+		params: { features: Array.from(emulatedMediaFeatures, ([name, value]) => ({ name, value })) },
 	})
+}
 
-	return mountComponent(testComponent, {
-		...mountOptions,
-		global: {
-			...mountOptions.global,
-			plugins: [
-				...(mountOptions.global?.plugins || []),
-				vuetify,
-			],
-			stubs: {
-				'transition': true,
-				'transition-group': true,
-				...mountOptions.global?.stubs,
+function mountWithVuetify(component: Component, options: MountWithVuetifyOptions = {}) {
+	// Re-applied on every mount, so emulated media survive AUT page reloads
+	// between spec files. cy.then queues the protocol call before mount() so no
+	// cy command is invoked from a raw promise.
+	return cy.then(() => applyEmulatedMediaFeatures()).then(() => {
+		const vuetify = createVuetifyInstance()
+
+		// Extract slots from options: we handle them manually so mount()
+		// does not try to attach them to the wrapper component.
+		const { slots, ...mountOptions } = options
+
+		const testComponent = defineComponent({
+			inheritAttrs: false,
+			setup(_, { attrs }) {
+				return () => h(VApp, null, () =>
+					h(component as Parameters<typeof h>[0], { ...attrs }, slots),
+				)
 			},
-		},
+		})
+
+		return mountComponent(testComponent, {
+			...mountOptions,
+			global: {
+				...mountOptions.global,
+				plugins: [
+					...(mountOptions.global?.plugins || []),
+					vuetify,
+				],
+				stubs: {
+					'transition': true,
+					'transition-group': true,
+					...mountOptions.global?.stubs,
+				},
+			},
+		})
 	})
 }
 
 Cypress.Commands.add('mountWithVuetify', mountWithVuetify)
+
+// Adds (or updates) an emulated media feature in the AUT page. Prefer this over
+// a raw `Cypress.automation('remote:debugger:protocol', ...)` call: features are
+// tracked centrally and re-sent together on every mount.
+Cypress.Commands.add('emulateMediaFeature', (name: string, value: string) => {
+	emulatedMediaFeatures.set(name, value)
+	return cy.then(() => applyEmulatedMediaFeatures())
+})

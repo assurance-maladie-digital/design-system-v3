@@ -7,11 +7,16 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('MonthPicker - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the month picker by default', () => {
 		cy.mountWithVuetify(MonthPicker)
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('month-picker-default', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('month-picker-default', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the month picker with a value', () => {
@@ -20,7 +25,7 @@ describe('MonthPicker - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('month-picker-with-value', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('month-picker-with-value', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the month picker in disabled state', () => {
@@ -29,7 +34,7 @@ describe('MonthPicker - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('month-picker-disabled', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('month-picker-disabled', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the month picker in readonly state', () => {
@@ -38,7 +43,7 @@ describe('MonthPicker - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('month-picker-readonly', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('month-picker-readonly', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Bouton d'ouverture (`<button>` natif) : ring DS primary scopé (2px, offset 2px).
@@ -48,8 +53,7 @@ describe('MonthPicker - Visual regression tests', () => {
 		})
 
 		focusVisible('.month-picker-input__toggle-btn')
-		cy.wait(150)
-		cy.matchImageSnapshot('month-picker-toggle-focus', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('month-picker-toggle-focus', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Bouton de la grille des mois : ring DS primary (`:focus-visible`, 2px). On ouvre le
@@ -63,7 +67,6 @@ describe('MonthPicker - Visual regression tests', () => {
 		cy.get('.month-selector__month--active', { timeout: 8000 }).should('be.visible')
 
 		focusVisible('.month-selector__month--active')
-		cy.wait(150)
-		cy.matchImageSnapshot('month-picker-month-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('month-picker-month-focus', cy.get('.month-picker-menu'), { padding: 10 })
 	})
 })

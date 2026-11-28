@@ -1,6 +1,12 @@
 import DataListItem from '../DataListItem.vue'
 
 describe('DataListItem - Visual regression tests', () => {
+	// Viewport réduit : l'item prend toute la largeur, un viewport plein
+	// grandeur diluerait le diff (aucun breakpoint mobile dans le composant).
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the item with label and value', () => {
 		cy.mountWithVuetify(DataListItem, {
 			props: {
@@ -10,7 +16,7 @@ describe('DataListItem - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-item-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('data-list-item-default', cy.get('.sy-data-list-item'))
 	})
 
 	it('displays the item as a chip', () => {
@@ -23,7 +29,7 @@ describe('DataListItem - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-item-chip', cy.get('.v-application'))
+		cy.matchImageSnapshot('data-list-item-chip', cy.get('.sy-data-list-item'))
 	})
 
 	it('displays the item in row layout', () => {
@@ -36,7 +42,7 @@ describe('DataListItem - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-item-row', cy.get('.v-application'))
+		cy.matchImageSnapshot('data-list-item-row', cy.get('.sy-data-list-item'))
 	})
 
 	it('displays the item with placeholder when value is empty', () => {
@@ -48,6 +54,6 @@ describe('DataListItem - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-item-placeholder', cy.get('.v-application'))
+		cy.matchImageSnapshot('data-list-item-placeholder', cy.get('.sy-data-list-item'))
 	})
 })

@@ -25,7 +25,7 @@ describe('NotificationBar - Visual regression tests', () => {
 		// Wait for notification to be visible
 		cy.get('.notification-bar-transition').should('be.visible')
 		cy.get('.notification').should('contain', 'Ceci est une notification informative')
-		cy.matchImageSnapshot('notification-bar-info', cy.get('.v-application'))
+		cy.matchImageSnapshot('notification-bar-info', cy.get('.notification-bar-transition'))
 	})
 
 	it('displays the notification bar at bottom', () => {
@@ -39,7 +39,7 @@ describe('NotificationBar - Visual regression tests', () => {
 		// Wait for notification to be visible
 		cy.get('.notification-bar-transition').should('be.visible')
 		cy.get('.notification').should('contain', 'Notification en bas de page')
-		cy.matchImageSnapshot('notification-bar-bottom', cy.get('.v-application'))
+		cy.matchImageSnapshot('notification-bar-bottom', cy.get('.notification-bar-transition'))
 	})
 
 	it('displays the notification bar with multiple types', () => {
@@ -56,7 +56,7 @@ describe('NotificationBar - Visual regression tests', () => {
 		cy.get('.notification').should('have.length', 2)
 		cy.get('.notification').should('contain', 'Succès de l\'opération')
 		cy.get('.notification').should('contain', 'Une erreur est survenue')
-		cy.matchImageSnapshot('notification-bar-multiple', cy.get('.v-application'))
+		cy.matchImageSnapshot('notification-bar-multiple', cy.get('.notification-bar-transition'))
 	})
 
 	// Bouton « Fermer » : ring DS contrasté sur le fond coloré de la barre (on-primary sur info).
@@ -72,8 +72,7 @@ describe('NotificationBar - Visual regression tests', () => {
 
 		cy.get('.notification__close').should('be.visible')
 		focusVisible('.notification__close')
-		cy.wait(150)
-		cy.matchImageSnapshot('notification-bar-close-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('notification-bar-close-focus', cy.get('.notification-bar-transition'))
 	})
 
 	// Un bouton interactif fourni via le slot `action` reçoit aussi le ring contrasté par type
@@ -95,7 +94,6 @@ describe('NotificationBar - Visual regression tests', () => {
 
 		cy.get('.notification-action-btn').should('be.visible')
 		focusVisible('.notification-action-btn')
-		cy.wait(150)
-		cy.matchImageSnapshot('notification-bar-action-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('notification-bar-action-focus', cy.get('.notification-bar-transition'))
 	})
 })

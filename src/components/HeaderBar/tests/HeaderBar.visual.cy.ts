@@ -10,7 +10,7 @@ describe('HeaderBar - Visual regression tests', () => {
 		})
 
 		cy.get('.header').should('be.visible')
-		cy.matchImageSnapshot('header-bar-default')
+		cy.matchImageSnapshot('header-bar-default', cy.get('.header'))
 	})
 
 	it('displays the header with title and subtitle', () => {
@@ -22,7 +22,7 @@ describe('HeaderBar - Visual regression tests', () => {
 		})
 
 		cy.get('.header').should('be.visible')
-		cy.matchImageSnapshot('header-bar-with-subtitle')
+		cy.matchImageSnapshot('header-bar-with-subtitle', cy.get('.header'))
 	})
 
 	it('displays the header with custom width', () => {
@@ -34,7 +34,7 @@ describe('HeaderBar - Visual regression tests', () => {
 		})
 
 		cy.get('.header').should('be.visible')
-		cy.matchImageSnapshot('header-bar-custom-width')
+		cy.matchImageSnapshot('header-bar-custom-width', cy.get('.header'))
 	})
 
 	it('displays the header with header-side slot', () => {
@@ -49,7 +49,7 @@ describe('HeaderBar - Visual regression tests', () => {
 
 		cy.get('.header').should('be.visible')
 		cy.get('.header-side').should('be.visible')
-		cy.matchImageSnapshot('header-bar-with-side')
+		cy.matchImageSnapshot('header-bar-with-side', cy.get('.header'))
 	})
 
 	it('displays the header with prepend slot', () => {
@@ -64,7 +64,7 @@ describe('HeaderBar - Visual regression tests', () => {
 
 		cy.get('.header').should('be.visible')
 		cy.get('.header-prepend').should('be.visible')
-		cy.matchImageSnapshot('header-bar-with-prepend')
+		cy.matchImageSnapshot('header-bar-with-prepend', cy.get('.header'))
 	})
 
 	it('displays the non-sticky header', () => {
@@ -76,6 +76,6 @@ describe('HeaderBar - Visual regression tests', () => {
 		})
 
 		cy.get('.header').should('be.visible')
-		cy.matchImageSnapshot('header-bar-no-sticky')
+		cy.matchImageSnapshot('header-bar-no-sticky', cy.get('.header'))
 	})
 })

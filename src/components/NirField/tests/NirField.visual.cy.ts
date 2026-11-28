@@ -7,11 +7,16 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('NirField - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(450, 250)
+	})
+
 	it('displays the NIR field by default', () => {
 		cy.mountWithVuetify(NirField)
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('nir-field-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('nir-field-default', cy.get('.nir-field'), { padding: 10 })
 	})
 
 	it('displays the NIR field with key display', () => {
@@ -20,7 +25,7 @@ describe('NirField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('nir-field-with-key', cy.get('.v-application'))
+		cy.matchImageSnapshot('nir-field-with-key', cy.get('.nir-field'), { padding: 10 })
 	})
 
 	it('displays the NIR field in complex mode', () => {
@@ -29,7 +34,7 @@ describe('NirField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('nir-field-complex', cy.get('.v-application'))
+		cy.matchImageSnapshot('nir-field-complex', cy.get('.nir-field'), { padding: 10 })
 	})
 
 	// NirField ne porte aucun style de focus propre : tout vient de SyTextField.
@@ -40,7 +45,6 @@ describe('NirField - Visual regression tests', () => {
 		})
 
 		focusVisible('.number-field input')
-		cy.wait(150)
-		cy.matchImageSnapshot('nir-field-input-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('nir-field-input-focus', cy.get('.nir-field'), { padding: 10 })
 	})
 })

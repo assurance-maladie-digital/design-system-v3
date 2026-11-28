@@ -9,6 +9,11 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('ToolbarContainer - Visual regression tests', () => {
+	// Viewport réduit : la barre prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(500, 150)
+	})
+
 	it('displays the toolbar container with buttons', () => {
 		cy.mountWithVuetify(ToolbarContainer, {
 			slots: {
@@ -21,7 +26,7 @@ describe('ToolbarContainer - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-toolbar').should('be.visible')
-		cy.matchImageSnapshot('toolbar-container-default', cy.get('.sy-toolbar'))
+		cy.matchImageSnapshot('toolbar-container-default', cy.get('.sy-toolbar'), { padding: 10 })
 	})
 
 	it('displays the toolbar container with links', () => {
@@ -35,14 +40,19 @@ describe('ToolbarContainer - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-toolbar').should('be.visible')
-		cy.matchImageSnapshot('toolbar-container-links', cy.get('.sy-toolbar'))
+		cy.matchImageSnapshot('toolbar-container-links', cy.get('.sy-toolbar'), { padding: 10 })
 	})
 })
 
 describe('ToolbarContainer - Focus visual regression tests', () => {
+	// Viewport réduit : cf. le describe ci-dessus.
+	beforeEach(() => {
+		cy.viewport(500, 150)
+	})
+
 	// Le ring provient de l'override global `_btns.scss` : chaque outil focalisé
-	// porte outline 2px primary, offset 3px. On capture `.v-application` pour ne pas
-	// rogner le ring outset (offset positif).
+	// porte outline 2px primary, offset 3px. Le padding de capture évite de le
+	// rogner (ring outset, offset positif).
 	it('shows the standard ring on the focused tool (light background)', () => {
 		cy.mountWithVuetify(ToolbarContainer, {
 			props: { ariaLabel: 'Outils de mise en forme' },
@@ -57,8 +67,9 @@ describe('ToolbarContainer - Focus visual regression tests', () => {
 
 		// Outil du milieu : montre que le ring suit l'outil actif du roving tabindex.
 		focusVisible('.sy-toolbar button.v-btn:nth-of-type(2)')
-		cy.wait(100)
-		cy.matchImageSnapshot('toolbar-container-focus-light', cy.get('.v-application'))
+		// Le ring outset (outline 2px + offset 3px) déborde du bounding box :
+		// le padding évite qu'il soit rogné par la capture d'élément.
+		cy.matchImageSnapshot('toolbar-container-focus-light', cy.get('.sy-toolbar'), { padding: 10 })
 	})
 
 	// Sur fond sombre (thème dark), le ring passe en on-primary (blanc) — cf. le compound
@@ -85,7 +96,6 @@ describe('ToolbarContainer - Focus visual regression tests', () => {
 		cy.mountWithVuetify(DarkToolbar)
 
 		focusVisible('.sy-toolbar button.v-btn:nth-of-type(2)')
-		cy.wait(100)
-		cy.matchImageSnapshot('toolbar-container-focus-dark', cy.get('.v-application'))
+		cy.matchImageSnapshot('toolbar-container-focus-dark', cy.get('.v-theme--dark'), { padding: 10 })
 	})
 })

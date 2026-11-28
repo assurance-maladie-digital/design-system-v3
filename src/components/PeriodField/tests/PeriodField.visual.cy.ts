@@ -1,11 +1,16 @@
 import PeriodField from '../PeriodField.vue'
 
 describe('PeriodField - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(450, 150)
+	})
+
 	it('displays the period field by default', () => {
 		cy.mountWithVuetify(PeriodField)
 
 		cy.get('.period-field').should('be.visible')
-		cy.matchImageSnapshot('period-field-default', cy.get('.period-field'))
+		cy.matchImageSnapshot('period-field-default', cy.get('.period-field'), { padding: 10 })
 	})
 
 	it('displays the period field with a value', () => {
@@ -16,7 +21,7 @@ describe('PeriodField - Visual regression tests', () => {
 		})
 
 		cy.get('.period-field').should('be.visible')
-		cy.matchImageSnapshot('period-field-with-value', cy.get('.period-field'))
+		cy.matchImageSnapshot('period-field-with-value', cy.get('.period-field'), { padding: 10 })
 	})
 
 	it('displays the period field in no calendar mode', () => {
@@ -25,7 +30,7 @@ describe('PeriodField - Visual regression tests', () => {
 		})
 
 		cy.get('.period-field').should('be.visible')
-		cy.matchImageSnapshot('period-field-no-calendar', cy.get('.period-field'))
+		cy.matchImageSnapshot('period-field-no-calendar', cy.get('.period-field'), { padding: 10 })
 	})
 
 	it('displays the period field as required', () => {
@@ -34,6 +39,6 @@ describe('PeriodField - Visual regression tests', () => {
 		})
 
 		cy.get('.period-field').should('be.visible')
-		cy.matchImageSnapshot('period-field-required', cy.get('.period-field'))
+		cy.matchImageSnapshot('period-field-required', cy.get('.period-field'), { padding: 10 })
 	})
 })

@@ -106,7 +106,6 @@ describe('FooterBar - Focus visual regression tests', () => {
 		})
 
 		focusVisible('#scroll-btn')
-		cy.wait(100)
 		cy.matchImageSnapshot('footer-bar-focus-scroll-dark', cy.get('.v-footer'))
 	})
 
@@ -117,7 +116,6 @@ describe('FooterBar - Focus visual regression tests', () => {
 		})
 
 		focusVisible('#scroll-btn')
-		cy.wait(100)
 		cy.matchImageSnapshot('footer-bar-focus-scroll-light', cy.get('.v-footer'))
 	})
 })

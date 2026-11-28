@@ -7,13 +7,18 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SyCheckbox - Visual regression tests', () => {
+	// Viewport réduit : la case prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the checkbox unchecked by default', () => {
 		cy.mountWithVuetify(SyCheckbox, {
 			props: { label: 'J\'accepte les conditions' },
 		})
 
 		cy.get('.v-checkbox').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-unchecked', cy.get('.v-checkbox'))
+		cy.matchImageSnapshot('sy-checkbox-unchecked', cy.get('.v-checkbox'), { padding: 10 })
 	})
 
 	it('displays the checkbox checked', () => {
@@ -25,7 +30,7 @@ describe('SyCheckbox - Visual regression tests', () => {
 		})
 
 		cy.get('.v-checkbox').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-checked', cy.get('.v-checkbox'))
+		cy.matchImageSnapshot('sy-checkbox-checked', cy.get('.v-checkbox'), { padding: 10 })
 	})
 
 	it('displays the checkbox in indeterminate state', () => {
@@ -37,7 +42,7 @@ describe('SyCheckbox - Visual regression tests', () => {
 		})
 
 		cy.get('.v-checkbox').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-indeterminate', cy.get('.v-checkbox'))
+		cy.matchImageSnapshot('sy-checkbox-indeterminate', cy.get('.v-checkbox'), { padding: 10 })
 	})
 
 	it('displays the checkbox in disabled state', () => {
@@ -49,7 +54,7 @@ describe('SyCheckbox - Visual regression tests', () => {
 		})
 
 		cy.get('.v-checkbox').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-disabled', cy.get('.v-checkbox'))
+		cy.matchImageSnapshot('sy-checkbox-disabled', cy.get('.v-checkbox'), { padding: 10 })
 	})
 
 	it('displays the checkbox as required', () => {
@@ -62,7 +67,7 @@ describe('SyCheckbox - Visual regression tests', () => {
 		})
 
 		cy.get('.v-checkbox').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-required', cy.get('.v-checkbox'))
+		cy.matchImageSnapshot('sy-checkbox-required', cy.get('.v-checkbox'), { padding: 10 })
 	})
 
 	// Ring DS au clavier : `.v-selection-control--focus-visible` (2px primary, offset 2px).
@@ -72,7 +77,6 @@ describe('SyCheckbox - Visual regression tests', () => {
 		})
 
 		focusVisible('.v-checkbox input[type="checkbox"]')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-checkbox-focus', cy.get('.v-checkbox'))
+		cy.matchImageSnapshot('sy-checkbox-focus', cy.get('.v-checkbox'), { padding: 10 })
 	})
 })

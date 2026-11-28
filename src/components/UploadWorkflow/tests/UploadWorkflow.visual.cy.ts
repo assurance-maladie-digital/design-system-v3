@@ -22,13 +22,18 @@ const defaultUploadList = [
 ]
 
 describe('UploadWorkflow - Visual regression tests', () => {
+	// Viewport réduit : le workflow prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 300)
+	})
+
 	it('displays the upload workflow by default', () => {
 		cy.mountWithVuetify(UploadWorkflow, {
 			props: { uploadList: defaultUploadList },
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('upload-workflow-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('upload-workflow-default', cy.get('.sy-upload-workflow'))
 	})
 
 	it('displays the upload workflow with a section title', () => {
@@ -40,7 +45,7 @@ describe('UploadWorkflow - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('upload-workflow-with-title', cy.get('.v-application'))
+		cy.matchImageSnapshot('upload-workflow-with-title', cy.get('.sy-upload-workflow'))
 	})
 
 	// La dropzone FileUpload composée dans le workflow reçoit son ring DS au clavier
@@ -51,7 +56,6 @@ describe('UploadWorkflow - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-file-upload')
-		cy.wait(150)
-		cy.matchImageSnapshot('upload-workflow-dropzone-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('upload-workflow-dropzone-focus', cy.get('.sy-file-upload'), { padding: 8 })
 	})
 })

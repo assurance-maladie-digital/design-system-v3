@@ -13,6 +13,11 @@ const defaultItems = [
 ]
 
 describe('Accordion - Visual regression tests', () => {
+	// Viewport réduit : la liste prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(500, 350)
+	})
+
 	it('displays the accordion collapsed by default', () => {
 		cy.mountWithVuetify(Accordion, {
 			props: { items: defaultItems },
@@ -56,7 +61,6 @@ describe('Accordion - Visual regression tests', () => {
 		})
 
 		focusVisible('#accordion-button-1')
-		cy.wait(150)
 		cy.matchImageSnapshot('accordion-button-focus', cy.get('.sy-accordion'))
 	})
 })

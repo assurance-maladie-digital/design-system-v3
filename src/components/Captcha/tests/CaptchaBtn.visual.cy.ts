@@ -17,7 +17,6 @@ describe('CaptchaBtn - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.captcha-btn')
-		cy.wait(150)
-		cy.matchImageSnapshot('captcha-btn-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('captcha-btn-focus', cy.get('.captcha-btn'), { padding: 10 })
 	})
 })

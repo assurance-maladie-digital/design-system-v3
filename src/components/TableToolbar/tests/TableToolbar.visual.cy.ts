@@ -7,6 +7,13 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('TableToolbar - Visual regression tests', () => {
+	// Viewport 800px : plancher desktop (sous xs, des éléments sont masqués
+	// via display.xs), assez large pour éviter tout retour à la ligne du
+	// compteur « x/y lignes » tout en réduisant la barre pleine largeur.
+	beforeEach(() => {
+		cy.viewport(800, 300)
+	})
+
 	it('displays the table toolbar by default', () => {
 		cy.mountWithVuetify(TableToolbar, {
 			props: { nbTotal: 42 },
@@ -60,7 +67,6 @@ describe('TableToolbar - Visual regression tests', () => {
 		})
 
 		focusVisible('[data-test-id="search-input"] input')
-		cy.wait(150)
 		cy.matchImageSnapshot('table-toolbar-search-focus', cy.get('.sy-table-toolbar'))
 	})
 
@@ -71,7 +77,6 @@ describe('TableToolbar - Visual regression tests', () => {
 		})
 
 		focusVisible('[data-test-id="add-btn"]')
-		cy.wait(150)
 		cy.matchImageSnapshot('table-toolbar-add-focus', cy.get('.sy-table-toolbar'))
 	})
 })

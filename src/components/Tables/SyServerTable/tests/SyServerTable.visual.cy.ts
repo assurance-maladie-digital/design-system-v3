@@ -18,6 +18,12 @@ const defaultItems = [
 ]
 
 describe('SyServerTable - Visual regression tests', () => {
+	// Viewport 700px : plancher desktop de VDataTable (< 600px = rendu mobile),
+	// la table suit la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(700, 450)
+	})
+
 	it('displays the server table by default', () => {
 		cy.mountWithVuetify(SyServerTable, {
 			props: {
@@ -29,7 +35,7 @@ describe('SyServerTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-table').should('be.visible')
-		cy.matchImageSnapshot('sy-server-table-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-server-table-default', cy.get('.sy-server-table'))
 	})
 
 	it('displays the server table in loading state', () => {
@@ -44,7 +50,7 @@ describe('SyServerTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sy-server-table-loading', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-server-table-loading', cy.get('.sy-server-table'))
 	})
 
 	it('displays the server table with selection', () => {
@@ -59,7 +65,7 @@ describe('SyServerTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-table').should('be.visible')
-		cy.matchImageSnapshot('sy-server-table-with-select', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-server-table-with-select', cy.get('.sy-server-table'))
 	})
 
 	// Focus délégué à TableHeader : ring sur le bouton de tri.
@@ -69,8 +75,7 @@ describe('SyServerTable - Visual regression tests', () => {
 		})
 
 		focusVisible('.sort-button')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-server-table-sort-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-server-table-sort-focus', cy.get('.sy-server-table'))
 	})
 
 	// Ligne cliquable : focus clavier = anneau seul (pas de fond), via le mixin partagé.
@@ -87,7 +92,6 @@ describe('SyServerTable - Visual regression tests', () => {
 
 		cy.get('.sy-table__clickable-row', { timeout: 8000 }).first().should('exist')
 		focusVisible('.sy-table__clickable-row')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-server-table-row-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-server-table-row-focus', cy.get('.sy-server-table'))
 	})
 })

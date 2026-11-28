@@ -16,7 +16,7 @@ describe('HeaderNavigationBar - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('header-navigation-bar-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('header-navigation-bar-default', cy.get('.header'))
 	})
 
 	it('displays the navigation bar with subtitle', () => {
@@ -29,6 +29,6 @@ describe('HeaderNavigationBar - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('header-navigation-bar-subtitle', cy.get('.v-application'))
+		cy.matchImageSnapshot('header-navigation-bar-subtitle', cy.get('.header'))
 	})
 })

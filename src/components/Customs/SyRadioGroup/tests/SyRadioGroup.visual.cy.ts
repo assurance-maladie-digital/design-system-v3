@@ -13,6 +13,12 @@ const defaultOptions = [
 ]
 
 describe('SyRadioGroup - Visual regression tests', () => {
+	// Viewport réduit : le groupe radio prend toute la largeur, un viewport
+	// plein grandeur diluerait le diff (aucun breakpoint dans le composant).
+	beforeEach(() => {
+		cy.viewport(400, 400)
+	})
+
 	it('displays the radio group by default', () => {
 		cy.mountWithVuetify(SyRadioGroup, {
 			props: {
@@ -22,7 +28,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-radio-group').should('be.visible')
-		cy.matchImageSnapshot('sy-radio-group-default', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-default', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group with a selected value', () => {
@@ -35,7 +41,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-radio-group').should('be.visible')
-		cy.matchImageSnapshot('sy-radio-group-selected', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-selected', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group in error state', () => {
@@ -51,7 +57,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 
 		cy.get('.v-radio-group').should('be.visible')
 		cy.get('.v-radio-group').should('have.class', 'error-field')
-		cy.matchImageSnapshot('sy-radio-group-error', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-error', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group in warning state', () => {
@@ -67,7 +73,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 
 		cy.get('.v-radio-group').should('be.visible')
 		cy.get('.v-radio-group').should('have.class', 'warning-field')
-		cy.matchImageSnapshot('sy-radio-group-warning', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-warning', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group in success state', () => {
@@ -85,7 +91,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 
 		cy.get('.v-radio-group').should('be.visible')
 		cy.get('.v-radio-group').should('have.class', 'success-field')
-		cy.matchImageSnapshot('sy-radio-group-success', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-success', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group when disabled', () => {
@@ -99,7 +105,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-radio-group').should('be.visible')
-		cy.matchImageSnapshot('sy-radio-group-disabled', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-disabled', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group when readonly', () => {
@@ -113,7 +119,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-radio-group').should('be.visible')
-		cy.matchImageSnapshot('sy-radio-group-readonly', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-readonly', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group with compact density', () => {
@@ -126,7 +132,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-radio-group').should('be.visible')
-		cy.matchImageSnapshot('sy-radio-group-compact', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-compact', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group with comfortable density', () => {
@@ -139,7 +145,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-radio-group').should('be.visible')
-		cy.matchImageSnapshot('sy-radio-group-comfortable', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-comfortable', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group with asterisk', () => {
@@ -153,7 +159,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-radio-group').should('be.visible')
-		cy.matchImageSnapshot('sy-radio-group-asterisk', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-asterisk', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	it('displays the radio group without details', () => {
@@ -166,7 +172,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-radio-group').should('be.visible')
-		cy.matchImageSnapshot('sy-radio-group-no-details', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-no-details', cy.get('.v-radio-group'), { padding: 10 })
 	})
 
 	// Ring DS au clavier ajouté sur les radios : `.v-selection-control--focus-visible`
@@ -177,7 +183,6 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		focusVisible('.v-radio-group input[type="radio"]')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-radio-group-focus', cy.get('.v-radio-group'))
+		cy.matchImageSnapshot('sy-radio-group-focus', cy.get('.v-radio-group'), { padding: 10 })
 	})
 })

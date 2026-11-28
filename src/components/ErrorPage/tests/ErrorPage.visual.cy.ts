@@ -7,11 +7,17 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('ErrorPage - Visual regression tests', () => {
+	// Viewport 960px : plancher desktop (sous smAndDown l'espacement et la
+	// largeur maximale du conteneur changent).
+	beforeEach(() => {
+		cy.viewport(960, 600)
+	})
+
 	it('displays the error page by default', () => {
 		cy.mountWithVuetify(ErrorPage)
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('error-page-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('error-page-default', cy.get('.vd-page-container'))
 	})
 
 	it('displays the error page with custom message', () => {
@@ -24,7 +30,7 @@ describe('ErrorPage - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('error-page-custom', cy.get('.v-application'))
+		cy.matchImageSnapshot('error-page-custom', cy.get('.vd-page-container'))
 	})
 
 	it('displays the error page without button', () => {
@@ -33,7 +39,7 @@ describe('ErrorPage - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('error-page-no-btn', cy.get('.v-application'))
+		cy.matchImageSnapshot('error-page-no-btn', cy.get('.vd-page-container'))
 	})
 })
 
@@ -45,7 +51,6 @@ describe('ErrorPage - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.v-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('error-page-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('error-page-focus', cy.get('.vd-page-container'))
 	})
 })

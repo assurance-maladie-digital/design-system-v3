@@ -52,10 +52,13 @@ describe('SyNavList - Visual regression tests', () => {
 	})
 
 	it('displays the closed list, actions hidden at rest', () => {
+		// >= 960px : plancher du mode flyout (matchMedia min-width 960px), la nav
+		// suit la largeur du viewport.
+		cy.viewport(960, 300)
 		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })
 
 		cy.get('.sy-nav-list-panel__actions').first().should('have.css', 'opacity', '0')
-		cy.matchImageSnapshot('sy-nav-list-closed', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-nav-list-closed', cy.get('.sy-nav-list'))
 	})
 
 	it('keeps 28 px buttons with 16 px icons, as in the PA mockup', () => {
@@ -86,7 +89,7 @@ describe('SyNavList - Visual regression tests', () => {
 			expect([after.outlineStyle, after.outlineWidth, after.outlineOffset]).to.deep.equal(['solid', '2px', '-3px'])
 			expect(window.getComputedStyle($link[0]!).outlineStyle).to.equal('none')
 		})
-		cy.matchImageSnapshot('sy-nav-list-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-nav-list-focus', cy.get('.sy-nav-list'))
 	})
 
 	it('opens sub-levels on the right, outside the list, without being clipped', () => {
@@ -196,7 +199,7 @@ describe('SyNavList - Visual regression tests', () => {
 		cy.document().then((doc) => {
 			expect(doc.documentElement.scrollWidth).to.be.at.most(320)
 		})
-		cy.matchImageSnapshot('sy-nav-list-open-narrow', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-nav-list-open-narrow', cy.get('.sy-nav-list'))
 	})
 
 	it('follows its content by default, and grows with a longer entry', () => {
@@ -361,17 +364,15 @@ describe('SyNavList - Visual regression tests', () => {
 		cy.document().then((doc) => {
 			expect(doc.documentElement.scrollWidth).to.be.at.most(320)
 		})
-		cy.matchImageSnapshot('sy-nav-list-accordion', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-nav-list-accordion', cy.get('.sy-nav-list'))
 	})
 
 	describe('in Windows high contrast mode (forced colors)', () => {
-		const setForcedColors = (value: 'active' | 'none') => Cypress.automation('remote:debugger:protocol', {
-			command: 'Emulation.setEmulatedMedia',
-			params: { features: [{ name: 'forced-colors', value }] },
-		})
-
-		beforeEach(() => setForcedColors('active'))
-		afterEach(() => setForcedColors('none'))
+		// Via the shared `emulateMediaFeature` command: Emulation.setEmulatedMedia
+		// replaces the whole feature list, so the emulated features must be
+		// tracked centrally (mountWithVuetify re-sends them on every mount).
+		beforeEach(() => cy.emulateMediaFeature('forced-colors', 'active'))
+		afterEach(() => cy.emulateMediaFeature('forced-colors', 'none'))
 
 		it('outlines the list, the sub-levels and the open entry, underlines the current page and greys out a disabled entry', () => {
 			const contrastItems: SyNavListItem[] = [

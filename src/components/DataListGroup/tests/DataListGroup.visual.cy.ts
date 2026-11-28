@@ -33,13 +33,19 @@ const iconsMap = {
 }
 
 describe('DataListGroup - Visual regression tests', () => {
+	// Viewport réduit : la liste prend toute la largeur, un viewport plein
+	// grandeur diluerait le diff (aucun breakpoint mobile dans le composant).
+	beforeEach(() => {
+		cy.viewport(400, 400)
+	})
+
 	it('displays the data list group by default', () => {
 		cy.mountWithVuetify(DataListGroup, {
 			props: { items: defaultItems, icons: iconsMap },
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-group-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('data-list-group-default', cy.get('.sy-data-list-group'))
 	})
 
 	it('displays the data list group in loading state', () => {
@@ -52,7 +58,7 @@ describe('DataListGroup - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-group-loading', cy.get('.v-application'))
+		cy.matchImageSnapshot('data-list-group-loading', cy.get('.sy-data-list-group'))
 	})
 
 	// Le bouton d'action d'un item (ici sur la 1re liste) porte le ring DS via l'override global
@@ -72,7 +78,6 @@ describe('DataListGroup - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-data-list-item-action-btn')
-		cy.wait(150)
-		cy.matchImageSnapshot('data-list-group-action-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('data-list-group-action-focus', cy.get('.sy-data-list-group'))
 	})
 })

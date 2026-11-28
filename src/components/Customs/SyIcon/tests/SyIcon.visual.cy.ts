@@ -102,7 +102,6 @@ describe('SyIcon - Visual regression tests', () => {
 
 		cy.get('.v-icon').should('have.attr', 'tabindex', '0')
 		focusVisible('.v-icon[role="button"]')
-		cy.wait(150)
 		cy.matchImageSnapshot('sy-icon-button-focus', cy.get('.v-icon'))
 	})
 })

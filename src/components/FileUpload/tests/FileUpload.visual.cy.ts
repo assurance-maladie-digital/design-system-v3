@@ -7,13 +7,18 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('FileUpload - Visual regression tests', () => {
+	// Viewport réduit : la dropzone prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 250)
+	})
+
 	it('displays the file upload zone by default', () => {
 		cy.mountWithVuetify(FileUpload, {
 			props: { modelValue: [] },
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('file-upload-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('file-upload-default', cy.get('.sy-file-upload'))
 	})
 
 	it('displays the file upload zone in disabled state', () => {
@@ -25,7 +30,7 @@ describe('FileUpload - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('file-upload-disabled', cy.get('.v-application'))
+		cy.matchImageSnapshot('file-upload-disabled', cy.get('.sy-file-upload'))
 	})
 
 	it('displays the file upload zone with multiple files allowed', () => {
@@ -37,7 +42,7 @@ describe('FileUpload - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('file-upload-multiple', cy.get('.v-application'))
+		cy.matchImageSnapshot('file-upload-multiple', cy.get('.sy-file-upload'))
 	})
 
 	// Dropzone (`role="button"` custom) : ring DS primary scopé au clavier (2px, offset 2px),
@@ -48,7 +53,6 @@ describe('FileUpload - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-file-upload')
-		cy.wait(150)
-		cy.matchImageSnapshot('file-upload-dropzone-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('file-upload-dropzone-focus', cy.get('.sy-file-upload'), { padding: 8 })
 	})
 })

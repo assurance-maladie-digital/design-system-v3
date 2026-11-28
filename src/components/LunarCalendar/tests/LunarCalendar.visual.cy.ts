@@ -7,13 +7,18 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('LunarCalendar - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the lunar calendar field by default', () => {
 		cy.mountWithVuetify(LunarCalendar, {
 			props: { label: 'Date de naissance (calendrier lunaire)' },
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('lunar-calendar-default', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('lunar-calendar-default', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the lunar calendar field as required', () => {
@@ -25,7 +30,7 @@ describe('LunarCalendar - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('lunar-calendar-required', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('lunar-calendar-required', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the lunar calendar with a value', () => {
@@ -37,7 +42,7 @@ describe('LunarCalendar - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('lunar-calendar-with-value', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('lunar-calendar-with-value', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Aucun style de focus propre : tout vient de SyTextField. Input focus => bordure primary.
@@ -47,7 +52,6 @@ describe('LunarCalendar - Visual regression tests', () => {
 		})
 
 		focusVisible('.v-text-field input')
-		cy.wait(150)
-		cy.matchImageSnapshot('lunar-calendar-input-focus', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('lunar-calendar-input-focus', cy.get('.v-text-field'), { padding: 10 })
 	})
 })

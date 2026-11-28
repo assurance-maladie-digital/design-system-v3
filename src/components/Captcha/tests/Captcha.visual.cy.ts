@@ -1,6 +1,13 @@
 import Captcha from '../Captcha.vue'
 
 describe('Captcha - Visual regression tests', () => {
+	// Viewport réduit : la racine du composant est un bloc pleine largeur, le
+	// texte d'instructions s'étalerait sur toute la largeur (aucun breakpoint ;
+	// les tests de contrainte ci-dessous surchargent avec leur propre viewport).
+	beforeEach(() => {
+		cy.viewport(600, 400)
+	})
+
 	it('displays the captcha with image type', () => {
 		cy.mountWithVuetify(Captcha, {
 			props: {
@@ -12,7 +19,7 @@ describe('Captcha - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('captcha-image-type', cy.get('.v-application'))
+		cy.matchImageSnapshot('captcha-image-type', cy.get('.captcha').parent())
 	})
 
 	it('displays the captcha with audio type', () => {
@@ -26,7 +33,7 @@ describe('Captcha - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('captcha-audio-type', cy.get('.v-application'))
+		cy.matchImageSnapshot('captcha-audio-type', cy.get('.captcha').parent())
 	})
 
 	it('displays the captcha without helpdesk', () => {
@@ -40,7 +47,7 @@ describe('Captcha - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('captcha-no-helpdesk', cy.get('.v-application'))
+		cy.matchImageSnapshot('captcha-no-helpdesk', cy.get('.captcha').parent())
 	})
 
 	it('keeps the captcha image inside a 256px wide container', () => {

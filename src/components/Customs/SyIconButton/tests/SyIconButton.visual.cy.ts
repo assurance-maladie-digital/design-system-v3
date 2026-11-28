@@ -69,7 +69,6 @@ describe('SyIconButton - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.v-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('sy-icon-button-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-icon-button-focus', cy.get('.v-btn'), { padding: 10 })
 	})
 })

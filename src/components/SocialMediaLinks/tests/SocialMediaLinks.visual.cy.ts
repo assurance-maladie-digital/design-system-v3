@@ -9,6 +9,11 @@ const defaultLinks = [
 ]
 
 describe('SocialMediaLinks - Visual regression tests', () => {
+	// Viewport réduit : le bloc prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the social media links by default', () => {
 		cy.mountWithVuetify(
 			h('div', { style: 'background-color: #1e1e2e; padding: 16px;' }, [

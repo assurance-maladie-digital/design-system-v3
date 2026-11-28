@@ -55,7 +55,7 @@ const openComplexDialogInView = (viewMode: CalendarViewMode) => {
 	})
 	cy.get(activeElementSelectorByViewMode[viewMode]).should('be.visible').focus().should('be.focused')
 	cy.get(overlayPanelSelectorByViewMode[viewMode]).should('be.visible')
-	cy.matchImageSnapshot(snapshotNameByViewMode[viewMode], cy.get('@visibleOverlay'))
+	cy.matchImageSnapshot(snapshotNameByViewMode[viewMode], cy.get('@visibleOverlay'), { padding: 10 })
 }
 
 // Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
@@ -66,6 +66,8 @@ const focusVisible = (selector: string) =>
 
 describe('ComplexDatePicker - Visual regression tests', () => {
 	it('displays the combined date field by default', () => {
+		// Viewport réduit : le champ prend toute la largeur.
+		cy.viewport(400, 150)
 		cy.mountWithVuetify(ComplexDatePicker, {
 			props: {
 				label: 'Date',
@@ -74,10 +76,12 @@ describe('ComplexDatePicker - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('complex-date-picker-default', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('complex-date-picker-default', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the readonly combined date field without opening the dialog', () => {
+		// Viewport réduit : le champ prend toute la largeur.
+		cy.viewport(400, 150)
 		cy.mountWithVuetify(ComplexDatePicker, {
 			props: {
 				label: 'Date de création',
@@ -90,7 +94,7 @@ describe('ComplexDatePicker - Visual regression tests', () => {
 		cy.get('.v-text-field').should('be.visible')
 		cy.get('.v-text-field input').type('{enter}', { force: true })
 		cy.get('[role="dialog"]').should('not.exist')
-		cy.matchImageSnapshot('complex-date-picker-readonly', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('complex-date-picker-readonly', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the opened combined dialog in day view', () => {
@@ -122,6 +126,6 @@ describe('ComplexDatePicker - Focus visual regression tests', () => {
 
 		focusVisible('.v-date-picker-month__day .v-btn')
 		cy.get('.v-date-picker-month__day .v-btn').should('be.focused')
-		cy.matchImageSnapshot('complex-date-picker-calendar-day-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('complex-date-picker-calendar-day-focus', cy.get('.date-picker-overlay-content').filter(':visible'), { padding: 10 })
 	})
 })
