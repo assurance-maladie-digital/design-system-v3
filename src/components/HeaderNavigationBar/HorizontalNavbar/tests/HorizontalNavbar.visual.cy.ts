@@ -19,7 +19,7 @@ describe('HorizontalNavbar - Visual regression tests', () => {
 		})
 
 		cy.get('.horizontal-menu').should('be.visible')
-		cy.matchImageSnapshot('horizontal-navbar-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('horizontal-navbar-default', cy.get('.horizontal-menu'))
 	})
 
 	// Le focus des onglets vient de SyTabs (ring 2px inset, couleur active-color = blanc ici).
@@ -29,7 +29,6 @@ describe('HorizontalNavbar - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-tabs__button')
-		cy.wait(100)
-		cy.matchImageSnapshot('horizontal-navbar-focus-tab', cy.get('.v-application'))
+		cy.matchImageSnapshot('horizontal-navbar-focus-tab', cy.get('.horizontal-menu'))
 	})
 })

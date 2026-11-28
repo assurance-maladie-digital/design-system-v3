@@ -38,7 +38,6 @@ describe('CopyBtn - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.v-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('copy-btn-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('copy-btn-focus', cy.get('.v-btn'), { padding: 10 })
 	})
 })

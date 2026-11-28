@@ -19,6 +19,12 @@ const defaultItems = [
 ]
 
 describe('SyTable - Visual regression tests', () => {
+	// Viewport 700px : plancher desktop de VDataTable (< 600px = rendu mobile),
+	// la table suit la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(700, 450)
+	})
+
 	it('displays the table by default', () => {
 		cy.mountWithVuetify(SyTable, {
 			props: {
@@ -29,7 +35,7 @@ describe('SyTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-table').should('be.visible')
-		cy.matchImageSnapshot('sy-table-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-table-default', cy.get('.sy-table'))
 	})
 
 	it('displays the table with striped rows', () => {
@@ -43,7 +49,7 @@ describe('SyTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-table').should('be.visible')
-		cy.matchImageSnapshot('sy-table-striped', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-table-striped', cy.get('.sy-table'))
 	})
 
 	it('displays the table with selection checkboxes', () => {
@@ -57,7 +63,7 @@ describe('SyTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-table').should('be.visible')
-		cy.matchImageSnapshot('sy-table-with-select', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-table-with-select', cy.get('.sy-table'))
 	})
 
 	it('displays the table with compact density', () => {
@@ -71,7 +77,7 @@ describe('SyTable - Visual regression tests', () => {
 		})
 
 		cy.get('.v-table').should('be.visible')
-		cy.matchImageSnapshot('sy-table-compact', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-table-compact', cy.get('.sy-table'))
 	})
 
 	// Tri multiple (#2692) : le chiffre d'ordre est aligné à droite de la flèche, sur la
@@ -98,7 +104,7 @@ describe('SyTable - Visual regression tests', () => {
 		})
 
 		cy.get('.sort-order-indicator').should('have.length', 2)
-		cy.matchImageSnapshot('sy-table-multi-sort', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-table-multi-sort', cy.get('.sy-table'))
 	})
 
 	// Bouton de tri d'un en-tête (`.sort-button`) : ring DS primary (offset 2px).
@@ -108,8 +114,7 @@ describe('SyTable - Visual regression tests', () => {
 		})
 
 		focusVisible('.sort-button')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-table-sort-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-table-sort-focus', cy.get('.sy-table'))
 	})
 
 	// Poignée de redimensionnement clavier (`.resizer`) : ring DS primary ajouté.
@@ -125,7 +130,6 @@ describe('SyTable - Visual regression tests', () => {
 
 		cy.get('.resizer').first().should('have.attr', 'tabindex', '0')
 		focusVisible('.resizer')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-table-resizer-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-table-resizer-focus', cy.get('.sy-table'))
 	})
 })

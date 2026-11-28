@@ -13,6 +13,11 @@ const defaultItems = [
 ]
 
 describe('SySelect - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the select by default', () => {
 		cy.mountWithVuetify(SySelect, {
 			props: {
@@ -22,7 +27,7 @@ describe('SySelect - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-select-default', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-select-default', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the select with a selected value', () => {
@@ -35,7 +40,7 @@ describe('SySelect - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-select-with-value', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-select-with-value', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the select as required', () => {
@@ -49,7 +54,7 @@ describe('SySelect - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-select-required', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-select-required', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the select with multiple selection and chips', () => {
@@ -64,7 +69,7 @@ describe('SySelect - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-select-multiple-chips', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-select-multiple-chips', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the select with clearable option', () => {
@@ -78,7 +83,7 @@ describe('SySelect - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-select-clearable', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-select-clearable', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Bouton clear (`<button>` natif) : ring DS primary scopé (2px, offset 1px).
@@ -93,8 +98,7 @@ describe('SySelect - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-select__clear-button')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-select-clear-focus', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-select-clear-focus', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Le ring de l'option active du menu n'est PAS testé en visuel : ouvrir l'overlay

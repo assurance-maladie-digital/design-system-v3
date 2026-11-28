@@ -14,6 +14,11 @@ const defaultItems = [
 ]
 
 describe('SearchListField - Visual regression tests', () => {
+	// Viewport réduit : la liste prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(450, 300)
+	})
+
 	it('displays the search list field by default', () => {
 		cy.mountWithVuetify(SearchListField, {
 			props: {
@@ -23,7 +28,7 @@ describe('SearchListField - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-search-list').should('be.visible')
-		cy.matchImageSnapshot('search-list-field-default', cy.get('.sy-search-list'))
+		cy.matchImageSnapshot('search-list-field-default', cy.get('.sy-search-list'), { padding: 10 })
 	})
 
 	it('displays the search list field with selected items', () => {
@@ -36,7 +41,7 @@ describe('SearchListField - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-search-list').should('be.visible')
-		cy.matchImageSnapshot('search-list-field-with-selection', cy.get('.sy-search-list'))
+		cy.matchImageSnapshot('search-list-field-with-selection', cy.get('.sy-search-list'), { padding: 10 })
 	})
 
 	// Ring DS de ligne : `.label:has(:focus-visible)` (2px primary, offset inset -2px) quand la
@@ -50,7 +55,6 @@ describe('SearchListField - Visual regression tests', () => {
 		})
 
 		focusVisible('[data-test-id="suggestions-list"] li:first-child input[type="checkbox"]')
-		cy.wait(150)
-		cy.matchImageSnapshot('search-list-field-row-focus', cy.get('.sy-search-list'))
+		cy.matchImageSnapshot('search-list-field-row-focus', cy.get('.sy-search-list'), { padding: 10 })
 	})
 })

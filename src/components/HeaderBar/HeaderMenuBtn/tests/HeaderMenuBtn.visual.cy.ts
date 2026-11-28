@@ -13,7 +13,6 @@ describe('HeaderMenuBtn - Focus visual regression tests', () => {
 		cy.mountWithVuetify(HeaderMenuBtn)
 
 		focusVisible('.header-menu-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('header-menu-btn-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('header-menu-btn-focus', cy.get('.header-menu-btn'))
 	})
 })

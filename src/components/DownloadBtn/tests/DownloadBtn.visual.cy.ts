@@ -55,11 +55,11 @@ describe('DownloadBtn - Hover visual regression tests', () => {
 			.should('be.visible')
 			.trigger('mouseover')
 
-		cy.wait(100)
-		cy.matchImageSnapshot('download-btn-hover-light', cy.get('.v-application'))
+		cy.matchImageSnapshot('download-btn-hover-light', cy.get('.sy-download-btn'), { padding: 10 })
 	})
 
 	it('shows the hover state in dark mode', () => {
+		cy.viewport(960, 200)
 		cy.mountWithVuetify(
 			h(VSheet, { color: 'primary', class: 'pa-4', style: 'display: inline-block;' }, () => [
 				h(DownloadBtn, {
@@ -73,8 +73,7 @@ describe('DownloadBtn - Hover visual regression tests', () => {
 			.should('be.visible')
 			.trigger('mouseover')
 
-		cy.wait(100)
-		cy.matchImageSnapshot('download-btn-hover-dark', cy.get('.v-application'))
+		cy.matchImageSnapshot('download-btn-hover-dark', cy.get('.sy-download-btn'), { padding: 10 })
 	})
 })
 
@@ -82,17 +81,18 @@ describe('DownloadBtn - Focus visual regression tests', () => {
 	// Mode clair (outlined primary) : ring primary, offset 3px. Capture `.v-application`
 	// pour ne pas rogner le ring outset.
 	it('shows the primary ring on the button (light)', () => {
+		cy.viewport(960, 200)
 		cy.mountWithVuetify(DownloadBtn, {
 			props: { filePromise: fakeFilePromise },
 		})
 
 		focusVisible('.sy-download-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('download-btn-focus-light', cy.get('.v-application'))
+		cy.matchImageSnapshot('download-btn-focus-light', cy.get('.sy-download-btn'), { padding: 10 })
 	})
 
 	// Mode `dark` (prop) sur fond primary : ring on-primary (blanc).
 	it('shows the onPrimary ring on the button (dark)', () => {
+		cy.viewport(960, 200)
 		cy.mountWithVuetify(
 			h(VSheet, { color: 'primary', class: 'pa-4', style: 'display: inline-block;' }, () => [
 				h(DownloadBtn, { filePromise: fakeFilePromise, dark: true }, () => 'Télécharger'),
@@ -100,7 +100,6 @@ describe('DownloadBtn - Focus visual regression tests', () => {
 		)
 
 		focusVisible('.sy-download-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('download-btn-focus-dark', cy.get('.v-application'))
+		cy.matchImageSnapshot('download-btn-focus-dark', cy.get('.sy-download-btn'), { padding: 10 })
 	})
 })

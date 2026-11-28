@@ -2,13 +2,19 @@ import PageContainer from '../PageContainer.vue'
 import { h } from 'vue'
 
 describe('PageContainer - Visual regression tests', () => {
+	// Viewport 960px : plancher desktop (sous smAndDown l'espacement et la
+	// largeur maximale du conteneur changent).
+	beforeEach(() => {
+		cy.viewport(960, 600)
+	})
+
 	it('displays the page container by default', () => {
 		cy.mountWithVuetify(PageContainer, {
 			slots: { default: () => h('p', 'Contenu de la page') },
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('page-container-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('page-container-default', cy.get('.vd-page-container'))
 	})
 
 	it('displays the page container with md size', () => {
@@ -18,7 +24,7 @@ describe('PageContainer - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('page-container-md', cy.get('.v-application'))
+		cy.matchImageSnapshot('page-container-md', cy.get('.vd-page-container'))
 	})
 
 	it('displays the page container with background color', () => {
@@ -28,6 +34,6 @@ describe('PageContainer - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('page-container-color', cy.get('.v-application'))
+		cy.matchImageSnapshot('page-container-color', cy.get('.vd-page-container'))
 	})
 })

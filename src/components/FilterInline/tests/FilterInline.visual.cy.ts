@@ -20,6 +20,11 @@ const defaultFilters = [
 ]
 
 describe('FilterInline - Visual regression tests', () => {
+	// Viewport réduit : la barre de filtres prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(450, 150)
+	})
+
 	it('displays the inline filters', () => {
 		cy.mountWithVuetify(FilterInline, {
 			props: { modelValue: defaultFilters },
@@ -36,7 +41,6 @@ describe('FilterInline - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-filter-statut')
-		cy.wait(150)
 		cy.matchImageSnapshot('filter-inline-trigger-focus', cy.get('.sy-filters-inline'))
 	})
 })

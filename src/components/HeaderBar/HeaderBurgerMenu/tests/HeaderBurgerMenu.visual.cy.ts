@@ -180,6 +180,8 @@ function mountGeneratedMenu(width = 375, height = 900) {
 }
 
 describe('HeaderBurgerMenu - Visual regression tests', () => {
+	// Global view kept on purpose: the overlay covers the viewport and the menu
+	// position relative to it is part of the verified rendering.
 	it('displays the generated menu opened', () => {
 		mountGeneratedMenu()
 		cy.matchImageSnapshot('header-burger-menu-generated')

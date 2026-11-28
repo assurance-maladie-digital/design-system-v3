@@ -7,11 +7,17 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('NotFoundPage - Visual regression tests', () => {
+	// Viewport 960px : plancher desktop (sous smAndDown l'espacement et la
+	// largeur maximale du conteneur changent).
+	beforeEach(() => {
+		cy.viewport(960, 600)
+	})
+
 	it('displays the not found page by default', () => {
 		cy.mountWithVuetify(NotFoundPage)
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('not-found-page-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('not-found-page-default', cy.get('.vd-page-container'))
 	})
 
 	it('displays the not found page without button', () => {
@@ -20,7 +26,7 @@ describe('NotFoundPage - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('not-found-page-no-btn', cy.get('.v-application'))
+		cy.matchImageSnapshot('not-found-page-no-btn', cy.get('.vd-page-container'))
 	})
 
 	it('displays the not found page with custom button text', () => {
@@ -29,7 +35,7 @@ describe('NotFoundPage - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('not-found-page-custom-btn', cy.get('.v-application'))
+		cy.matchImageSnapshot('not-found-page-custom-btn', cy.get('.vd-page-container'))
 	})
 })
 
@@ -41,7 +47,6 @@ describe('NotFoundPage - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.v-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('not-found-page-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('not-found-page-focus', cy.get('.vd-page-container'))
 	})
 })

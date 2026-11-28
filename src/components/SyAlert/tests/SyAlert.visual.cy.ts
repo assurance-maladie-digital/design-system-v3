@@ -8,6 +8,11 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SyAlert - Visual regression tests', () => {
+// Viewport réduit : le conteneur prend toute la largeur.
+	beforeEach(() => {
+		cy.viewport(500, 250)
+	})
+
 	const types = ['info', 'success', 'warning', 'error'] as const
 	const variants = ['tonal', 'outlined'] as const
 
@@ -79,7 +84,6 @@ describe('SyAlert - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.alert-close-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('sy-alert-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-alert-focus', cy.get('.v-alert'))
 	})
 })

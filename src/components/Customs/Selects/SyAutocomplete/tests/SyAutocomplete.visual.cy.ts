@@ -14,6 +14,11 @@ const defaultItems = [
 ]
 
 describe('SyAutocomplete - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the autocomplete by default', () => {
 		cy.mountWithVuetify(SyAutocomplete, {
 			props: {
@@ -23,7 +28,7 @@ describe('SyAutocomplete - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-autocomplete-default', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-autocomplete-default', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the autocomplete with a selected value', () => {
@@ -36,7 +41,7 @@ describe('SyAutocomplete - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-autocomplete-with-value', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-autocomplete-with-value', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the autocomplete with multiple selection', () => {
@@ -51,7 +56,7 @@ describe('SyAutocomplete - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-autocomplete-multiple', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-autocomplete-multiple', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the autocomplete with loading state', () => {
@@ -64,7 +69,7 @@ describe('SyAutocomplete - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-autocomplete-loading', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-autocomplete-loading', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Bouton clear (`<button>` natif) : ring DS primary scopé (2px, offset 1px).
@@ -79,8 +84,7 @@ describe('SyAutocomplete - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-autocomplete__clear-button')
-		cy.wait(150)
-		cy.matchImageSnapshot('sy-autocomplete-clear-focus', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-autocomplete-clear-focus', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Le ring de l'option active du menu (combobox) n'est PAS testé en visuel : ouvrir

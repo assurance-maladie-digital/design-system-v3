@@ -32,6 +32,26 @@ function getVisualSnapshotPaths(specRelative: string) {
 	}
 }
 
+function settleAnimations(doc: Document): void {
+	// CSS animations cannot be neutralized by the injected `animation: none` style:
+	// component scoped rules (higher specificity, `!important`) win the cascade.
+	// Instead, fast-forward every finite animation to its end state (entrance
+	// animations on messages, etc.) so captures are deterministic. Infinite
+	// animations (spinners) are left untouched: finish() would throw on them.
+	for (const animation of doc.getAnimations({ subtree: true })) {
+		const iterations = animation.effect?.getComputedTiming().iterations ?? 1
+		if (iterations === Number.POSITIVE_INFINITY) {
+			continue
+		}
+		try {
+			animation.finish()
+		}
+		catch {
+			// Already finished or not finishable: nothing to settle.
+		}
+	}
+}
+
 function ensureVisualStability() {
 	return cy.document({ log: false }).then((doc) => {
 		if (!doc.getElementById(VISUAL_STABILITY_STYLE_ID)) {
@@ -44,7 +64,7 @@ function ensureVisualStability() {
 	caret-color: transparent !important;
 	scroll-behavior: auto !important;
 }
-	
+
 svg {
   shape-rendering: geometricPrecision;
   text-rendering: geometricPrecision;
@@ -58,13 +78,23 @@ svg {
 		}
 	})
 		.then(() => {
-			return cy.window({ log: false }).then(win => new Cypress.Promise<void>((resolve) => {
+			return cy.document({ log: false }).then(doc => cy.window({ log: false }).then(win => new Cypress.Promise<void>((resolve) => {
+				settleAnimations(doc)
 				win.requestAnimationFrame(() => win.requestAnimationFrame(() => resolve()))
-			}))
+			})))
 		})
 }
 
 // Déclarations de types pour les commandes Cypress personnalisées
+type MatchImageSnapshotOptions = {
+	/**
+	 * Extra margin in px around an element capture. Needed when the focus ring
+	 * (outline + offset) overflows the element bounding box and would be clipped
+	 * by a plain element screenshot.
+	 */
+	padding?: number
+}
+
 declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace Cypress {
@@ -73,7 +103,11 @@ declare global {
 				component: Component,
 				options?: CyMountOptions<Record<string, unknown>>
 			): ReturnType<typeof mount>
-			matchImageSnapshot(name?: string, elem?: Cypress.Chainable<JQuery<HTMLElement>>): void
+			matchImageSnapshot(
+				name?: string,
+				elem?: Cypress.Chainable<JQuery<HTMLElement>>,
+				opts?: MatchImageSnapshotOptions
+			): void
 		}
 	}
 }
@@ -82,7 +116,7 @@ declare global {
  * Commande de comparaison de snapshots visuels
  * Reproduit la logique de addMatchImageSnapshotCommand sans import CJS top-level
  */
-Cypress.Commands.add('matchImageSnapshot', (name?: string, elem?: Cypress.Chainable<JQuery<HTMLElement>> = cy.get('body')) => {
+Cypress.Commands.add('matchImageSnapshot', (name?: string, elem: Cypress.Chainable<JQuery<HTMLElement>> = cy.get<HTMLElement>('body'), opts: MatchImageSnapshotOptions = {}) => {
 	const screenshotName = name || Cypress.currentTest.titlePath.join(' -- ')
 	const specRelative = Cypress.spec.relative
 	const snapshotPaths = getVisualSnapshotPaths(specRelative)
@@ -99,7 +133,10 @@ Cypress.Commands.add('matchImageSnapshot', (name?: string, elem?: Cypress.Chaina
 			specFileRelativeToRoot: '',
 			e2eSpecDir: specRelative,
 			currentTestTitle: Cypress.currentTest.title,
-			failureThreshold: 0.01,
+			// Small threshold: the capture area must stay tight around the component.
+			// A loose capture (full viewport) dilutes the diff ratio and lets real
+			// changes slip under the threshold.
+			failureThreshold: 0.002,
 			failureThresholdType: 'percent' as const,
 			snapFilenameExtension: '.snap',
 			diffFilenameExtension: '.diff',
@@ -119,6 +156,10 @@ Cypress.Commands.add('matchImageSnapshot', (name?: string, elem?: Cypress.Chaina
 			capture: 'viewport',
 			overwrite: true,
 			disableTimersAndAnimations: true,
+			// Expand the captured area around the element: focus rings are drawn
+			// outside the bounding box (outline-offset) and would be clipped
+			// by a plain element screenshot.
+			...(opts.padding ? { padding: opts.padding } : {}),
 		})
 	})
 

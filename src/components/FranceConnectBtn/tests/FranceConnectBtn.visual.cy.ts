@@ -7,6 +7,11 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('FranceConnectBtn - Visual regression tests', () => {
+	// Viewport réduit : le conteneur prend toute la largeur.
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the FranceConnect button by default', () => {
 		cy.mountWithVuetify(FranceConnectBtn, {
 			props: { href: 'https://franceconnect.gouv.fr' },
@@ -52,19 +57,18 @@ describe('FranceConnectBtn - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.sy-france-connect-link')
-		cy.wait(100)
-		cy.matchImageSnapshot('france-connect-btn-focus-light', cy.get('.v-application'))
+		cy.matchImageSnapshot('france-connect-btn-focus-light', cy.get('.sy-france-connect-link'), { padding: 10 })
 	})
 
 	it('shows the DSFR focus ring on the button (dark)', () => {
+		cy.viewport(960, 200)
 		cy.mountWithVuetify(FranceConnectBtn, {
 			props: { href: 'https://franceconnect.gouv.fr', dark: true },
 		})
 		cy.get('.v-application').invoke('css', 'background-color', '#121212')
 
 		focusVisible('.sy-france-connect-link')
-		cy.wait(100)
-		cy.matchImageSnapshot('france-connect-btn-focus-dark', cy.get('.v-application'))
+		cy.matchImageSnapshot('france-connect-btn-focus-dark', cy.get('.sy-france-connect-link'), { padding: 10 })
 		cy.get('.v-application').invoke('css', 'background-color', '')
 	})
 })

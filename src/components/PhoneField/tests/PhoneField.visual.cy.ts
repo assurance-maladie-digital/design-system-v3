@@ -7,11 +7,16 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('PhoneField - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(450, 150)
+	})
+
 	it('displays the phone field by default', () => {
 		cy.mountWithVuetify(PhoneField)
 
 		cy.get('.phone-field-container').should('be.visible')
-		cy.matchImageSnapshot('phone-field-default', cy.get('.phone-field-container'))
+		cy.matchImageSnapshot('phone-field-default', cy.get('.phone-field-container'), { padding: 10 })
 	})
 
 	it('displays the phone field with country code selector', () => {
@@ -20,7 +25,7 @@ describe('PhoneField - Visual regression tests', () => {
 		})
 
 		cy.get('.phone-field-container').should('be.visible')
-		cy.matchImageSnapshot('phone-field-with-country-code', cy.get('.phone-field-container'))
+		cy.matchImageSnapshot('phone-field-with-country-code', cy.get('.phone-field-container'), { padding: 10 })
 	})
 
 	it('displays the phone field with a value', () => {
@@ -29,7 +34,7 @@ describe('PhoneField - Visual regression tests', () => {
 		})
 
 		cy.get('.phone-field-container').should('be.visible')
-		cy.matchImageSnapshot('phone-field-with-value', cy.get('.phone-field-container'))
+		cy.matchImageSnapshot('phone-field-with-value', cy.get('.phone-field-container'), { padding: 10 })
 	})
 
 	// Bouton clear (`<button>` natif) : ring DS primary scopé (2px, offset 1px).
@@ -39,7 +44,6 @@ describe('PhoneField - Visual regression tests', () => {
 		})
 
 		focusVisible('.phone-field__clear-button')
-		cy.wait(150)
-		cy.matchImageSnapshot('phone-field-clear-focus', cy.get('.phone-field-container'))
+		cy.matchImageSnapshot('phone-field-clear-focus', cy.get('.phone-field-container'), { padding: 10 })
 	})
 })

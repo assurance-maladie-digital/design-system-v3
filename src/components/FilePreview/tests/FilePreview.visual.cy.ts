@@ -13,6 +13,11 @@ const pdfFile = new File([new Uint8Array([0x25, 0x50, 0x44, 0x46])], 'apercu.pdf
 })
 
 describe('FilePreview - Focus visual regression tests', () => {
+// Viewport réduit : le conteneur prend toute la largeur.
+	beforeEach(() => {
+		cy.viewport(450, 300)
+	})
+
 	// Visualiseur embarqué (`role="document"`, mode readonly) : ring DS scopé propre au
 	// composant (2px primary, offset -2px inset — adapté au conteneur scrollable).
 	it('shows the DS ring on the focused embedded pdf viewer', () => {
@@ -26,7 +31,6 @@ describe('FilePreview - Focus visual regression tests', () => {
 
 		cy.get('.sy-file-preview__pdf-viewer').should('be.visible')
 		focusVisible('.sy-file-preview__pdf-viewer')
-		cy.wait(150)
 		cy.matchImageSnapshot('file-preview-viewer-focus', cy.get('.sy-file-preview__pdf-viewer'))
 	})
 })

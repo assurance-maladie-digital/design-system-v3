@@ -20,6 +20,11 @@ const defaultFilters = [
 ]
 
 describe('FilterSideBar - Visual regression tests', () => {
+	// Viewport réduit : la barre prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 250)
+	})
+
 	it('displays the sidebar filter button', () => {
 		cy.mountWithVuetify(FilterSideBar, {
 			props: { modelValue: defaultFilters },
@@ -48,7 +53,6 @@ describe('FilterSideBar - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-filters-side-bar__open-btn')
-		cy.wait(150)
 		cy.matchImageSnapshot('filter-sidebar-toggle-focus', cy.get('.sy-filters-side-bar'))
 	})
 })

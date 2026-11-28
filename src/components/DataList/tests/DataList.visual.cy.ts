@@ -31,6 +31,11 @@ const iconsMap = {
 }
 
 describe('DataList - Visual regression tests', () => {
+	// Viewport réduit : la liste prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 400)
+	})
+
 	it('displays the data list by default', () => {
 		cy.mountWithVuetify(DataList, {
 			props: { items: defaultItems },
@@ -102,7 +107,6 @@ describe('DataList - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-data-list-item-action-btn')
-		cy.wait(150)
 		cy.matchImageSnapshot('data-list-action-focus', cy.get('.sy-data-list'))
 	})
 })

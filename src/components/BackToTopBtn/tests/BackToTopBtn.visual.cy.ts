@@ -40,9 +40,10 @@ describe('BackToTopBtn - Visual regression tests', () => {
 })
 
 describe('BackToTopBtn - Focus visual regression tests', () => {
-	// Ring standard fourni par l'override global (2px primary, offset 3px). Capture
-	// `.v-application` pour ne pas rogner le ring outset.
+	// Ring standard fourni par l'override global (2px primary, offset 3px), dessiné
+	// hors de la boîte du bouton : padding 10px autour de la capture élément.
 	it('shows the standard ring on the button', () => {
+		cy.viewport(960, 200)
 		cy.mountWithVuetify(BackToTopBtn, {
 			props: { threshold: 0 },
 		})
@@ -50,7 +51,6 @@ describe('BackToTopBtn - Focus visual regression tests', () => {
 		triggerScroll()
 		cy.get('.vd-back-to-top-btn').should('be.visible')
 		focusVisible('.vd-back-to-top-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('back-to-top-btn-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('back-to-top-btn-focus', cy.get('.vd-back-to-top-btn'), { padding: 10 })
 	})
 })

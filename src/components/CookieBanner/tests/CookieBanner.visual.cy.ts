@@ -7,13 +7,20 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('CookieBanner - Visual regression tests', () => {
+	// Viewport 1000x600 : plancher desktop (smAndDown) et hauteur suffisante
+	// pour que le contenu ne déclenche pas la scrollbar interne du bandeau
+	// (max-height calc(100dvh - 64px) + overflow-y auto).
+	beforeEach(() => {
+		cy.viewport(1000, 600)
+	})
+
 	it('displays the cookie banner', () => {
 		cy.mountWithVuetify(CookieBanner, {
 			props: { modelValue: true },
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('cookie-banner-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('cookie-banner-default', cy.get('.vd-cookie-banner'))
 	})
 
 	it('displays the cookie banner with custom items', () => {
@@ -30,7 +37,7 @@ describe('CookieBanner - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('cookie-banner-with-items', cy.get('.v-application'))
+		cy.matchImageSnapshot('cookie-banner-with-items', cy.get('.vd-cookie-banner'))
 	})
 
 	// Boutons d'action standalone → ring DS via l'override global `_btns.scss`. Ils sont dans un
@@ -43,7 +50,6 @@ describe('CookieBanner - Visual regression tests', () => {
 
 		cy.get('[data-test-id="accept"]').should('be.visible')
 		focusVisible('[data-test-id="accept"]')
-		cy.wait(150)
 		cy.matchImageSnapshot('cookie-banner-action-focus', cy.get('.vd-cookie-banner'))
 	})
 })

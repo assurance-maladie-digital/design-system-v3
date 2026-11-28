@@ -13,6 +13,11 @@ const defaultItems = [
 ]
 
 describe('ChipList - Visual regression tests', () => {
+	// Viewport réduit : la liste de chips prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays chips by default', () => {
 		cy.mountWithVuetify(ChipList, {
 			props: { items: defaultItems },
@@ -58,7 +63,6 @@ describe('ChipList - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-chip-list .remove-chip')
-		cy.wait(150)
 		cy.matchImageSnapshot('chip-list-remove-focus', cy.get('.sy-chip-list'))
 	})
 
@@ -77,7 +81,6 @@ describe('ChipList - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-chip-list .overflow-chip')
-		cy.wait(150)
 		cy.matchImageSnapshot('chip-list-overflow-focus', cy.get('.sy-chip-list'))
 	})
 })

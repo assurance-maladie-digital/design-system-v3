@@ -55,7 +55,7 @@ const openCalendarModeDialogInView = (viewMode: CalendarViewMode) => {
 	})
 	cy.get(activeElementSelectorByViewMode[viewMode]).should('be.visible').focus().should('be.focused')
 	cy.get(overlayPanelSelectorByViewMode[viewMode]).should('be.visible')
-	cy.matchImageSnapshot(snapshotNameByViewMode[viewMode], cy.get('@visibleOverlay'))
+	cy.matchImageSnapshot(snapshotNameByViewMode[viewMode], cy.get('@visibleOverlay'), { padding: 10 })
 }
 
 // Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
@@ -66,6 +66,8 @@ const focusVisible = (selector: string) =>
 
 describe('DatePicker - Visual regression tests', () => {
 	it('displays the calendar mode field by default', () => {
+		// Viewport réduit : le champ prend toute la largeur.
+		cy.viewport(400, 150)
 		cy.mountWithVuetify(DatePicker, {
 			props: {
 				label: 'Date de naissance',
@@ -74,10 +76,12 @@ describe('DatePicker - Visual regression tests', () => {
 		})
 
 		cy.get('.date-picker-container').should('be.visible')
-		cy.matchImageSnapshot('date-picker-calendar-default', cy.get('.date-picker-container'))
+		cy.matchImageSnapshot('date-picker-calendar-default', cy.get('.date-picker-container'), { padding: 10 })
 	})
 
 	it('displays the readonly calendar field without opening the dialog', () => {
+		// Viewport réduit : le champ prend toute la largeur.
+		cy.viewport(400, 150)
 		cy.mountWithVuetify(DatePicker, {
 			props: {
 				label: 'Date de création',
@@ -90,7 +94,7 @@ describe('DatePicker - Visual regression tests', () => {
 		cy.get('.date-picker-container').should('be.visible')
 		cy.get('.date-picker-container input').click({ force: true })
 		cy.get('[role="dialog"]').should('not.exist')
-		cy.matchImageSnapshot('date-picker-calendar-readonly', cy.get('.date-picker-container'))
+		cy.matchImageSnapshot('date-picker-calendar-readonly', cy.get('.date-picker-container'), { padding: 10 })
 	})
 
 	it('displays the opened calendar dialog in day view', () => {
@@ -120,7 +124,7 @@ describe('DatePicker (CalendarMode) - Focus visual regression tests', () => {
 
 		focusVisible('.v-date-picker-month__day .v-btn')
 		cy.get('.v-date-picker-month__day .v-btn').should('be.focused')
-		cy.matchImageSnapshot('date-picker-calendar-day-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('date-picker-calendar-day-focus', cy.get('.date-picker-overlay-content').filter(':visible'), { padding: 10 })
 	})
 
 	// Bouton « Aujourd'hui » : ring standard global (offset 3px, bouton autonome).
@@ -133,6 +137,6 @@ describe('DatePicker (CalendarMode) - Focus visual regression tests', () => {
 		cy.get('.date-picker__today-button').should('be.visible')
 
 		focusVisible('.date-picker__today-button')
-		cy.matchImageSnapshot('date-picker-today-button-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('date-picker-today-button-focus', cy.get('.date-picker-overlay-content').filter(':visible'), { padding: 10 })
 	})
 })

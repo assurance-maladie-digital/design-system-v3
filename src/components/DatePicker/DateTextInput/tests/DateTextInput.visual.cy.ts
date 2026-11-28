@@ -1,6 +1,11 @@
 import DateTextInput from '../DateTextInput.vue'
 
 describe('DateTextInput - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the single date text field by default', () => {
 		cy.mountWithVuetify(DateTextInput, {
 			props: {
@@ -10,7 +15,7 @@ describe('DateTextInput - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('date-text-input-default', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('date-text-input-default', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the date range text field with a value', () => {
@@ -25,7 +30,7 @@ describe('DateTextInput - Visual regression tests', () => {
 
 		cy.get('.v-text-field').should('be.visible')
 		cy.get('.v-text-field input').click({ force: true }).should('be.focused')
-		cy.matchImageSnapshot('date-text-input-range', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('date-text-input-range', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the readonly date text field', () => {
@@ -40,6 +45,6 @@ describe('DateTextInput - Visual regression tests', () => {
 
 		cy.get('.v-text-field').should('be.visible')
 		cy.get('.v-text-field input').click({ force: true }).should('be.focused')
-		cy.matchImageSnapshot('date-text-input-readonly', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('date-text-input-readonly', cy.get('.v-text-field'), { padding: 10 })
 	})
 })

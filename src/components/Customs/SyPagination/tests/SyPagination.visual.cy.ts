@@ -7,6 +7,12 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SyPagination - Visual regression tests', () => {
+	// Viewport réduit : le titre prend toute la largeur du viewport.
+	// Largeur suffisante pour éviter le retour à la ligne de la pagination.
+	beforeEach(() => {
+		cy.viewport(560, 100)
+	})
+
 	it('displays pagination on first page', () => {
 		cy.mountWithVuetify(SyPagination, {
 			props: {
@@ -66,6 +72,12 @@ describe('SyPagination - Visual regression tests', () => {
 })
 
 describe('SyPagination - Focus visual regression tests', () => {
+	// Viewport réduit : la pagination prend toute la largeur.
+	// Largeur suffisante pour éviter le retour à la ligne de la pagination.
+	beforeEach(() => {
+		cy.viewport(560, 100)
+	})
+
 	// Ring 2px primary (offset 3px) sur le lien focalisé. Page 1 (non active ici) :
 	// cellule bordée blanche + ring primary.
 	it('shows the focus ring on a page link', () => {
@@ -77,7 +89,6 @@ describe('SyPagination - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.list-first')
-		cy.wait(100)
 		cy.matchImageSnapshot('sy-pagination-focus', cy.get('.sy-pagination'))
 	})
 })

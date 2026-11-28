@@ -7,13 +7,18 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('PasswordField - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the password field by default', () => {
 		cy.mountWithVuetify(PasswordField, {
 			props: { label: 'Mot de passe' },
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('password-field-default', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('password-field-default', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the password field as required', () => {
@@ -26,7 +31,7 @@ describe('PasswordField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('password-field-required', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('password-field-required', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the password field in disabled state', () => {
@@ -38,7 +43,7 @@ describe('PasswordField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('password-field-disabled', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('password-field-disabled', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the password field with underlined variant', () => {
@@ -50,7 +55,7 @@ describe('PasswordField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('password-field-underlined', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('password-field-underlined', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Bouton toggle afficher/masquer (VBtn) : ring DS primary scopé (2px, offset 2px),
@@ -61,8 +66,7 @@ describe('PasswordField - Visual regression tests', () => {
 		})
 
 		focusVisible('.password-toggle-button')
-		cy.wait(150)
-		cy.matchImageSnapshot('password-field-toggle-focus', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('password-field-toggle-focus', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	// Bouton clear (<button> natif) : ring DS primary scopé (2px, offset 2px).
@@ -72,7 +76,6 @@ describe('PasswordField - Visual regression tests', () => {
 		})
 
 		focusVisible('.password-clear-button')
-		cy.wait(150)
-		cy.matchImageSnapshot('password-field-clear-focus', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('password-field-clear-focus', cy.get('.v-text-field'), { padding: 10 })
 	})
 })

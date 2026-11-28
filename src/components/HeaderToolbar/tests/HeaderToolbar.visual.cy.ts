@@ -1,11 +1,17 @@
 import HeaderToolbar from '../HeaderToolbar.vue'
 
 describe('HeaderToolbar - Visual regression tests', () => {
+	// Viewport 960px : plancher desktop (sous smAndDown le menu droit bascule
+	// en version mobile), la barre suit la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(960, 100)
+	})
+
 	it('displays the toolbar with default menu items', () => {
 		cy.mountWithVuetify(HeaderToolbar)
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('header-toolbar-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('header-toolbar-default', cy.get('.toolbar'))
 	})
 
 	it('displays the toolbar with custom left menu', () => {
@@ -20,6 +26,6 @@ describe('HeaderToolbar - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('header-toolbar-custom', cy.get('.v-application'))
+		cy.matchImageSnapshot('header-toolbar-custom', cy.get('.toolbar'))
 	})
 })

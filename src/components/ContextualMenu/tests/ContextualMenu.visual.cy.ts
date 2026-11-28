@@ -15,6 +15,11 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('ContextualMenu - Visual regression tests', () => {
+	// Viewport réduit : le conteneur du menu suit la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 250)
+	})
+
 	it('displays the contextual menu', () => {
 		cy.mountWithVuetify(ContextualMenu, {
 			props: {
@@ -42,6 +47,11 @@ describe('ContextualMenu - Visual regression tests', () => {
 })
 
 describe('ContextualMenu - Focus visual regression tests', () => {
+	// Viewport réduit : cf. le describe ci-dessus.
+	beforeEach(() => {
+		cy.viewport(400, 250)
+	})
+
 	// Ring 2px primary inset (offset -3px) sur le lien focalisé. Inset → capturé
 	// entièrement dans le conteneur (pas de rognage possible).
 	it('shows the focus ring on a menu link (light background)', () => {
@@ -53,7 +63,6 @@ describe('ContextualMenu - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.vd-contextual-menu a')
-		cy.wait(100)
 		cy.matchImageSnapshot('contextual-menu-focus-light', cy.get('.vd-contextual-menu-container'))
 	})
 
@@ -72,7 +81,6 @@ describe('ContextualMenu - Focus visual regression tests', () => {
 		cy.mountWithVuetify(DarkMenu)
 
 		focusVisible('.vd-contextual-menu a')
-		cy.wait(100)
-		cy.matchImageSnapshot('contextual-menu-focus-dark', cy.get('.v-application'))
+		cy.matchImageSnapshot('contextual-menu-focus-dark', cy.get('.v-theme--dark'))
 	})
 })

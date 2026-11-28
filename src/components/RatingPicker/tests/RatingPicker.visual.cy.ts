@@ -1,3 +1,4 @@
+import { h } from 'vue'
 import RatingPicker from '../RatingPicker.vue'
 
 // Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
@@ -7,40 +8,49 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('RatingPicker - Visual regression tests', () => {
+	// Viewport >= 960px (sous smAndDown, NumberPicker bascule en select mobile)
+	// mais conteneur de 400px : le picker suit la largeur du conteneur, la
+	// capture reste serrée.
+	beforeEach(() => {
+		cy.viewport(960, 300)
+	})
+
+	function InContainer(props: Record<string, unknown>) {
+		return {
+			setup: () => () => h(
+				'div',
+				{ style: 'width: 400px' },
+				[h(RatingPicker, props)],
+			),
+		}
+	}
+
 	it('displays the stars rating picker', () => {
-		cy.mountWithVuetify(RatingPicker, {
-			props: { type: 'stars', label: 'Évaluation' },
-		})
+		cy.mountWithVuetify(InContainer({ type: 'stars', label: 'Évaluation' }))
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('rating-picker-stars', cy.get('.v-application'))
+		cy.matchImageSnapshot('rating-picker-stars', cy.get('.sy-rating-picker'))
 	})
 
 	it('displays the number rating picker', () => {
-		cy.mountWithVuetify(RatingPicker, {
-			props: { type: 'number', label: 'Satisfaction' },
-		})
+		cy.mountWithVuetify(InContainer({ type: 'number', label: 'Satisfaction' }))
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('rating-picker-number', cy.get('.v-application'))
+		cy.matchImageSnapshot('rating-picker-number', cy.get('.sy-rating-picker'))
 	})
 
 	it('displays the emotion rating picker', () => {
-		cy.mountWithVuetify(RatingPicker, {
-			props: { type: 'emotion', label: 'Ressenti' },
-		})
+		cy.mountWithVuetify(InContainer({ type: 'emotion', label: 'Ressenti' }))
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('rating-picker-emotion', cy.get('.v-application'))
+		cy.matchImageSnapshot('rating-picker-emotion', cy.get('.sy-rating-picker'))
 	})
 
 	it('displays the rating picker in readonly mode', () => {
-		cy.mountWithVuetify(RatingPicker, {
-			props: { type: 'stars', label: 'Évaluation', readonly: true },
-		})
+		cy.mountWithVuetify(InContainer({ type: 'stars', label: 'Évaluation', readonly: true }))
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('rating-picker-readonly', cy.get('.v-application'))
+		cy.matchImageSnapshot('rating-picker-readonly', cy.get('.sy-rating-picker'))
 	})
 
 	// Ring DS d'une étoile focusée : `box-shadow: inset 2px primary` (inset pour ne pas déborder
@@ -51,8 +61,7 @@ describe('RatingPicker - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-stars-picker__item[tabindex="0"]')
-		cy.wait(150)
-		cy.matchImageSnapshot('rating-picker-stars-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('rating-picker-stars-focus', cy.get('.sy-stars-picker__item[tabindex="0"]'), { padding: 10 })
 	})
 
 	// Ring DS d'un nombre focusé : `outline: 2px primary, offset 2px`. Fond retiré au focus (hover only).
@@ -62,8 +71,7 @@ describe('RatingPicker - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-number-picker__item[tabindex="0"]')
-		cy.wait(150)
-		cy.matchImageSnapshot('rating-picker-number-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('rating-picker-number-focus', cy.get('.sy-number-picker__item[tabindex="0"]'), { padding: 10 })
 	})
 
 	// Émotion focusée au clavier : fond coloré de l'émotion (comme au survol et à la sélection)
@@ -74,7 +82,6 @@ describe('RatingPicker - Visual regression tests', () => {
 		})
 
 		focusVisible('.sy-emotion-picker__item[tabindex="0"]')
-		cy.wait(150)
-		cy.matchImageSnapshot('rating-picker-emotion-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('rating-picker-emotion-focus', cy.get('.sy-emotion-picker__item[tabindex="0"]'), { padding: 10 })
 	})
 })

@@ -7,11 +7,16 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('LogoBrandSection - Visual regression tests', () => {
+	// Viewport réduit : la section prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the brand section by default', () => {
 		cy.mountWithVuetify(LogoBrandSection)
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('logo-brand-section-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('logo-brand-section-default', cy.get('.vd-logo-brand-section'))
 	})
 
 	it('displays the brand section with service title', () => {
@@ -23,7 +28,7 @@ describe('LogoBrandSection - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('logo-brand-section-with-title', cy.get('.v-application'))
+		cy.matchImageSnapshot('logo-brand-section-with-title', cy.get('.vd-logo-brand-section'))
 	})
 
 	it('displays the brand section in mobile version', () => {
@@ -35,7 +40,7 @@ describe('LogoBrandSection - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('logo-brand-section-mobile', cy.get('.v-application'))
+		cy.matchImageSnapshot('logo-brand-section-mobile', cy.get('.vd-logo-brand-section'))
 	})
 
 	it('displays the brand section with reduced logo', () => {
@@ -44,7 +49,7 @@ describe('LogoBrandSection - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('logo-brand-section-reduced', cy.get('.v-application'))
+		cy.matchImageSnapshot('logo-brand-section-reduced', cy.get('.vd-logo-brand-section'))
 	})
 
 	// Le logo est enveloppé dans un lien d'accueil `<a>` (homeLink par défaut `{ href: '/' }`) →
@@ -58,7 +63,6 @@ describe('LogoBrandSection - Visual regression tests', () => {
 		})
 
 		focusVisible('.vd-home-link')
-		cy.wait(150)
-		cy.matchImageSnapshot('logo-brand-section-home-link-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('logo-brand-section-home-link-focus', cy.get('.vd-home-link'), { padding: 10 })
 	})
 })

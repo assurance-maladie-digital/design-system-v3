@@ -17,7 +17,7 @@ describe('HeaderLoading - Visual regression tests', () => {
 		})
 
 		cy.get('[role="alert"]').should('exist')
-		cy.matchImageSnapshot('header-loading-standalone', cy.get('.v-application'))
+		cy.matchImageSnapshot('header-loading-standalone', cy.get('.vd-header-loading-container'))
 	})
 
 	it('displays the loader with custom dimensions', () => {

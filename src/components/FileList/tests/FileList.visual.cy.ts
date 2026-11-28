@@ -23,6 +23,11 @@ const defaultUploadList = [
 ]
 
 describe('FileList - Visual regression tests', () => {
+	// Viewport réduit : la liste de fichiers prend toute la largeur (aucun breakpoint).
+	beforeEach(() => {
+		cy.viewport(450, 300)
+	})
+
 	it('displays the file list with mixed states', () => {
 		cy.mountWithVuetify(FileList, {
 			props: { uploadList: defaultUploadList },
@@ -75,7 +80,6 @@ describe('FileList - Visual regression tests', () => {
 		})
 
 		focusVisible('.file-item .v-btn')
-		cy.wait(150)
 		cy.matchImageSnapshot('file-list-action-focus', cy.get('.upload-list'))
 	})
 })

@@ -7,13 +7,18 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SyTextArea - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 250)
+	})
+
 	it('displays the textarea by default', () => {
 		cy.mountWithVuetify(SyTextArea, {
 			props: { label: 'Description' },
 		})
 
 		cy.get('.v-textarea').should('be.visible')
-		cy.matchImageSnapshot('sy-textarea-default', cy.get('.v-textarea'))
+		cy.matchImageSnapshot('sy-textarea-default', cy.get('.v-textarea'), { padding: 10 })
 	})
 
 	it('displays the textarea as required', () => {
@@ -25,7 +30,7 @@ describe('SyTextArea - Visual regression tests', () => {
 		})
 
 		cy.get('.v-textarea').should('be.visible')
-		cy.matchImageSnapshot('sy-textarea-required', cy.get('.v-textarea'))
+		cy.matchImageSnapshot('sy-textarea-required', cy.get('.v-textarea'), { padding: 10 })
 	})
 
 	it('displays the textarea with a value', () => {
@@ -37,7 +42,7 @@ describe('SyTextArea - Visual regression tests', () => {
 		})
 
 		cy.get('.v-textarea').should('be.visible')
-		cy.matchImageSnapshot('sy-textarea-with-value', cy.get('.v-textarea'))
+		cy.matchImageSnapshot('sy-textarea-with-value', cy.get('.v-textarea'), { padding: 10 })
 	})
 
 	it('displays the textarea with a custom variant', () => {
@@ -49,13 +54,19 @@ describe('SyTextArea - Visual regression tests', () => {
 		})
 
 		cy.get('.v-textarea').should('be.visible')
-		cy.matchImageSnapshot('sy-textarea-filled', cy.get('.v-textarea'))
+		cy.matchImageSnapshot('sy-textarea-filled', cy.get('.v-textarea'), { padding: 10 })
 	})
 })
 
 describe('SyTextArea - Focus visual regression tests', () => {
+	// Viewport réduit : le textarea prend toute la largeur.
+	beforeEach(() => {
+		cy.viewport(400, 250)
+	})
+
 	// Bouton d'effacement (<button> natif) : ring standard global (2px primary, offset 3px).
-	// Capture `.v-application` : le bouton est un sibling du textarea, et le ring est outset.
+	// La racine `.sy-textarea` contient le textarea et le bouton (absolu à 12px des
+	// bords) : le ring outset reste dans sa boîte, la capture peut donc être serrée.
 	it('shows the ring on the clear button', () => {
 		cy.mountWithVuetify(SyTextArea, {
 			props: {
@@ -66,7 +77,6 @@ describe('SyTextArea - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.sy-textarea__clear-button')
-		cy.wait(100)
-		cy.matchImageSnapshot('sy-textarea-focus-clear', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-textarea-focus-clear', cy.get('.sy-textarea'), { padding: 10 })
 	})
 })

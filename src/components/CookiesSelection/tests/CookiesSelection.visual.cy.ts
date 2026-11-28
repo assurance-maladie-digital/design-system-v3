@@ -32,7 +32,6 @@ describe('CookiesSelection - Visual regression tests', () => {
 		})
 
 		focusVisible('[data-test-id="submit"]')
-		cy.wait(150)
 		cy.matchImageSnapshot('cookies-selection-submit-focus', cy.get('.v-application'))
 	})
 
@@ -44,7 +43,6 @@ describe('CookiesSelection - Visual regression tests', () => {
 		})
 
 		focusVisible('input[type="radio"]')
-		cy.wait(150)
 		cy.matchImageSnapshot('cookies-selection-radio-focus', cy.get('.v-application'))
 	})
 
@@ -56,7 +54,6 @@ describe('CookiesSelection - Visual regression tests', () => {
 		})
 
 		focusVisible('details > summary')
-		cy.wait(150)
 		cy.matchImageSnapshot('cookies-selection-summary-focus', cy.get('.v-application'))
 	})
 })

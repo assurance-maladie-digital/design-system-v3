@@ -8,13 +8,19 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SyTextField - Visual regression tests', () => {
+	// Viewport réduit : le champ prend toute la largeur (les tests mobiles
+	// ci-dessous surchargent avec leur propre viewport).
+	beforeEach(() => {
+		cy.viewport(400, 150)
+	})
+
 	it('displays the text field by default', () => {
 		cy.mountWithVuetify(SyTextField, {
 			props: { label: 'Prénom' },
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-text-field-default', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-default', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the text field with a value', () => {
@@ -26,7 +32,7 @@ describe('SyTextField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-text-field-with-value', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-with-value', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the text field as required', () => {
@@ -39,7 +45,7 @@ describe('SyTextField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-text-field-required', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-required', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the text field in readonly state', () => {
@@ -52,7 +58,7 @@ describe('SyTextField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-text-field-readonly', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-readonly', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the text field with clearable', () => {
@@ -65,7 +71,7 @@ describe('SyTextField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-text-field-clearable', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-clearable', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the text field with prepend icon', () => {
@@ -77,7 +83,7 @@ describe('SyTextField - Visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-text-field-prepend-icon', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-prepend-icon', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the number field with the custom spin buttons', () => {
@@ -90,7 +96,7 @@ describe('SyTextField - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-text-field__spinner').should('be.visible')
-		cy.matchImageSnapshot('sy-text-field-number', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-number', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the number field without the spin buttons when hidden', () => {
@@ -104,7 +110,7 @@ describe('SyTextField - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-text-field__spinner').should('not.exist')
-		cy.matchImageSnapshot('sy-text-field-number-no-spinner', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-number-no-spinner', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('displays the number field disabled without the spin buttons', () => {
@@ -118,21 +124,21 @@ describe('SyTextField - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-text-field__spinner').should('not.exist')
-		cy.matchImageSnapshot('sy-text-field-number-disabled', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-number-disabled', cy.get('.v-text-field'), { padding: 10 })
 	})
 })
 
 describe('SyTextField - Focus visual regression tests', () => {
 	// Bouton d'effacement (VBtn) : ring standard global (2px primary, offset 3px).
-	// Capture `.v-application` pour ne pas rogner le ring outset.
+	// Viewport réduit : le champ prend toute la largeur du viewport.
 	it('shows the ring on the clear button', () => {
+		cy.viewport(400, 150)
 		cy.mountWithVuetify(SyTextField, {
 			props: { label: 'Nom', isClearable: true, modelValue: 'Ceci est un texte' },
 		})
 
 		focusVisible('.sy-text-field__clear')
-		cy.wait(100)
-		cy.matchImageSnapshot('sy-text-field-focus-clear', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-text-field-focus-clear', cy.get('.v-text-field'), { padding: 12 })
 	})
 })
 
@@ -152,7 +158,7 @@ describe('SyTextField - Mobile visual regression tests', () => {
 		})
 
 		cy.get('.v-text-field').should('be.visible')
-		cy.matchImageSnapshot('sy-text-field-mobile', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-mobile', cy.get('.v-text-field'), { padding: 10 })
 	})
 
 	it('keeps a long label inside the field, before the end icons, at 320px', () => {
@@ -176,7 +182,7 @@ describe('SyTextField - Mobile visual regression tests', () => {
 				expect(labelRect.right, 'label right edge <= end icons left edge').to.be.at.most(appendInner.getBoundingClientRect().left + 1)
 			}
 		})
-		cy.matchImageSnapshot('sy-text-field-mobile-long-label', cy.get('.v-text-field'))
+		cy.matchImageSnapshot('sy-text-field-mobile-long-label', cy.get('.v-text-field'), { padding: 10 })
 	})
 })
 

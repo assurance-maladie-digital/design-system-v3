@@ -7,6 +7,11 @@ const defaultItems = [
 ]
 
 describe('SyTabs - Visual regression tests', () => {
+	// Viewport réduit : le titre prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(500, 100)
+	})
+
 	it('displays the tabs with first tab active by default', () => {
 		cy.mountWithVuetify(SyTabs, {
 			props: { items: defaultItems },
@@ -76,6 +81,11 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SyTabs - Focus visual regression tests', () => {
+	// Viewport réduit : les onglets prennent toute la largeur.
+	beforeEach(() => {
+		cy.viewport(500, 100)
+	})
+
 	// Ring 2px inset (offset -3px), couleur active-color (primary par défaut).
 	it('shows the focus ring on a tab', () => {
 		cy.mountWithVuetify(SyTabs, {
@@ -83,7 +93,6 @@ describe('SyTabs - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.sy-tabs__button')
-		cy.wait(100)
 		cy.matchImageSnapshot('sy-tabs-focus', cy.get('.sy-tabs'))
 	})
 })

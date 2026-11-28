@@ -12,6 +12,14 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SyBtnMenu - Focus visual regression tests', () => {
+	// Viewport réduit (>= 960px : sous smAndDown le composant bascule en version
+	// mobile) : la capture `.v-application` (focus-activator) et la vue globale
+	// (focus-open, position du menu conservée) restent limitées autour du bouton
+	// et du menu ouvert.
+	beforeEach(() => {
+		cy.viewport(960, 300)
+	})
+
 	it('shows the focus ring on the activator button', () => {
 		cy.mountWithVuetify(SyBtnMenu, {
 			props: {
@@ -21,8 +29,7 @@ describe('SyBtnMenu - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.sy-user-menu-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('sy-btn-menu-focus-activator', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-btn-menu-focus-activator', cy.get('.sy-user-menu-btn'), { padding: 10 })
 	})
 
 	it('shows the focus ring on the activator with the menu open', () => {
@@ -37,7 +44,6 @@ describe('SyBtnMenu - Focus visual regression tests', () => {
 		cy.get('.v-overlay__content').should('be.visible')
 
 		focusVisible('.sy-user-menu-btn')
-		cy.wait(100)
 		cy.matchImageSnapshot('sy-btn-menu-focus-open')
 	})
 })

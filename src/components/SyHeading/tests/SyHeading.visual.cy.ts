@@ -1,6 +1,11 @@
 import SyHeading from '../SyHeading.vue'
 
 describe('SyHeading - Visual regression tests', () => {
+	// Viewport réduit : le titre prend toute la largeur du viewport.
+	beforeEach(() => {
+		cy.viewport(400, 80)
+	})
+
 	it('displays a level 1 heading', () => {
 		cy.mountWithVuetify(SyHeading, {
 			props: { level: 1 },

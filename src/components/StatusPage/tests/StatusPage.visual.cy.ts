@@ -14,6 +14,12 @@ const illustrationSlot = {
 }
 
 describe('StatusPage - Visual regression tests', () => {
+	// Viewport 960px : plancher desktop (sous smAndDown l'espacement et la
+	// largeur maximale du conteneur changent).
+	beforeEach(() => {
+		cy.viewport(960, 600)
+	})
+
 	it('displays the status page with a title', () => {
 		cy.mountWithVuetify(StatusPage, {
 			props: { pageTitle: 'Erreur 404' },
@@ -21,7 +27,7 @@ describe('StatusPage - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('status-page-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('status-page-default', cy.get('.vd-page-container'))
 	})
 
 	it('displays the status page with all content', () => {
@@ -36,7 +42,7 @@ describe('StatusPage - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('status-page-full', cy.get('.v-application'))
+		cy.matchImageSnapshot('status-page-full', cy.get('.vd-page-container'))
 	})
 
 	it('displays the status page without button', () => {
@@ -48,7 +54,7 @@ describe('StatusPage - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('status-page-no-btn', cy.get('.v-application'))
+		cy.matchImageSnapshot('status-page-no-btn', cy.get('.vd-page-container'))
 	})
 })
 
@@ -60,7 +66,6 @@ describe('StatusPage - Focus visual regression tests', () => {
 		})
 
 		focusVisible('.v-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('status-page-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('status-page-focus', cy.get('.vd-page-container'))
 	})
 })

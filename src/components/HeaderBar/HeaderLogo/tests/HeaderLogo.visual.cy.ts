@@ -8,13 +8,14 @@ const focusVisible = (selector: string) =>
 
 describe('HeaderLogo - Focus visual regression tests', () => {
 	// Le lien logo n'est pas bord-à-bord (padding du .header-logo) : ring outset DS.
+	// Viewport réduit : le lien prend toute la largeur du viewport.
 	it('shows the focus ring on the logo link', () => {
+		cy.viewport(400, 150)
 		cy.mountWithVuetify(HeaderLogo, {
 			props: { serviceTitle: 'Mon service' },
 		})
 
 		focusVisible('.logo')
-		cy.wait(100)
-		cy.matchImageSnapshot('header-logo-focus', cy.get('.v-application'))
+		cy.matchImageSnapshot('header-logo-focus', cy.get('.logo'), { padding: 10 })
 	})
 })

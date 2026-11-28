@@ -23,6 +23,8 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('DialogBox - Visual regression tests', () => {
+	// Global view kept on purpose: the centered position of the dialog in the
+	// viewport (and its scrim) is part of the verified rendering.
 	it('displays the opened dialog box', () => {
 		cy.mountWithVuetify(DialogBox, {
 			...dialogTransitionOptions,
@@ -122,7 +124,6 @@ describe('DialogBox - Visual regression tests', () => {
 		cy.get('.v-dialog').should('be.visible')
 		waitForDialogTransitionEnd()
 		focusVisible('[data-test-id="confirm-btn"]')
-		cy.wait(150)
 		cy.matchImageSnapshot('dialog-box-confirm-focus')
 	})
 
@@ -149,7 +150,6 @@ describe('DialogBox - Visual regression tests', () => {
 		cy.get('.v-dialog').should('be.visible')
 		waitForDialogTransitionEnd()
 		focusVisible('.sy-dialog-box-content--scrollable')
-		cy.wait(150)
 		cy.matchImageSnapshot('dialog-box-scrollable-focus')
 	})
 })

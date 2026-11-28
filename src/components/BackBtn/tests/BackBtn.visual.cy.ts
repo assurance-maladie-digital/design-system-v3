@@ -43,8 +43,8 @@ describe('BackBtn - Visual regression tests', () => {
 })
 
 // Le ring de focus est en :focus-visible : on le déclenche via l'option
-// native focus({ focusVisible: true }). On capture .v-application pour
-// inclure l'outline (offset 3px hors de la boîte du bouton).
+// native focus({ focusVisible: true }). Capture de l'élément avec padding
+// pour inclure l'outline (offset 3px hors de la boîte du bouton).
 const focusVisible = (selector: string) =>
 	cy.get(selector).then(($el) => {
 		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
@@ -55,23 +55,23 @@ describe('BackBtn - Focus visual regression tests', () => {
 		cy.mountWithVuetify(BackBtn)
 
 		focusVisible('.sy-back-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('back-btn-focus-light', cy.get('.v-application'))
+		cy.matchImageSnapshot('back-btn-focus-light', cy.get('.sy-back-btn'), { padding: 10 })
 	})
 
 	it('shows the onPrimary focus ring in dark mode', () => {
+		cy.viewport(960, 200)
 		cy.mountWithVuetify(BackBtn, {
 			props: { dark: true },
 		})
 		cy.get('.v-application').invoke('css', 'background-color', '#0c419a')
 
 		focusVisible('.sy-back-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('back-btn-focus-dark', cy.get('.v-application'))
+		cy.matchImageSnapshot('back-btn-focus-dark', cy.get('.sy-back-btn'), { padding: 10 })
 		cy.get('.v-application').invoke('css', 'background-color', '')
 	})
 
 	it('shows the focus ring when the VBtn renders as a link (href)', () => {
+		cy.viewport(960, 200)
 		cy.mountWithVuetify(BackBtn, {
 			attrs: { href: '#retour' },
 		})
@@ -79,7 +79,6 @@ describe('BackBtn - Focus visual regression tests', () => {
 		// VBtn rendu en <a> : couvert par .v-btn:focus-visible, pas par button:focus-visible
 		cy.get('a.sy-back-btn').should('exist')
 		focusVisible('a.sy-back-btn')
-		cy.wait(100)
-		cy.matchImageSnapshot('back-btn-focus-link', cy.get('.v-application'))
+		cy.matchImageSnapshot('back-btn-focus-link', cy.get('a.sy-back-btn'), { padding: 10 })
 	})
 })
